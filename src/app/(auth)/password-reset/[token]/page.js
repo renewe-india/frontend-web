@@ -71,7 +71,10 @@ const PasswordReset = () => {
                         required
                     />
 
-                    <InputError messages={errors.password} className="mt-2" />
+                    <InputError
+                        messages={errors.password}
+                        className="mt-2"
+                    />
                 </div>
 
                 {/* Confirm Password */}

@@ -1,23 +1,25 @@
-import Link from 'next/link'
-import AuthCard from '@/app/(auth)/AuthCard'
-import ApplicationLogo from '@/components/ApplicationLogo'
-
 export const metadata = {
-    title: 'Laravel',
+    title: 'Renewe',
 }
 
 const Layout = ({ children }) => {
     return (
-        <div>
-            <div className="font-sans text-gray-900 antialiased">
-                <AuthCard
-                    logo={
-                        <Link href="/">
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </Link>
-                    }>
-                    {children}
-                </AuthCard>
+        <div className="font-sans text-gray-900 antialiased">
+            <div className="font-sans antialiased bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+                    <div className="mt-5">
+                        <img
+                            src="/images/Renewe-logo.png"
+                            className="h-8"
+                            alt="RenewE Logo"
+                        />
+                    </div>
+                    <div className="w-full sm:max-w-md mt-6 px-6 py-4">
+                        <div className="card bg-base-100 rounded-lg p-5">
+                            {children}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

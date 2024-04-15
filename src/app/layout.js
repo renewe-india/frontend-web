@@ -1,7 +1,7 @@
 import '@/app/global.css'
 
 export const metadata = {
-    title: 'RenewE',
+    title: 'Renewe',
 }
 const RootLayout = ({ children }) => {
     return (

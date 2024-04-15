@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import ErrorDisplay from '@/components/ErrorDisplay'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 
 const Login = () => {
@@ -18,9 +19,9 @@ const Login = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [shouldRemember, setShouldRemember] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
@@ -30,89 +31,109 @@ const Login = () => {
         } else {
             setStatus(null)
         }
-    })
+    }, [router.reset, errors])
 
     const submitForm = async event => {
         event.preventDefault()
+        setIsSubmitting(true)
 
         login({
-            email,
+            username,
             password,
-            remember: shouldRemember,
             setErrors,
             setStatus,
         })
     }
-
+    useEffect(() => {
+        if (errors.length > 0) {
+            setIsSubmitting(false)
+        }
+    }, [errors])
     return (
         <>
-            <AuthSessionStatus className="mb-4" status={status} />
-            <form onSubmit={submitForm}>
-                {/* Email Address */}
+            <div className="pb-5">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <div className="text-2xl font-bold">Login</div>
+                    </div>
+                </div>
+            </div>
+            <div>
                 <div>
-                    <Label htmlFor="email">Email</Label>
-
-                    <Input
-                        id="email"
-                        type="email"
-                        value={email}
-                        className="block mt-1 w-full"
-                        onChange={event => setEmail(event.target.value)}
-                        required
-                        autoFocus
-                    />
-
-                    <InputError messages={errors.email} className="mt-2" />
+                    <form onSubmit={submitForm} className="flex flex-col gap-5">
+                        <div>
+                            <label
+                                htmlFor="username"
+                                className="pt-0 label label-text font-semibold">
+                                <span>
+                                    Username
+                                    <span className="text-error">*</span>
+                                </span>
+                            </label>
+                            <div className="flex-1 relative">
+                                <input
+                                    id="username"
+                                    placeholder=""
+                                    className="input input-primary w-full peer"
+                                    type="username"
+                                    value={username}
+                                    onChange={event =>
+                                        setUsername(event.target.value)
+                                    }
+                                    required
+                                    autoFocus
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label
+                                htmlFor="password"
+                                className="pt-0 label label-text font-semibold">
+                                <span>
+                                    Password
+                                    <span className="text-error">*</span>
+                                </span>
+                            </label>
+                            <div className="flex-1 relative">
+                                <input
+                                    id="password"
+                                    placeholder=""
+                                    className="input input-primary w-full peer"
+                                    type="password"
+                                    value={password}
+                                    onChange={event =>
+                                        setPassword(event.target.value)
+                                    }
+                                    required
+                                    autoComplete="current-password"
+                                />
+                            </div>
+                        </div>
+                        <button
+                            type="submit"
+                            className="btn normal-case btn-primary"
+                            disabled={isSubmitting}>
+                            {isSubmitting ? 'Logging in...' : 'Login'}
+                        </button>
+                    </form>
+                    <ErrorDisplay errors={errors} />
+                    <div className="mt-5 text-center font-semibold">
+                        Can't Sign In?
+                    </div>
+                    <div className="mt-2 flex items-center justify-between">
+                        <Link
+                            href="/onboarding"
+                            className="btn normal-case btn-outline">
+                            Register
+                        </Link>
+                        <Link
+                            href="/forgot-password"
+                            className="btn normal-case btn-outline">
+                            Forgot your password?
+                        </Link>
+                    </div>
                 </div>
-
-                {/* Password */}
-                <div className="mt-4">
-                    <Label htmlFor="password">Password</Label>
-
-                    <Input
-                        id="password"
-                        type="password"
-                        value={password}
-                        className="block mt-1 w-full"
-                        onChange={event => setPassword(event.target.value)}
-                        required
-                        autoComplete="current-password"
-                    />
-
-                    <InputError messages={errors.password} className="mt-2" />
-                </div>
-
-                {/* Remember Me */}
-                <div className="block mt-4">
-                    <label
-                        htmlFor="remember_me"
-                        className="inline-flex items-center">
-                        <input
-                            id="remember_me"
-                            type="checkbox"
-                            name="remember"
-                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            onChange={event =>
-                                setShouldRemember(event.target.checked)
-                            }
-                        />
-
-                        <span className="ml-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href="/forgot-password"
-                        className="underline text-sm text-gray-600 hover:text-gray-900">
-                        Forgot your password?
-                    </Link>
-
-                    <Button className="ml-3">Login</Button>
-                </div>
-            </form>
+            </div>
         </>
     )
 }
