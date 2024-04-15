@@ -471,6 +471,123 @@ function Sidebar() {
                                     </span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    href="https://renewe.in/coming-soon">
+                                    <svg
+                                        className="inline w-5 h-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round">
+                                        <path d="M15 5l0 2"></path>
+                                        <path d="M15 11l0 2"></path>
+                                        <path d="M15 17l0 2"></path>
+                                        <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"></path>
+                                    </svg>
+                                    <span className="mary-hideable whitespace-nowrap">
+                                        Support Tickets{' '}
+                                        <span className="badge badge-ghost badge-sm !badge-warning">
+                                            V3
+                                        </span>
+                                    </span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    href="https://renewe.in/coming-soon">
+                                    <svg
+                                        className="inline w-5 h-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round">
+                                        <path d="M15 21h-8a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 1.734 1.002"></path>
+                                        <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+                                        <path d="M8 11v-4a4 4 0 1 1 8 0v4"></path>
+                                        <path d="M19 16v3"></path>
+                                        <path d="M19 22v.01"></path>
+                                    </svg>
+                                    <span className="mary-hideable whitespace-nowrap">
+                                        Claims{' '}
+                                        <span className="badge badge-ghost badge-sm !badge-warning">
+                                            V3
+                                        </span>
+                                    </span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    href="https://renewe.in/coming-soon">
+                                    <svg
+                                        className="inline w-5 h-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round">
+                                        <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969"></path>
+                                        <path d="M14 3.223a9.003 9.003 0 0 1 0 17.554"></path>
+                                        <path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592"></path>
+                                        <path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305"></path>
+                                        <path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356"></path>
+                                        <path d="M14 14l-4 -4"></path>
+                                        <path d="M10 14l4 -4"></path>
+                                    </svg>
+                                    <span className="mary-hideable whitespace-nowrap">
+                                        Report A Problem{' '}
+                                        <span className="badge badge-ghost badge-sm !badge-warning">
+                                            V4
+                                        </span>
+                                    </span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    href="https://renewe.in/coming-soon">
+                                    <svg
+                                        className="inline w-5 h-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round">
+                                        <path d="M13 10l7.383 7.418c.823 .82 .823 2.148 0 2.967a2.11 2.11 0 0 1 -2.976 0l-7.407 -7.385"></path>
+                                        <path d="M6 9l4 4"></path>
+                                        <path d="M13 10l-4 -4"></path>
+                                        <path d="M3 21h7"></path>
+                                        <path d="M6.793 15.793l-3.586 -3.586a1 1 0 0 1 0 -1.414l2.293 -2.293l.5 .5l3 -3l-.5 -.5l2.293 -2.293a1 1 0 0 1 1.414 0l3.586 3.586a1 1 0 0 1 0 1.414l-2.293 2.293l-.5 -.5l-3 3l.5 .5l-2.293 2.293a1 1 0 0 1 -1.414 0z"></path>
+                                    </svg>
+                                    <span className="mary-hideable whitespace-nowrap">
+                                        Terms and Policies{' '}
+                                        <span className="badge badge-ghost badge-sm !badge-warning">
+                                            V4
+                                        </span>
+                                    </span>
+                                </Link>
+                            </li>
                         </ul>
                     </details>
                 </li>

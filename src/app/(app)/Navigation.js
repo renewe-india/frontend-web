@@ -82,6 +82,274 @@ const Navigation = ({ user }) => {
                     </div>
                 </div>
             </div>
+            <div className="drawer absolute z-50 drawer-end">
+                {/* Toggle visibility */}
+                <input
+                    id="notifications"
+                    type="checkbox"
+                    className="drawer-toggle"
+                />
+
+                <div className="drawer-side">
+                    {/* Overlay effect , click outside */}
+                    <label
+                        htmlFor="notifications"
+                        className="drawer-overlay"></label>
+
+                    {/* Content */}
+                    <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-md shadow dark:shadow-white">
+                        <div className="pb-5">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <div className="text-2xl font-bold">
+                                        Notifications
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const checkbox = document.getElementById(
+                                                'notifications',
+                                            )
+                                            if (checkbox)
+                                                checkbox.checked = false
+                                        }}
+                                        className="btn normal-case btn-ghost btn-sm">
+                                        <span className="block">
+                                            <svg
+                                                className="inline w-5 h-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                aria-hidden="true"
+                                                data-slot="icon">
+                                                <path d="M6 18 18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="flex flex-col gap-2">
+                                {/* Item */}
+                                <div className="p-2 shadow dark:shadow-white rounded-lg">
+                                    <div className="flex justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <div className="avatar">
+                                                <div className="w-7 rounded-full !w-10">
+                                                    <img
+                                                        src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                                                        alt="profile"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold font-lg">
+                                                    Grishma Khedekar
+                                                </div>
+                                                <div className="text-sm text-gray-400">
+                                                    Liked a Post
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="text-xs md:text-sm text-gray-500">
+                                            17m ago
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        Lorem Ipsum is simply dummy text of the
+                                        printing and typesetting industry. Lorem
+                                        Ipsum has been the industry's standard
+                                        dummy text ever since the 1500s, when an
+                                        unknown printer took a galley of type
+                                        and scrambled it to make a
+                                    </div>
+                                </div>
+                                {/* Item */}
+                                {/* Item */}
+                                <div className="p-2 shadow dark:shadow-white rounded-lg">
+                                    <div className="flex justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <div className="avatar">
+                                                <div className="w-7 rounded-full !w-10 !rounded">
+                                                    <img
+                                                        src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                                                        alt="profile"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold font-lg">
+                                                    Spinkraft Ventures Private
+                                                    Limited
+                                                </div>
+                                                <div className="text-sm text-gray-400">
+                                                    Share A Post
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="text-xs md:text-sm text-gray-500">
+                                            17m ago
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        Lorem Ipsum is simply dummy text of
+                                    </div>
+                                </div>
+                                {/* Item */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="drawer absolute z-50 drawer-end">
+                {/* Toggle visibility */}
+                <input id="search" type="checkbox" className="drawer-toggle" />
+
+                <div className="drawer-side">
+                    {/* Overlay effect, click outside */}
+                    <label htmlFor="search" className="drawer-overlay"></label>
+
+                    {/* Content */}
+                    <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-md shadow dark:shadow-white">
+                        <div className="pb-5">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <div className="text-2xl font-bold">
+                                        Search
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const checkbox = document.getElementById(
+                                                'search',
+                                            )
+                                            if (checkbox)
+                                                checkbox.checked = false
+                                        }}
+                                        className="btn normal-case btn-ghost btn-sm">
+                                        <span className="block">
+                                            <svg
+                                                className="inline w-5 h-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                aria-hidden="true"
+                                                data-slot="icon">
+                                                <path d="M6 18 18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-5">
+                            <div className="relative">
+                                <input
+                                    id="search_term"
+                                    placeholder=" "
+                                    className="input input-primary w-full peer"
+                                    type="text"
+                                    name="search_term"
+                                    required
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <label className="flex gap-3">
+                                    <input
+                                        type="radio"
+                                        name="search_model"
+                                        value="search_users"
+                                        className="radio"
+                                        defaultChecked
+                                    />
+                                    <span>Users</span>
+                                </label>
+                                <label className="flex gap-3">
+                                    <input
+                                        type="radio"
+                                        name="search_model"
+                                        value="search_stock_items"
+                                        className="radio"
+                                    />
+                                    <span>Product/Services</span>
+                                </label>
+                                <label className="flex gap-3">
+                                    <input
+                                        type="radio"
+                                        name="search_model"
+                                        value="search_businesses"
+                                        className="radio"
+                                    />
+                                    <span>Businesses</span>
+                                </label>
+                                <label className="flex gap-3">
+                                    <input
+                                        type="radio"
+                                        name="search_model"
+                                        value="search_associations"
+                                        className="radio"
+                                    />
+                                    <span>Associations</span>
+                                </label>
+                                <label className="flex gap-3">
+                                    <input
+                                        type="radio"
+                                        name="search_model"
+                                        value="search_news"
+                                        className="radio"
+                                    />
+                                    <span>News</span>
+                                </label>
+                                <label className="flex gap-3">
+                                    <input
+                                        type="radio"
+                                        name="search_model"
+                                        value="search_events"
+                                        className="radio"
+                                    />
+                                    <span>Events</span>
+                                </label>
+                            </div>
+
+                            <button
+                                type="button"
+                                className="btn normal-case btn-primary">
+                                <span className="block">
+                                    <svg
+                                        className="inline w-5 h-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round">
+                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                        <path d="M21 21l-6 -6"></path>
+                                    </svg>
+                                </span>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div
                 id="navbar"
                 style={{ transition: 'top 0.3s' }}

@@ -7,7 +7,7 @@ import ErrorDisplay from '@/components/ErrorDisplay'
 const Page = () => {
     const { onboardingOtp, onboardingVerifyOtp } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
+        redirectIfAuthenticated: '/landing-page',
     })
 
     const router = useRouter()

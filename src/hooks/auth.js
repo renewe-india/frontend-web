@@ -95,7 +95,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 .post('/login', props)
                 .then(() => mutate())
 
-            router.push(redirectIfAuthenticated || '/dashboard')
+            router.push(redirectIfAuthenticated || '/landing-page')
         } catch (error) {
             if (error.response?.status === 401) {
                 setErrors(['Incorrect username or password. Please try again.'])
