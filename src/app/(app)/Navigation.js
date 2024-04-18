@@ -1,27 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Sidebar from './Sidebar'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const Navigation = ({ user }) => {
-    const [theme, setTheme] = useState(
-        localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light',
-    )
+    const { theme } = useContext(ThemeContext)
+    const { toggleTheme } = useContext(ThemeContext)
+    const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
 
     const handleToggle = e => {
         if (e.target.checked) {
-            setTheme('dark')
+            toggleTheme('dark')
         } else {
-            setTheme('light')
+            toggleTheme('light')
         }
     }
-
-    useEffect(() => {
-        localStorage.setItem('theme', theme)
-        const localTheme = localStorage.getItem('theme')
-        document.querySelector('html').setAttribute('data-theme', localTheme)
-    }, [theme])
 
     return (
         <>
@@ -387,7 +382,7 @@ const Navigation = ({ user }) => {
                                 {/* Navigation items */}
                                 <li>
                                     <Link
-                                        href="https://renewe.in/network"
+                                        href="/network"
                                         className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
                                         <svg
                                             className="inline w-5 h-5"
@@ -412,7 +407,7 @@ const Navigation = ({ user }) => {
                                 </li>
                                 <li>
                                     <Link
-                                        href="https://renewe.in/news"
+                                        href="/news"
                                         className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
                                         <svg
                                             className="inline w-5 h-5"
@@ -437,7 +432,7 @@ const Navigation = ({ user }) => {
                                 </li>
                                 <li>
                                     <Link
-                                        href="https://renewe.in/events"
+                                        href="/events"
                                         className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
                                         <svg
                                             className="inline w-5 h-5"
@@ -462,7 +457,7 @@ const Navigation = ({ user }) => {
                                 </li>
                                 <li>
                                     <Link
-                                        href="https://renewe.in/jobs"
+                                        href="/jobs"
                                         className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
                                         <svg
                                             className="inline w-5 h-5"
@@ -559,6 +554,221 @@ const Navigation = ({ user }) => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div
+                className={`mb-14 transform -bottom-14 left-0 fixed w-full overflow-auto ease-in-out transition-all duration-100 z-10 border-t ${
+                    isBottomDrawerOpen ? '-translate-y-14' : 'translate-y-full'
+                }`}>
+                <div className="p-2 grid grid-cols-2 gap-2 bg-base-100 text-theme-dark dark:text-theme-light shadow dark:shadow-white">
+                    <button
+                        type="button"
+                        className="btn normal-case btn-outline">
+                        <span className="block">
+                            <svg
+                                className="inline w-5 h-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M8 9h8"></path>
+                                <path d="M8 13h6"></path>
+                                <path d="M13 18l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6"></path>
+                                <path d="M16 22l5 -5"></path>
+                                <path d="M21 21.5v-4.5h-4.5"></path>
+                            </svg>
+                        </span>
+                        Message
+                    </button>
+                    <button
+                        type="button"
+                        className="btn normal-case btn-outline">
+                        <span className="block">
+                            <svg
+                                className="inline w-5 h-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+                                <path d="M7 8h10"></path>
+                                <path d="M7 12h10"></path>
+                                <path d="M7 16h10"></path>
+                            </svg>
+                        </span>
+                        Article
+                    </button>
+                    <button
+                        type="button"
+                        className="btn normal-case btn-outline">
+                        <span className="block">
+                            <svg
+                                className="inline w-5 h-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M4 5h2"></path>
+                                <path d="M5 4v2"></path>
+                                <path d="M11.5 4l-.5 2"></path>
+                                <path d="M18 5h2"></path>
+                                <path d="M19 4v2"></path>
+                                <path d="M15 9l-1 1"></path>
+                                <path d="M18 13l2 -.5"></path>
+                                <path d="M18 19h2"></path>
+                                <path d="M19 18v2"></path>
+                                <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z"></path>
+                            </svg>
+                        </span>
+                        Celebration
+                    </button>
+                    <button
+                        type="button"
+                        className="btn normal-case btn-outline">
+                        <span className="block">
+                            <svg
+                                className="inline w-5 h-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z"></path>
+                                <path d="M9 11v-5a3 3 0 0 1 6 0v5"></path>
+                            </svg>
+                        </span>
+                        Buy Request
+                    </button>
+                </div>
+            </div>
+
+            <div
+                id="mobile-footer"
+                style={{ transition: 'bottom 0.3s' }}
+                className="fixed z-40 w-full text-xs grid grid-cols-5 bg-inherit lg:hidden items-center bottom-0 text-theme-dark dark:text-theme-light shadow dark:shadow-white">
+                <Link
+                    href="/network"
+                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                    <svg
+                        className="inline h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        stroke="currentColor"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                    </svg>
+                    Network
+                </Link>
+                <Link
+                    href="/news"
+                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                    <svg
+                        class="inline h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11"></path>
+                        <path d="M8 8l4 0"></path>
+                        <path d="M8 12l4 0"></path>
+                        <path d="M8 16l4 0"></path>
+                    </svg>
+                    News
+                </Link>{' '}
+                <button
+                    onClick={() => setIsBottomDrawerOpen(!isBottomDrawerOpen)}
+                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                    <svg
+                        className="inline h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        stroke="currentColor"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                        <path d="M15 12h-6"></path>
+                        <path d="M12 9v6"></path>
+                    </svg>
+                    Post
+                </button>{' '}
+                <Link
+                    href="/events"
+                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                    <svg
+                        class="inline h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                        <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13"></path>
+                        <path d="M11 17v4"></path>
+                        <path d="M7 21h8"></path>
+                    </svg>
+                    Events
+                </Link>{' '}
+                <Link
+                    href="/jobs"
+                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                    <svg
+                        class="inline h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+                        <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"></path>
+                        <path d="M12 12l0 .01"></path>
+                        <path d="M3 13a20 20 0 0 0 18 0"></path>
+                    </svg>
+                    Jobs{' '}
+                </Link>
             </div>
         </>
     )

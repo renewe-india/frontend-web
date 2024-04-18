@@ -157,6 +157,39 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         window.location.pathname = '/login'
     }
+    // <------------------------------------------------------------------------------------------------->
+
+    const createNews = async ({ setErrors, formData }) => {
+        try {
+            // Perform CSRF token request if necessary
+            await csrf()
+
+            setErrors([])
+
+            const postData = new FormData()
+            for (const key in formData) {
+                postData.append(key, formData[key])
+            }
+
+            const response = await axios.post('/news/articles', postData, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+
+            router.push(redirectIfAuthenticated || '/news')
+        } catch (error) {
+            if (error.response?.status === 422) {
+                setErrors(['Validation error.'])
+            } else {
+                console.error('An error occurred while creating news:', error)
+                setErrors([
+                    'An unexpected error occurred. Please try again later.',
+                ])
+            }
+        }
+    }
 
     useEffect(() => {
         if (middleware === 'guest' && redirectIfAuthenticated && user)
@@ -179,6 +212,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resetPassword,
         resendEmailVerification,
         logout,
+        createNews,
         // isLoading,
         // error,
     }
