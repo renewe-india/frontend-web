@@ -3,6 +3,8 @@
 import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/(app)/Navigation'
 import Loading from '@/app/(app)/Loading'
+import LeftSidebar from '@/app/(user)/(welcome)/LeftSidebar'
+import RightSidebar from '@/app/(user)/(welcome)/RightSidebar'
 
 const AppLayout = ({ children, header }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -15,7 +17,17 @@ const AppLayout = ({ children, header }) => {
         <>
             <Navigation user={user} />
 
-            <main>{children}</main>
+            <div className="container mx-auto py-16">
+                <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2">
+                    <LeftSidebar />
+                    <div
+                        id="main-content"
+                        className="col-span-12 lg:col-span-8 xl:col-span-6">
+                        {children}
+                    </div>
+                    <RightSidebar />
+                </div>
+            </div>
         </>
     )
 }

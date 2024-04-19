@@ -10,6 +10,27 @@ const Navigation = ({ user }) => {
     const { toggleTheme } = useContext(ThemeContext)
     const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
 
+    const [prevScrollPos, setPrevScrollPos] = useState(0)
+    const [topVisible, setTopVisible] = useState(true)
+    const [bottomVisible, setBottomVisible] = useState(true)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset
+            setTopVisible(
+                prevScrollPos > currentScrollPos || currentScrollPos < 10,
+            )
+            setBottomVisible(prevScrollPos > currentScrollPos)
+            setPrevScrollPos(currentScrollPos)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [prevScrollPos])
+
     const handleToggle = e => {
         if (e.target.checked) {
             toggleTheme('dark')
@@ -348,7 +369,9 @@ const Navigation = ({ user }) => {
             <div
                 id="navbar"
                 style={{ transition: 'top 0.3s' }}
-                className="fixed z-40 w-full text-sm px-5 shadow dark:shadow-white bg-inherit">
+                className={`z-40 fixed top-0 w-full text-sm px-5 shadow dark:shadow-white bg-inherit transition-transform ${
+                    topVisible ? 'translate-y-0' : '-translate-y-full'
+                }`}>
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center">
                         <div className="flex items-center gap-2 md:gap-5">
@@ -366,9 +389,7 @@ const Navigation = ({ user }) => {
                                     </div>
                                 </div>
                             </label>
-                            <Link
-                                href="https://renewe.in"
-                                className="flex items-center mr-2">
+                            <Link href="/" className="flex items-center mr-2">
                                 <img
                                     src="/images/Renewe-logo.png"
                                     alt="RenewE Logo"
@@ -664,111 +685,117 @@ const Navigation = ({ user }) => {
             <div
                 id="mobile-footer"
                 style={{ transition: 'bottom 0.3s' }}
-                className="fixed z-40 w-full text-xs grid grid-cols-5 bg-inherit lg:hidden items-center bottom-0 text-theme-dark dark:text-theme-light shadow dark:shadow-white">
-                <Link
-                    href="/network"
-                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
-                    <svg
-                        className="inline h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
-                    </svg>
-                    Network
-                </Link>
-                <Link
-                    href="/news"
-                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
-                    <svg
-                        class="inline h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11"></path>
-                        <path d="M8 8l4 0"></path>
-                        <path d="M8 12l4 0"></path>
-                        <path d="M8 16l4 0"></path>
-                    </svg>
-                    News
-                </Link>{' '}
-                <button
-                    onClick={() => setIsBottomDrawerOpen(!isBottomDrawerOpen)}
-                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
-                    <svg
-                        className="inline h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-                        <path d="M15 12h-6"></path>
-                        <path d="M12 9v6"></path>
-                    </svg>
-                    Post
-                </button>{' '}
-                <Link
-                    href="/events"
-                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
-                    <svg
-                        class="inline h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                        <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13"></path>
-                        <path d="M11 17v4"></path>
-                        <path d="M7 21h8"></path>
-                    </svg>
-                    Events
-                </Link>{' '}
-                <Link
-                    href="/jobs"
-                    className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
-                    <svg
-                        class="inline h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
-                        <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"></path>
-                        <path d="M12 12l0 .01"></path>
-                        <path d="M3 13a20 20 0 0 0 18 0"></path>
-                    </svg>
-                    Jobs{' '}
-                </Link>
+                className={`fixed z-40 w-full text-xs bg-inherit lg:hidden items-center text-theme-dark dark:text-theme-light shadow dark:shadow-white bottom-0 transform ${
+                    bottomVisible ? 'translate-y-0' : 'translate-y-full'
+                }`}>
+                <div className="grid grid-cols-5">
+                    <Link
+                        href="/network"
+                        className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                        <svg
+                            className="inline h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                        </svg>
+                        Network
+                    </Link>
+                    <Link
+                        href="/news"
+                        className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                        <svg
+                            className="inline h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11"></path>
+                            <path d="M8 8l4 0"></path>
+                            <path d="M8 12l4 0"></path>
+                            <path d="M8 16l4 0"></path>
+                        </svg>
+                        News
+                    </Link>{' '}
+                    <button
+                        onClick={() =>
+                            setIsBottomDrawerOpen(!isBottomDrawerOpen)
+                        }
+                        className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                        <svg
+                            className="inline h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                            <path d="M15 12h-6"></path>
+                            <path d="M12 9v6"></path>
+                        </svg>
+                        Post
+                    </button>{' '}
+                    <Link
+                        href="/events"
+                        className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                        <svg
+                            className="inline h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                            <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13"></path>
+                            <path d="M11 17v4"></path>
+                            <path d="M7 21h8"></path>
+                        </svg>
+                        Events
+                    </Link>{' '}
+                    <Link
+                        href="/jobs"
+                        className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
+                        <svg
+                            className="inline h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"></path>
+                            <path d="M12 12l0 .01"></path>
+                            <path d="M3 13a20 20 0 0 0 18 0"></path>
+                        </svg>
+                        Jobs{' '}
+                    </Link>
+                </div>
             </div>
         </>
     )
