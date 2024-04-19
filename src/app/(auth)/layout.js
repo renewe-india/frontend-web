@@ -15,7 +15,9 @@ const Layout = ({ children }) => {
                         />
                     </div>
                     <div className="w-full sm:max-w-md mt-6 px-6 py-4">
-                        <div className="card bg-base-100 rounded-lg p-5">
+                        <div
+                            data-theme="light"
+                            className="card bg-base-100 rounded-lg p-5">
                             {children}
                         </div>
                     </div>

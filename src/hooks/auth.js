@@ -166,12 +166,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
             setErrors([])
 
-            const postData = new FormData()
-            for (const key in formData) {
-                postData.append(key, formData[key])
-            }
+            // const postData = new FormData()
+            // for (const key in formData) {
+            //     postData.append(key, formData[key])
+            // }
+            console.log(formData, 'formData')
 
-            const response = await axios.post('/news/articles', postData, {
+            const response = await axios.post('/news/articles', formData, {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'multipart/form-data',
