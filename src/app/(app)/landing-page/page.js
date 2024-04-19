@@ -12,7 +12,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <main></main>
+            <main />
         </>
     )
 }

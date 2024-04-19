@@ -29,7 +29,7 @@ const Navigation = ({ user }) => {
                 />
 
                 <div className="drawer-side">
-                    <label htmlFor="sidebar" className="drawer-overlay"></label>
+                    <label htmlFor="sidebar" className="drawer-overlay" />
 
                     <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-xs shadow dark:shadow-white">
                         <div className="pb-5">
@@ -65,7 +65,8 @@ const Navigation = ({ user }) => {
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
-                                                    d="M6 18 18 6M6 6l12 12"></path>
+                                                    d="M6 18 18 6M6 6l12 12"
+                                                />
                                             </svg>
                                         </span>
                                     </button>
@@ -87,9 +88,7 @@ const Navigation = ({ user }) => {
 
                 <div className="drawer-side">
                     {/* Overlay effect , click outside */}
-                    <label
-                        htmlFor="notifications"
-                        className="drawer-overlay"></label>
+                    <label htmlFor="notifications" className="drawer-overlay" />
 
                     {/* Content */}
                     <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-md shadow dark:shadow-white">
@@ -122,7 +121,7 @@ const Navigation = ({ user }) => {
                                                 stroke="currentColor"
                                                 aria-hidden="true"
                                                 data-slot="icon">
-                                                <path d="M6 18 18 6M6 6l12 12"></path>
+                                                <path d="M6 18 18 6M6 6l12 12" />
                                             </svg>
                                         </span>
                                     </button>
@@ -209,7 +208,7 @@ const Navigation = ({ user }) => {
 
                 <div className="drawer-side">
                     {/* Overlay effect, click outside */}
-                    <label htmlFor="search" className="drawer-overlay"></label>
+                    <label htmlFor="search" className="drawer-overlay" />
 
                     {/* Content */}
                     <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-md shadow dark:shadow-white">
@@ -242,7 +241,7 @@ const Navigation = ({ user }) => {
                                                 stroke="currentColor"
                                                 aria-hidden="true"
                                                 data-slot="icon">
-                                                <path d="M6 18 18 6M6 6l12 12"></path>
+                                                <path d="M6 18 18 6M6 6l12 12" />
                                             </svg>
                                         </span>
                                     </button>
@@ -335,8 +334,8 @@ const Navigation = ({ user }) => {
                                         fill="none"
                                         strokeLinecap="round"
                                         strokeLinejoin="round">
-                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                                        <path d="M21 21l-6 -6"></path>
+                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                        <path d="M21 21l-6 -6" />
                                     </svg>
                                 </span>
                                 Search
@@ -395,10 +394,10 @@ const Navigation = ({ user }) => {
                                             fill="none"
                                             strokeLinecap="round"
                                             strokeLinejoin="round">
-                                            <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-                                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                                            <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                         </svg>
                                         <span className="mary-hideable whitespace-nowrap">
                                             Network
@@ -420,10 +419,10 @@ const Navigation = ({ user }) => {
                                             fill="none"
                                             strokeLinecap="round"
                                             strokeLinejoin="round">
-                                            <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11"></path>
-                                            <path d="M8 8l4 0"></path>
-                                            <path d="M8 12l4 0"></path>
-                                            <path d="M8 16l4 0"></path>
+                                            <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" />
+                                            <path d="M8 8l4 0" />
+                                            <path d="M8 12l4 0" />
+                                            <path d="M8 16l4 0" />
                                         </svg>
                                         <span className="mary-hideable whitespace-nowrap">
                                             News
@@ -445,10 +444,10 @@ const Navigation = ({ user }) => {
                                             fill="none"
                                             strokeLinecap="round"
                                             strokeLinejoin="round">
-                                            <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                            <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13"></path>
-                                            <path d="M11 17v4"></path>
-                                            <path d="M7 21h8"></path>
+                                            <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                            <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13" />
+                                            <path d="M11 17v4" />
+                                            <path d="M7 21h8" />
                                         </svg>
                                         <span className="mary-hideable whitespace-nowrap">
                                             Events
@@ -470,10 +469,10 @@ const Navigation = ({ user }) => {
                                             fill="none"
                                             strokeLinecap="round"
                                             strokeLinejoin="round">
-                                            <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
-                                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"></path>
-                                            <path d="M12 12l0 .01"></path>
-                                            <path d="M3 13a20 20 0 0 0 18 0"></path>
+                                            <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                                            <path d="M12 12l0 .01" />
+                                            <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         <span className="mary-hideable whitespace-nowrap">
                                             Jobs
@@ -576,11 +575,11 @@ const Navigation = ({ user }) => {
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeLinejoin="round">
-                                <path d="M8 9h8"></path>
-                                <path d="M8 13h6"></path>
-                                <path d="M13 18l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6"></path>
-                                <path d="M16 22l5 -5"></path>
-                                <path d="M21 21.5v-4.5h-4.5"></path>
+                                <path d="M8 9h8" />
+                                <path d="M8 13h6" />
+                                <path d="M13 18l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6" />
+                                <path d="M16 22l5 -5" />
+                                <path d="M21 21.5v-4.5h-4.5" />
                             </svg>
                         </span>
                         Message
@@ -600,10 +599,10 @@ const Navigation = ({ user }) => {
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeLinejoin="round">
-                                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
-                                <path d="M7 8h10"></path>
-                                <path d="M7 12h10"></path>
-                                <path d="M7 16h10"></path>
+                                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                <path d="M7 8h10" />
+                                <path d="M7 12h10" />
+                                <path d="M7 16h10" />
                             </svg>
                         </span>
                         Article
@@ -623,16 +622,16 @@ const Navigation = ({ user }) => {
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeLinejoin="round">
-                                <path d="M4 5h2"></path>
-                                <path d="M5 4v2"></path>
-                                <path d="M11.5 4l-.5 2"></path>
-                                <path d="M18 5h2"></path>
-                                <path d="M19 4v2"></path>
-                                <path d="M15 9l-1 1"></path>
-                                <path d="M18 13l2 -.5"></path>
-                                <path d="M18 19h2"></path>
-                                <path d="M19 18v2"></path>
-                                <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z"></path>
+                                <path d="M4 5h2" />
+                                <path d="M5 4v2" />
+                                <path d="M11.5 4l-.5 2" />
+                                <path d="M18 5h2" />
+                                <path d="M19 4v2" />
+                                <path d="M15 9l-1 1" />
+                                <path d="M18 13l2 -.5" />
+                                <path d="M18 19h2" />
+                                <path d="M19 18v2" />
+                                <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" />
                             </svg>
                         </span>
                         Celebration
@@ -652,8 +651,8 @@ const Navigation = ({ user }) => {
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeLinejoin="round">
-                                <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z"></path>
-                                <path d="M9 11v-5a3 3 0 0 1 6 0v5"></path>
+                                <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+                                <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
                             </svg>
                         </span>
                         Buy Request
@@ -679,10 +678,10 @@ const Navigation = ({ user }) => {
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round">
-                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                     </svg>
                     Network
                 </Link>
@@ -690,20 +689,20 @@ const Navigation = ({ user }) => {
                     href="/news"
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <svg
-                        class="inline h-5 w-5"
+                        className="inline h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11"></path>
-                        <path d="M8 8l4 0"></path>
-                        <path d="M8 12l4 0"></path>
-                        <path d="M8 16l4 0"></path>
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" />
+                        <path d="M8 8l4 0" />
+                        <path d="M8 12l4 0" />
+                        <path d="M8 16l4 0" />
                     </svg>
                     News
                 </Link>{' '}
@@ -721,9 +720,9 @@ const Navigation = ({ user }) => {
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round">
-                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-                        <path d="M15 12h-6"></path>
-                        <path d="M12 9v6"></path>
+                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                        <path d="M15 12h-6" />
+                        <path d="M12 9v6" />
                     </svg>
                     Post
                 </button>{' '}
@@ -731,20 +730,20 @@ const Navigation = ({ user }) => {
                     href="/events"
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <svg
-                        class="inline h-5 w-5"
+                        className="inline h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                        <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13"></path>
-                        <path d="M11 17v4"></path>
-                        <path d="M7 21h8"></path>
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                        <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13" />
+                        <path d="M11 17v4" />
+                        <path d="M7 21h8" />
                     </svg>
                     Events
                 </Link>{' '}
@@ -752,20 +751,20 @@ const Navigation = ({ user }) => {
                     href="/jobs"
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <svg
-                        class="inline h-5 w-5"
+                        className="inline h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
-                        <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"></path>
-                        <path d="M12 12l0 .01"></path>
-                        <path d="M3 13a20 20 0 0 0 18 0"></path>
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                        <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                        <path d="M12 12l0 .01" />
+                        <path d="M3 13a20 20 0 0 0 18 0" />
                     </svg>
                     Jobs{' '}
                 </Link>

@@ -37,7 +37,7 @@ const Login = () => {
         event.preventDefault()
         setIsSubmitting(true)
 
-        login({
+        await login({
             username,
             password,
             setErrors,

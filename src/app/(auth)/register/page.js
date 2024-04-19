@@ -244,10 +244,10 @@ const RegisterPage = () => {
                                         fill="none"
                                         strokeLinecap="round"
                                         strokeLinejoin="round">
-                                        <path d="M10 14m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"></path>
-                                        <path d="M19 5l-5.4 5.4"></path>
-                                        <path d="M19 5h-5"></path>
-                                        <path d="M19 5v5"></path>
+                                        <path d="M10 14m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+                                        <path d="M19 5l-5.4 5.4" />
+                                        <path d="M19 5h-5" />
+                                        <path d="M19 5v5" />
                                     </svg>
                                     Male
                                 </button>
@@ -267,9 +267,9 @@ const RegisterPage = () => {
                                         fill="none"
                                         strokeLinecap="round"
                                         strokeLinejoin="round">
-                                        <path d="M12 9m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"></path>
-                                        <path d="M12 14v7"></path>
-                                        <path d="M9 18h6"></path>
+                                        <path d="M12 9m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+                                        <path d="M12 14v7" />
+                                        <path d="M9 18h6" />
                                     </svg>
                                     Female
                                 </button>
@@ -289,8 +289,8 @@ const RegisterPage = () => {
                                         fill="none"
                                         strokeLinecap="round"
                                         strokeLinejoin="round">
-                                        <path d="M12 12m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"></path>
-                                        <path d="M7 12h11"></path>
+                                        <path d="M12 12m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" />
+                                        <path d="M7 12h11" />
                                     </svg>
                                     Other
                                 </button>

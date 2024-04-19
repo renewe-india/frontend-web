@@ -34,7 +34,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 ...props,
                 token,
             })
-            mutate()
+            await mutate()
             onSuccess()
         } catch (error) {
             if (error.response && error.response.status === 422) {

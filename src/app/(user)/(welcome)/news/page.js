@@ -167,7 +167,7 @@ const News = () => {
                                                             fill="none"
                                                             strokeLinecap="round"
                                                             strokeLinejoin="round">
-                                                            <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
+                                                            <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" />
                                                         </svg>
                                                     </span>
                                                 </button>
@@ -194,7 +194,7 @@ const News = () => {
                                                                     fill="none"
                                                                     strokeLinecap="round"
                                                                     strokeLinejoin="round">
-                                                                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                                                                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
                                                                 </svg>
                                                             </span>
                                                             {/* LABEL / SLOT */}
@@ -214,7 +214,7 @@ const News = () => {
                                                                     fill="none"
                                                                     strokeLinecap="round"
                                                                     strokeLinejoin="round">
-                                                                    <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
+                                                                    <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" />
                                                                 </svg>
                                                             </span>
                                                         </button>
@@ -233,10 +233,10 @@ const News = () => {
                                                                     fill="none"
                                                                     strokeLinecap="round"
                                                                     strokeLinejoin="round">
-                                                                    <path d="M12 21a9 9 0 1 1 0 -18a9 9 0 0 1 0 18z"></path>
-                                                                    <path d="M10 10c-.5 -1 -2.5 -1 -3 0"></path>
-                                                                    <path d="M17 10c-.5 -1 -2.5 -1 -3 0"></path>
-                                                                    <path d="M14.5 15a3.5 3.5 0 0 1 -5 0"></path>
+                                                                    <path d="M12 21a9 9 0 1 1 0 -18a9 9 0 0 1 0 18z" />
+                                                                    <path d="M10 10c-.5 -1 -2.5 -1 -3 0" />
+                                                                    <path d="M17 10c-.5 -1 -2.5 -1 -3 0" />
+                                                                    <path d="M14.5 15a3.5 3.5 0 0 1 -5 0" />
                                                                 </svg>
                                                             </span>
                                                         </button>
@@ -255,10 +255,10 @@ const News = () => {
                                                                     fill="none"
                                                                     strokeLinecap="round"
                                                                     strokeLinejoin="round">
-                                                                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
-                                                                    <path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25"></path>
-                                                                    <path d="M12.5 15.5l2 2"></path>
-                                                                    <path d="M15 13l2 2"></path>
+                                                                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                                                                    <path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
+                                                                    <path d="M12.5 15.5l2 2" />
+                                                                    <path d="M15 13l2 2" />
                                                                 </svg>
                                                             </span>
                                                         </button>
@@ -277,10 +277,10 @@ const News = () => {
                                                                     fill="none"
                                                                     strokeLinecap="round"
                                                                     strokeLinejoin="round">
-                                                                    <path d="M12 21a9 9 0 1 1 0 -18a9 9 0 0 1 0 18z"></path>
-                                                                    <path d="M10 10c-.5 -1 -2.5 -1 -3 0"></path>
-                                                                    <path d="M17 10c-.5 -1 -2.5 -1 -3 0"></path>
-                                                                    <path d="M14.5 15a3.5 3.5 0 0 1 -5 0"></path>
+                                                                    <path d="M12 21a9 9 0 1 1 0 -18a9 9 0 0 1 0 18z" />
+                                                                    <path d="M10 10c-.5 -1 -2.5 -1 -3 0" />
+                                                                    <path d="M17 10c-.5 -1 -2.5 -1 -3 0" />
+                                                                    <path d="M14.5 15a3.5 3.5 0 0 1 -5 0" />
                                                                 </svg>
                                                             </span>
                                                         </button>
@@ -303,9 +303,9 @@ const News = () => {
                                                     fill="none"
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round">
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"></path>
+                                                    <path d="M8 9h8" />
+                                                    <path d="M8 13h6" />
+                                                    <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />
                                                 </svg>
                                             </span>
                                         </button>
@@ -324,8 +324,8 @@ const News = () => {
                                                     fill="none"
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round">
-                                                    <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3"></path>
-                                                    <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3"></path>
+                                                    <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />
+                                                    <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" />
                                                 </svg>
                                             </span>
                                         </button>
@@ -344,8 +344,8 @@ const News = () => {
                                                     fill="none"
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round">
-                                                    <path d="M10 14l11 -11"></path>
-                                                    <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"></path>
+                                                    <path d="M10 14l11 -11" />
+                                                    <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
                                                 </svg>
                                             </span>
                                         </button>

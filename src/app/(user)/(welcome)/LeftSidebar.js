@@ -39,14 +39,14 @@ function LeftSidebar() {
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeLinejoin="round">
-                                <path d="M12.277 20.925c-.092.026-.184.051-.277.075a12 12 0 0 1-8.5-15 12 12 0 0 0 8.5-3 12 12 0 0 0 8.5 3 12 12 0 0 1 .145 6.232"></path>
-                                <path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0"></path>
-                                <path d="M17 21l4-4"></path>
+                                <path d="M12.277 20.925c-.092.026-.184.051-.277.075a12 12 0 0 1-8.5-15 12 12 0 0 0 8.5-3 12 12 0 0 0 8.5 3 12 12 0 0 1 .145 6.232" />
+                                <path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0" />
+                                <path d="M17 21l4-4" />
                             </svg>
                             <div className="text-negative-500">Navin Patil</div>
                         </div>
                     </div>
-                    <div className="text-sm text-gray-500"></div>
+                    <div className="text-sm text-gray-500" />
                 </div>
             </div>
             <div className="card bg-base-200 rounded-lg p-5">
@@ -75,8 +75,8 @@ function LeftSidebar() {
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeLinejoin="round">
-                                <path d="M12 5l0 14"></path>
-                                <path d="M5 12l14 0"></path>
+                                <path d="M12 5l0 14" />
+                                <path d="M5 12l14 0" />
                             </svg>
                             <span>Add Employment</span>
                         </a>
