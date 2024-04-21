@@ -1,4 +1,6 @@
+import { Plus, ShieldCheck } from '@phosphor-icons/react'
 import React from 'react'
+import Link from 'next/link'
 
 function LeftSidebar() {
     return (
@@ -28,21 +30,12 @@ function LeftSidebar() {
                     </div>
                     <div className="font-semibold flex items-center justify-center gap-2">
                         <div className="inline-flex items-center gap-1">
-                            <svg
-                                className="inline w-5 h-5 text-negative-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round">
-                                <path d="M12.277 20.925c-.092.026-.184.051-.277.075a12 12 0 0 1-8.5-15 12 12 0 0 0 8.5-3 12 12 0 0 0 8.5 3 12 12 0 0 1 .145 6.232" />
-                                <path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0" />
-                                <path d="M17 21l4-4" />
-                            </svg>
+                            <ShieldCheck
+                                size={24}
+                                stroke={2}
+                                color="red"
+                                weight="bold"
+                            />
                             <div className="text-negative-500">Navin Patil</div>
                         </div>
                     </div>
@@ -61,25 +54,12 @@ function LeftSidebar() {
                 </div>
                 <div>
                     <div className="flex flex-col gap-5">
-                        <a
-                            href="https://renewe.in/profile#employments"
-                            className="btn normal-case btn-xs">
-                            <svg
-                                className="inline w-5 h-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round">
-                                <path d="M12 5l0 14" />
-                                <path d="M5 12l14 0" />
-                            </svg>
+                        <Link
+                            href="/profile#employments"
+                            className="btn bg-base-300 normal-case btn-xs">
+                            <Plus size={24} stroke={2} />
                             <span>Add Employment</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

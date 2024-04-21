@@ -91,11 +91,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             setErrors([])
             setStatus(null)
 
-            const response = await axios
-                .post('/login', props)
-                .then(() => mutate())
+            await axios.post('/login', props)
 
-            router.push(redirectIfAuthenticated || '/landing-page')
+            // Assuming mutate function updates the authentication status correctly
+            await mutate()
+
+            router.push(redirectIfAuthenticated || '/')
         } catch (error) {
             if (error.response?.status === 401) {
                 setErrors(['Incorrect username or password. Please try again.'])
@@ -157,6 +158,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         window.location.pathname = '/login'
     }
+
     // <------------------------------------------------------------------------------------------------->
 
     const createNews = async ({ setErrors, formData }) => {
@@ -193,15 +195,19 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user)
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
             router.push(redirectIfAuthenticated)
+        }
         if (
             window.location.pathname === '/verify-email' &&
             user?.email_verified_at
-        )
+        ) {
             router.push(redirectIfAuthenticated)
-        if (middleware === 'auth' && error) logout()
-    }, [user, error])
+        }
+        if (middleware === 'auth' && error) {
+            logout()
+        }
+    }, [user, error, middleware, redirectIfAuthenticated, router])
 
     return {
         user,
@@ -214,7 +220,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resendEmailVerification,
         logout,
         createNews,
-        // isLoading,
+
         // error,
     }
 }

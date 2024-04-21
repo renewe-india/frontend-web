@@ -9,7 +9,7 @@ import ErrorDisplay from '@/components/ErrorDisplay'
 const RegisterPage = () => {
     const { register } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/landing-page',
+        redirectIfAuthenticated: '/',
     })
     const router = useRouter()
     const [name, setName] = useState('')
