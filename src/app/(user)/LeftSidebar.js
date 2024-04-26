@@ -1,8 +1,15 @@
 import { Plus, ShieldCheck } from '@phosphor-icons/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useAuth } from '@/hooks/auth'
 
 function LeftSidebar() {
+    const [userData, setUserData] = useState(null)
+    const { user } = useAuth({ middleware: 'auth' })
+    useEffect(() => {
+        setUserData(user)
+    }, [user])
+
     return (
         <div
             id="left-sidebar"
@@ -28,17 +35,21 @@ function LeftSidebar() {
                             </div>
                         </div>
                     </div>
-                    <div className="font-semibold flex items-center justify-center gap-2">
-                        <div className="inline-flex items-center gap-1">
-                            <ShieldCheck
-                                size={24}
-                                stroke={2}
-                                color="red"
-                                weight="bold"
-                            />
-                            <div className="text-negative-500">Navin Patil</div>
+                    {userData && (
+                        <div className="font-semibold flex items-center justify-center gap-2">
+                            <div className="inline-flex items-center gap-1">
+                                <ShieldCheck
+                                    size={24}
+                                    stroke={2}
+                                    color="red"
+                                    weight="bold"
+                                />
+                                <div className="text-negative-500">
+                                    {userData.name}
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    )}
                     <div className="text-sm text-gray-500" />
                 </div>
             </div>

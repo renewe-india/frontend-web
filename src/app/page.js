@@ -3,8 +3,8 @@ import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import Navigation from '@/app/Navigation'
-import LeftSidebar from '@/app/(user)/(welcome)/LeftSidebar'
-import RightSidebar from '@/app/(user)/(welcome)/RightSidebar'
+import LeftSidebar from '@/app/(user)/LeftSidebar'
+import RightSidebar from '@/app/(user)/RightSidebar'
 import Loading from '@/components//Loading'
 
 const Home = ({ children }) => {

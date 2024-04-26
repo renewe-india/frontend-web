@@ -19,10 +19,9 @@ import MobileNavigation from '@/components/MobileNavigation'
 import Notification from '@/components/Notification'
 import Search from '@/components/Search'
 
-const Navigation = ({ user }) => {
+const Navigation = () => {
     const { theme } = useContext(ThemeContext)
     const { toggleTheme } = useContext(ThemeContext)
-    const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
 
     const handleToggle = e => {
         if (e.target.checked) {

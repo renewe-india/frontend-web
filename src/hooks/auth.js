@@ -6,26 +6,59 @@ import { useParams, useRouter } from 'next/navigation'
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
     const params = useParams()
-    // const [user, setUser] = useState(null)
-    // const [isLoading, setIsLoading] = useState(true)
-    // const [errors, setError] = useState(null)
+    const [userData, setUserData] = useState(null)
+    const [articles, setArticles] = useState([])
 
-    const { data: user, error, mutate } = useSWR('/api/user', () =>
-        axios
-            .get('/api/user')
-            .then(res => res.data)
-            .catch(error => {
-                if (error.response.status !== 409) throw error
+    const { data: user, error, mutate } = useSWR(
+        userData ? '/api/user' : null,
+        () =>
+            axios
+                .get('/api/user')
+                .then(res => res.data)
+                .catch(error => {
+                    if (error.response.status !== 409) throw error
 
-                router.push('/verify-email')
-            }),
+                    router.push('/verify-email')
+                }),
     )
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get('/api/user')
+                const user = response.data
+                setUserData(user)
+            } catch (error) {
+                if (error.response.status === 422) {
+                    router.push('/login')
+                }
+            }
+        }
+
+        if (!userData) {
+            fetchUserData()
+        }
+    }, [userData])
+
+    useEffect(() => {
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
+            router.push(redirectIfAuthenticated)
+        }
+        if (
+            window.location.pathname === '/verify-email' &&
+            user?.email_verified_at
+        ) {
+            router.push(redirectIfAuthenticated)
+        }
+        if (middleware === 'auth' && error) {
+            logout()
+        }
+    }, [user, error, middleware, redirectIfAuthenticated, router])
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
     const register = async ({ onSuccess, setErrors, token, ...props }) => {
         try {
-            // Assuming csrf() is a function to get CSRF token
             await csrf()
 
             setErrors([])
@@ -53,7 +86,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         try {
             const response = await axios.post('/onboarding', props)
-            // Handle successful OTP verification
+
             const { data } = response.data
 
             localStorage.setItem('token', data.token)
@@ -75,12 +108,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         try {
             await axios.post('/onboarding/send-otp', props)
-            onSuccess() // Call the onSuccess callback provided by the caller
+            onSuccess()
         } catch (error) {
             if (error.response.status !== 422) throw error
 
             setErrors(error.response.data.errors)
-            onError() // Call the onError callback provided by the caller
+            onError()
         }
     }
 
@@ -92,8 +125,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             setStatus(null)
 
             await axios.post('/login', props)
-
-            // Assuming mutate function updates the authentication status correctly
             await mutate()
 
             router.push(redirectIfAuthenticated || '/')
@@ -159,24 +190,17 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         window.location.pathname = '/login'
     }
 
-    // <------------------------------------------------------------------------------------------------->
+    // <--------------------------------Request-------------------------------------------->
 
     const createNews = async ({ setErrors, formData }) => {
         try {
-            // Perform CSRF token request if necessary
             await csrf()
 
             setErrors([])
 
-            // const postData = new FormData()
-            // for (const key in formData) {
-            //     postData.append(key, formData[key])
-            // }
-            console.log(formData, 'formData')
-
             const response = await axios.post('/news/articles', formData, {
                 headers: {
-                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                     'Content-Type': 'multipart/form-data',
                 },
             })
@@ -194,23 +218,51 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
+    const { data: fetchedArticles, error: articlesError } = useSWR(
+        userData ? '/news/articles' : null,
+        () =>
+            axios
+                .get('/news/articles')
+                .then(res => res.data.data)
+                .catch(error => {
+                    console.error('Error fetching articles:', error)
+                }),
+    )
+
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user) {
-            router.push(redirectIfAuthenticated)
+        if (user) {
+            setArticles(fetchedArticles)
         }
-        if (
-            window.location.pathname === '/verify-email' &&
-            user?.email_verified_at
-        ) {
-            router.push(redirectIfAuthenticated)
+    }, [user])
+
+    const getArticle = async ({ articleSlug }) => {
+        try {
+            const response = await axios.get(`/news/articles/${articleSlug}`)
+
+            return response.data.data
+        } catch (error) {
+            console.error('Error fetching article data:', error)
+            throw error
         }
-        if (middleware === 'auth' && error) {
-            logout()
+    }
+
+    const deleteNews = async ({ articleSlug }) => {
+        try {
+            await csrf()
+            console.log(`${articleSlug}`)
+            await axios.delete(`/news/articles/${articleSlug}`)
+            router.push(redirectIfAuthenticated || '/news')
+        } catch (error) {
+            console.error('Error deleting article:', error)
+            throw error
         }
-    }, [user, error, middleware, redirectIfAuthenticated, router])
+    }
 
     return {
         user,
+        articles,
+        deleteNews,
+        getArticle,
         onboardingOtp,
         register,
         onboardingVerifyOtp,

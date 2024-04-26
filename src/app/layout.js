@@ -8,7 +8,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
     return (
         <html lang="en">
-            <body className="antialiased">
+            <body className="antialiased ">
                 <ThemeProvider>
                     <ClientThemeWrapper>{children}</ClientThemeWrapper>
                 </ThemeProvider>

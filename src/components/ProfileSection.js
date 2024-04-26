@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import {
@@ -27,6 +27,10 @@ import {
 function ProfileSection() {
     const { logout } = useAuth()
 
+    const handleLogout = () => {
+        logout()
+    }
+
     return (
         <div>
             <ul className="menu rounded-md">
@@ -46,12 +50,12 @@ function ProfileSection() {
                         </summary>
                         <ul className="menu dropdown-content z-[1] bg-base-100">
                             <li>
-                                <Link
-                                    href="businesses/create"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
+                                <div className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
                                     <Plus size={24} stroke={2} />
-                                    Create New Business
-                                </Link>
+                                    <Link href="/businesses/create">
+                                        Create New Business
+                                    </Link>
+                                </div>
                             </li>
                         </ul>
                     </details>
@@ -100,7 +104,7 @@ function ProfileSection() {
                             </li>
                             <li>
                                 <Link
-                                    href="https://renewe.in/coming-soon"
+                                    href="/associations/create"
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
                                     <Plus size={24} stroke={2} />
                                     Create New Association
@@ -296,7 +300,7 @@ function ProfileSection() {
 
                 <div
                     className="btn normal-case w-full btn-outline btn-xs"
-                    onClick={logout}>
+                    onClick={handleLogout}>
                     <SignOut size={24} stroke={2} />
                     Logout
                 </div>

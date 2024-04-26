@@ -110,6 +110,7 @@ const Login = () => {
                             className="btn normal-case btn-primary"
                             disabled={isSubmitting}>
                             <SignIn size={24} />
+
                             {isSubmitting ? 'Logging in...' : 'Login'}
                         </button>
                     </form>
