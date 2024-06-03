@@ -6,6 +6,7 @@ import Navigation from '@/app/Navigation'
 import LeftSidebar from '@/app/(user)/LeftSidebar'
 import RightSidebar from '@/app/(user)/RightSidebar'
 import Loading from '@/components//Loading'
+import Input from '@/components/Input'
 
 const Home = ({ children }) => {
     const { user } = useAuth({ middleware: 'guest' })
@@ -32,14 +33,17 @@ const Home = ({ children }) => {
                 <>
                     <Navigation user={user} />
 
-                    <div className="container mx-auto py-16">
+                    <div className="container mx-auto py-16 ">
                         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2">
                             <LeftSidebar />
+
                             <div
                                 id="main-content"
                                 className="col-span-12 lg:col-span-8 xl:col-span-6">
+                                <Input />
                                 {children}
                             </div>
+
                             <RightSidebar />
                         </div>
                     </div>

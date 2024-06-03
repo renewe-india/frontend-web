@@ -33,13 +33,13 @@ const News = () => {
                     <div className="card bg-base-200 rounded-lg p-5">
                         <div>
                             <div className="flex flex-col gap-2">
-                                <div className="flex gap-2">
-                                    <div className="mx-7">
-                                        <img
-                                            src="https://picsum.photos/300/300"
-                                            alt=""
-                                            className=" w-full cursor-pointer"
-                                        />
+                                <div className="mx-7 flex gap-2">
+                                    <img
+                                        src="https://picsum.photos/300/300"
+                                        alt=""
+                                        className=" w-24 h-24 rounded cursor-pointer"
+                                    />
+                                    <div className="px-2">
                                         <h2 className="text-xl font-bold">
                                             Solar Industry Soars High: A New
                                             Dawn for Renewable Energy.
@@ -182,14 +182,16 @@ const News = () => {
                             className="card bg-base-200 rounded-lg p-5">
                             <div>
                                 <div className="flex flex-col gap-2">
-                                    <div className="flex gap-2">
+                                    <div className="ml-7 flex gap-2">
+                                        {article.image && (
+                                            <img
+                                                src={article.image}
+                                                alt=""
+                                                className="w-24 h-24 rounded cursor-pointer"
+                                            />
+                                        )}
                                         <Link href={`/news/${article.slug}`}>
-                                            <div className="mx-5">
-                                                <img
-                                                    src={article.image}
-                                                    alt=""
-                                                    className="w-full cursor-pointer"
-                                                />
+                                            <div className="px-2">
                                                 <h2 className="text-xl font-bold">
                                                     {article.headline}
                                                 </h2>
@@ -210,11 +212,11 @@ const News = () => {
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-4">
-                                            <div className="dropdown normal-case w-full btn-ghost">
+                                            <div className="dropdown normal-case w-full ">
                                                 <div tabIndex={0} role="button">
                                                     <button
                                                         type="button"
-                                                        className="btn normal-case w-full ">
+                                                        className="btn btn-ghost normal-case w-full ">
                                                         <span className="block">
                                                             <ThumbsUp
                                                                 size={24}

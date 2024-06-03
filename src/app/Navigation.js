@@ -82,7 +82,7 @@ const Navigation = () => {
             <div
                 id="navbar"
                 style={{ transition: 'top 0.3s' }}
-                className="fixed z-40 w-full text-sm px-5 shadow dark:shadow-white bg-inherit">
+                className="fixed z-40 w-full h-14 text-sm px-5 shadow dark:shadow-white bg-inherit">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center">
                         <div className="flex items-center gap-2 md:gap-5">

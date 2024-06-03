@@ -198,7 +198,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
             setErrors([])
 
-            const response = await axios.post('/news/articles', formData, {
+            const response = await axios.post('/api/news/articles', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Content-Type': 'multipart/form-data',
@@ -219,10 +219,10 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const { data: fetchedArticles, error: articlesError } = useSWR(
-        userData ? '/news/articles' : null,
+        userData ? '/api/news/articles' : null,
         () =>
             axios
-                .get('/news/articles')
+                .get('/api/news/articles')
                 .then(res => res.data.data)
                 .catch(error => {
                     console.error('Error fetching articles:', error)
@@ -237,7 +237,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const getArticle = async ({ articleSlug }) => {
         try {
-            const response = await axios.get(`/news/articles/${articleSlug}`)
+            const response = await axios.get(
+                `/api/news/articles/${articleSlug}`,
+            )
 
             return response.data.data
         } catch (error) {
@@ -250,7 +252,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         try {
             await csrf()
             console.log(`${articleSlug}`)
-            await axios.delete(`/news/articles/${articleSlug}`)
+            await axios.delete(`/api/news/articles/${articleSlug}`)
             router.push(redirectIfAuthenticated || '/news')
         } catch (error) {
             console.error('Error deleting article:', error)

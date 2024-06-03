@@ -72,12 +72,12 @@ function NewsForm() {
                                     required
                                 />
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-6">
                                 <input
                                     type="file"
                                     accept="image/*"
                                     onChange={handleImageChange}
-                                    className="input input-primary h-24 w-80 peer"
+                                    className="input input-primary h-24 w-70 peer"
                                 />
                                 <div>
                                     <textarea
