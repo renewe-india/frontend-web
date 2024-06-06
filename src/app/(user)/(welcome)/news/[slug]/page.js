@@ -9,10 +9,11 @@ import {
 
 const ArticlePage = ({ params }) => {
     const articleSlug = params.slug
-    const { getArticle, deleteNews } = useAuth({
+    const { user, getArticle, deleteNews } = useAuth({
         middleware: 'auth',
     })
     const [articleData, setArticleData] = useState(null)
+    console.log(articleData)
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -36,9 +37,12 @@ const ArticlePage = ({ params }) => {
         createNews({ setErrors, formData })
         console.log(formData)
     }
+    const handleFollow = e => {
+        console.log(user)
+    }
 
     return (
-        <div className="card bg-base-200 rounded-lg p-5">
+        <div className="card bg-base-200 rounded-lg lg:p-5">
             <div className="mx-5 py-7 flex justify-between gap-4">
                 <div className="flex items-center">
                     <div className="flex items-center gap-2">
@@ -54,7 +58,8 @@ const ArticlePage = ({ params }) => {
                             Navin Patil
                             <button
                                 type="button"
-                                className="btn normal-case btn-xs rounded-full btn-outline">
+                                className="btn normal-case btn-xs rounded-full btn-outline"
+                                onClick={handleFollow(user)}>
                                 <span className="">Follow</span>
                             </button>
                         </div>

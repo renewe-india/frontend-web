@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
@@ -8,6 +8,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const params = useParams()
     const [userData, setUserData] = useState(null)
     const [articles, setArticles] = useState([])
+    const [availableToClaim, setAvailableToClaim] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1)
 
     const { data: user, error, mutate } = useSWR(
         userData ? '/api/user' : null,
@@ -79,6 +82,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             throw error
         }
     }
+
     const onboardingVerifyOtp = async ({ setErrors, onSuccess, ...props }) => {
         await csrf()
 
@@ -189,9 +193,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         window.location.pathname = '/login'
     }
-
-    // <--------------------------------Request-------------------------------------------->
-
+    ////Request////
+    ///NEWS///
     const createNews = async ({ setErrors, formData }) => {
         try {
             await csrf()
@@ -205,7 +208,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 },
             })
 
-            router.push(redirectIfAuthenticated || '/news')
+            router.push(redirectIfAuthenticated)
         } catch (error) {
             if (error.response?.status === 422) {
                 setErrors(['Validation error.'])
@@ -218,29 +221,43 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
-    const { data: fetchedArticles, error: articlesError } = useSWR(
-        userData ? '/api/news/articles' : null,
-        () =>
-            axios
-                .get('/api/news/articles')
-                .then(res => res.data.data)
-                .catch(error => {
-                    console.error('Error fetching articles:', error)
-                }),
-    )
+    const fetchArticles = useCallback(async page => {
+        setIsLoading(true)
+        try {
+            const response = await axios.get(`/api/news/articles?page=${page}`)
+            const newArticles = response.data.data // Adjust based on your API response structure
+            setArticles(prevArticles => [...prevArticles, ...newArticles])
+        } catch (error) {
+            console.error('Error fetching articles:', error)
+        } finally {
+            setIsLoading(false)
+        }
+    }, [])
 
     useEffect(() => {
-        if (user) {
-            setArticles(fetchedArticles)
+        fetchArticles(page)
+    }, [page, fetchArticles])
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (
+                window.innerHeight + document.documentElement.scrollTop >=
+                    document.documentElement.offsetHeight - 500 &&
+                !isLoading
+            ) {
+                setPage(prevPage => prevPage + 1)
+            }
         }
-    }, [user])
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [isLoading])
 
     const getArticle = async ({ articleSlug }) => {
         try {
             const response = await axios.get(
                 `/api/news/articles/${articleSlug}`,
             )
-
             return response.data.data
         } catch (error) {
             console.error('Error fetching article data:', error)
@@ -260,11 +277,78 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
+    ///Business///
+    const BusinessAvailableToClaim = async ({ setErrors }) => {
+        try {
+            await csrf()
+            setErrors([])
+
+            const response = await axios.get('/businesses/available-to-claim')
+            setAvailableToClaim(response.data.data)
+
+            if (redirectIfAuthenticated) {
+                router.push(redirectIfAuthenticated)
+            }
+        } catch (error) {
+            if (error.response?.status === 404) {
+                setAvailableToClaim(null)
+                router.push('/businesses/create')
+            } else {
+                setErrors([
+                    'An unexpected error occurred. Please try again later.',
+                ])
+            }
+        }
+    }
+
+    const CreateNewBusiness = async ({ setErrors, formData }) => {
+        try {
+            await csrf()
+
+            setErrors([])
+
+            const response = await axios.post('/api/businesses', formData)
+            console.log(response.data.message)
+            router.push(redirectIfAuthenticated || '/businesses/create')
+        } catch (error) {
+            if (error.response?.status === 422) {
+                setErrors(['Validation error.'])
+            } else {
+                console.error(
+                    'An error occurred while creating business:',
+                    error,
+                )
+                setErrors([
+                    'An unexpected error occurred. Please try again later.',
+                ])
+            }
+        }
+    }
+    const CheckBusinessListing = async ({ setErrors, Domain }) => {
+        try {
+            await csrf()
+
+            setErrors([])
+
+            const response = await axios.post('/api/businesses', formData)
+            console.log(response.data.message)
+            router.push(redirectIfAuthenticated || '/businesses/create')
+        } catch (error) {
+            if (error.response?.status === 422) {
+                setErrors(['Validation error.'])
+            } else {
+                console.error(
+                    'An error occurred while creating business:',
+                    error,
+                )
+                setErrors([
+                    'An unexpected error occurred. Please try again later.',
+                ])
+            }
+        }
+    }
     return {
         user,
-        articles,
-        deleteNews,
-        getArticle,
         onboardingOtp,
         register,
         onboardingVerifyOtp,
@@ -273,8 +357,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resetPassword,
         resendEmailVerification,
         logout,
+        articles,
         createNews,
-
-        // error,
+        deleteNews,
+        getArticle,
+        availableToClaim,
+        BusinessAvailableToClaim,
+        CreateNewBusiness,
+        CheckBusinessListing,
     }
 }

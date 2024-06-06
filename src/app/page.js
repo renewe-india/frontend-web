@@ -39,7 +39,7 @@ const Home = ({ children }) => {
 
                             <div
                                 id="main-content"
-                                className="col-span-12 lg:col-span-8 xl:col-span-6">
+                                className="w-full min-h-screen lg:col-span-8 xl:col-span-6">
                                 <Input />
                                 {children}
                             </div>

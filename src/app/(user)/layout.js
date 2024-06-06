@@ -21,7 +21,7 @@ const AppLayout = ({ children }) => {
                     <LeftSidebar />
                     <div
                         id="main-content"
-                        className="col-span-12 lg:col-span-8 xl:col-span-6">
+                        className="w-full min-h-screen lg:col-span-8 xl:col-span-6">
                         {children}
                     </div>
                     <RightSidebar />

@@ -51,7 +51,19 @@ function NewsForm() {
                 <div className="space-y-2">
                     <div className="card bg-base-200 rounded-lg p-5">
                         <div className="flex flex-col gap-2">
+                            <div className="pb-5">
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <div className="text-2xl font-bold">
+                                            Create a NEWS article
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div>
+                                <label className="pt-0 label label-text font-semibold">
+                                    <span>Headline</span>
+                                </label>
                                 <input
                                     type="text"
                                     name="headline"
@@ -63,6 +75,9 @@ function NewsForm() {
                                 />
                             </div>
                             <div>
+                                <label className="pt-0 label label-text font-semibold">
+                                    <span>Summary</span>
+                                </label>
                                 <textarea
                                     name="summary"
                                     value={formData.summary}
@@ -72,22 +87,35 @@ function NewsForm() {
                                     required
                                 />
                             </div>
-                            <div className="flex gap-6">
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                    className="input input-primary h-24 w-70 peer"
+                            <div>
+                                <label className="pt-0 label label-text font-semibold">
+                                    <span>Body</span>
+                                </label>
+                                <textarea
+                                    name="body"
+                                    value={formData.body}
+                                    onChange={handleChange}
+                                    placeholder="Body"
+                                    className="input input-primary w-full peer"
+                                    required
                                 />
-                                <div>
-                                    <textarea
-                                        name="body"
-                                        value={formData.body}
-                                        onChange={handleChange}
-                                        placeholder="Body"
+                            </div>
+                            <div className="flex gap-5">
+                                <div className="flex-1">
+                                    <label className="pt-0 label label-text font-semibold">
+                                        <span>Image</span>
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
                                         className="input input-primary w-full peer"
-                                        required
                                     />
+                                </div>
+                                <div className="flex-1 gap">
+                                    <label className="pt-0 label label-text font-semibold">
+                                        <span>Published at</span>
+                                    </label>
                                     <input
                                         type="date"
                                         name="published_at"
@@ -99,7 +127,6 @@ function NewsForm() {
                                     />
                                 </div>
                             </div>
-
                             <button
                                 type="submit"
                                 className="btn normal-case btn-primary"

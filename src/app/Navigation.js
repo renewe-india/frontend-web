@@ -180,7 +180,7 @@ const Navigation = () => {
                             </div>
                         </label>
                         {/* Dark Theme Toggle */}
-                        <div className="hidden lg:block">
+                        <div className="block">
                             <label className="swap swap-rotate w-8 h-8 btn btn-circle btn-xs relative btn-outline">
                                 <input
                                     type="checkbox"

@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import {
@@ -25,10 +25,15 @@ import {
 } from '@phosphor-icons/react'
 
 function ProfileSection() {
-    const { logout } = useAuth()
+    const { logout, BusinessAvailableToClaim } = useAuth()
+    const [errors, setErrors] = useState([])
 
     const handleLogout = () => {
         logout()
+    }
+
+    const handleCreateNewBusiness = () => {
+        BusinessAvailableToClaim({ setErrors })
     }
 
     return (
@@ -43,7 +48,7 @@ function ProfileSection() {
                 </li>
 
                 <li>
-                    <details className="dropdown">
+                    <details>
                         <summary className="hover:text-inherit text-inherit">
                             <BagSimple size={24} stroke={2} />
                             <span className="">My Businesses</span>
@@ -52,9 +57,9 @@ function ProfileSection() {
                             <li>
                                 <div className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
                                     <Plus size={24} stroke={2} />
-                                    <Link href="/businesses/create">
+                                    <button onClick={handleCreateNewBusiness}>
                                         Create New Business
-                                    </Link>
+                                    </button>
                                 </div>
                             </li>
                         </ul>
@@ -62,7 +67,7 @@ function ProfileSection() {
                 </li>
 
                 <li>
-                    <details className="dropdown">
+                    <details>
                         <summary className="hover:text-inherit text-inherit">
                             <UsersFour size={24} stroke={2} />
                             <span className="mary-hideable">
