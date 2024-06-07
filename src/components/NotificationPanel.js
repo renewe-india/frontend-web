@@ -1,10 +1,9 @@
 import { X } from '@phosphor-icons/react'
 import React from 'react'
 
-function Notification() {
+function NotificationPanel() {
     return (
         <div className="drawer absolute z-50 drawer-end">
-            {/* Toggle visibility */}
             <input
                 id="notifications"
                 type="checkbox"
@@ -12,10 +11,8 @@ function Notification() {
             />
 
             <div className="drawer-side">
-                {/* Overlay effect , click outside */}
                 <label htmlFor="notifications" className="drawer-overlay" />
 
-                {/* Content */}
                 <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-md shadow dark:shadow-white">
                     <div className="pb-5">
                         <div className="flex justify-between items-center">
@@ -45,7 +42,6 @@ function Notification() {
 
                     <div>
                         <div className="flex flex-col gap-2">
-                            {/* Item */}
                             <div className="p-2 shadow dark:shadow-white rounded-lg">
                                 <div className="flex justify-between">
                                     <div className="flex items-center gap-2">
@@ -119,4 +115,4 @@ function Notification() {
     )
 }
 
-export default Notification
+export default NotificationPanel

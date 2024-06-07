@@ -19,10 +19,32 @@ const RegisterPage = () => {
     const [dateOfBirth, setDateOfBirth] = useState('')
     const [gender, setGender] = useState('male')
     const [errors, setErrors] = useState([])
+
     useEffect(() => {
         const storedUsername = localStorage.getItem('username')
         if (storedUsername) {
-            setUsername(storedUsername) // Set username only once when component mounts
+            setUsername(storedUsername)
+        }
+    }, [])
+
+    useEffect(() => {
+        const storedName = localStorage.getItem('name')
+        if (storedName) {
+            setName(storedName)
+        }
+    }, [])
+
+    useEffect(() => {
+        const storedMobile = localStorage.getItem('mobile')
+        if (storedMobile) {
+            setMobile(storedMobile)
+        }
+    }, [])
+
+    useEffect(() => {
+        const storedGender = localStorage.getItem('gender')
+        if (storedGender) {
+            setGender(storedGender)
         }
     }, [])
     const submitForm = event => {
@@ -65,7 +87,7 @@ const RegisterPage = () => {
 
             <div>
                 <form onSubmit={submitForm} className="flex flex-col gap-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 gap-5">
                         <div>
                             <label
                                 htmlFor="first_name"

@@ -4,14 +4,11 @@ import { X, MagnifyingGlass } from '@phosphor-icons/react'
 function Search() {
     return (
         <div className="drawer absolute z-50 drawer-end">
-            {/* Toggle visibility */}
             <input id="search" type="checkbox" className="drawer-toggle" />
 
             <div className="drawer-side">
-                {/* Overlay effect, click outside */}
                 <label htmlFor="search" className="drawer-overlay" />
 
-                {/* Content */}
                 <div className="card bg-base-100 rounded-lg p-5 min-h-screen rounded-none px-8 w-full md:max-w-md shadow dark:shadow-white">
                     <div className="pb-5">
                         <div className="flex justify-between items-center">

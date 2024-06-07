@@ -1,6 +1,5 @@
 'use client'
 
-import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import {
@@ -12,55 +11,53 @@ import {
     PaperPlaneTilt,
     Smiley,
     ThumbsUp,
-    X,
 } from '@phosphor-icons/react'
 
 import Link from 'next/link'
-import NewsForm from '@/components/NewsForm'
 
 const News = () => {
-    const { articles: initialArticles } = useAuth({
-        middleware: 'auth',
-        redirectIfAuthenticated: '/news',
-    })
-    const [articles, setArticles] = useState(initialArticles || [])
+    const [articles, setArticles] = useState([])
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
+    const [noMoreArticles, setNoMoreArticles] = useState(false)
     const observer = useRef()
 
-    const fetchMoreArticles = async () => {
+    const fetchArticles = useCallback(async () => {
+        if (loading || noMoreArticles) return
         setLoading(true)
         try {
             const response = await axios.get(`/api/news/articles?page=${page}`)
             const newArticles = response.data.data
             setArticles(prevArticles => [...prevArticles, ...newArticles])
-            setPage(prevPage => prevPage + 1)
+            if (newArticles.length === 0) {
+                setNoMoreArticles(true)
+            } else {
+                setPage(prevPage => prevPage + 1)
+            }
         } catch (error) {
-            console.error('Error fetching more articles:', error)
+            console.error('Error fetching articles:', error)
         } finally {
             setLoading(false)
         }
-    }
+    }, [loading, noMoreArticles, page])
 
     const lastArticleElementRef = useCallback(
         node => {
             if (loading) return
             if (observer.current) observer.current.disconnect()
             observer.current = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting) {
-                    fetchMoreArticles()
+                if (entries[0].isIntersecting && !noMoreArticles) {
+                    fetchArticles()
                 }
             })
             if (node) observer.current.observe(node)
         },
-        [loading],
+        [loading, noMoreArticles, fetchArticles],
     )
 
     useEffect(() => {
-        if (initialArticles && initialArticles.length > 0) {
-            setArticles(initialArticles)
-        }
-    }, [initialArticles])
+        fetchArticles()
+    }, [fetchArticles])
 
     return (
         <>
@@ -68,7 +65,6 @@ const News = () => {
                 id="main-content"
                 className="col-span-12 lg:col-span-8 xl:col-span-6">
                 <div className="space-y-2">
-                    <NewsForm />
                     {articles.map((article, index) => (
                         <div
                             key={index}
@@ -245,6 +241,11 @@ const News = () => {
                     {loading && (
                         <p className="text-xl text-black">
                             Loading more articles...
+                        </p>
+                    )}
+                    {noMoreArticles && !loading && (
+                        <p className="text-xl text-gray-500">
+                            No more articles available.
                         </p>
                     )}
                 </div>

@@ -1,18 +1,13 @@
+'use client'
 import React, { useState, useEffect } from 'react'
-import { useAuth } from '@/hooks/auth'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import axios from '@/lib/axios'
+import { useRouter } from 'next/navigation'
 
-function CreateNewBusiness() {
-    const { CreateNewBusiness } = useAuth({
-        middleware: 'auth',
-        redirectIfAuthenticated: '/',
-    })
+function CreateNewBusinessForm() {
+    const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
         name: '',
-        // tagline: '',
-        // description: '',
         company_size: '',
         company_type: '',
         mobile: '',
@@ -23,42 +18,74 @@ function CreateNewBusiness() {
         state_id: '',
         domain: '',
     })
+    const [countries, setCountries] = useState([])
+    const [states, setStates] = useState([])
 
-    const handleChange = e => {
+    const handleChange = async e => {
         const { name, value } = e.target
         setFormData(prevFormData => ({
             ...prevFormData,
             [name]: value,
         }))
+
+        if (name === 'country_id') {
+            const selectedCountry = countries.find(
+                country => country.id === parseInt(value),
+            )
+            if (selectedCountry) {
+                await fetchStates(selectedCountry.slug)
+            }
+        }
     }
+
     const handleCreateNewBusiness = async e => {
         e.preventDefault()
         setIsSubmitting(true)
-        await CreateNewBusiness({
-            formData,
-            setErrors,
+        const response = await axios.post('/api/businesses', formData)
+        console.log(response.data)
+        setIsSubmitting(false)
+        setFormData({
+            name: '',
+            company_size: '',
+            company_type: '',
+            mobile: '',
+            email: '',
+            date_of_incorporation: '',
+            handle: '',
+            country_id: '',
+            state_id: '',
+            domain: '',
         })
-        console.log(formData)
-        // setFormData({
-        //     name: '',
-        //     company_size: '',
-        //     company_type: '',
-        //     mobile: '',
-        //     email: '',
-        //     date_of_incorporation: '',
-        //     handle: '',
-        //     country_id: '',
-        //     state_id: '',
-        //     domain: '',
-        // })
+        router.push({
+            pathname: '/otherpage',
+            query: { responseData: JSON.stringify(response.data) }, // Pass response data as query parameter
+        })
     }
+
     useEffect(() => {
-        if (errors.length > 0) {
-            setIsSubmitting(false)
+        const fetchCountries = async () => {
+            try {
+                const response = await axios.get('/api/address/countries')
+                setCountries(response.data.data)
+            } catch (error) {
+                console.error('Error fetching countries:', error)
+            }
         }
-    }, [errors])
+        fetchCountries()
+    }, [])
+
+    const fetchStates = async countryName => {
+        try {
+            const response = await axios.get(
+                `/api/address/countries/${countryName}/states`,
+            )
+            setStates(response.data.data)
+        } catch (error) {
+            console.error('Error fetching states:', error)
+        }
+    }
     return (
-        <div className="card bg-base-200 rounded-lg p-5">
+        <div className="card bg-base-200 my-2 rounded-lg p-5">
             <div className="pb-5">
                 <div className="flex justify-between items-center">
                     <div>
@@ -85,6 +112,7 @@ function CreateNewBusiness() {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
+                                required
                             />
                         </div>
                     </div>
@@ -128,10 +156,9 @@ function CreateNewBusiness() {
                                     className="input input-primary w-full peer rounded"
                                     name="company_size"
                                     value={formData.company_size}
-                                    onChange={handleChange}>
-                                    <option value="">
-                                        Select Company Size
-                                    </option>
+                                    onChange={handleChange}
+                                    required>
+                                    <option value="">Select Size</option>
                                     <option value="1 To 10 Employees">
                                         1 To 10 Employees
                                     </option>
@@ -154,10 +181,9 @@ function CreateNewBusiness() {
                                     className="input input-primary w-full peer rounded"
                                     name="company_type"
                                     value={formData.company_type}
-                                    onChange={handleChange}>
-                                    <option value="">
-                                        Select Company Type
-                                    </option>
+                                    onChange={handleChange}
+                                    required>
+                                    <option value="">Select Type</option>
                                     <option value="Self Employed">
                                         Self Employed
                                     </option>
@@ -193,6 +219,7 @@ function CreateNewBusiness() {
                                     name="handle"
                                     value={formData.handle}
                                     onChange={handleChange}
+                                    required
                                 />
                             </div>
                             <div className="flex-1">
@@ -206,6 +233,7 @@ function CreateNewBusiness() {
                                     name="mobile"
                                     value={formData.mobile}
                                     onChange={handleChange}
+                                    required
                                 />
                             </div>
                         </div>
@@ -223,6 +251,7 @@ function CreateNewBusiness() {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
+                                    required
                                 />
                             </div>
                             <div className="flex-1">
@@ -236,6 +265,7 @@ function CreateNewBusiness() {
                                     name="date_of_incorporation"
                                     value={formData.date_of_incorporation}
                                     onChange={handleChange}
+                                    required
                                 />
                             </div>
                         </div>
@@ -244,29 +274,41 @@ function CreateNewBusiness() {
                         <div className="flex flex-row gap-5">
                             <div className="flex-1">
                                 <label className="pt-0 label label-text font-semibold">
-                                    <span>Country ID</span>
+                                    <span>Country</span>
                                 </label>
-                                <input
-                                    placeholder="Country ID"
+                                <select
                                     className="input input-primary w-full peer rounded"
-                                    type="text"
                                     name="country_id"
                                     value={formData.country_id}
                                     onChange={handleChange}
-                                />
+                                    required>
+                                    <option value="">Select Country</option>
+                                    {countries.map(country => (
+                                        <option
+                                            key={country.id}
+                                            value={country.id}>
+                                            {country.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="flex-1">
                                 <label className="pt-0 label label-text font-semibold">
-                                    <span>State ID</span>
+                                    <span>State</span>
                                 </label>
-                                <input
-                                    placeholder="State ID"
+                                <select
                                     className="input input-primary w-full peer rounded"
-                                    type="text"
                                     name="state_id"
                                     value={formData.state_id}
                                     onChange={handleChange}
-                                />
+                                    required>
+                                    <option value="">Select State</option>
+                                    {states.map(state => (
+                                        <option key={state.id} value={state.id}>
+                                            {state.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -290,7 +332,7 @@ function CreateNewBusiness() {
                             </div>
                         </div>
                     </div>
-                    <ErrorDisplay errors={errors} />
+
                     <button
                         type="submit"
                         className="btn normal-case btn-primary"
@@ -307,4 +349,4 @@ function CreateNewBusiness() {
     )
 }
 
-export default CreateNewBusiness
+export default CreateNewBusinessForm

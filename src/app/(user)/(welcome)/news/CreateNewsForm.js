@@ -1,11 +1,8 @@
-import { useAuth } from '@/hooks/auth'
+import axios from '@/lib/axios'
 import { useState } from 'react'
+import ErrorDisplay from '@/components/ErrorDisplay'
 
-function NewsForm() {
-    const { createNews } = useAuth({
-        middleware: 'auth',
-        redirectIfAuthenticated: '/news',
-    })
+function CreateNewsForm() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
@@ -32,18 +29,39 @@ function NewsForm() {
         })
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
         setIsSubmitting(true)
-        createNews({ setErrors, formData })
-        setIsSubmitting(false)
-        setFormData({
-            headline: '',
-            summary: '',
-            body: '',
-            published_at: '',
-            image: null,
-        })
+        const csrf = () => axios.get('/sanctum/csrf-cookie')
+        try {
+            await csrf()
+            setErrors([])
+
+            const response = await axios.post('/api/news/articles', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+        } catch (error) {
+            if (error.response?.status === 422) {
+                setErrors(['Validation error.'])
+            } else {
+                console.error('An error occurred while creating news:', error)
+                setErrors([
+                    'An unexpected error occurred. Please try again later.',
+                ])
+            }
+        } finally {
+            setIsSubmitting(false)
+            setFormData({
+                headline: '',
+                summary: '',
+                body: '',
+                published_at: '',
+                image: null,
+            })
+        }
     }
     return (
         <>
@@ -133,6 +151,7 @@ function NewsForm() {
                                 disabled={isSubmitting}>
                                 {isSubmitting ? 'Publishing...' : 'Publish'}
                             </button>
+                            <ErrorDisplay errors={errors} />
                         </div>
                     </div>
                 </div>
@@ -141,4 +160,4 @@ function NewsForm() {
     )
 }
 
-export default NewsForm
+export default CreateNewsForm
