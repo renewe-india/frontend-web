@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "next/core-web-vitals"
+  ],
+  "parser": "babel-eslint",
+  // "rules": {
+  //   // Your custom rules here
+  // }
+}
