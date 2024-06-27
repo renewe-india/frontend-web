@@ -1,6 +1,7 @@
 import axios from '@/lib/axios'
 import { useState } from 'react'
 import ErrorDisplay from '@/components/ErrorDisplay'
+import SubmitButton from '@/components/SubmitButton'
 
 function CreateNewsForm() {
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -145,12 +146,11 @@ function CreateNewsForm() {
                                     />
                                 </div>
                             </div>
-                            <button
-                                type="submit"
-                                className="btn normal-case btn-primary"
-                                disabled={isSubmitting}>
-                                {isSubmitting ? 'Publishing...' : 'Publish'}
-                            </button>
+                            <SubmitButton
+                                isSubmitting={isSubmitting}
+                                label="Publish"
+                                submittingLabel="Publishing..."
+                            />
                             <ErrorDisplay errors={errors} />
                         </div>
                     </div>

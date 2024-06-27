@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
+import Avatar from '@/components/Avatar'
+import Background from '@/components/Background'
 
 export const fetchData = async (key, collection) => {
     try {
@@ -54,33 +56,18 @@ function LeftSidebar() {
             className="hidden lg:flex flex-col gap-2 w-full col-span-1 lg:col-span-4 xl:col-span-3">
             <div className="relative flex flex-col rounded-[1rem] bg-base-200 rounded-lg p-5 text-center">
                 <figure className="mb-5 mx-5">
-                    {background && (
-                        <img
-                            srcSet={background.srcset || ''}
-                            src={background.url || '/images/backdrop.svg'}
-                            alt="background"
-                            className=" align-middle"
-                        />
-                    )}
+                    <Background
+                        background={background}
+                        customClass="align-middle"
+                    />
                 </figure>
                 <div>
                     <div className="flex justify-center -mt-16">
                         <div className="flex items-center gap-2">
-                            <div className="avatar">
-                                <div className="w-7 rounded-full !w-20 !rounded-full">
-                                    {avatar && (
-                                        <img
-                                            srcSet={avatar.srcset}
-                                            src={
-                                                avatar.url || '/images/user.svg'
-                                            }
-                                            alt="Avatar"
-                                            width={32}
-                                            height={32}
-                                        />
-                                    )}
-                                </div>
-                            </div>
+                            <Avatar
+                                avatar={avatar}
+                                customClass="w-7  !w-20 !rounded-full"
+                            />
                         </div>
                     </div>
                     {userData && (

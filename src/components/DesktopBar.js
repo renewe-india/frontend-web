@@ -14,6 +14,7 @@ import axios from '@/lib/axios'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { ThemeContext } from '@/context/ThemeContext'
+import Avatar from './Avatar'
 
 export const fetchData = async key => {
     try {
@@ -70,22 +71,7 @@ function DesktopBar() {
                                 htmlFor="sidebar"
                                 className="flex items-center cursor-pointer">
                                 <div className="flex items-center gap-2">
-                                    <div className="avatar">
-                                        <div className="w-7 rounded-full">
-                                            {avatar && (
-                                                <img
-                                                    srcSet={avatar.srcset || ''}
-                                                    src={
-                                                        avatar.url ||
-                                                        '/images/user.svg'
-                                                    }
-                                                    alt="Avatar"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                            )}
-                                        </div>
-                                    </div>
+                                    <Avatar avatar={avatar} customClass="w-7" />
                                 </div>
                             </label>
                             <Link href="/" className="flex items-center mr-2">

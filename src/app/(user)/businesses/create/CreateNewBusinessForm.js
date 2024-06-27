@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
+import SubmitButton from '@/components/SubmitButton'
+import InputField from '@/components/InputField'
+import SelectField from '@/components/SelectField'
 
 function CreateNewBusinessForm() {
     const router = useRouter()
@@ -14,8 +17,6 @@ function CreateNewBusinessForm() {
         handle: '',
         domain: '',
     })
-    const [countries, setCountries] = useState([])
-    const [states, setStates] = useState([])
 
     const handleChange = async e => {
         const { name, value } = e.target
@@ -57,66 +58,42 @@ function CreateNewBusinessForm() {
                     method="POST"
                     onSubmit={handleCreateNewBusiness}
                     className="flex flex-col gap-5 form-control">
-                    <div>
-                        <label className="pt-0 label label-text font-semibold">
-                            <span>Name</span>
-                        </label>
-                        <div className="flex">
-                            <input
-                                placeholder="Name"
-                                className="input input-primary w-full peer rounded"
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                    </div>
+                    <InputField
+                        label="Name"
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name"
+                        required
+                    />
                     <div>
                         <div className="flex flex-row gap-5">
                             <div className="flex-1">
-                                <label className="pt-0 label label-text font-semibold">
-                                    <span>Company Type</span>
-                                </label>
-                                <select
-                                    className="input input-primary w-full peer rounded"
+                                <SelectField
+                                    label="Company Type"
                                     name="company_type"
                                     value={formData.company_type}
                                     onChange={handleChange}
-                                    required>
-                                    <option value="">Select Type</option>
-                                    <option value="Self Employed">
-                                        Self Employed
-                                    </option>
-                                    <option value="Self Owned">
-                                        Self Owned
-                                    </option>
-                                    <option value="Partnership">
-                                        Partnership
-                                    </option>
-                                    <option value="Privately Held">
-                                        Privately Held
-                                    </option>
-                                    <option value="Publicly Held">
-                                        Publicly Held
-                                    </option>
-                                    <option value="Government Agency">
-                                        Government Agency
-                                    </option>
-                                </select>
+                                    options={[
+                                        'Self Employed',
+                                        'Self Owned',
+                                        'Partnership',
+                                        'Privately Held',
+                                        'Publicly Held',
+                                        'Government Agency',
+                                    ]}
+                                    required
+                                />
                             </div>
                             <div className="flex-1">
-                                <label className="pt-0 label label-text font-semibold">
-                                    <span>Handle</span>
-                                </label>
-                                <input
-                                    placeholder="Handle"
-                                    className="input input-primary w-full peer rounded"
+                                <InputField
+                                    label="Handle"
                                     type="text"
                                     name="handle"
                                     value={formData.handle}
                                     onChange={handleChange}
+                                    placeholder="Handle"
                                     required
                                 />
                             </div>
@@ -125,30 +102,24 @@ function CreateNewBusinessForm() {
                     <div>
                         <div className="flex flex-row gap-5">
                             <div className="flex-1">
-                                <label className="pt-0 label label-text font-semibold">
-                                    <span>Email</span>
-                                </label>
-                                <input
-                                    placeholder="example@xyz.com"
-                                    className="input input-primary w-full peer rounded"
+                                <InputField
+                                    label="Email"
                                     type="text"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
+                                    placeholder="example@xyz.com"
                                     required
                                 />
                             </div>
                             <div className="flex-1">
-                                <label className="pt-0 label label-text font-semibold">
-                                    <span>Mobile No.</span>
-                                </label>
-                                <input
-                                    placeholder="Mobile No."
-                                    className="input input-primary w-full peer rounded"
+                                <InputField
+                                    label="Mobile No."
                                     type="text"
                                     name="mobile"
                                     value={formData.mobile}
                                     onChange={handleChange}
+                                    placeholder="Mobile No."
                                     required
                                 />
                             </div>
@@ -175,16 +146,11 @@ function CreateNewBusinessForm() {
                         </div>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="btn normal-case btn-primary"
-                        disabled={isSubmitting}>
-                        <span>
-                            {isSubmitting
-                                ? 'Creating a New Business...'
-                                : 'Create a New Business'}
-                        </span>
-                    </button>
+                    <SubmitButton
+                        isSubmitting={isSubmitting}
+                        label="Create a New Business"
+                        submittingLabel="Creating a New Business..."
+                    />
                 </form>
             </div>
         </div>
