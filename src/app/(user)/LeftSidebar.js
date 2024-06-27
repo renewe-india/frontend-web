@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import Avatar from '@/components/Avatar'
-import Background from '@/components/Background'
+import Background from '@/components/Image'
 
 export const fetchData = async (key, collection) => {
     try {
