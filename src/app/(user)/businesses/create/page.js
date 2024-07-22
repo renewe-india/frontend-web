@@ -1,21 +1,21 @@
-import React from "react";
-import CreateNewBusinessForm from "./CreateNewBusinessForm";
+import React from 'react'
+import CreateNewBusinessForm from './CreateNewBusinessForm'
 // import SearchBusiness from "./SearchBusiness";
-import ClaimableBusiness from "./ClaimableBusiness";
+import ClaimableBusiness from './ClaimableBusiness'
 
 const BusinessCreate = () => {
-  // const [createNewBusinessForm, setCreateNewBusinessForm] = useState(false)
+    // const [createNewBusinessForm, setCreateNewBusinessForm] = useState(false)
 
-  return (
-    <>
-      <ClaimableBusiness />
-      {/* <SearchBusiness
+    return (
+        <>
+            <ClaimableBusiness />
+            {/* <SearchBusiness
                 setCreateNewBusinessForm={setCreateNewBusinessForm}
             /> */}
-      {/* {createNewBusinessForm && <CreateNewBusinessForm />} */}
-      <CreateNewBusinessForm />
-    </>
-  );
-};
+            {/* {createNewBusinessForm && <CreateNewBusinessForm />} */}
+            <CreateNewBusinessForm />
+        </>
+    )
+}
 
-export default BusinessCreate;
+export default BusinessCreate

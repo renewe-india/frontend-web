@@ -16,8 +16,7 @@ function UpdateBusinessForm({ businessDetails }) {
         name: '',
         company_size: '',
         company_type: '',
-        mobile: '',
-        email: '',
+
         date_of_incorporation: '',
         handle: '',
         country_id: '',
@@ -70,14 +69,11 @@ function UpdateBusinessForm({ businessDetails }) {
     }, [])
 
     useEffect(() => {
-        console.log(businessDetails)
         if (businessDetails) {
             setFormData({
                 name: businessDetails.name || '',
                 company_size: businessDetails.company_size || '',
                 company_type: businessDetails.company_type || '',
-                mobile: businessDetails.mobile || '',
-                email: businessDetails.email || '',
                 date_of_incorporation:
                     businessDetails.date_of_incorporation || '',
                 handle: businessDetails.handle || '',
@@ -93,27 +89,22 @@ function UpdateBusinessForm({ businessDetails }) {
     const handleUpdateBusiness = async e => {
         e.preventDefault()
         setIsSubmitting(true)
-        const response = await axios.patch('/api/businesses', formData)
-
-        // setIsSubmitting(false)
-        // setFormData({
-        //     name: '',
-        //     company_size: '',
-        //     company_type: '',
-        //     mobile: '',
-        //     email: '',
-        //     date_of_incorporation: '',
-        //     handle: '',
-        //     country_id: '',
-        //     state_id: '',
-        //     domain: '',
-        //     description: '',
-        //     short_description: '',
-        //     tagline: '',
-        // })
-        // router.push(`/businesses/${response.data.data.handle}`)
+        const response = await axios.patch('/api/businesses/batch', formData)
+        console.log(response)
         setIsSubmitting(false)
-        router.push(`/businesses/${response.data.data.handle}`)
+        setFormData({
+            name: '',
+            company_size: '',
+            company_type: '',
+            date_of_incorporation: '',
+            handle: '',
+            country_id: '',
+            state_id: '',
+            description: '',
+            short_description: '',
+            tagline: '',
+        })
+        router.push(`/businesses/${businessDetails.handle}`)
     }
 
     return (

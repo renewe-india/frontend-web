@@ -8,10 +8,17 @@ const InputField = ({
     onChange,
     placeholder,
     required,
+    labelClassName,
+    className,
 }) => {
     return (
         <div>
-            <label className="pt-0 label label-text font-semibold">
+            <label
+                className={
+                    'pt-0 label label-text font-semibold' +
+                    ' ' +
+                    `${labelClassName}`
+                }>
                 <span>{label}</span>
             </label>
             <input
@@ -20,7 +27,11 @@ const InputField = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className="input input-primary w-full peer rounded"
+                className={
+                    className
+                        ? `${className}`
+                        : 'input input-primary w-full peer rounded'
+                }
                 required={required}
             />
         </div>

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import SubmitButton from '@/components/SubmitButton'
@@ -115,7 +115,7 @@ function CreateNewBusinessForm() {
                             <div className="flex-1">
                                 <InputField
                                     label="Mobile No."
-                                    type="text"
+                                    type="number"
                                     name="mobile"
                                     value={formData.mobile}
                                     onChange={handleChange}

@@ -14,7 +14,7 @@ import axios from '@/lib/axios'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { ThemeContext } from '@/context/ThemeContext'
-import Avatar from './Avatar'
+import Image from './Image'
 
 export const fetchData = async key => {
     try {
@@ -30,7 +30,7 @@ function DesktopBar() {
     const [avatar, setAvatar] = useState(null)
     const [error, setError] = useState(null)
     const { theme, toggleTheme } = useContext(ThemeContext)
-
+    const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
     useEffect(() => {
         const getData = async () => {
             try {
@@ -71,12 +71,15 @@ function DesktopBar() {
                                 htmlFor="sidebar"
                                 className="flex items-center cursor-pointer">
                                 <div className="flex items-center gap-2">
-                                    <Avatar avatar={avatar} customClass="w-7" />
+                                    <Image
+                                        data={avatar}
+                                        customClass="rounded-full avatar w-7"
+                                    />
                                 </div>
                             </label>
                             <Link href="/" className="flex items-center mr-2">
-                                <img
-                                    src="/images/Renewe-logo.png"
+                                <Image
+                                    src={ReneweLogo}
                                     alt="RenewE Logo"
                                     className="h-5"
                                 />

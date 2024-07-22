@@ -1,10 +1,8 @@
 'use client'
-
 import {
     AddressBook,
     ArrowSquareOut,
     DotsThreeOutline,
-    Gear,
     LinkSimple,
     PaperPlaneTilt,
     PaperclipHorizontal,
@@ -14,6 +12,7 @@ import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import Loading from '@/components/Loading'
+import Image from '@/components/Image'
 
 async function fetchBusinessDetails(businessHandle) {
     let businessDetails = {}
@@ -21,7 +20,6 @@ async function fetchBusinessDetails(businessHandle) {
     try {
         const response = await axios.get(`/api/businesses/${businessHandle}`)
         businessDetails = response.data.data
-        console.log(businessDetails)
     } catch (error) {
         console.error('Error fetching business details:', error)
     }
@@ -30,9 +28,10 @@ async function fetchBusinessDetails(businessHandle) {
 }
 
 function ShowBusinessDetails({ businessHandle }) {
+    const [isFollowing, setIsFollowing] = useState(false)
     const [businessDetails, setBusinessDetails] = useState({})
     const [loading, setLoading] = useState(true)
-
+    const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL
     useEffect(() => {
         if (businessHandle) {
             fetchBusinessDetails(businessHandle).then(details => {
@@ -44,10 +43,11 @@ function ShowBusinessDetails({ businessHandle }) {
 
     const [selectedTab, setSelectedTab] = useState(1)
 
-    const handleFollow = e => {
-        console.log('Follow functionality not implemented')
+    const handleFollow = () => {
+        //check api
+        setIsFollowing(prevState => !prevState)
+        console.log(isFollowing ? 'Unfollowed' : 'Followed')
     }
-
     if (loading) {
         return <Loading />
     }
@@ -55,16 +55,15 @@ function ShowBusinessDetails({ businessHandle }) {
     return (
         <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-5">
             <div className="relative w-full h-64 rounded-lg">
-                <img
-                    src="https://picsum.photos/800/250"
+                <Image
+                    src={`${baseURL}${businessDetails.backdrop.url}`}
                     className="w-full h-full object-cover rounded-lg"
                 />
                 <div className="absolute -bottom-20 left-5">
-                    <div className="avatar">
-                        <div className="w-36 rounded-full border-4 border-white">
-                            <img src="https://picsum.photos/600" />
-                        </div>
-                    </div>
+                    <Image
+                        src={`${baseURL}${businessDetails.logo.url}`}
+                        className=" avatar w-36 rounded-full border-4 border-white"
+                    />
                 </div>
             </div>
             <div className="mx-5 py-2 mt-12 flex flex-col gap-2">
@@ -113,7 +112,7 @@ function ShowBusinessDetails({ businessHandle }) {
                         <summary className="m-1 list-none">
                             <DotsThreeOutline size={18} weight="fill" />
                         </summary>
-                        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-36">
+                        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-56">
                             <li>
                                 <Link
                                     href={`/businesses/${businessDetails.handle}/edit`}>
@@ -137,9 +136,9 @@ function ShowBusinessDetails({ businessHandle }) {
                             </li>
                             <li>
                                 <Link
-                                    href={`/businesses/${businessDetails.handle}/contact`}>
+                                    href={`/businesses/${businessDetails.handle}/updateContact`}>
                                     <AddressBook size={18} />
-                                    Contact
+                                    Update Contact
                                 </Link>
                             </li>
                         </ul>

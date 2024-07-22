@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
+import SubmitButton from '@/components/SubmitButton'
+import Image from '@/components/Image'
 
 function ClaimableBusiness() {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [businessAvailableToClaim, setBusinessAvailableToClaim] =
-        useState(null)
+    const [businessAvailableToClaim, setBusinessAvailableToClaim] = useState(
+        null,
+    )
 
     const handleClaim = async e => {
         e.preventDefault()
@@ -43,17 +46,14 @@ function ClaimableBusiness() {
 
     return (
         <div className="card bg-base-200 rounded-lg p-5 mb-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 items-start justify-between">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 items-center justify-between">
                 <div className="flex flex-col gap-5 lg:flex-row items-start lg:items-center">
                     <div className="flex items-start items-center text-right gap-5">
-                        <div className="avatar">
-                            <div className="w-7 rounded-full !rounded !h-12 !w-12">
-                                <img
-                                    src="https://picsum.photos/400"
-                                    alt="avatar"
-                                />
-                            </div>
-                        </div>
+                        <Image
+                            src="https://picsum.photos/400"
+                            alt="business Avatar"
+                            className="avatar !rounded-full  !w-20"
+                        />
                         <div className="text-2xl font-bold">
                             {businessAvailableToClaim.name}
                         </div>

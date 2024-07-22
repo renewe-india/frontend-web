@@ -1,11 +1,15 @@
+import MangersTable from './MangersTable'
+import axios from '@/lib/axios'
 export const metadata = {
     title: 'Business Managers',
 }
 
-const BusinessManagers = () => {
+async function BusinessManagers({ params }) {
+    const businessHandle = params.business
+
     return (
         <>
-            <div>Business Managers</div>
+            <MangersTable businessHandle={businessHandle} />
         </>
     )
 }

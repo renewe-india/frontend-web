@@ -3,15 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
-import Avatar from '@/components/Avatar'
-import Background from '@/components/Image'
+import Image from '@/components/Image'
 
-export const fetchData = async (key, collection) => {
+export const fetchData = async key => {
     try {
-        const response = await axios.get(
-            `/api/media/users/${key}/${collection}/first`,
-        )
-        console.log(response.data)
+        const response = await axios.get(`api/users/${key}`)
         return response.data
     } catch (error) {
         throw new Error('Error fetching data: ' + error.message)
@@ -20,8 +16,7 @@ export const fetchData = async (key, collection) => {
 
 function LeftSidebar() {
     const [userData, setUserData] = useState(null)
-    const [avatar, setAvatar] = useState(null)
-    const [background, setBackground] = useState(null)
+    const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const { user } = useAuth({ middleware: 'auth' })
 
@@ -31,15 +26,8 @@ function LeftSidebar() {
     useEffect(() => {
         const getData = async () => {
             try {
-                const avatarData = await fetchData(user.username, 'avatar')
-                setAvatar(avatarData.data)
-
-                const backgroundData = await fetchData(
-                    user.username,
-                    'background',
-                )
-                setBackground(backgroundData.data)
-                console.log(avatarData)
+                const data = await fetchData(user.username)
+                setData(data.data)
             } catch (error) {
                 setError(error)
             }
@@ -56,18 +44,22 @@ function LeftSidebar() {
             className="hidden lg:flex flex-col gap-2 w-full col-span-1 lg:col-span-4 xl:col-span-3">
             <div className="relative flex flex-col rounded-[1rem] bg-base-200 rounded-lg p-5 text-center">
                 <figure className="mb-5 mx-5">
-                    <Background
-                        background={background}
-                        customClass="align-middle"
-                    />
+                    {data && (
+                        <Image
+                            data={data.backdrop}
+                            customClass="align-middle"
+                        />
+                    )}
                 </figure>
                 <div>
                     <div className="flex justify-center -mt-16">
                         <div className="flex items-center gap-2">
-                            <Avatar
-                                avatar={avatar}
-                                customClass="w-7  !w-20 !rounded-full"
-                            />
+                            {data && (
+                                <Image
+                                    data={data.avatar}
+                                    customClass="w-7 !w-20 !rounded-full"
+                                />
+                            )}
                         </div>
                     </div>
                     {userData && (

@@ -18,13 +18,19 @@ const AppLayout = ({ children }) => {
             <Navigation />
             <div className="container mx-auto py-16">
                 <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2">
-                    <LeftSidebar />
+                    <div className="hidden lg:block lg:col-span-2 xl:col-span-3">
+                        <div className="sticky top-16">
+                            <LeftSidebar />
+                        </div>
+                    </div>
                     <div
                         id="main-content"
                         className="w-full min-h-screen lg:col-span-8 xl:col-span-6">
                         {children}
                     </div>
-                    <RightSidebar />
+                    <div className="hidden lg:block lg:col-span-2 xl:col-span-3">
+                        <RightSidebar />
+                    </div>
                 </div>
             </div>
         </>
