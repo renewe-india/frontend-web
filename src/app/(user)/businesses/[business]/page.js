@@ -6,11 +6,11 @@ export const metadata = {
 }
 
 export default function BusinessShow({ params }) {
-    const businessHandle = params.business
+    const businessName = params.business
 
     return (
         <>
-            <ShowBusinessDetails businessHandle={businessHandle} />
+            <ShowBusinessDetails businessName={businessName} />
             <StockAvailable />
         </>
     )

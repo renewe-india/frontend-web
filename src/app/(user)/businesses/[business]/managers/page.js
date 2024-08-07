@@ -5,11 +5,11 @@ export const metadata = {
 }
 
 async function BusinessManagers({ params }) {
-    const businessHandle = params.business
+    const businessName = params.business
 
     return (
         <>
-            <MangersTable businessHandle={businessHandle} />
+            <MangersTable businessName={businessName} />
         </>
     )
 }

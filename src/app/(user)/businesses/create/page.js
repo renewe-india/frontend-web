@@ -1,7 +1,6 @@
 import React from 'react'
-import CreateNewBusinessForm from './CreateNewBusinessForm'
-// import SearchBusiness from "./SearchBusiness";
 import ClaimableBusiness from './ClaimableBusiness'
+import CreateOrganizationForm from '@/components/CreateOrganizationForm'
 
 const BusinessCreate = () => {
     // const [createNewBusinessForm, setCreateNewBusinessForm] = useState(false)
@@ -13,7 +12,7 @@ const BusinessCreate = () => {
                 setCreateNewBusinessForm={setCreateNewBusinessForm}
             /> */}
             {/* {createNewBusinessForm && <CreateNewBusinessForm />} */}
-            <CreateNewBusinessForm />
+            <CreateOrganizationForm type="business" />
         </>
     )
 }

@@ -1,42 +1,26 @@
 import { Plus, ShieldCheck } from '@phosphor-icons/react'
-import React, { useEffect, useState } from 'react'
+import React, { lazy, Suspense } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
-import Image from '@/components/Image'
+import AvatarSkeleton from '@/components/skeletons/AvatarSkeleton'
+import BackdropSkeleton from '@/components/skeletons/BackdropSkeleton'
+import useSWR from 'swr'
 
-export const fetchData = async key => {
-    try {
-        const response = await axios.get(`api/users/${key}`)
-        return response.data
-    } catch (error) {
-        throw new Error('Error fetching data: ' + error.message)
-    }
-}
+const Image = lazy(() => import('@/components/Image'))
 
-function LeftSidebar() {
-    const [userData, setUserData] = useState(null)
-    const [data, setData] = useState(null)
-    const [error, setError] = useState(null)
+const fetcher = url => axios.get(url).then(res => res.data.data)
+
+const LeftSidebar = React.memo(() => {
     const { user } = useAuth({ middleware: 'auth' })
+    const { data, error } = useSWR(
+        user ? `/api/users/${user.username}` : null,
+        fetcher,
+    )
 
-    useEffect(() => {
-        setUserData(user)
-    }, [user])
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const data = await fetchData(user.username)
-                setData(data.data)
-            } catch (error) {
-                setError(error)
-            }
-        }
-
-        if (user && user.username) {
-            getData()
-        }
-    }, [user])
+    if (error) {
+        return <div>Error: {error.message}</div>
+    }
 
     return (
         <div
@@ -44,25 +28,33 @@ function LeftSidebar() {
             className="hidden lg:flex flex-col gap-2 w-full col-span-1 lg:col-span-4 xl:col-span-3">
             <div className="relative flex flex-col rounded-[1rem] bg-base-200 rounded-lg p-5 text-center">
                 <figure className="mb-5 mx-5">
-                    {data && (
-                        <Image
-                            data={data.backdrop}
-                            customClass="align-middle"
-                        />
-                    )}
+                    <Suspense fallback={<BackdropSkeleton />}>
+                        {data ? (
+                            <Image
+                                data={data.backdrop}
+                                customClass="align-middle"
+                            />
+                        ) : (
+                            <BackdropSkeleton />
+                        )}
+                    </Suspense>
                 </figure>
                 <div>
                     <div className="flex justify-center -mt-16">
                         <div className="flex items-center gap-2">
-                            {data && (
-                                <Image
-                                    data={data.avatar}
-                                    customClass="w-7 !w-20 !rounded-full"
-                                />
-                            )}
+                            <Suspense fallback={<AvatarSkeleton />}>
+                                {data ? (
+                                    <Image
+                                        data={data.avatar}
+                                        customClass="w-7 !w-20 !rounded-full"
+                                    />
+                                ) : (
+                                    <AvatarSkeleton />
+                                )}
+                            </Suspense>
                         </div>
                     </div>
-                    {userData && (
+                    {user && (
                         <div className="font-semibold flex items-center justify-center gap-2">
                             <div className="inline-flex items-center gap-1">
                                 <ShieldCheck
@@ -72,7 +64,7 @@ function LeftSidebar() {
                                     weight="bold"
                                 />
                                 <div className="text-negative-500">
-                                    {userData.name}
+                                    {user.name}
                                 </div>
                             </div>
                         </div>
@@ -103,6 +95,6 @@ function LeftSidebar() {
             </div>
         </div>
     )
-}
+})
 
 export default LeftSidebar

@@ -98,7 +98,6 @@ function Input() {
                     <div className="flex items-center gap-2">
                         <div>
                             <input
-                                id="maryf767aaaf95192ceb3fc430678a29f954"
                                 type="file"
                                 ref={file => setFile(file)}
                                 onChange={refreshImage}

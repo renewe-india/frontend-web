@@ -5,11 +5,11 @@ import BusinessShowCard from './BusinessShowCard'
 import UpdateBusinessForm from './UpdateBusinessForm'
 import Loading from '@/components/Loading'
 
-async function fetchBusinessDetails(businessHandle) {
+async function fetchBusinessDetails(businessName) {
     let businessDetails = {}
 
     try {
-        const response = await axios.get(`/api/businesses/${businessHandle}`)
+        const response = await axios.get(`/api/organizations/${businessName}`)
         businessDetails = response.data.data
     } catch (error) {
         console.error('Error fetching business details:', error)
@@ -19,18 +19,18 @@ async function fetchBusinessDetails(businessHandle) {
 }
 
 const BusinessEdit = ({ params }) => {
-    const businessHandle = params.business
+    const businessName = params.business
     const [businessDetails, setBusinessDetails] = useState({})
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (businessHandle) {
-            fetchBusinessDetails(businessHandle).then(details => {
+        if (businessName) {
+            fetchBusinessDetails(businessName).then(details => {
                 setBusinessDetails(details)
                 setLoading(false)
             })
         }
-    }, [businessHandle])
+    }, [businessName])
 
     if (loading) {
         return <Loading />

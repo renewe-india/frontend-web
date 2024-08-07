@@ -59,11 +59,18 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         try {
             await csrf()
             setErrors([])
-            await axios.patch(`/onboarding/${props.username}`, {
-                ...props,
-                token,
-            })
+
+            await axios.post(
+                `/onboarding/complete/contact/${props.contact_id}`,
+                {
+                    ...props,
+                    token,
+                },
+            )
             await mutate()
+
+            localStorage.clear()
+
             onSuccess()
         } catch (error) {
             if (error.response && error.response.status === 422) {
@@ -79,16 +86,22 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         await csrf()
         setErrors([])
         try {
-            const response = await axios.post('/onboarding', props)
-            const { data } = response.data
+            const response = await axios.post('/onboarding/check-otp', props)
+            const data = response.data
+            // localStorage.setItem('email', data.email)
+            // localStorage.setItem('username', data.username)
+            // localStorage.setItem('name', data.name)
+            localStorage.setItem('contact_id', data.id)
             localStorage.setItem('token', data.token)
-            localStorage.setItem('email', data.email)
-            localStorage.setItem('username', data.username)
-            localStorage.setItem('name', data.name)
-            localStorage.setItem('mobile', data.mobile)
-            localStorage.setItem('gender', data.gender)
-            onSuccess(data)
-        } catch (error) {}
+            if (data.type === 'Mobile') {
+                localStorage.setItem('mobile', data.data)
+            }
+
+            onSuccess()
+        } catch (error) {
+            console.error('Error verifying OTP:', error)
+            setErrors(['An error occurred while verifying OTP.'])
+        }
     }
 
     const onboardingOtp = async ({

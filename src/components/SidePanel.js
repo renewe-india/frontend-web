@@ -24,6 +24,7 @@ import {
     SignOut,
     X,
 } from '@phosphor-icons/react'
+import OrganizationList from './OrganizationList'
 
 function SidePanel() {
     const { logout } = useAuth()
@@ -94,22 +95,7 @@ function SidePanel() {
                                         <BagSimple size={24} stroke={2} />
                                         <span className="">My Businesses</span>
                                     </summary>
-                                    <ul className="menu dropdown-content z-[1] bg-base-100">
-                                        <Link
-                                            href="/businesses/create"
-                                            onClick={handleLinkClick}>
-                                            {' '}
-                                            <li>
-                                                <div className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
-                                                    <Plus
-                                                        size={24}
-                                                        stroke={2}
-                                                    />
-                                                    Create New Business
-                                                </div>
-                                            </li>{' '}
-                                        </Link>
-                                    </ul>
+                                    <OrganizationList type="business" />
                                 </details>
                             </li>
 
@@ -121,51 +107,7 @@ function SidePanel() {
                                             My Associations
                                         </span>
                                     </summary>
-                                    <ul className="menu dropdown-content z-[1] bg-base-100">
-                                        <li>
-                                            <Link
-                                                href="#"
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
-                                                <img
-                                                    src="/images/user.svg"
-                                                    className="h-5 w-5 overflow-hidden rounded"
-                                                    alt="Company Logo"
-                                                />
-                                                <span>MASMA</span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="#"
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
-                                                <img
-                                                    src="/images/user.svg"
-                                                    className="h-5 w-5 overflow-hidden rounded"
-                                                    alt="Company Logo"
-                                                />
-                                                <span>SOLICE</span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="https://renewe.in/coming-soon"
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
-                                                <MagnifyingGlass
-                                                    size={24}
-                                                    stroke={2}
-                                                />
-                                                Search Associations
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="/associations/create"
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
-                                                <Plus size={24} stroke={2} />
-                                                Create New Association
-                                            </Link>
-                                        </li>
-                                    </ul>
+                                    <OrganizationList type="association" />
                                 </details>
                             </li>
                         </ul>

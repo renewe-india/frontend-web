@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation'
 import SubmitButton from '@/components/SubmitButton'
 import InputField from '@/components/InputField'
 
-function CreateNewBusinessForm() {
+const CreateOrganizationForm = ({ type }) => {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const handleCreateNewBusiness = async e => {
+    const handleCreateOrganization = async e => {
         e.preventDefault()
         setIsSubmitting(true)
 
@@ -19,15 +19,16 @@ function CreateNewBusinessForm() {
 
         const requestData = {
             display_name,
-            type: 'business',
+            type: `${type}`,
         }
 
         try {
-            const response = await axios.post('/api/organizations', requestData)
+            const response = await axios.post(`/api/organizations`, requestData)
             console.log(response)
-            // router.push(`/businesses/${response.data.data.display_name}`)
+            // Uncomment the line below to redirect after successful creation
+            // router.push(`/${type}/${response.data.data.display_name}`)
         } catch (error) {
-            console.error('Error creating business:', error)
+            console.error(`Error creating ${type}:`, error)
         } finally {
             setIsSubmitting(false)
         }
@@ -39,7 +40,8 @@ function CreateNewBusinessForm() {
                 <div className="flex justify-between items-center">
                     <div>
                         <div className="text-2xl font-bold">
-                            Create a New Business
+                            Create a New{' '}
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
                         </div>
                     </div>
                 </div>
@@ -47,7 +49,7 @@ function CreateNewBusinessForm() {
             <div>
                 <form
                     method="POST"
-                    onSubmit={handleCreateNewBusiness}
+                    onSubmit={handleCreateOrganization}
                     className="flex flex-col gap-5 form-control">
                     <InputField
                         label="Name"
@@ -58,8 +60,12 @@ function CreateNewBusinessForm() {
                     />
                     <SubmitButton
                         isSubmitting={isSubmitting}
-                        label="Create a New Business"
-                        submittingLabel="Creating a New Business..."
+                        label={`Create a New ${
+                            type.charAt(0).toUpperCase() + type.slice(1)
+                        }`}
+                        submittingLabel={`Creating a New ${
+                            type.charAt(0).toUpperCase() + type.slice(1)
+                        }...`}
                     />
                 </form>
             </div>
@@ -67,4 +73,4 @@ function CreateNewBusinessForm() {
     )
 }
 
-export default CreateNewBusinessForm
+export default CreateOrganizationForm

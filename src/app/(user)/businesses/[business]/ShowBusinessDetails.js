@@ -14,11 +14,11 @@ import axios from '@/lib/axios'
 import Loading from '@/components/Loading'
 import Image from '@/components/Image'
 
-async function fetchBusinessDetails(businessHandle) {
+async function fetchBusinessDetails(businessName) {
     let businessDetails = {}
 
     try {
-        const response = await axios.get(`/api/businesses/${businessHandle}`)
+        const response = await axios.get(`/api/organizations/${businessName}`)
         businessDetails = response.data.data
     } catch (error) {
         console.error('Error fetching business details:', error)
@@ -27,23 +27,23 @@ async function fetchBusinessDetails(businessHandle) {
     return businessDetails
 }
 
-function ShowBusinessDetails({ businessHandle }) {
+function ShowBusinessDetails({ businessName }) {
     const [isFollowing, setIsFollowing] = useState(false)
     const [businessDetails, setBusinessDetails] = useState({})
     const [loading, setLoading] = useState(true)
     const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL
     useEffect(() => {
-        if (businessHandle) {
-            fetchBusinessDetails(businessHandle).then(details => {
+        if (businessName) {
+            fetchBusinessDetails(businessName).then(details => {
                 setBusinessDetails(details)
                 setLoading(false)
             })
         }
-    }, [businessHandle])
+    }, [businessName])
 
     const [selectedTab, setSelectedTab] = useState(1)
 
-    const handleFollow = () => {
+    const nameFollow = () => {
         //check api
         setIsFollowing(prevState => !prevState)
         console.log(isFollowing ? 'Unfollowed' : 'Followed')
@@ -56,14 +56,14 @@ function ShowBusinessDetails({ businessHandle }) {
         <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-5">
             <div className="relative w-full h-64 rounded-lg">
                 <Image
-                    src={`${baseURL}${businessDetails.backdrop.url}`}
+                    src={`${businessDetails.backdrop.url}`}
                     className="w-full h-full object-cover rounded-lg"
                 />
                 <div className="absolute -bottom-20 left-5">
-                    <Image
+                    {/* <Image
                         src={`${baseURL}${businessDetails.logo.url}`}
                         className=" avatar w-36 rounded-full border-4 border-white"
-                    />
+                    /> */}
                 </div>
             </div>
             <div className="mx-5 py-2 mt-12 flex flex-col gap-2">
@@ -95,7 +95,7 @@ function ShowBusinessDetails({ businessHandle }) {
             <div className="flex flex-row gap-2 mx-5 mb-2">
                 <div className="flex">
                     <button
-                        onClick={handleFollow}
+                        onClick={nameFollow}
                         className="btn bg-base-100 normal-case btn-sm flex items-center gap-1">
                         <Plus size={18} weight="bold" />
                         <span>Follow</span>
@@ -115,28 +115,28 @@ function ShowBusinessDetails({ businessHandle }) {
                         <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-56">
                             <li>
                                 <Link
-                                    href={`/businesses/${businessDetails.handle}/edit`}>
+                                    href={`/businesses/${businessDetails.name}/edit`}>
                                     <ArrowSquareOut size={18} />
                                     Edit
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href={`/businesses/${businessDetails.handle}/managers`}>
+                                    href={`/businesses/${businessDetails.name}/managers`}>
                                     <PaperclipHorizontal size={18} />
                                     Managers
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href={`/businesses/${businessDetails.handle}/domains`}>
+                                    href={`/businesses/${businessDetails.name}/domains`}>
                                     <LinkSimple size={18} />
                                     Domains
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href={`/businesses/${businessDetails.handle}/updateContact`}>
+                                    href={`/businesses/${businessDetails.name}/updateContact`}>
                                     <AddressBook size={18} />
                                     Update Contact
                                 </Link>

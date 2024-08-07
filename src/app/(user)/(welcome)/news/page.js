@@ -12,8 +12,10 @@ import {
     Smiley,
     ThumbsUp,
 } from '@phosphor-icons/react'
-
 import Link from 'next/link'
+import { SkeletonCard } from '@/components/skeletons/NewsSkeleton'
+import ArticleImage from './ArticleImage'
+import Loading from '@/components/Loading'
 
 const News = () => {
     const [articles, setArticles] = useState([])
@@ -43,13 +45,22 @@ const News = () => {
 
     const lastArticleElementRef = useCallback(
         node => {
-            if (loading) return
+            if (loading || noMoreArticles) return
             if (observer.current) observer.current.disconnect()
-            observer.current = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting && !noMoreArticles) {
-                    fetchArticles()
-                }
-            })
+            observer.current = new IntersectionObserver(
+                entries => {
+                    if (
+                        entries[0].isIntersecting &&
+                        !loading &&
+                        !noMoreArticles
+                    ) {
+                        fetchArticles()
+                    }
+                },
+                {
+                    rootMargin: '100px',
+                },
+            )
             if (node) observer.current.observe(node)
         },
         [loading, noMoreArticles, fetchArticles],
@@ -60,14 +71,20 @@ const News = () => {
     }, [fetchArticles])
 
     return (
-        <>
-            <div
-                id="main-content"
-                className="col-span-12 lg:col-span-8 xl:col-span-6">
-                <div className="space-y-2">
-                    {articles.map((article, index) => (
+        <div
+            id="main-content"
+            className="col-span-12 lg:col-span-8 xl:col-span-6">
+            <div className="space-y-2">
+                {loading && !articles.length ? (
+                    <>
+                        <SkeletonCard />
+                        <SkeletonCard />
+                        <SkeletonCard />
+                    </>
+                ) : (
+                    articles.map((article, index) => (
                         <div
-                            key={index}
+                            key={article.id}
                             ref={
                                 index === articles.length - 1
                                     ? lastArticleElementRef
@@ -77,23 +94,14 @@ const News = () => {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <div className="ml-7 flex gap-2">
-                                        {article.image && (
-                                            <img
-                                                src={article.image}
-                                                alt=""
-                                                className="w-24 h-24 rounded cursor-pointer"
-                                            />
-                                        )}
-                                        <Link href={`/news/${article.slug}`}>
-                                            <div className="px-2">
-                                                <h2 className="text-xl font-bold">
-                                                    {article.headline}
-                                                </h2>
-                                                <div>{article.summary}</div>
-                                            </div>
-                                        </Link>
+                                        <ArticleImage src={article.image} />
+                                        <div className="px-2 flex flex-col gap-2">
+                                            <h2 className="text-xl font-bold">
+                                                {article.headline}
+                                            </h2>
+                                            <div>{article.summary}</div>
+                                        </div>
                                     </div>
-
                                     <div>
                                         <div className="mx-7 flex justify-between border-b border-gray-200 dark:border-gray-600 pb-1">
                                             <div className="text-xs text-gray-500">
@@ -109,7 +117,7 @@ const News = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-4">
+                                        <div className="grid grid-cols-4 gap-2">
                                             <div className="dropdown normal-case w-full">
                                                 <div tabIndex={0} role="button">
                                                     <button
@@ -130,7 +138,7 @@ const News = () => {
                                                         <div className="flex gap-3">
                                                             <button
                                                                 type="button"
-                                                                className="normal-case btn-square btn-ghost">
+                                                                className="btn normal-case btn-square btn-ghost">
                                                                 <span className="block">
                                                                     <Heart
                                                                         size={
@@ -237,20 +245,16 @@ const News = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
-                    {loading && (
-                        <p className="text-xl text-black">
-                            Loading more articles...
-                        </p>
-                    )}
-                    {noMoreArticles && !loading && (
-                        <p className="text-xl text-gray-500">
-                            No more articles available.
-                        </p>
-                    )}
-                </div>
+                    ))
+                )}
+                {loading && articles.length > 0 && <Loading />}
+                {noMoreArticles && !loading && !articles.length && (
+                    <p className="text-xl text-gray-500">
+                        No more articles available.
+                    </p>
+                )}
             </div>
-        </>
+        </div>
     )
 }
 

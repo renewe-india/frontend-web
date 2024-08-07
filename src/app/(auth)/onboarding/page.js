@@ -18,28 +18,30 @@ const Page = () => {
     const [isSendingOtp, setIsSendingOtp] = useState(false)
     const [errors, setErrors] = useState([])
 
+    const isEmail = contact => /\S+@\S+\.\S+/.test(contact)
+
     const submitOtp = event => {
         event.preventDefault()
-        // Handle OTP verification
         onboardingVerifyOtp({
-            contact,
+            ...payload,
             otp,
             setUsername,
             setErrors,
-            onSuccess:
-                // console.log(data)
-                router.push(
-                    '/register',
-                    // query: { email: data.email },
-                ),
+            onSuccess: () => {
+                router.push('/register')
+            },
         })
     }
+    const payload = isEmail(contact)
+        ? { data: contact }
+        : { country_code: '91', data: contact }
 
     const submitForm = event => {
         event.preventDefault()
         setIsSendingOtp(true)
+
         onboardingOtp({
-            contact,
+            ...payload,
             setErrors,
             onSuccess: () => {
                 setOtpSent(true)

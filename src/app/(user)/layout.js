@@ -7,7 +7,9 @@ import LeftSidebar from './LeftSidebar'
 import RightSidebar from './RightSidebar'
 
 const AppLayout = ({ children }) => {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useAuth({
+        middleware: 'auth',
+    })
 
     if (!user) {
         return <Loading />

@@ -44,7 +44,7 @@ const Home = ({ children }) => {
             {user && !isLoading && (
                 <>
                     <Navigation user={user} />
-                    <div className="container mx-auto py-16">
+                    <div className="container mx-auto  my-auto py-16">
                         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2">
                             <LeftSidebar />
                             <div

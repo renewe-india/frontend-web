@@ -15,6 +15,7 @@ const RegisterPage = () => {
     const [name, setName] = useState('')
     const [mobile, setMobile] = useState('')
     const [username, setUsername] = useState('')
+    const [contact_id, setContact_id] = useState('')
     const [password, setPassword] = useState('')
     const [dateOfBirth, setDateOfBirth] = useState('')
     const [gender, setGender] = useState('male')
@@ -24,6 +25,12 @@ const RegisterPage = () => {
         const storedUsername = localStorage.getItem('username')
         if (storedUsername) {
             setUsername(storedUsername)
+        }
+    }, [])
+    useEffect(() => {
+        const storedContact_id = localStorage.getItem('contact_id')
+        if (storedContact_id) {
+            setContact_id(storedContact_id)
         }
     }, [])
 
@@ -56,6 +63,7 @@ const RegisterPage = () => {
                 mobile,
                 username,
                 password,
+                contact_id,
                 date_of_birth: dateOfBirth,
                 gender,
                 token: localStorage.getItem('token'),
@@ -133,7 +141,7 @@ const RegisterPage = () => {
                                 <div className="flex-1 relative">
                                     <input
                                         id="mobile"
-                                        placeholder=" "
+                                        placeholder="Mobile No."
                                         className="input input-primary w-full peer"
                                         type="text"
                                         name="mobile"
@@ -165,7 +173,7 @@ const RegisterPage = () => {
                             <div className="flex-1 relative">
                                 <input
                                     id="username"
-                                    placeholder=" "
+                                    placeholder="Username"
                                     className="input input-primary w-full peer"
                                     type="text"
                                     name="username"
@@ -178,7 +186,7 @@ const RegisterPage = () => {
                             </div>
 
                             <InputError
-                                messages={errors.username}
+                                messages={errors.message}
                                 className="mt-2"
                             />
                         </div>
@@ -196,7 +204,7 @@ const RegisterPage = () => {
                             <div className="flex-1 relative">
                                 <input
                                     id="password"
-                                    placeholder=" "
+                                    placeholder="••••••••"
                                     className="input input-primary w-full peer"
                                     type="password"
                                     name="password"
@@ -227,7 +235,7 @@ const RegisterPage = () => {
                             <div className="flex-1 relative">
                                 <input
                                     id="date_of_birth"
-                                    placeholder=" "
+                                    placeholder="D. O. B."
                                     className="input input-primary w-full peer"
                                     type="date"
                                     name="date_of_birth"
