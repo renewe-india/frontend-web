@@ -42,16 +42,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await mutate()
             router.push(redirectIfAuthenticated)
         } catch (error) {
-            if (error.response.status === 401) {
-                setErrors(['Incorrect username or password. Please try again.'])
-            } else if (error.response.status === 422) {
-                setErrors(['Username or password format is incorrect.'])
-            } else {
-                console.error('An error occurred during login:', error)
-                setErrors([
-                    'An unexpected error occurred. Please try again later.',
-                ])
-            }
+            if (error.response.status !== 422) throw error
+            setErrors(error.response.data.message)
         }
     }
 
@@ -73,12 +65,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
             onSuccess()
         } catch (error) {
-            if (error.response && error.response.status === 422) {
-                setErrors(error.response.data.errors)
-            } else {
-                console.error('An error occurred:', error)
-            }
-            throw error
+            if (error.response.status !== 422) throw error
+            setErrors(error.response.data.message)
         }
     }
 
@@ -99,8 +87,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
             onSuccess()
         } catch (error) {
-            console.error('Error verifying OTP:', error)
-            setErrors(['An error occurred while verifying OTP.'])
+            if (error.response.status !== 422) throw error
+            setErrors(error.response.data.message)
         }
     }
 
@@ -117,7 +105,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             onSuccess()
         } catch (error) {
             if (error.response.status !== 422) throw error
-            setErrors(error.response.data.errors)
+            setErrors(error.response.data.message)
             onError()
         }
     }
@@ -131,7 +119,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .then(response => setStatus(response.data.status))
             .catch(error => {
                 if (error.response.status !== 422) throw error
-                setErrors(error.response.data.errors)
+                setErrors(error.response.data.message)
             })
     }
 
@@ -146,7 +134,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             )
             .catch(error => {
                 if (error.response.status !== 422) throw error
-                setErrors(error.response.data.errors)
+                setErrors(error.response.data.message)
             })
     }
 

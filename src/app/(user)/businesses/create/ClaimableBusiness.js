@@ -40,7 +40,7 @@ function ClaimableBusiness() {
 
         fetchBusinessesAvailableToClaim()
     }, [])
-    console.log(businessesAvailableToClaim)
+
     if (businessesAvailableToClaim.length === 0) {
         return null
     }

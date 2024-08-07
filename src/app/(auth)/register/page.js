@@ -1,6 +1,5 @@
 'use client'
 
-import InputError from '@/components/InputError'
 import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -20,6 +19,7 @@ const RegisterPage = () => {
     const [dateOfBirth, setDateOfBirth] = useState('')
     const [gender, setGender] = useState('male')
     const [errors, setErrors] = useState([])
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
         const storedUsername = localStorage.getItem('username')
@@ -27,6 +27,7 @@ const RegisterPage = () => {
             setUsername(storedUsername)
         }
     }, [])
+
     useEffect(() => {
         const storedContact_id = localStorage.getItem('contact_id')
         if (storedContact_id) {
@@ -54,8 +55,10 @@ const RegisterPage = () => {
             setGender(storedGender)
         }
     }, [])
+
     const submitForm = event => {
         event.preventDefault()
+        setIsSubmitting(true)
 
         if (localStorage.getItem('token')) {
             register({
@@ -71,15 +74,19 @@ const RegisterPage = () => {
                 onSuccess: () => {
                     localStorage.removeItem('token')
                     localStorage.removeItem('username')
-                    router.push('/login')
+                    setIsSubmitting(false)
+                    router.push('/')
+                },
+                onError: () => {
+                    setIsSubmitting(false)
                 },
             })
         } else {
             alert('Please verify your email first ')
+            setIsSubmitting(false)
             // You may need to adjust this part based on your application flow
         }
     }
-    //console.log(data)
 
     return (
         <>
@@ -120,11 +127,6 @@ const RegisterPage = () => {
                                     }
                                 />
                             </div>
-
-                            <InputError
-                                messages={errors.first_name}
-                                className="mt-2"
-                            />
                         </div>
 
                         <div className="">
@@ -152,11 +154,6 @@ const RegisterPage = () => {
                                         }
                                     />
                                 </div>
-
-                                <InputError
-                                    messages={errors.mobile}
-                                    className="mt-2"
-                                />
                             </div>
                         </div>
 
@@ -184,11 +181,6 @@ const RegisterPage = () => {
                                     }
                                 />
                             </div>
-
-                            <InputError
-                                messages={errors.message}
-                                className="mt-2"
-                            />
                         </div>
 
                         <div>
@@ -215,11 +207,6 @@ const RegisterPage = () => {
                                     }
                                 />
                             </div>
-
-                            <InputError
-                                messages={errors.password}
-                                className="mt-2"
-                            />
                         </div>
 
                         <div>
@@ -246,11 +233,6 @@ const RegisterPage = () => {
                                     }
                                 />
                             </div>
-
-                            <InputError
-                                messages={errors.date_of_birth}
-                                className="mt-2"
-                            />
                         </div>
 
                         <div x-data="{gender: 'male'}">
@@ -335,8 +317,11 @@ const RegisterPage = () => {
                     </div>
                     <button
                         type="submit"
-                        className="btn normal-case w-full btn-primary">
-                        Complete Verification
+                        className="btn normal-case w-full btn-primary"
+                        disabled={isSubmitting}>
+                        {isSubmitting
+                            ? 'Registering...'
+                            : 'Complete Verification'}
                     </button>
                 </form>
             </div>

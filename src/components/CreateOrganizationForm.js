@@ -24,9 +24,17 @@ const CreateOrganizationForm = ({ type }) => {
 
         try {
             const response = await axios.post(`/api/organizations`, requestData)
-            console.log(response)
-            // Uncomment the line below to redirect after successful creation
-            // router.push(`/${type}/${response.data.data.display_name}`)
+            const org = response.data.data
+
+            router.push(
+                `/${
+                    type === 'business'
+                        ? 'businesses'
+                        : type === 'association'
+                        ? 'associations'
+                        : type
+                }/${org.name}`,
+            )
         } catch (error) {
             console.error(`Error creating ${type}:`, error)
         } finally {

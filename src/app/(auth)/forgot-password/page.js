@@ -1,12 +1,11 @@
 'use client'
 
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
-import Label from '@/components/Label'
+import InputField from '@/components/InputField'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
-import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
+import AuthSessionStatus from '../AuthSessionStatus'
+import ErrorDisplay from '@/components/ErrorDisplay'
+import { Lock } from '@phosphor-icons/react'
 
 const Page = () => {
     const { forgotPassword } = useAuth({
@@ -38,23 +37,23 @@ const Page = () => {
             <form onSubmit={submitForm}>
                 {/* Email Address */}
                 <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                        id="email"
+                    <InputField
+                        label="Email"
                         type="email"
                         name="email"
-                        value={email}
-                        className="block mt-1 w-full"
+                        placeholder="Email"
                         onChange={event => setEmail(event.target.value)}
                         required
-                        autoFocus
                     />
-
-                    <InputError messages={errors.email} className="mt-2" />
                 </div>
-
+                <ErrorDisplay errors={errors} />
                 <div className="flex items-center justify-end mt-4">
-                    <Button>Email Password Reset Link</Button>
+                    <button
+                        type="submit"
+                        className="w-full btn normal-case btn-primary">
+                        <Lock size={24} />
+                        Email Password Reset Link
+                    </button>
                 </div>
             </form>
         </>
