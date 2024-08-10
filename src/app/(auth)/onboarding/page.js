@@ -26,7 +26,7 @@ const Page = () => {
     const [otpSent, setOtpSent] = useState(false)
     const [sendingOtp, setSendingOtp] = useState(false)
     const [verifyingOtp, setVerifyingOtp] = useState(false)
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
     const [countryCodes, setCountryCodes] = useState([])
     const [loading, setLoading] = useState(true) // State for loading
 
@@ -38,14 +38,15 @@ const Page = () => {
 
     const submitOtp = event => {
         event.preventDefault()
+        setErrors(null)
         setVerifyingOtp(true)
         onboardingVerifyOtp({
             ...constructPayload(),
             otp,
             setErrors,
             onSuccess: () => {
-                setVerifyingOtp(false)
                 router.push('/register')
+                setVerifyingOtp(false)
             },
             onError: () => {
                 setVerifyingOtp(false)
@@ -56,7 +57,6 @@ const Page = () => {
     const submitForm = event => {
         event.preventDefault()
         setSendingOtp(true)
-        console.log(constructPayload())
         onboardingOtp({
             ...constructPayload(),
             setErrors,
@@ -145,6 +145,7 @@ const Page = () => {
                             ))}
                         </select>
                     )}
+
                     <input
                         id="contact"
                         placeholder={
@@ -163,6 +164,8 @@ const Page = () => {
                         disabled={otpSent}
                     />
                 </div>
+                {errors?.data && <ErrorDisplay errors={errors.data} />}
+                {errors?.type && <ErrorDisplay errors={errors.type} />}
                 {otpSent && (
                     <div>
                         <label
@@ -183,6 +186,9 @@ const Page = () => {
                             />
                         </div>
                     </div>
+                )}
+                {errors?.otp && errors.otp.length > 0 && (
+                    <ErrorDisplay errors={errors.otp} />
                 )}
                 <button
                     type="submit"
@@ -207,7 +213,6 @@ const Page = () => {
                     )}
                 </button>
             </form>
-            <ErrorDisplay errors={errors} />
         </>
     )
 }

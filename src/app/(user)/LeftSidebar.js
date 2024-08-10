@@ -6,6 +6,7 @@ import axios from '@/lib/axios'
 import AvatarSkeleton from '@/components/skeletons/AvatarSkeleton'
 import BackdropSkeleton from '@/components/skeletons/BackdropSkeleton'
 import useSWR from 'swr'
+import { useRouter } from 'next/navigation'
 
 const Image = lazy(() => import('@/components/Image'))
 
@@ -17,9 +18,9 @@ const LeftSidebar = React.memo(() => {
         user ? `/api/users/${user.username}` : null,
         fetcher,
     )
-
+    const router = useRouter()
     if (error) {
-        return <div>Error: {error.message}</div>
+        router.push('/login')
     }
 
     return (

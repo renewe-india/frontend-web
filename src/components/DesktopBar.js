@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import useSWR from 'swr'
 import { ThemeContext } from '@/context/ThemeContext'
+import { useRouter } from 'next/navigation'
 
 const Image = dynamic(() => import('./Image'), { ssr: false })
 
@@ -31,6 +32,7 @@ const DesktopBar = memo(() => {
         fetcher,
     )
     const { theme, toggleTheme } = useContext(ThemeContext)
+    const router = useRouter()
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
 
     const handleToggle = e => {
@@ -42,7 +44,7 @@ const DesktopBar = memo(() => {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        router.push('/login')
     }
 
     return (

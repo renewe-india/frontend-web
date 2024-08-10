@@ -4,11 +4,12 @@ import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import SubmitButton from '@/components/SubmitButton'
 import InputField from '@/components/InputField'
+import ErrorDisplay from './ErrorDisplay'
 
 const CreateOrganizationForm = ({ type }) => {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
-
+    const [error, setError] = useState(null)
     const handleCreateOrganization = async e => {
         e.preventDefault()
         setIsSubmitting(true)
@@ -36,7 +37,8 @@ const CreateOrganizationForm = ({ type }) => {
                 }/${org.name}`,
             )
         } catch (error) {
-            console.error(`Error creating ${type}:`, error)
+            console.log(error)
+            setError(error.response.data.errors)
         } finally {
             setIsSubmitting(false)
         }
@@ -58,7 +60,7 @@ const CreateOrganizationForm = ({ type }) => {
                 <form
                     method="POST"
                     onSubmit={handleCreateOrganization}
-                    className="flex flex-col gap-5 form-control">
+                    className="flex flex-col gap-3 form-control">
                     <InputField
                         label="Name"
                         type="text"
@@ -66,6 +68,7 @@ const CreateOrganizationForm = ({ type }) => {
                         placeholder="Name"
                         required
                     />
+                    {error && <ErrorDisplay errors={error.display_name} />}
                     <SubmitButton
                         isSubmitting={isSubmitting}
                         label={`Create a New ${

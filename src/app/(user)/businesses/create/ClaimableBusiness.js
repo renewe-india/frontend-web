@@ -13,11 +13,11 @@ function ClaimableBusiness() {
         setBusinessesAvailableToClaim,
     ] = useState([])
 
-    const handleClaim = async displayName => {
+    const handleClaim = async name => {
         setIsSubmitting(true)
         try {
-            await axios.post(`/api/organizations/${displayName}/claim`)
-            router.push(`/businesses/${displayName}`)
+            await axios.post(`/api/organizations/${name}/claim`)
+            router.push(`/businesses/${name}`)
         } catch (error) {
             console.error('Error claiming business:', error)
         } finally {
@@ -75,7 +75,7 @@ function ClaimableBusiness() {
                             isSubmitting={isSubmitting}
                             label="Claim this Business"
                             submittingLabel="Claiming"
-                            onClick={() => handleClaim(business.display_name)}
+                            onClick={() => handleClaim(business.name)}
                             type="button"
                             className="btn normal-case btn-primary self-end lg:self-auto w-full lg:w-auto"
                         />

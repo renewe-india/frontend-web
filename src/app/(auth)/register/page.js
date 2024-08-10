@@ -14,47 +14,11 @@ const RegisterPage = () => {
     const [name, setName] = useState('')
     const [mobile, setMobile] = useState('')
     const [username, setUsername] = useState('')
-    const [contact_id, setContact_id] = useState('')
     const [password, setPassword] = useState('')
     const [dateOfBirth, setDateOfBirth] = useState('')
     const [gender, setGender] = useState('male')
     const [errors, setErrors] = useState([])
     const [isSubmitting, setIsSubmitting] = useState(false)
-
-    useEffect(() => {
-        const storedUsername = localStorage.getItem('username')
-        if (storedUsername) {
-            setUsername(storedUsername)
-        }
-    }, [])
-
-    useEffect(() => {
-        const storedContact_id = localStorage.getItem('contact_id')
-        if (storedContact_id) {
-            setContact_id(storedContact_id)
-        }
-    }, [])
-
-    useEffect(() => {
-        const storedName = localStorage.getItem('name')
-        if (storedName) {
-            setName(storedName)
-        }
-    }, [])
-
-    useEffect(() => {
-        const storedMobile = localStorage.getItem('mobile')
-        if (storedMobile) {
-            setMobile(storedMobile)
-        }
-    }, [])
-
-    useEffect(() => {
-        const storedGender = localStorage.getItem('gender')
-        if (storedGender) {
-            setGender(storedGender)
-        }
-    }, [])
 
     const submitForm = event => {
         event.preventDefault()
@@ -63,17 +27,14 @@ const RegisterPage = () => {
         if (localStorage.getItem('token')) {
             register({
                 name,
-                mobile,
                 username,
                 password,
-                contact_id,
+                contact_id: localStorage.getItem('contact_id'),
                 date_of_birth: dateOfBirth,
                 gender,
                 token: localStorage.getItem('token'),
                 setErrors,
                 onSuccess: () => {
-                    localStorage.removeItem('token')
-                    localStorage.removeItem('username')
                     setIsSubmitting(false)
                     router.push('/')
                 },
@@ -84,7 +45,6 @@ const RegisterPage = () => {
         } else {
             alert('Please verify your email first ')
             setIsSubmitting(false)
-            // You may need to adjust this part based on your application flow
         }
     }
 
@@ -112,7 +72,6 @@ const RegisterPage = () => {
                                     <span className="text-error">*</span>
                                 </span>
                             </label>
-
                             <div className="flex-1 relative">
                                 <input
                                     id="name"
@@ -126,35 +85,10 @@ const RegisterPage = () => {
                                         setName(event.target.value)
                                     }
                                 />
-                            </div>
-                        </div>
-
-                        <div className="">
-                            <div>
-                                <label
-                                    htmlFor="mobile"
-                                    className="pt-0 label label-text font-semibold">
-                                    <span>
-                                        Mobile
-                                        <span className="text-error">*</span>
-                                    </span>
-                                </label>
-
-                                <div className="flex-1 relative">
-                                    <input
-                                        id="mobile"
-                                        placeholder="Mobile No."
-                                        className="input input-primary w-full peer"
-                                        type="text"
-                                        name="mobile"
-                                        required
-                                        value={mobile}
-                                        onChange={event =>
-                                            setMobile(event.target.value)
-                                        }
-                                    />
-                                </div>
-                            </div>
+                            </div>{' '}
+                            {errors.name && (
+                                <ErrorDisplay errors={errors.name} />
+                            )}
                         </div>
 
                         <div>
@@ -181,6 +115,9 @@ const RegisterPage = () => {
                                     }
                                 />
                             </div>
+                            {errors.username && (
+                                <ErrorDisplay errors={errors.username} />
+                            )}
                         </div>
 
                         <div>
@@ -207,6 +144,9 @@ const RegisterPage = () => {
                                     }
                                 />
                             </div>
+                            {errors.password && (
+                                <ErrorDisplay errors={errors.password} />
+                            )}
                         </div>
 
                         <div>
@@ -218,7 +158,6 @@ const RegisterPage = () => {
                                     <span className="text-error">*</span>
                                 </span>
                             </label>
-
                             <div className="flex-1 relative">
                                 <input
                                     id="date_of_birth"
@@ -232,7 +171,10 @@ const RegisterPage = () => {
                                         setDateOfBirth(event.target.value)
                                     }
                                 />
-                            </div>
+                            </div>{' '}
+                            {errors.date_of_birth && (
+                                <ErrorDisplay errors={errors.date_of_birth} />
+                            )}
                         </div>
 
                         <div x-data="{gender: 'male'}">
@@ -266,7 +208,7 @@ const RegisterPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => setGender('female')}
-                                    className={`btn normal-case btn-outline ${
+                                    className={`btn normal-case btn-outline lg:p-0 ${
                                         gender === 'female' && 'btn-primary'
                                     }`}>
                                     <svg
@@ -312,7 +254,9 @@ const RegisterPage = () => {
                                     value={gender}
                                 />
                             </div>
-                            <ErrorDisplay errors={errors} />
+                            {errors.gender && (
+                                <ErrorDisplay errors={errors.gender} />
+                            )}
                         </div>
                     </div>
                     <button

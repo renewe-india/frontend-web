@@ -5,13 +5,36 @@ import Navigation from '@/app/Navigation'
 import Loading from '@/components/Loading'
 import LeftSidebar from './LeftSidebar'
 import RightSidebar from './RightSidebar'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import axios from '@/lib/axios'
 
 const AppLayout = ({ children }) => {
-    const { user } = useAuth({
+    const { user: authUser } = useAuth({
         middleware: 'auth',
     })
+    const [isLoading, setIsLoading] = useState(true)
+    const router = useRouter()
 
-    if (!user) {
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                await axios.get('/api/user')
+
+                setIsLoading(false)
+            } catch (error) {
+                router.push('/login')
+            }
+        }
+
+        if (!authUser) {
+            fetchUserData()
+        } else {
+            setIsLoading(false)
+        }
+    }, [authUser, router])
+
+    if (isLoading) {
         return <Loading />
     }
 

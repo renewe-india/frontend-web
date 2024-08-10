@@ -1,6 +1,7 @@
 import Link from 'next/link'
+import React from 'react'
 
-const NotFoundPage = () => {
+function page() {
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-inherit flex flex-col ">
             <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -26,4 +27,4 @@ const NotFoundPage = () => {
     )
 }
 
-export default NotFoundPage
+export default page

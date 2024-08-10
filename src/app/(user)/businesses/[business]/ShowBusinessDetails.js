@@ -31,7 +31,6 @@ function ShowBusinessDetails({ businessName }) {
     const [isFollowing, setIsFollowing] = useState(false)
     const [businessDetails, setBusinessDetails] = useState({})
     const [loading, setLoading] = useState(true)
-    const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL
     useEffect(() => {
         if (businessName) {
             fetchBusinessDetails(businessName).then(details => {
@@ -60,15 +59,15 @@ function ShowBusinessDetails({ businessName }) {
                     className="w-full h-full object-cover rounded-lg"
                 />
                 <div className="absolute -bottom-20 left-5">
-                    {/* <Image
-                        src={`${baseURL}${businessDetails.logo.url}`}
+                    <Image
+                        src={`${businessDetails.logo.url}`}
                         className=" avatar w-36 rounded-full border-4 border-white"
-                    /> */}
+                    />
                 </div>
             </div>
             <div className="mx-5 py-2 mt-12 flex flex-col gap-2">
                 <div className="font-bold text-base md:text-xl flex items-center gap-2">
-                    {businessDetails.name}
+                    {businessDetails.display_name}
                 </div>
                 <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
                     {businessDetails.tagline}

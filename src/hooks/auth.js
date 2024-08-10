@@ -38,16 +38,27 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await csrf()
             setErrors([])
             setStatus(null)
-            await axios.post('/login', props)
+
+            const res = await axios.post('/login', props)
+
             await mutate()
             router.push(redirectIfAuthenticated)
         } catch (error) {
-            if (error.response.status !== 422) throw error
-            setErrors(error.response.data.message)
+            if (error.response?.status === 422) {
+                setErrors(error.response.data.errors)
+            } else {
+                throw error
+            }
         }
     }
 
-    const register = async ({ onSuccess, setErrors, token, ...props }) => {
+    const register = async ({
+        onSuccess,
+        onError,
+        setErrors,
+        token,
+        ...props
+    }) => {
         try {
             await csrf()
             setErrors([])
@@ -62,15 +73,20 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await mutate()
 
             localStorage.clear()
-
             onSuccess()
         } catch (error) {
             if (error.response.status !== 422) throw error
-            setErrors(error.response.data.message)
+            setErrors(error.response.data.errors)
+            onError()
         }
     }
 
-    const onboardingVerifyOtp = async ({ setErrors, onSuccess, ...props }) => {
+    const onboardingVerifyOtp = async ({
+        setErrors,
+        onError,
+        onSuccess,
+        ...props
+    }) => {
         await csrf()
         setErrors([])
         try {
@@ -88,7 +104,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             onSuccess()
         } catch (error) {
             if (error.response.status !== 422) throw error
-            setErrors(error.response.data.message)
+            setErrors(error.response.data.errors)
+            onError()
         }
     }
 
@@ -105,7 +122,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             onSuccess()
         } catch (error) {
             if (error.response.status !== 422) throw error
-            setErrors(error.response.data.message)
+            setErrors(error.response.data.errors)
             onError()
         }
     }

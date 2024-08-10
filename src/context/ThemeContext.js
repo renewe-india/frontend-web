@@ -15,15 +15,6 @@ export const ThemeProvider = ({ children }) => {
         }
     }, [])
 
-    // if (!mounted)
-    //     return (
-    //         <>
-    //             <div className="flex min-h-screen w-full items-center justify-center bg-gray-100 ">
-    //                 Loading...
-    //             </div>
-    //         </>
-    //     )
-
     const toggleTheme = theme => {
         setTheme(theme)
         localStorage.setItem('theme', theme)
