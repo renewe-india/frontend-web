@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import Navigation from '@/app/Navigation'
-import LeftSidebar from '@/app/(user)/LeftSidebar'
-import RightSidebar from '@/app/(user)/RightSidebar'
 import Loading from '@/components/Loading'
-import Input from '@/components/Input'
+import LeftSidebar from './(app)/(user)/LeftSidebar'
+import RightSidebar from './(app)/(user)/RightSidebar'
+import SearchComponent from '@/components/SearchPanel'
 
 const Home = ({ children }) => {
     const router = useRouter()
@@ -50,8 +50,7 @@ const Home = ({ children }) => {
                             <div
                                 id="main-content"
                                 className="w-full min-h-screen lg:col-span-8 xl:col-span-6">
-                                <Input />
-                                {children}
+                                <SearchComponent />
                             </div>
                             <RightSidebar />
                         </div>

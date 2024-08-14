@@ -17,7 +17,7 @@ function ClaimableBusiness() {
         setIsSubmitting(true)
         try {
             await axios.post(`/api/organizations/${name}/claim`)
-            router.push(`/businesses/${name}`)
+            router.push(`/manage/${name}`)
         } catch (error) {
             console.error('Error claiming business:', error)
         } finally {

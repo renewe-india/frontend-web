@@ -27,15 +27,7 @@ const CreateOrganizationForm = ({ type }) => {
             const response = await axios.post(`/api/organizations`, requestData)
             const org = response.data.data
 
-            router.push(
-                `/${
-                    type === 'business'
-                        ? 'businesses'
-                        : type === 'association'
-                        ? 'associations'
-                        : type
-                }/${org.name}`,
-            )
+            router.push(`/manage/${org.name}`)
         } catch (error) {
             console.log(error)
             setError(error.response.data.errors)

@@ -12,7 +12,7 @@ const RootLayout = ({ children }) => {
             <body className="antialiased ">
                 <ThemeProvider>
                     <ClientThemeWrapper>{children}</ClientThemeWrapper>
-                </ThemeProvider>
+                </ThemeProvider>{' '}
             </body>
         </html>
     )

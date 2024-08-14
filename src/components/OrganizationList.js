@@ -75,13 +75,7 @@ const OrganizationList = ({ type }) => {
             {organizations.map(org => (
                 <li key={org.name}>
                     <Link
-                        href={`/${
-                            type === 'business'
-                                ? 'businesses'
-                                : type === 'association'
-                                ? 'associations'
-                                : type
-                        }/${org.name}`}
+                        href={`/manage/${org.name}`}
                         className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
                         <img
                             src={org.logo.url}

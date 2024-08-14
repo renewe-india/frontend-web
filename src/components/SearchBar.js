@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { X, MagnifyingGlass } from '@phosphor-icons/react'
+import { useRouter } from 'next/navigation'
 
 function Search() {
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedModel, setSelectedModel] = useState('users')
+    const router = useRouter()
+
+    const handleInputChange = e => {
+        setSearchTerm(e.target.value)
+    }
+
+    const handleModelChange = e => {
+        setSelectedModel(e.target.value)
+    }
+
+    const handleSearch = () => {
+        if (searchTerm.trim() === '') return
+
+        router.push(
+            `/search/${selectedModel}?search=${encodeURIComponent(searchTerm)}`,
+        )
+    }
+
     return (
         <div className="drawer absolute z-50 drawer-end">
             <input id="search" type="checkbox" className="drawer-toggle" />
@@ -42,6 +63,8 @@ function Search() {
                                 className="input input-primary w-full peer"
                                 type="text"
                                 name="search_term"
+                                value={searchTerm}
+                                onChange={handleInputChange}
                                 required
                             />
                         </div>
@@ -51,9 +74,10 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="search_users"
+                                    value="users"
                                     className="radio"
                                     defaultChecked
+                                    onChange={handleModelChange}
                                 />
                                 <span>Users</span>
                             </label>
@@ -61,17 +85,29 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="search_stock_items"
+                                    value="products"
                                     className="radio"
+                                    onChange={handleModelChange}
                                 />
-                                <span>Product/Services</span>
+                                <span>Products</span>
                             </label>
                             <label className="flex gap-3">
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="search_businesses"
+                                    value="services"
                                     className="radio"
+                                    onChange={handleModelChange}
+                                />
+                                <span>Services</span>
+                            </label>
+                            <label className="flex gap-3">
+                                <input
+                                    type="radio"
+                                    name="search_model"
+                                    value="businesses"
+                                    className="radio"
+                                    onChange={handleModelChange}
                                 />
                                 <span>Businesses</span>
                             </label>
@@ -79,8 +115,9 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="search_associations"
+                                    value="associations"
                                     className="radio"
+                                    onChange={handleModelChange}
                                 />
                                 <span>Associations</span>
                             </label>
@@ -88,8 +125,9 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="search_news"
+                                    value="news"
                                     className="radio"
+                                    onChange={handleModelChange}
                                 />
                                 <span>News</span>
                             </label>
@@ -97,8 +135,9 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="search_events"
+                                    value="events"
                                     className="radio"
+                                    onChange={handleModelChange}
                                 />
                                 <span>Events</span>
                             </label>
@@ -106,6 +145,7 @@ function Search() {
 
                         <button
                             type="button"
+                            onClick={handleSearch}
                             className="btn normal-case btn-primary">
                             <span className="block">
                                 <MagnifyingGlass size={24} stroke={2} />
