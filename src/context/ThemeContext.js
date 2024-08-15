@@ -5,10 +5,10 @@ export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('light')
-    const [mounted, setMounted] = useState(false)
+    // const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
-        setMounted(true)
+        // setMounted(true)
         const localTheme = localStorage.getItem('theme')
         if (localTheme) {
             setTheme(localTheme ? localTheme : 'light')

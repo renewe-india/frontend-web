@@ -34,16 +34,10 @@ function SearchBusiness({ setCreateNewBusinessForm }) {
                         Accept: 'application/json',
                     },
                 })
-                console.log(response.data.data)
+
                 setResults(response.data.data)
             } catch (error) {
-                console.error(
-                    'Error fetching businesses:',
-                    error.response.data.message,
-                )
-                setErrors([
-                    'An unexpected error occurred. Please try again later.',
-                ])
+                setErrors(error.response.data.message)
             }
         }
 

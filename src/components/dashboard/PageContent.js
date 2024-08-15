@@ -29,7 +29,7 @@ function PageContent({ children, organizationData }) {
 
                     {!isLoading && <Page404 />}
                 </Suspense>
-                <div className="h-16"></div>
+                <div className="h-16" />
             </main>
         </div>
     )

@@ -14,7 +14,7 @@ function ManagersTable({ organizationName }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [roles, setRoles] = useState([])
     const [managersRoles, setManagersRoles] = useState([])
-    const [error, setError] = useState(null)
+    // const [error, setError] = useState(null)
     const [deleteManager, setDeleteManager] = useState(null)
 
     const fetchManagers = async () => {
@@ -24,7 +24,7 @@ function ManagersTable({ organizationName }) {
             )
             setManagers(response.data.data)
         } catch (error) {
-            console.error('Error fetching Managers:', error)
+            // console.error('Error fetching Managers:', error)
         }
     }
 
@@ -48,7 +48,7 @@ function ManagersTable({ organizationName }) {
             )
             setManagersRoles(managersRolesOptions)
         } catch (error) {
-            console.error('Error fetching Managers Roles:', error)
+            // console.error('Error fetching Managers Roles:', error)
         }
     }, [])
 
@@ -77,7 +77,7 @@ function ManagersTable({ organizationName }) {
             setDeleteManager(null)
             await fetchManagers()
         } catch (error) {
-            setError(error.response.data.errors)
+            // setError(error.response.data.errors)
             alert(error.response.data.message)
         }
     }
@@ -95,7 +95,7 @@ function ManagersTable({ organizationName }) {
             setCurrentManager(null)
             await fetchManagers()
         } catch (error) {
-            setError(error.response.data.errors)
+            // setError(error.response.data.errors)
             alert(error.response.data.message)
         }
     }
@@ -121,7 +121,7 @@ function ManagersTable({ organizationName }) {
                     <div className="flex justify-between font-bold">
                         <div className="w-1/2 pl-2">Name</div>
                         <div className="w-1/4">Role</div>
-                        <div className="w-1/4"></div>
+                        <div className="w-1/4" />
                     </div>
                     {managers.map((manager, index) => (
                         <ManagerItem

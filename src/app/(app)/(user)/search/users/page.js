@@ -14,7 +14,7 @@ export default function UserSearch() {
     const search = searchParams.get('search')
     const [searchResults, setSearchResults] = useState([])
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    // const [error, setError] = useState(null)
     const [sortCriteria, setSortCriteria] = useState('')
     const [filters, setFilters] = useState([])
 
@@ -25,12 +25,12 @@ export default function UserSearch() {
                 search: {
                     value: decodedSearchTerm,
                 },
-                sort: sortBy ? [{ field: sortBy, direction: 'asc' }] : [],
-                filters: appliedFilters, // Apply the filters
+                sort: sortBy ? [sortBy] : [],
+                filters: appliedFilters,
             })
             setSearchResults(response.data.data)
         } catch (err) {
-            setError('Failed to fetch search results')
+            // setError('Failed to fetch search results')
         } finally {
             setLoading(false)
         }
@@ -42,14 +42,12 @@ export default function UserSearch() {
         }
     }, [search, sortCriteria, filters])
 
-    const handleSortChange = value => {
-        setSortCriteria(value)
-    }
-
     const handleApplyFilters = newFilters => {
         setFilters(newFilters)
     }
-
+    const handleSortChange = value => {
+        setSortCriteria(value)
+    }
     const handleRemoveFilter = index => {
         const updatedFilters = [...filters]
         updatedFilters.splice(index, 1)
@@ -59,9 +57,6 @@ export default function UserSearch() {
     if (loading) {
         return (
             <div className="card bg-base-200 rounded-lg p-5">
-                <h1 className="text-2xl font-semibold">
-                    Search Results for: {decodeURIComponent(search)}
-                </h1>
                 <Loading />
             </div>
         )
@@ -70,30 +65,34 @@ export default function UserSearch() {
     return (
         <div className="card bg-base-100 space-y-2">
             <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-3">
-                <div className="flex flex-row gap-3 items-center">
-                    <SortBy onSortChange={handleSortChange} />
-                    <FilterDrawer onApplyFilters={handleApplyFilters} />
+                <div className="flex flex-row gap-3 items-center flex-wrap">
+                    <div className="flex flex-row gap-3 items-center ">
+                        <FilterDrawer onApplyFilters={handleApplyFilters} />
+                    </div>
 
                     {filters.map((filter, index) => (
                         <button
                             key={index}
-                            className="btn btn-outline btn-sm flex items-center gap-2"
+                            className="btn btn-outline btn-sm flex items-center gap-2 text-left whitespace-normal break-words"
                             onClick={() => handleRemoveFilter(index)}>
-                            {filter.field === 'created_at'
-                                ? `Created After: ${filter.value}`
-                                : null}
-                            {filter.field === 'options->visible'
-                                ? 'Visible'
-                                : null}
+                            {filter.field === 'gender' &&
+                                `Gender: ${filter.value}`}
+                            {filter.field === 'date_of_birth' &&
+                                `Date of Birth After: ${filter.value}`}
+
                             <XCircle size={16} />
                         </button>
                     ))}
                 </div>
             </div>
             <div className="card bg-base-200 rounded-lg p-5">
-                <h1 className="text-2xl font-semibold">
-                    Search Results for: {decodeURIComponent(search)}
-                </h1>
+                <div className="flex  flex-row justify-between items-center mb-3">
+                    <h1 className="text-sm">
+                        {searchResults.length} result
+                        {searchResults.length !== 1 ? 's' : ''} found
+                    </h1>
+                    <SortBy onSortChange={handleSortChange} />
+                </div>
                 {searchResults.length > 0 ? (
                     <div className="space-y-4">
                         {searchResults.map(user => (
@@ -101,7 +100,15 @@ export default function UserSearch() {
                         ))}
                     </div>
                 ) : (
-                    <div>No results found.</div>
+                    <div className="flex flex-col items-center justify-center  text-center">
+                        <img
+                            src="/result_not_found.svg"
+                            alt="No results found"
+                            width={200}
+                            height={200}
+                        />
+                        <div className="mt-4">No results found.</div>
+                    </div>
                 )}
             </div>
         </div>

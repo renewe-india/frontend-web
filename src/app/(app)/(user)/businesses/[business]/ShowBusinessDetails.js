@@ -21,14 +21,14 @@ async function fetchBusinessDetails(businessName) {
         const response = await axios.get(`/api/organizations/${businessName}`)
         businessDetails = response.data.data
     } catch (error) {
-        console.error('Error fetching business details:', error)
+        // console.error('Error fetching business details:', error)
     }
 
     return businessDetails
 }
 
 function ShowBusinessDetails({ businessName }) {
-    const [isFollowing, setIsFollowing] = useState(false)
+    //const [isFollowing, setIsFollowing] = useState(false)
     const [businessDetails, setBusinessDetails] = useState({})
     const [loading, setLoading] = useState(true)
     useEffect(() => {
@@ -44,8 +44,8 @@ function ShowBusinessDetails({ businessName }) {
 
     const nameFollow = () => {
         //check api
-        setIsFollowing(prevState => !prevState)
-        console.log(isFollowing ? 'Unfollowed' : 'Followed')
+        //setIsFollowing(prevState => !prevState)
+        //console.log(isFollowing ? 'Unfollowed' : 'Followed')
     }
     if (loading) {
         return <Loading />

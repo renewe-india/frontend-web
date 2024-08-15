@@ -9,7 +9,7 @@ import LeftSidebar from './(app)/(user)/LeftSidebar'
 import RightSidebar from './(app)/(user)/RightSidebar'
 import SearchComponent from '@/components/SearchPanel'
 
-const Home = ({ children }) => {
+const Home = () => {
     const router = useRouter()
     const { user: authUser } = useAuth({ middleware: 'auth' })
     const [user, setUser] = useState(null)

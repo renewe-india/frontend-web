@@ -11,7 +11,7 @@ async function fetchBusinessDetails(businessHandle) {
         const response = await axios.get(`/api/businesses/${businessHandle}`)
         businessDetails = response.data.data
     } catch (error) {
-        console.error('Error fetching business details:', error)
+        //console.error('Error fetching business details:', error)
     }
 
     return businessDetails

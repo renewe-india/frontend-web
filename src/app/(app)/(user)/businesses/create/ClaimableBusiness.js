@@ -19,7 +19,7 @@ function ClaimableBusiness() {
             await axios.post(`/api/organizations/${name}/claim`)
             router.push(`/manage/${name}`)
         } catch (error) {
-            console.error('Error claiming business:', error)
+            // console.error('Error claiming business:', error)
         } finally {
             setIsSubmitting(false)
         }
@@ -33,7 +33,7 @@ function ClaimableBusiness() {
                 )
                 setBusinessesAvailableToClaim(response.data.data || [])
             } catch (error) {
-                console.error('Error fetching businesses:', error)
+                // console.error('Error fetching businesses:', error)
                 setBusinessesAvailableToClaim([])
             }
         }
@@ -70,7 +70,7 @@ function ClaimableBusiness() {
                         </div>
                     </div>
                     <div className="flex flex-col lg:flex-row justify-end lg:justify-start">
-                        <div className="flex-grow"></div>
+                        <div className="flex-grow" />
                         <SubmitButton
                             isSubmitting={isSubmitting}
                             label="Claim this Business"

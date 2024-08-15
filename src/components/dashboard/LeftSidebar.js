@@ -9,7 +9,7 @@ import Loading from '../Loading'
 function LeftSidebar({ organizationData }) {
     const pathname = usePathname()
 
-    const close = e => {
+    const close = () => {
         document.getElementById('left-sidebar-drawer').click()
     }
     if (!organizationData) {
@@ -17,9 +17,7 @@ function LeftSidebar({ organizationData }) {
     }
     return (
         <div className="drawer-side lg:z-30 z-50">
-            <label
-                htmlFor="left-sidebar-drawer"
-                className="drawer-overlay"></label>
+            <label htmlFor="left-sidebar-drawer" className="drawer-overlay" />
             <ul className="menu pt-2 w-80 bg-base-100 min-h-full text-base-content">
                 <button
                     className="btn btn-ghost bg-base-300 btn-circle z-50 top-0 right-0 mt-4 mr-2 absolute lg:hidden"
@@ -53,7 +51,8 @@ function LeftSidebar({ organizationData }) {
                                 {pathname === route.path && (
                                     <span
                                         className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
-                                        aria-hidden="true"></span>
+                                        aria-hidden="true"
+                                    />
                                 )}
                             </Link>
                         )}

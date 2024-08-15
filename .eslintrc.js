@@ -16,6 +16,7 @@ module.exports = {
         'eslint:recommended',
         'plugin:react/recommended',
         'plugin:prettier/recommended',
+        'prettier',
     ],
     parserOptions: {
         ecmaFeatures: {
@@ -45,7 +46,8 @@ module.exports = {
         'react/no-unescaped-entities': 0,
         'react/require-default-props': 0,
         'react/react-in-jsx-scope': 0,
-        'linebreak-style': ['error', 'unix'],
+        // 'linebreak-style': ['error', 'unix'],
+        'linebreak-style': 0,
         semi: ['error', 'never'],
         'prettier/prettier': [
             'error',

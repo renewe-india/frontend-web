@@ -29,7 +29,6 @@ const CreateOrganizationForm = ({ type }) => {
 
             router.push(`/manage/${org.name}`)
         } catch (error) {
-            console.log(error)
             setError(error.response.data.errors)
         } finally {
             setIsSubmitting(false)

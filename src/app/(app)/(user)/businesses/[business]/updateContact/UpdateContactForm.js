@@ -3,23 +3,20 @@ import SubmitButton from '@/components/SubmitButton'
 import React, { useState } from 'react'
 
 export default function UpdateContactForm({ businessDetails }) {
-    const [contactType, setContactType] = useState('mobile')
     const [mobile, setMobile] = useState(businessDetails.mobile || '')
     const [email, setEmail] = useState(businessDetails.email || '')
     const [isSubmitting, setIsSubmitting] = useState(false)
-    console.log(businessDetails)
+
     const handleUpdateMobile = event => {
         event.preventDefault()
         setIsSubmitting(true)
-        console.log('update contact')
-        // Add your update logic here
+
         setIsSubmitting(false)
     }
     const handleUpdateEmail = event => {
         event.preventDefault()
         setIsSubmitting(true)
-        console.log('update contact')
-        // Add your update logic here
+
         setIsSubmitting(false)
     }
 

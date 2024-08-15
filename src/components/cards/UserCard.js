@@ -3,7 +3,9 @@ import { Users, Plus, ShieldCheck } from '@phosphor-icons/react'
 
 export default function UserCard({ user }) {
     return (
-        <div className="card w-full bg-base-100 shadow-xl border p-4 flex flex-col items-start">
+        <a
+            href={`/users/${user.username}`}
+            className="card w-full bg-base-100 shadow-xl border p-4 flex flex-col items-start">
             {/* Profile Image */}
             <div className="flex items-center w-full">
                 <div className="avatar">
@@ -58,6 +60,6 @@ export default function UserCard({ user }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     )
 }

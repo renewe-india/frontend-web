@@ -1,13 +1,13 @@
+import ShowUserDetails from './ShowUserDetails'
+
 export const metadata = {
     title: 'User Show',
 }
-
-const UserShow = () => {
+export default function UserShow({ params }) {
+    const username = params.user
     return (
         <>
-            <div>User Show</div>
+            <ShowUserDetails username={username} />
         </>
     )
 }
-
-export default UserShow

@@ -18,7 +18,7 @@ function ManagersTable({ businessHandle }) {
                 )
                 setManagers(response.data.data)
             } catch (error) {
-                console.error('Error fetching Managers:', error)
+                //console.error('Error fetching Managers:', error)
             }
         }
         fetchManagers()
@@ -46,15 +46,15 @@ function ManagersTable({ businessHandle }) {
             )
             setManagersRoles(managersRolesOptions)
         } catch (error) {
-            console.error('Error fetching Managers Roles:', error)
+            // console.error('Error fetching Managers Roles:', error)
         }
     }
 
     const handleEditSubmit = async e => {
         e.preventDefault()
-        console.log(currentManager)
+
         try {
-            const response = await axios.patch(
+            await axios.patch(
                 `/api/businesses/${businessHandle}/managers/${currentManager.username}/pivot`,
                 {
                     pivot: {
@@ -62,9 +62,8 @@ function ManagersTable({ businessHandle }) {
                     },
                 },
             )
-            console.log(response)
         } catch (error) {
-            console.error('Error fetching countries:', error)
+            //console.error('Error fetching countries:', error)
         }
         setCurrentManager(null)
         //setIsModalOpen(false)
@@ -86,7 +85,7 @@ function ManagersTable({ businessHandle }) {
                     <div className="flex justify-between font-bold">
                         <div className="w-1/3 pl-2">Name</div>
                         <div className="w-1/3">Role</div>
-                        <div className="w-1/3"></div>
+                        <div className="w-1/3" />
                     </div>
                     {managers.map((manager, index) => (
                         <ManagerItem

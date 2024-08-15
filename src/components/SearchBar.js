@@ -105,7 +105,7 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="businesses"
+                                    value="business"
                                     className="radio"
                                     onChange={handleModelChange}
                                 />
@@ -115,7 +115,7 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="associations"
+                                    value="association"
                                     className="radio"
                                     onChange={handleModelChange}
                                 />

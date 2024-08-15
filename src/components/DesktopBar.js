@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useContext, memo } from 'react'
+import React, { useContext, memo } from 'react'
 import dynamic from 'next/dynamic'
 import {
     BellRinging,
@@ -22,7 +22,7 @@ const Image = dynamic(() => import('./Image'), { ssr: false })
 
 const fetcher = url => axios.get(url).then(res => res.data)
 const AvatarSkeleton = () => (
-    <div className="rounded-full avatar w-7 h-7 bg-gray-300 animate-pulse"></div>
+    <div className="rounded-full avatar w-7 h-7 bg-gray-300 animate-pulse" />
 )
 
 const DesktopBar = memo(() => {
@@ -162,5 +162,5 @@ const DesktopBar = memo(() => {
         </div>
     )
 })
-
+DesktopBar.displayName = 'DesktopBar'
 export default DesktopBar

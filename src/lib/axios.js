@@ -23,7 +23,6 @@ axios.interceptors.response.use(
             } else if (status === 404) {
                 window.location.href = '/page-not-found'
             } else if (status === 500) {
-                console.log(error)
                 window.location.href = '/internal-server-error'
             } else if (status === 422) {
                 return Promise.reject(error)

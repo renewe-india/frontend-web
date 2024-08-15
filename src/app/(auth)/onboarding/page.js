@@ -79,7 +79,7 @@ const Page = () => {
                 )
                 setCountryCodes(response.data.data)
             } catch (error) {
-                console.error('Failed to fetch country codes:', error)
+                // console.error('Failed to fetch country codes:', error)
             } finally {
                 setLoading(false)
             }

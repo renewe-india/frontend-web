@@ -5,8 +5,6 @@ import {
     PlugsConnected,
     BagSimple,
     UsersFour,
-    Plus,
-    MagnifyingGlass,
     Sparkle,
     Newspaper,
     Monitor,
@@ -38,15 +36,9 @@ function SidePanel() {
             sidebarCheckbox.checked = false
         }
     }
-
     return (
         <div className="drawer absolute z-50">
-            <input
-                id="sidebar"
-                x-ref="checkbox"
-                type="checkbox"
-                className="drawer-toggle"
-            />
+            <input id="sidebar" type="checkbox" className="drawer-toggle" />
 
             <div className="drawer-side">
                 <label htmlFor="sidebar" className="drawer-overlay" />
@@ -95,7 +87,10 @@ function SidePanel() {
                                         <BagSimple size={24} stroke={2} />
                                         <span className="">My Businesses</span>
                                     </summary>
-                                    <OrganizationList type="business" />
+                                    <OrganizationList
+                                        type="business"
+                                        handleLinkClick={handleLinkClick}
+                                    />
                                 </details>
                             </li>
 
@@ -122,7 +117,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <Newspaper size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Newsletters{' '}
@@ -135,7 +130,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <Monitor size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Projects{' '}
@@ -148,7 +143,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <ChartLineUp size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Invest{' '}
@@ -161,7 +156,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <Certificate size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Courses{' '}
@@ -174,7 +169,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <ChatCenteredText size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Forums{' '}
@@ -195,7 +190,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <UserCircle size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Profile{' '}
@@ -208,7 +203,7 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="https://renewe.in/coming-soon">
+                                    href="/coming-soon">
                                     <UserGear size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Preferences{' '}
@@ -230,7 +225,7 @@ function SidePanel() {
                                         <li>
                                             <Link
                                                 className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                                href="https://renewe.in/coming-soon">
+                                                href="/coming-soon">
                                                 <Handshake
                                                     size={24}
                                                     stroke={2}
@@ -246,7 +241,7 @@ function SidePanel() {
                                         <li>
                                             <Link
                                                 className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                                href="https://renewe.in/coming-soon">
+                                                href="/coming-soon">
                                                 <Ticket size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Support Tickets{' '}
@@ -259,7 +254,7 @@ function SidePanel() {
                                         <li>
                                             <Link
                                                 className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                                href="https://renewe.in/coming-soon">
+                                                href="/coming-soon">
                                                 <Vault size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Claims{' '}
@@ -272,7 +267,7 @@ function SidePanel() {
                                         <li>
                                             <Link
                                                 className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                                href="https://renewe.in/coming-soon">
+                                                href="/coming-soon">
                                                 <XCircle size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Report A Problem{' '}
@@ -285,7 +280,7 @@ function SidePanel() {
                                         <li>
                                             <Link
                                                 className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                                href="https://renewe.in/coming-soon">
+                                                href="/coming-soon">
                                                 <Gavel size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Terms and Policies{' '}

@@ -50,7 +50,7 @@ function UpdateBusinessForm({ businessDetails }) {
             )
             setStates(response.data.data)
         } catch (error) {
-            console.error('Error fetching states:', error)
+            // console.error('Error fetching states:', error)
         }
     }
 
@@ -62,7 +62,7 @@ function UpdateBusinessForm({ businessDetails }) {
                 )
                 setCountries(response.data.data)
             } catch (error) {
-                console.error('Error fetching countries:', error)
+                //  console.error('Error fetching countries:', error)
             }
         }
         fetchCountries()
@@ -89,8 +89,8 @@ function UpdateBusinessForm({ businessDetails }) {
     const handleUpdateBusiness = async e => {
         e.preventDefault()
         setIsSubmitting(true)
-        const response = await axios.patch('/api/businesses/batch', formData)
-        console.log(response)
+        await axios.patch('/api/businesses/batch', formData)
+
         setIsSubmitting(false)
         setFormData({
             name: '',

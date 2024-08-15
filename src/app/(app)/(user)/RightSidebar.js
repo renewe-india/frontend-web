@@ -23,9 +23,7 @@ function RightSidebar() {
                             <div>
                                 <div className="flex items-center gap-2">
                                     <div className="avatar">
-                                        <div
-                                            className="w-7 rounded-full"
-                                            squared="squared">
+                                        <div className="w-7 rounded-full">
                                             <img src="https://picsum.photos/300" />
                                         </div>
                                     </div>
@@ -55,23 +53,19 @@ function RightSidebar() {
                             </div>
                         </div>
 
-                        <div className="border-b my-2"></div>
+                        <div className="border-b my-2" />
 
                         <div className="flex gap-2">
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <div className="avatar">
-                                        <div
-                                            className="w-7 rounded-full"
-                                            squared="squared">
-                                            <img src="https://picsum.photos/300" />
-                                        </div>
+                            <div className="flex items-center gap-2">
+                                <div className="avatar">
+                                    <div className="w-7 rounded-full">
+                                        <img src="https://picsum.photos/300" />
                                     </div>
-                                    <div>
-                                        {/*[if BLOCK]><![endif]*/}
+                                </div>
+                                <div>
+                                    {/*[if BLOCK]><![endif]*/}
 
-                                        {/*[if BLOCK]><![endif]*/}
-                                    </div>
+                                    {/*[if BLOCK]><![endif]*/}
                                 </div>
                             </div>
                             <div>
@@ -122,7 +116,7 @@ function RightSidebar() {
                         </div>
                     </div>
 
-                    <div className="border-b my-2"></div>
+                    <div className="border-b my-2" />
 
                     <div className="flex flex-col gap-1">
                         <div className="font-semibold">Sales Executive</div>

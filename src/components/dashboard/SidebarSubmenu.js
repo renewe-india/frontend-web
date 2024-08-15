@@ -37,7 +37,8 @@ function SidebarSubmenu({ submenu, name, icon }) {
                                     {router.pathname === m.path && (
                                         <span
                                             className="absolute mt-1 mb-1 inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
-                                            aria-hidden="true"></span>
+                                            aria-hidden="true"
+                                        />
                                     )}
                                 </div>
                             </Link>

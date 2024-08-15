@@ -1,5 +1,5 @@
 import { Plus, ShieldCheck } from '@phosphor-icons/react'
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, memo, Suspense } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
@@ -12,7 +12,7 @@ const Image = lazy(() => import('@/components/Image'))
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
-const LeftSidebar = React.memo(() => {
+const LeftSidebar = memo(() => {
     const { user } = useAuth({ middleware: 'auth' })
     const { data, error } = useSWR(
         user ? `/api/users/${user.username}` : null,
@@ -97,5 +97,5 @@ const LeftSidebar = React.memo(() => {
         </div>
     )
 })
-
+LeftSidebar.displayName = 'LeftSidebar'
 export default LeftSidebar

@@ -33,13 +33,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         await axios.get('/sanctum/csrf-cookie')
     }
 
-    const login = async ({ setErrors, setStatus, ...props }) => {
+    const login = async ({ setErrors, ...props }) => {
         try {
             await csrf()
             setErrors([])
-            setStatus(null)
 
-            const res = await axios.post('/login', props)
+            await axios.post('/login', props)
 
             await mutate()
             router.push(redirectIfAuthenticated)

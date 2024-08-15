@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from '@/hooks/auth'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ErrorDisplay from '@/components/ErrorDisplay'
 
@@ -12,7 +12,6 @@ const RegisterPage = () => {
     })
     const router = useRouter()
     const [name, setName] = useState('')
-    const [mobile, setMobile] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [dateOfBirth, setDateOfBirth] = useState('')
@@ -177,7 +176,7 @@ const RegisterPage = () => {
                             )}
                         </div>
 
-                        <div x-data="{gender: 'male'}">
+                        <div>
                             <span className="pt-0 label label-text font-semibold">
                                 Gender
                             </span>

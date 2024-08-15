@@ -38,17 +38,11 @@ function CreateNewsForm() {
             await csrf()
             setErrors([])
 
-            const response = await axios.post('/api/news/articles', formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
+            await axios.post('/api/news/articles', formData)
         } catch (error) {
             if (error.response?.status === 422) {
                 setErrors(['Validation error.'])
             } else {
-                console.error('An error occurred while creating news:', error)
                 setErrors([
                     'An unexpected error occurred. Please try again later.',
                 ])

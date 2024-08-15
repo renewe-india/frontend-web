@@ -1,5 +1,4 @@
 import MangersTable from './MangersTable'
-import axios from '@/lib/axios'
 export const metadata = {
     title: 'Business Managers',
 }

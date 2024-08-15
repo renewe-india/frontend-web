@@ -8,8 +8,8 @@ export default function SearchComponent() {
         'users',
         'products',
         'services',
-        'businesses',
-        'associations',
+        'business',
+        'association',
         'events',
     ]
     const [selectedCategory, setSelectedCategory] = useState(categories[0])
@@ -20,14 +20,9 @@ export default function SearchComponent() {
         setSearchTerm(value)
     }
 
-    const handleOptionClick = option => {
-        setSearchTerm(option)
-    }
-
     const handleSearch = e => {
         e.preventDefault()
-        console.log(selectedCategory)
-        console.log(searchTerm)
+
         if (searchTerm.trim() === '') return
 
         router.push(

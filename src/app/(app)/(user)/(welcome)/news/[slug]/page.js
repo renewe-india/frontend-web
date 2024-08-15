@@ -33,7 +33,6 @@ const ArticlePage = ({ params }) => {
                                         <img src="https://capecoraltech.edu/wp-content/uploads/2016/01/tutor-8-3.jpg" />
                                     </div>
                                 </div>
-                                <div></div>
                             </div>
                             <div>
                                 <div className="font-bold text-base md:text-lg flex items-center gap-2">

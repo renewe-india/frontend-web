@@ -6,13 +6,8 @@ import { Plus } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 
 const fetchOrganizations = async type => {
-    try {
-        const response = await axios.get(`/api/my/${type}/organizations/list`)
-        return response.data.data
-    } catch (error) {
-        console.error('Error fetching organizations:', error)
-        throw error
-    }
+    const response = await axios.get(`/api/my/${type}/organizations/list`)
+    return response.data.data
 }
 
 const truncateName = name => {
@@ -20,7 +15,7 @@ const truncateName = name => {
     return words.length > 2 ? `${words.slice(0, 2).join(' ')}...` : name
 }
 
-const OrganizationList = ({ type }) => {
+const OrganizationList = ({ type, handleLinkClick }) => {
     const [organizations, setOrganizations] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -76,7 +71,8 @@ const OrganizationList = ({ type }) => {
                 <li key={org.name}>
                     <Link
                         href={`/manage/${org.name}`}
-                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
+                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                        onClick={() => handleLinkClick()}>
                         <img
                             src={org.logo.url}
                             className="h-5 w-5 overflow-hidden rounded"
@@ -89,7 +85,8 @@ const OrganizationList = ({ type }) => {
             <li>
                 <Link
                     href={createLink}
-                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap">
+                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                    onClick={() => handleLinkClick()}>
                     <Plus size={24} stroke={2} />
                     Create New {type.charAt(0).toUpperCase() + type.slice(1)}
                 </Link>

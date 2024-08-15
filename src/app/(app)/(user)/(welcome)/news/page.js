@@ -12,7 +12,6 @@ import {
     Smiley,
     ThumbsUp,
 } from '@phosphor-icons/react'
-import Link from 'next/link'
 import { SkeletonCard } from '@/components/skeletons/NewsSkeleton'
 import ArticleImage from './ArticleImage'
 import Loading from '@/components/Loading'
@@ -37,7 +36,7 @@ const News = () => {
                 setPage(prevPage => prevPage + 1)
             }
         } catch (error) {
-            console.error('Error fetching articles:', error)
+            //console.error('Error fetching articles:', error)
         } finally {
             setLoading(false)
         }
