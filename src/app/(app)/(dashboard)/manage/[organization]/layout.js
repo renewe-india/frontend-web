@@ -4,7 +4,6 @@ import useSWR from 'swr'
 import { useMemo } from 'react'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
-import Navigation from '@/app/Navigation'
 import Loading from '@/components/Loading'
 import PageContent from '@/components/dashboard/PageContent'
 import LeftSidebar from '@/components/dashboard/LeftSidebar'
@@ -47,8 +46,7 @@ const AdminLayout = ({ children, params }) => {
     }
     return (
         <>
-            <Navigation />
-            <div className="container mx-auto py-16">
+            <div className="container mx-auto ">
                 <div id="main-content" className="w-full min-h-screen">
                     <div className="drawer lg:drawer-open">
                         <input

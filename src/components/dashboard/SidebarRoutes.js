@@ -1,8 +1,22 @@
-import { Briefcase, Newspaper, Package, Megaphone } from '@phosphor-icons/react'
+import {
+    Briefcase,
+    Newspaper,
+    Package,
+    Megaphone,
+    ChartBar,
+    Trophy,
+    Calendar,
+    House,
+} from '@phosphor-icons/react'
 
 const iconClasses = `h-6 w-6`
 
 const routes = [
+    {
+        path: '/',
+        icon: <House className={iconClasses} />,
+        name: 'Home',
+    },
     {
         path: 'jobs',
         icon: <Briefcase className={iconClasses} />,
@@ -11,7 +25,7 @@ const routes = [
     {
         path: 'stocks',
         icon: <Package className={iconClasses} />,
-        name: 'Product Stocks',
+        name: 'Stocks',
     },
     {
         path: 'newsletter',
@@ -19,9 +33,24 @@ const routes = [
         name: 'Newsletter',
     },
     {
-        path: 'advertise',
+        path: 'advertisements',
         icon: <Megaphone className={iconClasses} />,
-        name: 'Advertise',
+        name: 'Advertisements',
+    },
+    {
+        path: 'analytics',
+        icon: <ChartBar className={iconClasses} />,
+        name: 'Analytics',
+    },
+    {
+        path: 'awards',
+        icon: <Trophy className={iconClasses} />,
+        name: 'Awards',
+    },
+    {
+        path: 'events',
+        icon: <Calendar className={iconClasses} />,
+        name: 'Events',
     },
 ]
 

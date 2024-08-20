@@ -8,7 +8,7 @@ import Loading from '../Loading'
 
 function LeftSidebar({ organizationData }) {
     const pathname = usePathname()
-
+    const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
     const close = () => {
         document.getElementById('left-sidebar-drawer').click()
     }
@@ -25,14 +25,13 @@ function LeftSidebar({ organizationData }) {
                     <X className="h-6 inline-block  w-6" />
                 </button>
 
-                <li className="mb-2 font-semibold text-xl">
+                <li className="mb-2 ">
                     <Link href="/">
                         <Image
-                            customClass={'mask mask-squircle w-10'}
-                            data={organizationData.logo}
-                            alt={organizationData.name}
+                            src={ReneweLogo}
+                            alt="RenewE Logo"
+                            className="h-5"
                         />
-                        {organizationData.display_name}
                     </Link>
                 </li>
                 {routes.map((route, k) => (

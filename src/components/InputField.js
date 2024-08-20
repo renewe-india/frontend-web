@@ -30,7 +30,7 @@ const InputField = ({
                 className={
                     className
                         ? `${className}`
-                        : 'input input-primary w-full peer rounded'
+                        : 'input input-primary w-full peer '
                 }
                 required={required}
             />

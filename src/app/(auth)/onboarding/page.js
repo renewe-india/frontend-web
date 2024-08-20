@@ -9,6 +9,7 @@ import {
     EnvelopeSimple,
     SealCheck,
     SealQuestion,
+    ArrowClockwise,
 } from '@phosphor-icons/react'
 import Loading from '@/components/Loading'
 
@@ -28,7 +29,7 @@ const Page = () => {
     const [verifyingOtp, setVerifyingOtp] = useState(false)
     const [errors, setErrors] = useState(null)
     const [countryCodes, setCountryCodes] = useState([])
-    const [loading, setLoading] = useState(true) // State for loading
+    const [loading, setLoading] = useState(true)
 
     const constructPayload = () => ({
         type: contactType,
@@ -71,6 +72,16 @@ const Page = () => {
         })
     }
 
+    const resetForm = () => {
+        setOtpSent(false)
+        setContact('')
+        setOtp('')
+        setCountryCode('91')
+        setErrors(null)
+        setSendingOtp(false)
+        setVerifyingOtp(false)
+    }
+
     useEffect(() => {
         const fetchCountryCodes = async () => {
             try {
@@ -89,10 +100,7 @@ const Page = () => {
     }, [])
 
     useEffect(() => {
-        setContact('')
-        setOtp('')
-        setCountryCode('91')
-        setOtpSent(false)
+        resetForm()
     }, [contactType])
 
     if (loading) {
@@ -146,23 +154,33 @@ const Page = () => {
                         </select>
                     )}
 
-                    <input
-                        id="contact"
-                        placeholder={
-                            contactType === 'email'
-                                ? 'Email Address'
-                                : 'Mobile Number'
-                        }
-                        className={`input input-primary ${
-                            contactType === 'mobile' ? 'w-3/4' : 'w-full'
-                        } peer`}
-                        type="text"
-                        value={contact}
-                        onChange={event => setContact(event.target.value)}
-                        required
-                        autoFocus
-                        disabled={otpSent}
-                    />
+                    <div className="relative flex items-center w-full">
+                        <input
+                            id="contact"
+                            placeholder={
+                                contactType === 'email'
+                                    ? 'Email Address'
+                                    : 'Mobile Number'
+                            }
+                            className={`input input-primary ${
+                                contactType === 'mobile' ? 'w-3/4' : 'w-full'
+                            } peer`}
+                            type="text"
+                            value={contact}
+                            onChange={event => setContact(event.target.value)}
+                            required
+                            autoFocus
+                            disabled={otpSent}
+                        />
+                        {otpSent && (
+                            <button
+                                type="button"
+                                onClick={resetForm}
+                                className="absolute right-0 mr-2">
+                                <ArrowClockwise size={24} />
+                            </button>
+                        )}
+                    </div>
                 </div>
                 {errors?.data && <ErrorDisplay errors={errors.data} />}
                 {errors?.type && <ErrorDisplay errors={errors.type} />}

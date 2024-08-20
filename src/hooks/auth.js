@@ -1,11 +1,10 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
-    const params = useParams()
 
     const fetcher = async () => {
         try {
@@ -124,32 +123,40 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
-    const forgotPassword = async ({ setErrors, setStatus, email }) => {
+    const forgotPasswordOtp = async ({
+        setErrors,
+        onSuccess,
+        onError,
+        ...props
+    }) => {
         await csrf()
         setErrors([])
-        setStatus(null)
-        axios
-            .post('/forgot-password', { email })
-            .then(response => setStatus(response.data.status))
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-                setErrors(error.response.data.message)
-            })
+        try {
+            await axios.post('/password/forget/send-otp', props)
+            onSuccess()
+        } catch (error) {
+            if (error.response.status !== 422) throw error
+            setErrors(error.response.data.errors)
+            onError()
+        }
     }
 
-    const resetPassword = async ({ setErrors, setStatus, ...props }) => {
+    const resetPassword = async ({
+        setErrors,
+        onSuccess,
+        onError,
+        ...props
+    }) => {
         await csrf()
         setErrors([])
-        setStatus(null)
-        axios
-            .post('/reset-password', { token: params.token, ...props })
-            .then(response =>
-                router.push('/login?reset=' + btoa(response.data.status)),
-            )
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-                setErrors(error.response.data.message)
-            })
+        try {
+            await axios.post('password/reset', props)
+            onSuccess()
+        } catch (error) {
+            if (error.response.status !== 422) throw error
+            setErrors(error.response.data.errors)
+            onError()
+        }
     }
 
     const resendEmailVerification = ({ setStatus }) => {
@@ -188,7 +195,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         onboardingOtp,
         register,
         onboardingVerifyOtp,
-        forgotPassword,
+        forgotPasswordOtp,
         resetPassword,
         resendEmailVerification,
         logout,
