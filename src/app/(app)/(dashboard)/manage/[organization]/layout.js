@@ -7,14 +7,13 @@ import { useAuth } from '@/hooks/auth'
 import Loading from '@/components/Loading'
 import PageContent from '@/components/dashboard/PageContent'
 import LeftSidebar from '@/components/dashboard/LeftSidebar'
+import { OrganizationContext } from '@/context/OrganizationContext'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
 const AdminLayout = ({ children, params }) => {
     const organizationName = params.organization
-    const { user } = useAuth({
-        middleware: 'auth',
-    })
+    const { user } = useAuth({ middleware: 'auth' })
 
     const { data: organizationData, error } = useSWR(
         user ? `/api/organizations/${organizationName}` : null,
@@ -44,22 +43,21 @@ const AdminLayout = ({ children, params }) => {
     if (isLoading) {
         return <Loading />
     }
+
     return (
-        <>
-            <div className="container mx-auto ">
-                <div id="main-content" className="w-full min-h-screen">
-                    <div className="drawer lg:drawer-open">
-                        <input
-                            id="left-sidebar-drawer"
-                            type="checkbox"
-                            className="drawer-toggle"
-                        />
-                        {memoizedPageContent}
-                        {memoizedLeftSidebar}
-                    </div>
+        <OrganizationContext.Provider value={organizationData}>
+            <div id="main-content" className="w-full min-h-screen">
+                <div className="drawer lg:drawer-open">
+                    <input
+                        id="left-sidebar-drawer"
+                        type="checkbox"
+                        className="drawer-toggle"
+                    />
+                    {memoizedPageContent}
+                    {memoizedLeftSidebar}
                 </div>
             </div>
-        </>
+        </OrganizationContext.Provider>
     )
 }
 

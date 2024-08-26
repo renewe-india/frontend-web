@@ -1,3 +1,4 @@
+'use client'
 import {
     ShareNetwork,
     Heart,
@@ -9,9 +10,11 @@ import {
     CheckCircle,
     Repeat,
 } from '@phosphor-icons/react/dist/ssr'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const Card = () => {
+    const router = useRouter()
     return (
         <div className="card bg-base-200 rounded-lg p-5">
             <div className="pb-5">
@@ -69,7 +72,9 @@ const Card = () => {
                         <div className="badge">Travel Allowance</div>
                     </div>
                     <div className="grid grid-cols-2 gap-3 justify-center justify-items-center">
-                        <button className="btn normal-case w-full btn-outline">
+                        <button
+                            className="btn normal-case w-full btn-outline"
+                            onClick={() => router.push('/jobs/view')}>
                             <span className="block">
                                 <CheckCircle size={24} />
                             </span>
