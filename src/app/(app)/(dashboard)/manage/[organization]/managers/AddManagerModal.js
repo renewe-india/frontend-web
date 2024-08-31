@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import axios from '@/lib/axios'
 import SearchComponent from '@/components/dashboard/SearchComponent'
 import ErrorDisplay from '@/components/ErrorDisplay'
+import { useToast } from '@/context/ToastContext'
 
 function AddManagerModal({
     isModalOpen,
@@ -15,6 +16,7 @@ function AddManagerModal({
     const [managerName, setManagerName] = useState('')
     const [selectedRoles, setSelectedRoles] = useState([])
     const [error, setError] = useState(null)
+    const { notifySuccess, notifyError } = useToast()
     const handleSubmit = async e => {
         e.preventDefault()
         try {
@@ -30,7 +32,9 @@ function AddManagerModal({
                 onAddManager()
             }
             setIsModalOpen(false)
+            notifySuccess('Manager added successfully!')
         } catch (error) {
+            notifyError('Error adding manager.')
             setError(error.response.data.errors)
         }
     }

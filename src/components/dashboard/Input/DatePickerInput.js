@@ -12,6 +12,7 @@ function DatePickerInput({
     labelStyle,
     updateType,
     updateFormValue,
+    required = false,
 }) {
     const [selectedDate, setSelectedDate] = useState(
         defaultValue ? new Date(defaultValue) : null,
@@ -47,6 +48,7 @@ function DatePickerInput({
                 className="input input-bordered w-full"
                 placeholderText="Select a date"
                 aria-label={labelTitle}
+                required={required}
             />
         </div>
     )

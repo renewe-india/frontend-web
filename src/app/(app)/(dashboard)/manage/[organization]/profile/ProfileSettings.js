@@ -1,20 +1,22 @@
 'use client'
-import React, { useState } from 'react'
-import TitleCard from '@/components/dashboard/Cards/TitleCard'
-import InputText from '@/components/dashboard/Input/InputText'
-import TextAreaInput from '@/components/dashboard/Input/TextAreaInput'
-import SelectBox from '@/components/dashboard/Input/SelectBox'
-import { useOrganization } from '@/context/OrganizationContext'
-import DatePickerInput from '@/components/dashboard/Input/DatePickerInput'
-import axios from '@/lib/axios'
 
-function ProfileSettings({
-    companySizeOptions,
-    companyTypeOptions,
-    notifySuccess,
-    notifyError,
-}) {
+import React, { useState, Suspense, lazy } from 'react'
+import { useOrganization } from '@/context/OrganizationContext'
+import axios from '@/lib/axios'
+import { useToast } from '@/context/ToastContext'
+const TitleCard = lazy(() => import('@/components/dashboard/Cards/TitleCard'))
+const InputText = lazy(() => import('@/components/dashboard/Input/InputText'))
+const TextAreaInput = lazy(() =>
+    import('@/components/dashboard/Input/TextAreaInput'),
+)
+const SelectBox = lazy(() => import('@/components/dashboard/Input/SelectBox'))
+const DatePickerInput = lazy(() =>
+    import('@/components/dashboard/Input/DatePickerInput'),
+)
+
+function ProfileSettings({ companySizeOptions, companyTypeOptions }) {
     const organization = useOrganization()
+    const { notifySuccess, notifyError } = useToast()
 
     const [formData, setFormData] = useState({
         display_name: organization?.display_name || '',
@@ -46,7 +48,7 @@ function ProfileSettings({
     }
 
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <TitleCard title="Profile Settings" topMargin="mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <InputText
@@ -112,7 +114,7 @@ function ProfileSettings({
                     </button>
                 </div>
             </TitleCard>
-        </>
+        </Suspense>
     )
 }
 

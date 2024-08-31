@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Info } from '@phosphor-icons/react'
 
 function SelectBox({
@@ -11,12 +11,15 @@ function SelectBox({
     options = [],
     updateType,
     updateFormValue,
+    required = false,
 }) {
     const [value, setValue] = useState(defaultValue || '')
 
     const updateValue = newValue => {
         setValue(newValue)
-        updateFormValue({ updateType, value: newValue })
+        if (updateFormValue) {
+            updateFormValue({ updateType, value: newValue })
+        }
     }
 
     return (
@@ -40,13 +43,14 @@ function SelectBox({
                 className="select select-bordered w-full"
                 value={value}
                 onChange={e => updateValue(e.target.value)}
-                aria-label={labelTitle}>
+                aria-label={labelTitle}
+                required={required}>
                 <option disabled value="">
                     {placeholder}
                 </option>
                 {options.map((o, k) => (
                     <option value={o.value || k} key={k}>
-                        {o.name}
+                        {o.label || o.name}{' '}
                     </option>
                 ))}
             </select>
@@ -54,4 +58,4 @@ function SelectBox({
     )
 }
 
-export default React.memo(SelectBox)
+export default memo(SelectBox)

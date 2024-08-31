@@ -102,7 +102,10 @@ function SidePanel() {
                                             My Associations
                                         </span>
                                     </summary>
-                                    <OrganizationList type="association" />
+                                    <OrganizationList
+                                        type="association"
+                                        handleLinkClick={handleLinkClick}
+                                    />
                                 </details>
                             </li>
                         </ul>

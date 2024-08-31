@@ -8,6 +8,8 @@ import Loading from '@/components/Loading'
 import PageContent from '@/components/dashboard/PageContent'
 import LeftSidebar from '@/components/dashboard/LeftSidebar'
 import { OrganizationContext } from '@/context/OrganizationContext'
+import { ToastContainer } from 'react-toastify'
+import { ToastProvider } from '@/context/ToastContext'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
@@ -21,6 +23,7 @@ const AdminLayout = ({ children, params }) => {
         {
             revalidateOnFocus: false,
             revalidateOnReconnect: false,
+            dedupingInterval: 60000, // Cache data for 1 minute
         },
     )
 
@@ -28,7 +31,7 @@ const AdminLayout = ({ children, params }) => {
 
     const memoizedLeftSidebar = useMemo(
         () => <LeftSidebar organizationData={organizationData} />,
-        [organizationName, organizationData],
+        [organizationData],
     )
 
     const memoizedPageContent = useMemo(
@@ -37,7 +40,7 @@ const AdminLayout = ({ children, params }) => {
                 {children}
             </PageContent>
         ),
-        [organizationName, organizationData, children],
+        [organizationData, children],
     )
 
     if (isLoading) {
@@ -46,17 +49,30 @@ const AdminLayout = ({ children, params }) => {
 
     return (
         <OrganizationContext.Provider value={organizationData}>
-            <div id="main-content" className="w-full min-h-screen">
-                <div className="drawer lg:drawer-open">
-                    <input
-                        id="left-sidebar-drawer"
-                        type="checkbox"
-                        className="drawer-toggle"
-                    />
-                    {memoizedPageContent}
-                    {memoizedLeftSidebar}
+            <ToastProvider>
+                <div id="main-content" className="w-full min-h-screen">
+                    <div className="drawer lg:drawer-open">
+                        <input
+                            id="left-sidebar-drawer"
+                            type="checkbox"
+                            className="drawer-toggle"
+                        />
+                        {memoizedPageContent}
+                        {memoizedLeftSidebar}
+                    </div>
                 </div>
-            </div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+            </ToastProvider>
         </OrganizationContext.Provider>
     )
 }

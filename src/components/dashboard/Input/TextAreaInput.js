@@ -9,6 +9,7 @@ function TextAreaInput({
     placeholder,
     updateFormValue,
     updateType,
+    required = false,
 }) {
     const [value, setValue] = useState(defaultValue)
 
@@ -29,6 +30,7 @@ function TextAreaInput({
                 className="textarea textarea-bordered w-full"
                 placeholder={placeholder || ''}
                 onChange={e => updateInputValue(e.target.value)}
+                required={required}
             />
         </div>
     )
