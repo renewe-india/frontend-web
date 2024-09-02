@@ -1,4 +1,4 @@
-import CreateOrganizationForm from '@/components/CreateOrganizationForm'
+import CreateOrganizationForm from '@/components/organization/CreateOrganizationForm'
 
 export const metadata = {
     title: 'Association Create',

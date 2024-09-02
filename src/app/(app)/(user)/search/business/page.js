@@ -89,14 +89,21 @@ export default function BusinessSearch() {
                     ))}
                 </div>
             </div>
-
+            <div className="flex items-center justify-between">
+                <div className="flex-1 ml-2">
+                    <div className="divider my-0" />
+                </div>
+                <div className="flex items-center space-x-2 mx-4">
+                    <span className="text-xs">Sort by:</span>
+                    <SortBy onSortChange={handleSortChange} />
+                </div>
+            </div>
             <div className="card bg-base-200 rounded-lg p-5">
-                <div className="flex flex-row justify-between items-center mb-3">
+                <div className=" mb-3">
                     <h1 className="text-sm">
                         {searchResults.length} result
                         {searchResults.length !== 1 ? 's' : ''} found
                     </h1>
-                    <SortBy onSortChange={handleSortChange} />
                 </div>
                 {searchResults.length > 0 ? (
                     <div className="space-y-4">

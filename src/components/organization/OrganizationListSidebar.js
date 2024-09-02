@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { Plus } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
@@ -95,4 +95,4 @@ const OrganizationList = ({ type, handleLinkClick }) => {
     )
 }
 
-export default OrganizationList
+export default React.memo(OrganizationList)

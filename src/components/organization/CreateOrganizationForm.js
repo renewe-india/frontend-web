@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import SubmitButton from '@/components/SubmitButton'
 import InputField from '@/components/InputField'
-import ErrorDisplay from './ErrorDisplay'
+import ErrorDisplay from '../ErrorDisplay'
 
 const CreateOrganizationForm = ({ type }) => {
     const router = useRouter()
@@ -38,14 +38,11 @@ const CreateOrganizationForm = ({ type }) => {
     return (
         <div className="card bg-base-200 rounded-lg p-5">
             <div className="pb-5">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <div className="text-2xl font-bold">
-                            Create a New{' '}
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                        </div>
-                    </div>
+                <div className="text-2xl font-bold">
+                    Create a New {type.charAt(0).toUpperCase() + type.slice(1)}
                 </div>
+
+                <div className="divider my-0" />
             </div>
             <div>
                 <form

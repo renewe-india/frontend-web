@@ -22,7 +22,7 @@ import {
     SignOut,
     X,
 } from '@phosphor-icons/react'
-import OrganizationList from './OrganizationList'
+import OrganizationList from '@/components/organization/OrganizationListSidebar'
 
 function SidePanel() {
     const { logout } = useAuth()
@@ -193,13 +193,11 @@ function SidePanel() {
                             <li>
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="/coming-soon">
+                                    href="/profile"
+                                    onClick={() => handleLinkClick()}>
                                     <UserCircle size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
-                                        Profile{' '}
-                                        <span className="badge badge-ghost badge-sm !badge-warning">
-                                            Coming Soon
-                                        </span>
+                                        Profile
                                     </span>
                                 </Link>
                             </li>

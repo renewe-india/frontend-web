@@ -1,7 +1,9 @@
 import React from 'react'
-import ClaimableBusiness from './ClaimableBusiness'
-import CreateOrganizationForm from '@/components/CreateOrganizationForm'
-
+import dynamic from 'next/dynamic'
+const CreateOrganizationForm = dynamic(() =>
+    import('@/components/organization/CreateOrganizationForm'),
+)
+const ClaimableBusiness = dynamic(() => import('./ClaimableBusiness'))
 const BusinessCreate = () => {
     // const [createNewBusinessForm, setCreateNewBusinessForm] = useState(false)
 

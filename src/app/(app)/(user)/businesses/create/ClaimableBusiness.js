@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
-import SubmitButton from '@/components/SubmitButton'
-import Image from '@/components/Image'
+import ClaimableOrganizationCard from '@/components/organization/ClaimableOrganizationCard'
 
 function ClaimableBusiness() {
     const router = useRouter()
@@ -19,7 +18,7 @@ function ClaimableBusiness() {
             await axios.post(`/api/organizations/${name}/claim`)
             router.push(`/manage/${name}`)
         } catch (error) {
-            // console.error('Error claiming business:', error)
+            // console.error('Error claiming business:', error);
         } finally {
             setIsSubmitting(false)
         }
@@ -33,7 +32,7 @@ function ClaimableBusiness() {
                 )
                 setBusinessesAvailableToClaim(response.data.data || [])
             } catch (error) {
-                // console.error('Error fetching businesses:', error)
+                // console.error('Error fetching businesses:', error);
                 setBusinessesAvailableToClaim([])
             }
         }
@@ -48,39 +47,19 @@ function ClaimableBusiness() {
     return (
         <div className="card bg-base-200 rounded-lg p-5 mb-2">
             <div className="mb-4">
-                <h2 className="text-xl font-bold">
+                <h2 className="text-2xl font-bold">
                     Businesses Available to Claim:{' '}
                     {businessesAvailableToClaim.length}
-                </h2>
+                </h2>{' '}
+                <div className="divider my-0" />
             </div>
             {businessesAvailableToClaim.map(business => (
-                <div
+                <ClaimableOrganizationCard
                     key={business.name}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 items-center justify-between mb-4">
-                    <div className="flex flex-col gap-5 lg:flex-row items-start lg:items-center">
-                        <div className="flex items-center gap-4">
-                            <Image
-                                data={business.logo}
-                                alt="Business Avatar"
-                                customClass="avatar !rounded-full w-20"
-                            />
-                            <div className="text-2xl justify-right font-bold">
-                                {business.display_name}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col lg:flex-row justify-end lg:justify-start">
-                        <div className="flex-grow" />
-                        <SubmitButton
-                            isSubmitting={isSubmitting}
-                            label="Claim this Business"
-                            submittingLabel="Claiming"
-                            onClick={() => handleClaim(business.name)}
-                            type="button"
-                            className="btn normal-case btn-primary self-end lg:self-auto w-full lg:w-auto"
-                        />
-                    </div>
-                </div>
+                    business={business}
+                    onClaim={handleClaim}
+                    isSubmitting={isSubmitting}
+                />
             ))}
         </div>
     )
