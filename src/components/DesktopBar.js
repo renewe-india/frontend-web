@@ -5,6 +5,7 @@ import {
     BellRinging,
     Briefcase,
     GlobeStand,
+    List,
     MagnifyingGlass,
     Moon,
     Newspaper,
@@ -16,7 +17,6 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import useSWR from 'swr'
 import { ThemeContext } from '@/context/ThemeContext'
-import { useRouter } from 'next/navigation'
 
 const Image = dynamic(() => import('./Image'), { ssr: false })
 
@@ -27,12 +27,12 @@ const AvatarSkeleton = () => (
 
 const DesktopBar = memo(() => {
     const { user } = useAuth()
-    const { data: avatar, error } = useSWR(
+    const { data: avatar } = useSWR(
         user ? `/api/media/users/${user.username}/avatar/first` : null,
         fetcher,
     )
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const router = useRouter()
+
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
 
     const handleToggle = e => {
@@ -41,10 +41,6 @@ const DesktopBar = memo(() => {
         } else {
             toggleTheme('light')
         }
-    }
-
-    if (error) {
-        router.push('/login')
     }
 
     return (
@@ -59,7 +55,9 @@ const DesktopBar = memo(() => {
                             htmlFor="sidebar"
                             className="flex items-center cursor-pointer">
                             <div className="flex items-center gap-2">
-                                {!avatar ? (
+                                {!user ? (
+                                    <List className="h-5 inline-block w-5" />
+                                ) : !avatar ? (
                                     <AvatarSkeleton />
                                 ) : (
                                     <Image
@@ -129,14 +127,16 @@ const DesktopBar = memo(() => {
                         <MagnifyingGlass size={24} stroke={2} />
                         <span className="hidden md:block">Search</span>
                     </label>
-                    <label
-                        htmlFor="notifications"
-                        className="btn btn-circle btn-sm relative btn-outline">
-                        <BellRinging size={24} stroke={2} />
-                        <div className="badge badge-error absolute -right-2 -top-2 badge-xs">
-                            9+
-                        </div>
-                    </label>
+                    {user && (
+                        <label
+                            htmlFor="notifications"
+                            className="btn btn-circle btn-sm relative btn-outline">
+                            <BellRinging size={24} stroke={2} />
+                            <div className="badge badge-error absolute -right-2 -top-2 badge-xs">
+                                9+
+                            </div>
+                        </label>
+                    )}
                     <div className="block">
                         <label className="swap swap-rotate w-8 h-8 btn btn-circle btn-xs relative btn-outline">
                             <input

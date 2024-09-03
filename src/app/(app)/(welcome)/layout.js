@@ -1,42 +1,12 @@
-'use client'
-
-import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/Navigation'
 import Loading from '@/components/Loading'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import axios from '@/lib/axios'
-import LeftSidebar from '../(user)/LeftSidebar'
+import dynamic from 'next/dynamic'
+
+const LeftSidebar = dynamic(() => import('../(user)/LeftSidebar'), {
+    loading: () => <Loading />,
+})
 
 const AppLayout = ({ children }) => {
-    const { user: authUser } = useAuth({
-        middleware: 'auth',
-    })
-    const [isLoading, setIsLoading] = useState(true)
-    const router = useRouter()
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                await axios.get('/api/user')
-
-                setIsLoading(false)
-            } catch (error) {
-                router.push('/login')
-            }
-        }
-
-        if (!authUser) {
-            fetchUserData()
-        } else {
-            setIsLoading(false)
-        }
-    }, [authUser, router])
-
-    if (isLoading) {
-        return <Loading />
-    }
-
     return (
         <>
             <Navigation />

@@ -1,3 +1,4 @@
+'use client'
 import { React } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
@@ -21,11 +22,12 @@ import {
     Gavel,
     SignOut,
     X,
+    Lock,
 } from '@phosphor-icons/react'
 import OrganizationList from '@/components/organization/OrganizationListSidebar'
 
 function SidePanel() {
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
 
     const handleLogout = () => {
         logout()
@@ -72,43 +74,47 @@ function SidePanel() {
                         </div>
                     </div>
                     <div>
-                        <ul className="menu rounded-md">
-                            <hr className="my-3" />
-                            <li className="menu-title text-inherit uppercase">
-                                <div className="flex items-center gap-2">
-                                    <PlugsConnected size={24} stroke={2} />
-                                    Connect
-                                </div>
-                            </li>
+                        {user && (
+                            <ul className="menu rounded-md">
+                                <hr className="my-3" />
+                                <li className="menu-title text-inherit uppercase">
+                                    <div className="flex items-center gap-2">
+                                        <PlugsConnected size={24} stroke={2} />
+                                        Connect
+                                    </div>
+                                </li>
 
-                            <li>
-                                <details>
-                                    <summary className="hover:text-inherit text-inherit">
-                                        <BagSimple size={24} stroke={2} />
-                                        <span className="">My Businesses</span>
-                                    </summary>
-                                    <OrganizationList
-                                        type="business"
-                                        handleLinkClick={handleLinkClick}
-                                    />
-                                </details>
-                            </li>
+                                <li>
+                                    <details>
+                                        <summary className="hover:text-inherit text-inherit">
+                                            <BagSimple size={24} stroke={2} />
+                                            <span className="">
+                                                My Businesses
+                                            </span>
+                                        </summary>
+                                        <OrganizationList
+                                            type="business"
+                                            handleLinkClick={handleLinkClick}
+                                        />
+                                    </details>
+                                </li>
 
-                            <li>
-                                <details>
-                                    <summary className="hover:text-inherit text-inherit">
-                                        <UsersFour size={24} stroke={2} />
-                                        <span className="mary-hideable">
-                                            My Associations
-                                        </span>
-                                    </summary>
-                                    <OrganizationList
-                                        type="association"
-                                        handleLinkClick={handleLinkClick}
-                                    />
-                                </details>
-                            </li>
-                        </ul>
+                                <li>
+                                    <details>
+                                        <summary className="hover:text-inherit text-inherit">
+                                            <UsersFour size={24} stroke={2} />
+                                            <span className="mary-hideable">
+                                                My Associations
+                                            </span>
+                                        </summary>
+                                        <OrganizationList
+                                            type="association"
+                                            handleLinkClick={handleLinkClick}
+                                        />
+                                    </details>
+                                </li>
+                            </ul>
+                        )}
                         <ul className="menu rounded-md">
                             <hr className="my-3" />
                             <li className="menu-title text-inherit uppercase">
@@ -184,36 +190,59 @@ function SidePanel() {
                             </li>
                         </ul>
                         <ul className="menu rounded-md">
+                            {user && (
+                                <>
+                                    <hr className="my-3" />
+                                    <li className="menu-title text-inherit uppercase">
+                                        <div className="flex items-center gap-2">
+                                            Settings
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                            href="/profile"
+                                            onClick={() => handleLinkClick()}>
+                                            <UserCircle size={24} stroke={2} />
+                                            <span className="mary-hideable whitespace-nowrap">
+                                                Profile
+                                            </span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                            href="/password-update"
+                                            onClick={() => handleLinkClick()}>
+                                            <Lock size={24} stroke={2} />
+                                            <span className="mary-hideable whitespace-nowrap">
+                                                Change Your password
+                                            </span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                            href="/coming-soon">
+                                            <UserGear size={24} stroke={2} />
+                                            <span className="mary-hideable whitespace-nowrap">
+                                                Preferences{' '}
+                                                <span className="badge badge-ghost badge-sm !badge-warning">
+                                                    V3
+                                                </span>
+                                            </span>
+                                        </Link>
+                                    </li>{' '}
+                                </>
+                            )}
+                        </ul>
+                        <ul className="menu rounded-md">
                             <hr className="my-3" />
                             <li className="menu-title text-inherit uppercase">
                                 <div className="flex items-center gap-2">
-                                    Settings
+                                    Support
                                 </div>
-                            </li>
-                            <li>
-                                <Link
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="/profile"
-                                    onClick={() => handleLinkClick()}>
-                                    <UserCircle size={24} stroke={2} />
-                                    <span className="mary-hideable whitespace-nowrap">
-                                        Profile
-                                    </span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                                    href="/coming-soon">
-                                    <UserGear size={24} stroke={2} />
-                                    <span className="mary-hideable whitespace-nowrap">
-                                        Preferences{' '}
-                                        <span className="badge badge-ghost badge-sm !badge-warning">
-                                            V3
-                                        </span>
-                                    </span>
-                                </Link>
-                            </li>
+                            </li>{' '}
                             <li>
                                 <details>
                                     <summary>
@@ -295,13 +324,14 @@ function SidePanel() {
                                 </details>
                             </li>
                             <hr className="my-3" />
-
-                            <div
-                                className="btn normal-case w-full btn-outline btn-xs"
-                                onClick={handleLogout}>
-                                <SignOut size={24} stroke={2} />
-                                Logout
-                            </div>
+                            {user && (
+                                <div
+                                    className="btn normal-case w-full btn-outline btn-xs"
+                                    onClick={handleLogout}>
+                                    <SignOut size={24} stroke={2} />
+                                    Logout
+                                </div>
+                            )}
                         </ul>
                     </div>
                 </div>

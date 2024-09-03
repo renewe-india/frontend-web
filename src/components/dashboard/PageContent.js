@@ -5,7 +5,7 @@ import Header from './Header'
 
 const Page404 = dynamic(() => import('@/app/not-found'), { ssr: false })
 
-function PageContent({ children, organizationData }) {
+function PageContent({ children }) {
     const mainContentRef = useRef(null)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -18,7 +18,7 @@ function PageContent({ children, organizationData }) {
 
     return (
         <div className="drawer-content flex flex-col">
-            <Header org={organizationData} />
+            <Header />
             <main
                 className="flex-1 overflow-y-auto md:pt-4 pt-4 px-6 bg-base-200"
                 ref={mainContentRef}>

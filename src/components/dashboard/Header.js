@@ -1,12 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { List, Moon, Sun } from '@phosphor-icons/react'
 import Link from 'next/link'
 import Image from '../Image'
 import { ThemeContext } from '@/context/ThemeContext'
+import { useOrganization } from '@/context/OrganizationContext'
 
-function Header({ org }) {
+function Header() {
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
-    const showManagersButton = org.manager_roles.includes('administrator')
+    const org = useOrganization()
+    const [showManagersButton, setShowManagersButton] = useState(null)
     const { theme, toggleTheme } = useContext(ThemeContext)
 
     const handleToggle = e => {
@@ -15,6 +17,10 @@ function Header({ org }) {
         } else {
             toggleTheme('light')
         }
+    }
+
+    if (org) {
+        setShowManagersButton(org.manager_roles.includes('administrator'))
     }
     return (
         <div className="navbar sticky top-0 bg-base-100 z-10 shadow-md">
@@ -53,58 +59,60 @@ function Header({ org }) {
                         size={24}
                         stroke={2}
                     />
-                </label>
-                <div className="dropdown dropdown-end ml-4">
-                    <div
-                        tabIndex={0}
-                        className="flex flex-row gap-2 items-center">
-                        <label className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <Image
-                                    customClass={'mask mask-squircle w-10'}
-                                    data={org.logo}
-                                    alt={org.name}
-                                />
-                            </div>
-                        </label>
-                        <div className="hidden lg:block font-semibold text-base text-gray-600">
-                            {org.display_name}
-                        </div>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        <li>
-                            <div className="block lg:hidden font-semibold text-base text-gray-600">
+                </label>{' '}
+                {org && (
+                    <div className="dropdown dropdown-end ml-4">
+                        <div
+                            tabIndex={0}
+                            className="flex flex-row gap-2 items-center">
+                            <label className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <Image
+                                        customClass={'mask mask-squircle w-10'}
+                                        data={org.logo}
+                                        alt={org.name}
+                                    />
+                                </div>
+                            </label>
+                            <div className="hidden lg:block font-semibold text-base text-gray-600">
                                 {org.display_name}
-                                <div className="divider mt-0 mb-0" />
                             </div>
-                        </li>
-
-                        <li>
-                            <Link href={`/manage/${org.name}/profile`}>
-                                Profile
-                            </Link>
-                        </li>
-                        {showManagersButton && (
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li>
-                                <Link href={`/manage/${org.name}/managers`}>
-                                    Managers
+                                <div className="block lg:hidden font-semibold text-base text-gray-600">
+                                    {org.display_name}
+                                    <div className="divider mt-0 mb-0" />
+                                </div>
+                            </li>
+
+                            <li>
+                                <Link href={`/manage/${org.name}/profile`}>
+                                    Profile
                                 </Link>
                             </li>
-                        )}
-                        <li>
-                            <Link href={`/manage/${org.name}/contacts`}>
-                                Contacts
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href={`/manage/${org.name}/settings`}>
-                                Settings
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                            {showManagersButton && (
+                                <li>
+                                    <Link href={`/manage/${org.name}/managers`}>
+                                        Managers
+                                    </Link>
+                                </li>
+                            )}
+                            <li>
+                                <Link href={`/manage/${org.name}/contacts`}>
+                                    Contacts
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={`/manage/${org.name}/settings`}>
+                                    Settings
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                )}
             </div>
         </div>
     )

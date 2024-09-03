@@ -1,8 +1,13 @@
-import { Buildings, CalendarDots, CurrencyInr } from '@phosphor-icons/react'
-import { MapPinArea } from '@phosphor-icons/react/dist/ssr'
-import React from 'react'
+'use client'
+import {
+    Buildings,
+    CalendarDots,
+    CurrencyInr,
+    MapPinArea,
+} from '@phosphor-icons/react'
+import React, { memo } from 'react'
 
-function RightSidebar() {
+const RightSidebar = memo(() => {
     return (
         <div
             id="right-sidebar"
@@ -137,6 +142,6 @@ function RightSidebar() {
             </div>
         </div>
     )
-}
-
+})
+RightSidebar.displayName = 'RightSidebar'
 export default RightSidebar

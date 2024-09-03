@@ -11,10 +11,26 @@ import {
     Envelope,
 } from '@phosphor-icons/react'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function MobileNavigation() {
     const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768)
+        }
+        handleResize()
+
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    if (!isMobile) return null
+
     return (
         <>
             <div
@@ -72,24 +88,24 @@ function MobileNavigation() {
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <Newspaper size={24} stroke={2} />
                     News
-                </Link>{' '}
+                </Link>
                 <button
                     onClick={() => setIsBottomDrawerOpen(!isBottomDrawerOpen)}
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <PlusSquare size={24} stroke={2} />
                     Post
-                </button>{' '}
+                </button>
                 <Link
                     href="/events"
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <GlobeStand size={24} stroke={2} />
                     Events
-                </Link>{' '}
+                </Link>
                 <Link
                     href="/jobs"
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
                     <Briefcase size={24} stroke={2} />
-                    Jobs{' '}
+                    Jobs
                 </Link>
             </div>
         </>

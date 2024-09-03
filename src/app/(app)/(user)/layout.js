@@ -3,12 +3,17 @@
 import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/Navigation'
 import Loading from '@/components/Loading'
-import LeftSidebar from './LeftSidebar'
-import RightSidebar from './RightSidebar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from '@/lib/axios'
+import dynamic from 'next/dynamic'
 
+const LeftSidebar = dynamic(() => import('./LeftSidebar'), {
+    loading: () => <Loading />,
+})
+const RightSidebar = dynamic(() => import('./RightSidebar'), {
+    loading: () => <Loading />,
+})
 const AppLayout = ({ children }) => {
     const { user: authUser } = useAuth({
         middleware: 'auth',

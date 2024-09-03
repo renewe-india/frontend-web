@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import { X, MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'

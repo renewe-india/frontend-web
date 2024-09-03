@@ -1,7 +1,7 @@
 'use client'
 
 import useSWR from 'swr'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
 import Loading from '@/components/Loading'
@@ -10,10 +10,12 @@ import LeftSidebar from '@/components/dashboard/LeftSidebar'
 import { OrganizationContext } from '@/context/OrganizationContext'
 import { ToastContainer } from 'react-toastify'
 import { ToastProvider } from '@/context/ToastContext'
+import { useRouter } from 'next/navigation'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
 const AdminLayout = ({ children, params }) => {
+    const router = useRouter()
     const organizationName = params.organization
     const { user } = useAuth({ middleware: 'auth' })
 
@@ -43,8 +45,24 @@ const AdminLayout = ({ children, params }) => {
         [organizationData, children],
     )
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                await axios.get('/api/user')
+            } catch (error) {
+                router.push('/login')
+            }
+        }
+
+        if (!user) {
+            fetchUserData()
+        }
+    }, [user])
+
     if (isLoading) {
         return <Loading />
+    } else {
+        router.push('/login')
     }
 
     return (

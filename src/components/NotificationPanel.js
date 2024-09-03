@@ -1,3 +1,4 @@
+'use client'
 import { X } from '@phosphor-icons/react'
 import React from 'react'
 
