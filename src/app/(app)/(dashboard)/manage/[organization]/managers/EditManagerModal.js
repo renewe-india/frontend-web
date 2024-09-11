@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useCallback } from 'react'
-import SubmitButton from '@/components/SubmitButton'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 function EditManagerModal({
     isModalOpen,

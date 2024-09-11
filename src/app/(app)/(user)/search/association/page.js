@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axios from '@/lib/axios'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 import SortBy from './SortBy'
 import FilterDrawer from './FilterDrawer'
 import { XCircle } from '@phosphor-icons/react'

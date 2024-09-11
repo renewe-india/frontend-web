@@ -2,9 +2,9 @@
 import React, { useState } from 'react'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
-import SubmitButton from '@/components/SubmitButton'
-import InputField from '@/components/InputField'
-import ErrorDisplay from '../ErrorDisplay'
+import SubmitButton from '@/components/ui/SubmitButton'
+import InputField from '@/components/ui/InputField'
+import ErrorDisplay from '../ui/ErrorDisplay'
 
 const CreateOrganizationForm = ({ type }) => {
     const router = useRouter()

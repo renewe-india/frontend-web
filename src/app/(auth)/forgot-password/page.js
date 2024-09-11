@@ -3,8 +3,8 @@
 import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import ErrorDisplay from '@/components/ErrorDisplay'
-import InputField from '@/components/InputField'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import InputField from '@/components/ui/InputField'
 import {
     ArrowLeft,
     EnvelopeOpen,
@@ -12,7 +12,7 @@ import {
     SealCheck,
     SealQuestion,
 } from '@phosphor-icons/react'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 import axios from '@/lib/axios'
 
 const Page = () => {

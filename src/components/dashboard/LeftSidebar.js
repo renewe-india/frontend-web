@@ -4,7 +4,7 @@ import SidebarSubmenu from './SidebarSubmenu'
 import { X } from '@phosphor-icons/react'
 import routes from './SidebarRoutes'
 import Image from '../Image'
-import Loading from '../Loading'
+import Loading from '../ui/Loading'
 
 function LeftSidebar({ organizationData }) {
     const pathname = usePathname()

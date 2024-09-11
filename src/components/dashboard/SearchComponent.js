@@ -1,6 +1,5 @@
-'use client'
 import React, { useState, useEffect, useCallback } from 'react'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import axios from '@/lib/axios'
 
 function SearchComponent({

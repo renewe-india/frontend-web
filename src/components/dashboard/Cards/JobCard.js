@@ -1,4 +1,3 @@
-'use client'
 import { Copy, Eye, Note } from '@phosphor-icons/react'
 import React from 'react'
 import { useRouter } from 'next/navigation'

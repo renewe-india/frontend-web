@@ -1,7 +1,7 @@
-import Navigation from '@/app/Navigation'
 import SearchComponent from '@/components/SearchPanel'
-import Loading from '@/components/Loading'
 import dynamic from 'next/dynamic'
+import Navigation from '@/components/navigation/Navigation'
+import Loading from '@/components/ui/Loading'
 
 const LeftSidebar = dynamic(() => import('./(app)/(user)/LeftSidebar'), {
     loading: () => <Loading />,

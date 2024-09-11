@@ -1,7 +1,7 @@
 import axios from '@/lib/axios'
 import { useState } from 'react'
-import ErrorDisplay from '@/components/ErrorDisplay'
-import SubmitButton from '@/components/SubmitButton'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 function CreateNewsForm() {
     const [isSubmitting, setIsSubmitting] = useState(false)

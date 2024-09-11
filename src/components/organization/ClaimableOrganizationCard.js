@@ -1,7 +1,6 @@
-// components/BusinessCard.js
 import React from 'react'
 import Image from '@/components/Image'
-import SubmitButton from '@/components/SubmitButton'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 const ClaimableOrganizationCard = ({ business, onClaim, isSubmitting }) => {
     return (

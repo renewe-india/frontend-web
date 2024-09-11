@@ -1,12 +1,12 @@
 'use client'
 
 import { useAuth } from '@/hooks/auth'
-import Navigation from '@/app/Navigation'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from '@/lib/axios'
 import dynamic from 'next/dynamic'
+import Navigation from '@/components/navigation/Navigation'
 
 const LeftSidebar = dynamic(() => import('./LeftSidebar'), {
     loading: () => <Loading />,

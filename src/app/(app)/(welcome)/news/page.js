@@ -14,7 +14,7 @@ import {
 } from '@phosphor-icons/react'
 import { SkeletonCard } from '@/components/skeletons/NewsSkeleton'
 import ArticleImage from './ArticleImage'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 
 const News = () => {
     const [articles, setArticles] = useState([])

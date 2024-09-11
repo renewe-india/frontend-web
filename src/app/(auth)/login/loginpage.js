@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { SignIn } from '@phosphor-icons/react'
 
 const Login = () => {
@@ -18,7 +18,6 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errors, setErrors] = useState({})
-    //const [status, setStatus] = useState(null)
 
     useEffect(() => {
         const queryUsername = searchParams.get('username')
@@ -29,17 +28,6 @@ const Login = () => {
             setPassword(queryPassword)
         }
     }, [searchParams])
-
-    // useEffect(() => {
-    //     if (
-    //         router.reset?.length > 0 &&
-    //         Object.keys(errors || {}).length === 0
-    //     ) {
-    //         // setStatus(atob(router.reset))
-    //     } else {
-    //         // setStatus(null)
-    //     }
-    // }, [router.reset, errors])
 
     const submitForm = async event => {
         event.preventDefault()

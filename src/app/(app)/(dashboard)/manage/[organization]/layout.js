@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import { useEffect, useMemo } from 'react'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 import PageContent from '@/components/dashboard/PageContent'
 import LeftSidebar from '@/components/dashboard/LeftSidebar'
 import { OrganizationContext } from '@/context/OrganizationContext'
@@ -25,7 +25,7 @@ const AdminLayout = ({ children, params }) => {
         {
             revalidateOnFocus: false,
             revalidateOnReconnect: false,
-            dedupingInterval: 60000, // Cache data for 1 minute
+            dedupingInterval: 60000,
         },
     )
 
@@ -61,10 +61,7 @@ const AdminLayout = ({ children, params }) => {
 
     if (isLoading) {
         return <Loading />
-    } else {
-        router.push('/login')
     }
-
     return (
         <OrganizationContext.Provider value={organizationData}>
             <ToastProvider>

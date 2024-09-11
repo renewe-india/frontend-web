@@ -1,4 +1,3 @@
-'use client'
 import { Info } from '@phosphor-icons/react'
 import { useState } from 'react'
 

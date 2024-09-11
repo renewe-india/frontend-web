@@ -3,7 +3,7 @@
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 
 const RegisterPage = () => {
     const { register } = useAuth({

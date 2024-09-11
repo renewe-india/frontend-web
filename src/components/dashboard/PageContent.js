@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import Loading from '../Loading'
+import Loading from '../ui/Loading'
 import Header from './Header'
 
 const Page404 = dynamic(() => import('@/app/not-found'), { ssr: false })

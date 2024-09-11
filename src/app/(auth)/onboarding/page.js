@@ -2,7 +2,7 @@
 import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import axios from '@/lib/axios'
 import {
     EnvelopeOpen,
@@ -11,7 +11,7 @@ import {
     SealQuestion,
     ArrowClockwise,
 } from '@phosphor-icons/react'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 
 const Page = () => {
     const { onboardingOtp, onboardingVerifyOtp } = useAuth({

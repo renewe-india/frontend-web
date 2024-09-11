@@ -1,5 +1,5 @@
-import Navigation from '@/app/Navigation'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
+import Navigation from '@/components/navigation/Navigation'
 import dynamic from 'next/dynamic'
 
 const LeftSidebar = dynamic(() => import('../(user)/LeftSidebar'), {

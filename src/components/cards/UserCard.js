@@ -5,7 +5,7 @@ export default function UserCard({ user }) {
     return (
         <a
             href={`/users/${user.username}`}
-            className="card w-full bg-base-100 shadow-xl border p-4 flex flex-col items-start">
+            className="card w-full bg-base-100 shadow-xl border p-4 flex flex-col items-start ">
             {/* Profile Image */}
             <div className="flex items-center w-full">
                 <div className="avatar">
@@ -24,7 +24,7 @@ export default function UserCard({ user }) {
                         <div className="flex items-center">
                             {user.name} • <ShieldCheck size={20} />
                         </div>
-                        <button className="btn btn-outline btn-primary btn-sm rounded-full flex items-center ml-2">
+                        <button className="btn btn-primary btn-sm text-white rounded-full flex items-center ml-2">
                             <Plus size={20} />
                             Follow
                         </button>

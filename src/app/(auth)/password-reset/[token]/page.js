@@ -4,8 +4,8 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
-import InputField from '@/components/InputField'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import InputField from '@/components/ui/InputField'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { Lock } from '@phosphor-icons/react'
 
 const PasswordReset = () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { List, Moon, Sun } from '@phosphor-icons/react'
 import Link from 'next/link'
 import Image from '../Image'
@@ -11,16 +11,18 @@ function Header() {
     const [showManagersButton, setShowManagersButton] = useState(null)
     const { theme, toggleTheme } = useContext(ThemeContext)
 
+    useEffect(() => {
+        if (org) {
+            setShowManagersButton(org.manager_roles.includes('administrator'))
+        }
+    }, [org])
+
     const handleToggle = e => {
         if (e.target.checked) {
             toggleTheme('dark')
         } else {
             toggleTheme('light')
         }
-    }
-
-    if (org) {
-        setShowManagersButton(org.manager_roles.includes('administrator'))
     }
     return (
         <div className="navbar sticky top-0 bg-base-100 z-10 shadow-md">

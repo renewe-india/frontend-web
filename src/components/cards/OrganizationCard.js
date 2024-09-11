@@ -25,7 +25,7 @@ export default function OrganizationCard({ organization }) {
                             {organization.display_name} •{' '}
                             <ShieldCheck size={20} />
                         </div>
-                        <button className="btn btn-outline btn-primary btn-sm rounded-full flex items-center ml-2">
+                        <button className="btn btn-primary btn-sm text-white rounded-full flex items-center ml-2">
                             <Plus size={20} />
                             Follow
                         </button>

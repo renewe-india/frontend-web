@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import axios from '@/lib/axios'
 import SearchComponent from '@/components/dashboard/SearchComponent'
-import ErrorDisplay from '@/components/ErrorDisplay'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { useToast } from '@/context/ToastContext'
 
 function AddManagerModal({

@@ -2,7 +2,7 @@
 import { PaperPlaneTilt, Plus } from '@phosphor-icons/react'
 import React, { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 import Image from '@/components/Image'
 
 async function fetchUserDetails(username) {
