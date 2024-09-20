@@ -34,31 +34,37 @@ export default function SearchComponent() {
     }
 
     return (
-        <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-5">
-            <form onSubmit={handleSearch} className="flex items-center ">
-                <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={handleInputChange}
-                    placeholder="Search..."
-                    className="input input-primary w-full peer rounded-l-full"
-                />
-                <select
-                    value={selectedCategory}
-                    onChange={e => setSelectedCategory(e.target.value)}
-                    className="input input-primary rounded-none">
-                    {categories.map((category, index) => (
-                        <option key={index} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-                <button
-                    type="submit"
-                    className="btn btn-primary rounded-r-full">
-                    <MagnifyingGlass size={24} />
-                </button>
-            </form>
+        <div className="w-full">
+            <div className="join w-full card bg-base-200 rounded-lg p-5">
+                <form onSubmit={handleSearch} className="flex w-full ">
+                    <div className="join w-full rounded-full">
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                            placeholder="Search"
+                            className="input input-primary input-bordered join-item w-full"
+                        />
+                    </div>
+                    <select
+                        value={selectedCategory}
+                        onChange={e => setSelectedCategory(e.target.value)}
+                        className="select select-primary select-bordered join-item">
+                        {categories.map((category, index) => (
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                    <div className="indicator rounded-full">
+                        <button
+                            type="submit"
+                            className="btn bg-base-100 join-item">
+                            <MagnifyingGlass size={24} />
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

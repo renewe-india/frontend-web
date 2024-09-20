@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import SidebarSubmenu from './SidebarSubmenu'
@@ -7,7 +8,8 @@ import Image from '../Image'
 import Loading from '../ui/Loading'
 
 function LeftSidebar({ organizationData }) {
-    const pathname = usePathname()
+    const url = usePathname()
+    const pathname = url.split('/').pop()
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
     const close = () => {
         document.getElementById('left-sidebar-drawer').click()
@@ -25,17 +27,17 @@ function LeftSidebar({ organizationData }) {
                     <X className="h-6 inline-block  w-6" />
                 </button>
 
-                <li className="mb-2 ">
+                <li className="mb-2 p-3 ">
                     <Link href="/">
                         <Image
                             src={ReneweLogo}
                             alt="RenewE Logo"
-                            className="h-5"
+                            className="h-5 "
                         />
                     </Link>
                 </li>
                 {routes.map((route, k) => (
-                    <li key={k}>
+                    <li key={k} className="mx-3">
                         {route.submenu ? (
                             <SidebarSubmenu {...route} />
                         ) : (
@@ -49,7 +51,7 @@ function LeftSidebar({ organizationData }) {
                                 {route.icon} {route.name}
                                 {pathname === route.path && (
                                     <span
-                                        className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+                                        className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-green-700"
                                         aria-hidden="true"
                                     />
                                 )}

@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import { List, Moon, Sun } from '@phosphor-icons/react'
 import Link from 'next/link'
-import Image from '../Image'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useOrganization } from '@/context/OrganizationContext'
+import Image from '@/components/Image'
 
 function Header() {
-    const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
     const org = useOrganization()
     const { theme, toggleTheme } = useContext(ThemeContext)
 
@@ -26,13 +25,8 @@ function Header() {
                     className="btn  drawer-button lg:hidden">
                     <List className="h-5 inline-block w-5" />
                 </label>
-                <Link href="/">
-                    <Image
-                        src={ReneweLogo}
-                        alt="RenewE Logo"
-                        customClass={'h-5 lg:hidden block'}
-                    />
-                </Link>
+
+                <h1 className="text-2xl font-semibold ml-2">Settings</h1>
             </div>
 
             {/* Profile icon, opening menu on click */}
@@ -69,20 +63,10 @@ function Header() {
                                     />
                                 </div>
                             </label>
-                            <div className="hidden lg:block font-semibold text-base text-gray-600">
-                                {org.display_name}
-                            </div>
                         </div>
                         <ul
                             tabIndex={0}
                             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                            <li>
-                                <div className="block lg:hidden font-semibold text-base text-gray-600">
-                                    {org.display_name}
-                                    <div className="divider mt-0 mb-0" />
-                                </div>
-                            </li>
-
                             <li>
                                 <Link href={`/manage/${org.name}/profile`}>
                                     Profile

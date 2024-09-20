@@ -1,12 +1,10 @@
 'use client'
 
 import useSWR from 'swr'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
 import Loading from '@/components/ui/Loading'
-import PageContent from '@/components/dashboard/PageContent'
-import LeftSidebar from '@/components/dashboard/LeftSidebar'
 import { OrganizationContext } from '@/context/OrganizationContext'
 import { ToastContainer } from 'react-toastify'
 import { ToastProvider } from '@/context/ToastContext'
@@ -14,7 +12,7 @@ import { useRouter } from 'next/navigation'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
-const AdminLayout = ({ children, params }) => {
+const DashBoardLayout = ({ children, params }) => {
     const router = useRouter()
     const organizationName = params.organization
     const { user } = useAuth({ middleware: 'auth' })
@@ -30,20 +28,6 @@ const AdminLayout = ({ children, params }) => {
     )
 
     const isLoading = !user || (!organizationData && !error)
-
-    const memoizedLeftSidebar = useMemo(
-        () => <LeftSidebar organizationData={organizationData} />,
-        [organizationData],
-    )
-
-    const memoizedPageContent = useMemo(
-        () => (
-            <PageContent organizationData={organizationData}>
-                {children}
-            </PageContent>
-        ),
-        [organizationData, children],
-    )
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -65,17 +49,7 @@ const AdminLayout = ({ children, params }) => {
     return (
         <OrganizationContext.Provider value={organizationData}>
             <ToastProvider>
-                <div id="main-content" className="w-full min-h-screen">
-                    <div className="drawer lg:drawer-open">
-                        <input
-                            id="left-sidebar-drawer"
-                            type="checkbox"
-                            className="drawer-toggle"
-                        />
-                        {memoizedPageContent}
-                        {memoizedLeftSidebar}
-                    </div>
-                </div>
+                {children}
                 <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
@@ -92,4 +66,4 @@ const AdminLayout = ({ children, params }) => {
     )
 }
 
-export default AdminLayout
+export default DashBoardLayout

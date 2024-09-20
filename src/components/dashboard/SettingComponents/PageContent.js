@@ -1,8 +1,8 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import Loading from '../ui/Loading'
 import Header from './Header'
+import Loading from '@/components/ui/Loading'
 
 const Page404 = dynamic(() => import('@/app/not-found'), { ssr: false })
 
