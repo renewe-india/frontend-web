@@ -1,22 +1,17 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 export const metadata = {
-    title: 'Verification',
+    title: 'addresses',
 }
-const VerificationForm = dynamic(() => import('./VerificationForm'), {
-    loading: () => <p>Loading...</p>,
-})
 
 const page = () => {
     return (
         <>
             <div className="card bg-base-200 rounded-lg p-5 ">
                 <div className="mb-2">
-                    <h2 className="text-2xl font-bold">Verification</h2>
+                    <h2 className="text-2xl font-bold">Addresses</h2>
                     <div className="divider my-0" />
                 </div>
-                <VerificationForm />
             </div>
         </>
     )

@@ -17,7 +17,7 @@ const OrganizationComponent = () => {
     const [addresses, setAddresses] = useState(organizationAddresses)
 
     const handleEdit = address => {
-        console.log('Editing address: ', address)
+        alert('Editing address: ', address)
         // Add logic to handle editing
     }
 

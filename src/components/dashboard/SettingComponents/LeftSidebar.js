@@ -25,7 +25,6 @@ function LeftSidebar({ organizationData }) {
     if (!organizationData) {
         return <Loading />
     }
-    console.log(pathname)
     return (
         <div className="drawer-side lg:z-30 z-50">
             <label htmlFor="left-sidebar-drawer" className="drawer-overlay" />
