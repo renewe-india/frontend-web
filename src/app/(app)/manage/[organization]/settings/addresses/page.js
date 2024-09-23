@@ -1,32 +1,16 @@
 'use client'
-import React, { useState } from 'react'
-import OrganizationAddressTable from './OrganizationAddressTable'
+import React from 'react'
 import TitleCard from '@/components/dashboard/Cards/TitleCard'
-
-const organizationAddresses = [
-    {
-        location: 'New York',
-        contactPerson: 'John Doe',
-        phone: '123-456-7890',
-        address: '123 Main St, New York, NY 10001',
-    },
-    // Add more locations
-]
+import AddressCard from './AddressCard'
 
 const OrganizationComponent = () => {
-    const [addresses, setAddresses] = useState(organizationAddresses)
-
-    const handleEdit = address => {
-        alert('Editing address: ', address)
-        // Add logic to handle editing
-    }
-
     return (
         <TitleCard title="Addresses" topMargin={'mt-2'}>
-            <OrganizationAddressTable
-                addresses={addresses}
-                onEdit={handleEdit}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <AddressCard />
+                <AddressCard />
+                <AddressCard />
+            </div>
         </TitleCard>
     )
 }

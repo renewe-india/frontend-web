@@ -8,7 +8,6 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
     const [customPlatformName, setCustomPlatformName] = useState('')
     const [editingPlatform, setEditingPlatform] = useState(null)
 
-    // Platform options for the dropdown
     const platformOptions = [
         { value: 'facebook', name: 'Facebook' },
         { value: 'twitter', name: 'Twitter' },
@@ -17,7 +16,6 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
         { value: 'custom', name: 'Other' },
     ]
 
-    // Function to add or update a social link
     const addSocialLink = () => {
         let platformKey = selectedPlatform
         if (selectedPlatform === 'custom' && customPlatformName) {
@@ -33,7 +31,6 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
         }
     }
 
-    // Function to start editing an existing social link
     const editSocialLink = platform => {
         setEditingPlatform(platform)
         setSelectedPlatform(
@@ -47,7 +44,6 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
         }
     }
 
-    // Function to reset input fields after adding or editing
     const resetInputFields = () => {
         setLink('')
         setSelectedPlatform('')
