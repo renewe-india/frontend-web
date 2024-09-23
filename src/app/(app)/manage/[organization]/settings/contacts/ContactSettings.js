@@ -55,21 +55,17 @@ function ContactSettings({ countryCodes }) {
                 <div className="divider my-1" />
 
                 <div className="h-full w-full ">
-                    <TitleCard title="Phone Numbers" topMargin={'mt-2'}>
-                        <PhoneNumberInput
-                            phoneNumbers={phoneNumbers}
-                            countryCodes={countryCodes}
-                            org={org.name}
-                            fetchContact={fetchContactInfo}
-                        />
-                    </TitleCard>
-                    <TitleCard title="Emails" topMargin={'mt-2'}>
-                        <EmailInput
-                            emails={emails}
-                            org={org.name}
-                            fetchContact={fetchContactInfo}
-                        />
-                    </TitleCard>
+                    <PhoneNumberInput
+                        phoneNumbers={phoneNumbers}
+                        countryCodes={countryCodes}
+                        org={org.name}
+                        fetchContact={fetchContactInfo}
+                    />
+                    <EmailInput
+                        emails={emails}
+                        org={org.name}
+                        fetchContact={fetchContactInfo}
+                    />
                     <TitleCard title="Social Media" topMargin={'mt-2'}>
                         <SocialMediaInput
                             socialLinks={socialLinks}

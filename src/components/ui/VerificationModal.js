@@ -24,7 +24,7 @@ function VerificationModal({ isOpen, onClose, onVerify, methodType, contact }) {
 
     return (
         <div className="fixed z-50 inset-0 bg-black/30 backdrop-blur-md flex justify-center items-center">
-            <div className="modal-box w-full max-w-xs p-8 rounded-lg shadow-lg bg-white relative">
+            <div className="modal-box w-full max-w-xs p-8 rounded-lg shadow-lg bg-base-100 relative">
                 <button
                     type="button"
                     className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -50,7 +50,9 @@ function VerificationModal({ isOpen, onClose, onVerify, methodType, contact }) {
                     ))}
                 </div>
                 <div className="flex justify-end mt-4">
-                    <button onClick={handleSubmit} className="btn btn-primary">
+                    <button
+                        onClick={handleSubmit}
+                        className="btn btn-sm text-white btn-primary">
                         Verify
                     </button>
                 </div>

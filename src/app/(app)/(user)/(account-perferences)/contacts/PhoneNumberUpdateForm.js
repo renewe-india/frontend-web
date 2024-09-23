@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
-import { Plus, SealCheck, Trash, SealQuestion } from '@phosphor-icons/react'
 import VerificationModal from '@/components/ui/VerificationModal'
-import axios from '@/lib/axios'
-import { useToast } from '@/context/ToastContext'
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal'
+import { useAuth } from '@/hooks/auth'
+import axios from '@/lib/axios'
+import { Plus, SealCheck, Trash, SealQuestion } from '@phosphor-icons/react'
+import React, { useState } from 'react'
 
-function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
+const PhoneNumberUpdateForm = ({
+    phoneNumbers,
+    fetchContact,
+    countryCodes,
+}) => {
+    const { user } = useAuth({ middleware: 'auth' })
     const [newPhoneNumber, setNewPhoneNumber] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentPhone, setCurrentPhone] = useState(null)
     const [countryCode, setCountryCode] = useState('91')
     const [loading, setLoading] = useState(false)
-    const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
-    const { notifySuccess, notifyError } = useToast()
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
     const addPhoneNumber = async () => {
         if (newPhoneNumber) {
@@ -25,14 +29,15 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
             try {
                 setLoading(true)
 
-                await axios.post(`/organizations/${org}/contacts`, newPhoneData)
+                await axios.post(
+                    `/users/${user.username}/contacts`,
+                    newPhoneData,
+                )
 
                 setNewPhoneNumber('')
                 setLoading(false)
-                notifySuccess('Phone number added successfully')
                 fetchContact()
             } catch (error) {
-                notifyError('Failed to add phone number')
                 setLoading(false)
             }
         }
@@ -45,12 +50,8 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
     }
 
     const sendOtp = async phone => {
-        try {
-            await axios.post(`/contact/${phone.uuid}/verification/otp/send`)
-            setIsModalOpen(true)
-        } catch (error) {
-            notifyError('Error Sending OTP!')
-        }
+        await axios.post(`/contact/${phone.uuid}/verification/otp/send`)
+        setIsModalOpen(true)
     }
 
     const handleVerify = async otp => {
@@ -63,44 +64,39 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
                 },
             )
 
+            setIsModalOpen(false)
             fetchContact()
         } catch (error) {
-            notifyError('Error Verifying OTP!')
-        } finally {
             setIsModalOpen(false)
-            setCurrentPhone(null)
         }
+    }
+
+    const handleDeleteConfirmation = index => {
+        const phoneToDelete = phoneNumbers[index]
+        setCurrentPhone(phoneToDelete)
+        setIsDeleteModalOpen(true)
     }
 
     const deletePhoneNumber = async () => {
         try {
             await axios.delete(
-                `/organizations/${org}/contacts/${currentPhone.uuid}`,
+                `/users/${user.username}/contacts/${currentPhone.uuid}`,
             )
+            setIsDeleteModalOpen(false)
             fetchContact()
-            notifySuccess('Phone number deleted successfully')
         } catch (error) {
-            notifyError('Error deleting phone number:', error)
-        } finally {
-            setCurrentPhone(null)
-            setIsDeletionModalOpen(false)
+            setIsDeleteModalOpen(false)
         }
     }
 
-    const confirmDeletePhoneNumber = index => {
-        const phone = phoneNumbers[index]
-        setCurrentPhone(phone)
-        setIsDeletionModalOpen(true)
-    }
-
     return (
-        <div className="card bg-base-100 rounded-lg  mb-5">
-            <h3 className="text-xl font-semibold mb-4">Manage Phone Numbers</h3>
+        <div className="card bg-base-200 rounded-lg p-5 mb-2">
+            <h3 className="text-xl font-semibold mb-4">Update Phone Number</h3>
             <div className="flex items-center mb-4">
                 <select
                     value={countryCode}
                     onChange={e => setCountryCode(e.target.value)}
-                    className="input input-bordered  w-2/5 lg:w-1/4 mr-2">
+                    className="input input-bordered input-primary w-2/5 lg:w-1/4 mr-2">
                     {countryCodes.map(code => (
                         <option key={code.code} value={code.code}>
                             +{code.code} : {code.country}
@@ -112,7 +108,7 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
                     value={newPhoneNumber}
                     onChange={e => setNewPhoneNumber(e.target.value)}
                     placeholder="Add new phone number"
-                    className="input input-bordered  w-3/5 lg:w-3/4 mr-2"
+                    className="input input-bordered input-primary w-3/5 lg:w-3/4 mr-2"
                 />
                 <button
                     onClick={addPhoneNumber}
@@ -129,19 +125,19 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
                 {phoneNumbers.map((phone, index) => (
                     <li
                         key={index}
-                        className="flex flex-col lg:flex-row items-left lg:items-center gap-3 justify-between bg-base-200 mb-2 p-2 border border-primary rounded">
+                        className="flex flex-col lg:flex-row items-left lg:items-center gap-3 bg-base-100 justify-between mb-2 p-2 border border-primary rounded">
                         <div className="flex items-center">
-                            <div>
-                                {phone.is_verified ? (
-                                    <SealCheck className="w-8 h-8 text-green-600 mr-2" />
-                                ) : (
-                                    <SealQuestion className="w-8 h-8 text-red-600 mr-2" />
-                                )}
-                            </div>
+                            {phone.is_verified ? (
+                                <SealCheck className="w-8 h-8 text-green-600 mr-2" />
+                            ) : (
+                                <SealQuestion className="w-8 h-8 text-red-600 mr-2" />
+                            )}
                             +{phone.country_code}-{phone.data}
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                            {!phone.is_verified && (
+                            {phone.is_verified ? (
+                                <div />
+                            ) : (
                                 <button
                                     onClick={() => toggleVerification(index)}
                                     className="btn btn-sm btn-success text-white">
@@ -149,10 +145,9 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
                                 </button>
                             )}
                             <button
-                                onClick={() => confirmDeletePhoneNumber(index)}
+                                onClick={() => handleDeleteConfirmation(index)}
                                 className="btn btn-sm bg-red-600 text-white mr-2 flex items-center">
-                                <Trash className="w-5 h-5" />
-                                Delete
+                                <Trash className="w-5 h-5" /> Delete
                             </button>
                         </div>
                     </li>
@@ -161,21 +156,15 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
 
             <VerificationModal
                 isOpen={isModalOpen}
-                onClose={() => {
-                    setIsModalOpen(false)
-                    setCurrentPhone(null)
-                }}
+                onClose={() => setIsModalOpen(false)}
                 onVerify={handleVerify}
                 methodType="Phone Number"
                 contact={currentPhone?.data}
             />
 
             <DeleteConfirmationModal
-                isOpen={isDeletionModalOpen}
-                onClose={() => {
-                    setIsDeletionModalOpen(false)
-                    setCurrentPhone(null)
-                }}
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={deletePhoneNumber}
                 contact={currentPhone?.data}
             />
@@ -183,4 +172,4 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
     )
 }
 
-export default PhoneNumberInput
+export default PhoneNumberUpdateForm

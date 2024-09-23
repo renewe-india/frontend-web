@@ -1,19 +1,18 @@
-'use client'
 import React, { useState } from 'react'
 import { Plus, SealCheck, SealQuestion, Trash } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
-import { useToast } from '@/context/ToastContext'
 import VerificationModal from '@/components/ui/VerificationModal'
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal'
+import { useAuth } from '@/hooks/auth'
 
-function EmailInput({ emails, fetchContact, org }) {
+const EmailUpdateForm = ({ emails, fetchContact }) => {
+    const { user } = useAuth({ middleware: 'auth' })
     const [newEmail, setNewEmail] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
     const [currentEmail, setCurrentEmail] = useState(null)
-    const [emailToDelete, setEmailToDelete] = useState(null)
     const [loading, setLoading] = useState(false)
-    const { notifySuccess, notifyError } = useToast()
+
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false) // New state
 
     const addEmail = async () => {
         if (newEmail && validateEmail(newEmail)) {
@@ -24,18 +23,17 @@ function EmailInput({ emails, fetchContact, org }) {
 
             try {
                 setLoading(true)
-                await axios.post(`/organizations/${org}/contacts`, newEmailData)
+                await axios.post(
+                    `/users/${user.username}/contacts`,
+                    newEmailData,
+                )
 
                 setNewEmail('')
                 setLoading(false)
-                notifySuccess('Email added successfully')
                 fetchContact()
             } catch (error) {
-                notifyError('Error adding email!')
                 setLoading(false)
             }
-        } else {
-            notifyError('Please enter a valid email address.')
         }
     }
 
@@ -51,12 +49,8 @@ function EmailInput({ emails, fetchContact, org }) {
     }
 
     const sendOtp = async email => {
-        try {
-            await axios.post(`/contact/${email.uuid}/verification/otp/send`)
-            setIsModalOpen(true)
-        } catch (error) {
-            notifyError('Error sending OTP!')
-        }
+        await axios.post(`/contact/${email.uuid}/verification/otp/send`)
+        setIsModalOpen(true)
     }
 
     const handleVerify = async otp => {
@@ -69,42 +63,39 @@ function EmailInput({ emails, fetchContact, org }) {
             setIsModalOpen(false)
             fetchContact()
         } catch (error) {
-            notifyError('Error verifying OTP!')
             setIsModalOpen(false)
         }
     }
 
-    const confirmDeleteEmail = index => {
-        setEmailToDelete(emails[index])
-        setIsDeletionModalOpen(true)
+    const handleDeleteConfirmation = index => {
+        const emailToDelete = emails[index]
+        console.log(emailToDelete)
+        setCurrentEmail(emailToDelete)
+        setIsDeleteModalOpen(true)
     }
 
     const deleteEmail = async () => {
-        if (emailToDelete) {
-            try {
-                await axios.delete(
-                    `/organizations/${org}/contacts/${emailToDelete.uuid}`,
-                )
-                fetchContact()
-                notifySuccess('Email deleted successfully')
-            } catch (error) {
-                notifyError('Error deleting email!')
-            } finally {
-                setIsDeletionModalOpen(false)
-            }
+        try {
+            await axios.delete(
+                `/users/${user.username}/contacts/${currentEmail.uuid}`,
+            )
+            setIsDeleteModalOpen(false)
+            fetchContact()
+        } catch (error) {
+            setIsDeleteModalOpen(false)
         }
     }
 
     return (
-        <div className="card bg-base-100 rounded-lg mb-5">
-            <h3 className="text-xl font-semibold mb-4">Manage Emails</h3>
+        <div className="card bg-base-200 rounded-lg p-5 mb-2">
+            <h3 className="text-xl font-semibold mb-4">Update Email</h3>
             <div className="flex items-center mb-4">
                 <input
                     type="email"
                     value={newEmail}
                     onChange={e => setNewEmail(e.target.value)}
                     placeholder="Add new email"
-                    className="input input-bordered w-full mr-2"
+                    className="input input-bordered input-primary w-full mr-2"
                 />
                 <button
                     onClick={addEmail}
@@ -121,7 +112,7 @@ function EmailInput({ emails, fetchContact, org }) {
                 {emails.map((email, index) => (
                     <li
                         key={index}
-                        className="flex flex-col lg:flex-row items-left lg:items-center gap-3 mb-2 p-2 bg-base-200 border border-primary rounded">
+                        className="flex flex-col lg:flex-row items-left lg:items-center bg-base-100 gap-3 mb-2 p-2 border border-primary rounded">
                         <div className="flex items-center flex-1">
                             {email.is_verified ? (
                                 <SealCheck className="w-8 h-8 text-green-600 mr-2" />
@@ -131,7 +122,9 @@ function EmailInput({ emails, fetchContact, org }) {
                             {email.data}
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                            {!email.is_verified && (
+                            {email.is_verified ? (
+                                <div />
+                            ) : (
                                 <button
                                     onClick={() => toggleVerification(index)}
                                     className="btn btn-sm btn-success text-white">
@@ -139,10 +132,9 @@ function EmailInput({ emails, fetchContact, org }) {
                                 </button>
                             )}
                             <button
-                                onClick={() => confirmDeleteEmail(index)}
-                                className="btn btn-sm bg-red-600 text-white flex items-center">
-                                <Trash className="w-5 h-5" />
-                                Delete
+                                onClick={() => handleDeleteConfirmation(index)}
+                                className="btn btn-sm bg-red-600 text-white mr-2 flex items-center">
+                                <Trash className="w-5 h-5" /> Delete
                             </button>
                         </div>
                     </li>
@@ -158,13 +150,13 @@ function EmailInput({ emails, fetchContact, org }) {
             />
 
             <DeleteConfirmationModal
-                isOpen={isDeletionModalOpen}
-                onClose={() => setIsDeletionModalOpen(false)}
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={deleteEmail}
-                contact={emailToDelete?.data}
+                contact={currentEmail?.data}
             />
         </div>
     )
 }
 
-export default EmailInput
+export default EmailUpdateForm
