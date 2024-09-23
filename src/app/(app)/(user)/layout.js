@@ -24,7 +24,7 @@ const AppLayout = ({ children }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                await axios.get('/api/user')
+                await axios.get('/user')
 
                 setIsLoading(false)
             } catch (error) {

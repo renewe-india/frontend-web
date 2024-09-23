@@ -21,7 +21,7 @@ function AddManagerModal({
         e.preventDefault()
         try {
             await axios.patch(
-                `/api/organizations/${organizationName}/managers/${managerName}`,
+                `/organizations/${organizationName}/managers/${managerName}`,
                 {
                     roles: selectedRoles,
                 },
@@ -61,7 +61,7 @@ function AddManagerModal({
                     <div className="mb-4">
                         <SearchComponent
                             placeholder="Search Username"
-                            searchUrl="/api/users/search"
+                            searchUrl="/users/search"
                             scopes={[]}
                             resultLabelKey="username"
                             onInputChange={handleInputChange}

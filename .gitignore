@@ -37,3 +37,7 @@ yarn-error.log*
 # idea
 .idea
 /.idea/
+
+#folder 
+/[associations]/
+/[business]/

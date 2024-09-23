@@ -58,10 +58,7 @@ function ProfileSettings({ companySizeOptions, companyTypeOptions }) {
 
     const updateProfile = async () => {
         try {
-            await axios.patch(
-                `/api/organizations/${organization?.name}`,
-                formData,
-            )
+            await axios.patch(`/organizations/${organization?.name}`, formData)
             notifySuccess('Profile updated successfully!')
         } catch (error) {
             notifyError('Error updating profile.')

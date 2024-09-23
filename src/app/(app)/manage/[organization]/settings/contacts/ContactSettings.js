@@ -18,7 +18,7 @@ function ContactSettings({ countryCodes }) {
         try {
             setLoading(true)
             const response = await axios.get(
-                `/api/organizations/${org.name}/contacts`,
+                `/organizations/${org.name}/contacts`,
             )
             const contactData = response.data.data
             const phones = contactData.filter(

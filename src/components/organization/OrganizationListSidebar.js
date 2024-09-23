@@ -6,7 +6,7 @@ import { Plus } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 
 const fetchOrganizations = async type => {
-    const response = await axios.get(`/api/my/${type}/organizations/list`)
+    const response = await axios.get(`/my/${type}/organizations/list`)
     return response.data.data
 }
 

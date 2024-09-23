@@ -22,7 +22,7 @@ export default function associationSearch() {
     const fetchSearchResults = async (sortBy, appliedFilters) => {
         try {
             const decodedSearchTerm = decodeURIComponent(search)
-            const response = await axios.post(`/api/organizations/search`, {
+            const response = await axios.post(`/organizations/search`, {
                 search: {
                     value: decodedSearchTerm,
                 },

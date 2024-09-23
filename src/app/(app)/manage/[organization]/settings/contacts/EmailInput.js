@@ -22,10 +22,7 @@ function EmailInput({ emails, fetchContact, org }) {
             try {
                 setLoading(true)
                 // Make the API call to add the email
-                await axios.post(
-                    `/api/organizations/${org}/contacts`,
-                    newEmailData,
-                )
+                await axios.post(`/organizations/${org}/contacts`, newEmailData)
 
                 setNewEmail('')
                 setLoading(false)
@@ -53,7 +50,7 @@ function EmailInput({ emails, fetchContact, org }) {
 
     const sendOtp = async email => {
         try {
-            await axios.post(`/api/contact/${email.uuid}/verification/otp/send`)
+            await axios.post(`/contact/${email.uuid}/verification/otp/send`)
             setIsModalOpen(true)
         } catch (error) {
             notifyError('Error sending OTP!')
@@ -63,7 +60,7 @@ function EmailInput({ emails, fetchContact, org }) {
     const handleVerify = async otp => {
         try {
             await axios.post(
-                `/api/contact/${currentEmail.uuid}/verification/otp/verify`,
+                `/contact/${currentEmail.uuid}/verification/otp/verify`,
                 { otp, otp_confirmation: otp },
             )
 
@@ -79,7 +76,7 @@ function EmailInput({ emails, fetchContact, org }) {
         const emailToDelete = emails[index]
 
         try {
-            await axios.delete(`/api/organizations/${org}/contacts`, {
+            await axios.delete(`/organizations/${org}/contacts`, {
                 data: { type: 'email', data: emailToDelete.email },
             })
             fetchContact()

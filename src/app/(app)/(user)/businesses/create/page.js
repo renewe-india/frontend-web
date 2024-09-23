@@ -5,15 +5,9 @@ const CreateOrganizationForm = dynamic(() =>
 )
 const ClaimableBusiness = dynamic(() => import('./ClaimableBusiness'))
 const BusinessCreate = () => {
-    // const [createNewBusinessForm, setCreateNewBusinessForm] = useState(false)
-
     return (
         <>
             <ClaimableBusiness />
-            {/* <SearchBusiness
-                setCreateNewBusinessForm={setCreateNewBusinessForm}
-            /> */}
-            {/* {createNewBusinessForm && <CreateNewBusinessForm />} */}
             <CreateOrganizationForm type="business" />
         </>
     )

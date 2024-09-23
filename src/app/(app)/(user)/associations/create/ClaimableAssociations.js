@@ -15,7 +15,7 @@ function ClaimableAssociations() {
     const handleClaim = async name => {
         setIsSubmitting(true)
         try {
-            await axios.post(`/api/organizations/${name}/claim`)
+            await axios.post(`/organizations/${name}/claim`)
             router.push(`/manage/${name}`)
         } catch (error) {
             // console.error('Error claiming business:', error);
@@ -28,7 +28,7 @@ function ClaimableAssociations() {
         const fetchBusinessesAvailableToClaim = async () => {
             try {
                 const response = await axios.get(
-                    '/api/organizations/available-to-claim',
+                    '/organizations/available-to-claim',
                 )
                 setBusinessesAvailableToClaim(response.data.data || [])
             } catch (error) {

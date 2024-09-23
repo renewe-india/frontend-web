@@ -24,7 +24,7 @@ function ManagersTable({ organizationName }) {
     const fetchManagers = useCallback(async () => {
         try {
             const response = await axios.get(
-                `/api/organizations/${organizationName}/managers`,
+                `/organizations/${organizationName}/managers`,
             )
             setManagers(response.data.data)
         } catch (error) {
@@ -34,7 +34,7 @@ function ManagersTable({ organizationName }) {
 
     const fetchManagersRole = useCallback(async () => {
         try {
-            const response = await axios.get('/api/enums/data', {
+            const response = await axios.get('/enums/data', {
                 params: {
                     enum_path: 'OrganizationManagerRole',
                 },
@@ -70,7 +70,7 @@ function ManagersTable({ organizationName }) {
     const handleDeleteConfirm = async () => {
         try {
             await axios.patch(
-                `/api/organizations/${organizationName}/managers/${deleteManager?.username}`,
+                `/organizations/${organizationName}/managers/${deleteManager?.username}`,
                 { roles: [] },
             )
             setIsDeleteModalOpen(false)
@@ -88,7 +88,7 @@ function ManagersTable({ organizationName }) {
         e.preventDefault()
         try {
             await axios.patch(
-                `/api/organizations/${organizationName}/managers/${currentManager.username}`,
+                `/organizations/${organizationName}/managers/${currentManager.username}`,
                 { roles: roles },
             )
             setIsEditModalOpen(false)

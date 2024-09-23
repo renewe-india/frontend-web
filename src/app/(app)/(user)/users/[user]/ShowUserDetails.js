@@ -9,7 +9,7 @@ async function fetchUserDetails(username) {
     let userDetails = {}
 
     try {
-        const response = await axios.get(`/api/users/${username}`)
+        const response = await axios.get(`/users/${username}`)
         userDetails = response.data.data
     } catch (error) {
         // console.error('Error fetching business details:', error)

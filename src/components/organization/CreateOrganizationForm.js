@@ -24,7 +24,7 @@ const CreateOrganizationForm = ({ type }) => {
         }
 
         try {
-            const response = await axios.post(`/api/organizations`, requestData)
+            const response = await axios.post(`/organizations`, requestData)
             const org = response.data.data
 
             router.push(`/manage/${org.name}`)

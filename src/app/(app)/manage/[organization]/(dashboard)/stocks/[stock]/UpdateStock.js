@@ -49,7 +49,7 @@ function UpdateStock({ stock, stockData, categoryOptions, warehouseOptions }) {
         e.preventDefault()
 
         try {
-            // await axios.put(`/api/solar-stocks/${stock}`, formData)
+            // await axios.put(`/solar-stocks/${stock}`, formData)
             notifySuccess(`Stock ${stock} updated successfully!`)
         } catch (error) {
             notifyError('Error updating stock.')

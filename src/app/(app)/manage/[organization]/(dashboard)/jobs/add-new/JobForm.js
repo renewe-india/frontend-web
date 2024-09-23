@@ -55,7 +55,7 @@ function JobForm() {
         }
 
         try {
-            await axios.post('/api/jobs', formattedData)
+            await axios.post('/jobs', formattedData)
             notifySuccess('Job added successfully!')
         } catch (error) {
             notifyError('Error adding job.')

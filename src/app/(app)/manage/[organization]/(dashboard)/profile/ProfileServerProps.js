@@ -2,7 +2,7 @@ import axios from '@/lib/axios'
 
 export async function getServerSideProps() {
     try {
-        const sizeResponse = await axios.get('/api/enums/data', {
+        const sizeResponse = await axios.get('/enums/data', {
             params: { enum_path: 'CompanySize' },
         })
         const sizeData = sizeResponse.data.data
@@ -10,7 +10,7 @@ export async function getServerSideProps() {
             sizeData,
         ).map(([key, value]) => ({ value: key, name: value }))
 
-        const typeResponse = await axios.get('/api/enums/data', {
+        const typeResponse = await axios.get('/enums/data', {
             params: { enum_path: 'CompanyType' },
         })
         const typeData = typeResponse.data.data

@@ -38,7 +38,7 @@ function StockForm({ categoryOptions, warehouseOptions }) {
         e.preventDefault()
 
         try {
-            // await axios.post('/api/solar-stocks', formData)
+            // await axios.post('/solar-stocks', formData)
             notifySuccess('Stock added successfully!')
         } catch (error) {
             notifyError('Error adding stock.')

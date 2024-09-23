@@ -9,9 +9,7 @@ const ArticlePage = ({ params }) => {
     const [articleData, setArticleData] = useState(null)
     useEffect(() => {
         const fetchArticle = async () => {
-            const response = await axios.get(
-                `/api/news/articles/${articleSlug}`,
-            )
+            const response = await axios.get(`/news/articles/${articleSlug}`)
 
             setArticleData(response.data.data)
         }

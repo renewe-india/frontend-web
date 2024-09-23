@@ -38,7 +38,7 @@ function CreateNewsForm() {
             await csrf()
             setErrors([])
 
-            await axios.post('/api/news/articles', formData)
+            await axios.post('/news/articles', formData)
         } catch (error) {
             if (error.response?.status === 422) {
                 setErrors(['Validation error.'])

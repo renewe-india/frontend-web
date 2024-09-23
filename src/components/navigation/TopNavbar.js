@@ -28,7 +28,7 @@ const AvatarSkeleton = () => (
 const TopNavbar = memo(() => {
     const { user } = useAuth()
     const { data: avatar } = useSWR(
-        user ? `/api/media/users/${user.username}/avatar/first` : null,
+        user ? `/media/users/${user.username}/avatar/first` : null,
         fetcher,
     )
     const { theme, toggleTheme } = useContext(ThemeContext)

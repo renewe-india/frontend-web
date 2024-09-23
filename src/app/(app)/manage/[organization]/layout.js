@@ -18,7 +18,7 @@ const DashBoardLayout = ({ children, params }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     const { data: organizationData, error } = useSWR(
-        user ? `/api/organizations/${organizationName}` : null,
+        user ? `/organizations/${organizationName}` : null,
         fetcher,
         {
             revalidateOnFocus: false,
@@ -32,7 +32,7 @@ const DashBoardLayout = ({ children, params }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                await axios.get('/api/user')
+                await axios.get('/user')
             } catch (error) {
                 router.push('/login')
             }

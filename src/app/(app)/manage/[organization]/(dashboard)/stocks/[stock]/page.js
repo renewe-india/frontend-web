@@ -3,7 +3,7 @@ import UpdateStock from './UpdateStock'
 
 async function fetchStockData() {
     // try {
-    //const response = await axios.get(`/api/solar-stocks/${stockId}`)
+    //const response = await axios.get(`/solar-stocks/${stockId}`)
     return {
         productName: 'Solar Panel X100',
         description: 'High-efficiency solar panel with a 300W output.',

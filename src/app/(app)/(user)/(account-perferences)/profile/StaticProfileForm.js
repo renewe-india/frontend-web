@@ -23,7 +23,7 @@ const StaticProfileForm = () => {
         setError(null)
 
         try {
-            const response = await axios.patch(`/api/users/${user.username}`, {
+            const response = await axios.patch(`/users/${user.username}`, {
                 name,
                 gender,
                 dateOfBirth,

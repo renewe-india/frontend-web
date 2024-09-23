@@ -92,9 +92,7 @@ const Page = () => {
     useEffect(() => {
         const fetchCountryCodes = async () => {
             try {
-                const response = await axios.get(
-                    '/api/address/countries/isd-codes',
-                )
+                const response = await axios.get('/address/countries/isd-codes')
                 setCountryCodes(response.data.data)
             } catch (error) {
                 // console.error('Failed to fetch country codes:', error)

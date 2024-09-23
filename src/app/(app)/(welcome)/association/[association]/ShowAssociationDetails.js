@@ -9,9 +9,7 @@ async function fetchAssociationDetails(associationName) {
     let associationDetails = {}
 
     try {
-        const response = await axios.get(
-            `/api/organizations/${associationName}`,
-        )
+        const response = await axios.get(`/organizations/${associationName}`)
         associationDetails = response.data.data
     } catch (error) {
         // console.error('Error fetching business details:', error)

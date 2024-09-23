@@ -21,7 +21,7 @@ export default function UserSearch() {
     const fetchSearchResults = async (sortBy, appliedFilters) => {
         try {
             const decodedSearchTerm = decodeURIComponent(search)
-            const response = await axios.post(`/api/users/search`, {
+            const response = await axios.post(`/users/search`, {
                 search: {
                     value: decodedSearchTerm,
                 },

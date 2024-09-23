@@ -24,10 +24,7 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
             try {
                 setLoading(true)
 
-                await axios.post(
-                    `/api/organizations/${org}/contacts`,
-                    newPhoneData,
-                )
+                await axios.post(`/organizations/${org}/contacts`, newPhoneData)
 
                 setNewPhoneNumber('')
                 setLoading(false)
@@ -48,7 +45,7 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
 
     const sendOtp = async phone => {
         try {
-            await axios.post(`/api/contact/${phone.uuid}/verification/otp/send`)
+            await axios.post(`/contact/${phone.uuid}/verification/otp/send`)
             setIsModalOpen(true)
         } catch (error) {
             notifyError('Error Sending OTP!')
@@ -58,7 +55,7 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
     const handleVerify = async otp => {
         try {
             await axios.post(
-                `/api/contact/${currentPhone.uuid}/verification/otp/verify`,
+                `/contact/${currentPhone.uuid}/verification/otp/verify`,
                 {
                     otp: otp,
                     otp_confirmation: otp,
@@ -76,7 +73,7 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
         const phoneToDelete = phoneNumbers[index]
 
         try {
-            await axios.delete(`/api/organizations/${org}/contacts`, {
+            await axios.delete(`/organizations/${org}/contacts`, {
                 data: { type: 'mobile', number: phoneToDelete.number },
             })
         } catch (error) {

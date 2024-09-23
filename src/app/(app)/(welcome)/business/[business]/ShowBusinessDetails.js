@@ -11,7 +11,7 @@ async function fetchBusinessDetails(businessName) {
     let businessDetails = {}
 
     try {
-        const response = await axios.get(`/api/organizations/${businessName}`)
+        const response = await axios.get(`/organizations/${businessName}`)
         businessDetails = response.data.data
     } catch (error) {
         // Handle error

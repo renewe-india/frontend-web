@@ -8,7 +8,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const fetcher = async () => {
         try {
-            const response = await axios.get('/api/user')
+            const response = await axios.get('/user')
             return response.data
         } catch (error) {
             if (error.response.status === 401) {
@@ -20,7 +20,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const { data: user, error, mutate } = useSWR(
-        () => (middleware !== 'guest' ? '/api/user' : null),
+        () => (middleware !== 'guest' ? '/user' : null),
         fetcher,
         {
             revalidateOnFocus: false,

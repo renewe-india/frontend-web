@@ -27,7 +27,7 @@ const News = () => {
         if (loading || noMoreArticles) return
         setLoading(true)
         try {
-            const response = await axios.get(`/api/news/articles?page=${page}`)
+            const response = await axios.get(`/news/articles?page=${page}`)
             const newArticles = response.data.data
             setArticles(prevArticles => [...prevArticles, ...newArticles])
             if (newArticles.length === 0) {

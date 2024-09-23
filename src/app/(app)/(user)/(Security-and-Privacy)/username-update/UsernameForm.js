@@ -21,7 +21,7 @@ const UsernameForm = () => {
         setError(null)
 
         try {
-            const response = await axios.patch(`/api/user/update/username`, {
+            const response = await axios.patch(`/user/update/username`, {
                 username,
             })
 
