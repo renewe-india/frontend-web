@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import TitleCard from '@/components/dashboard/Cards/TitleCard'
 import AddressCard from './AddressCard'

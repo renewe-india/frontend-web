@@ -8,33 +8,46 @@ function SearchComponent({
     scopes,
     resultLabelKey,
     onInputChange,
+    clearTrigger,
 }) {
     const [query, setQuery] = useState('')
     const [errors, setErrors] = useState([])
     const [results, setResults] = useState([])
+    const [isSelecting, setIsSelecting] = useState(false)
 
     const handleChange = e => {
         const newValue = e.target.value
         setQuery(newValue)
-        if (onInputChange) {
+
+        if (onInputChange && !isSelecting) {
             onInputChange(newValue)
+        }
+
+        if (isSelecting) {
+            setIsSelecting(false)
         }
     }
 
     const handleResultClick = result => {
         const resultLabel = result[resultLabelKey]
         setQuery(resultLabel)
+        setResults([])
 
-        if (resultLabel === query) {
-            setResults([])
-        }
+        setIsSelecting(true)
+
         if (onInputChange) {
             onInputChange(resultLabel)
         }
     }
 
+    useEffect(() => {
+        setQuery('')
+        setResults([])
+        setErrors([])
+    }, [clearTrigger])
+
     const fetchResults = useCallback(async () => {
-        if (query.trim() === '') {
+        if (query.trim() === '' || isSelecting) {
             setResults([])
             return
         }
@@ -51,12 +64,11 @@ function SearchComponent({
             }
 
             const response = await axios.post(searchUrl, payload)
-
             setResults(response.data.data)
         } catch (error) {
             setErrors(['An unexpected error occurred. Please try again later.'])
         }
-    }, [query, searchUrl, scopes])
+    }, [query, searchUrl, scopes, isSelecting])
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -68,7 +80,7 @@ function SearchComponent({
 
     return (
         <>
-            <div className="card bg-base-200 rounded-lg ">
+            <div className="card bg-base-100 rounded-lg ">
                 <label className="pt-0 label label-text font-semibold">
                     <div className="text-base lg:text-2xl font-bold">
                         {placeholder}

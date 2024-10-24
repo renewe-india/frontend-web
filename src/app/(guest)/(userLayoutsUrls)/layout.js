@@ -2,7 +2,7 @@ import Loading from '@/components/ui/Loading'
 import Navigation from '@/components/navigation/Navigation'
 import dynamic from 'next/dynamic'
 
-const LeftSidebar = dynamic(() => import('../(user)/LeftSidebar'), {
+const LeftSidebar = dynamic(() => import('@/app/(app)/(user)/LeftSidebar'), {
     loading: () => <Loading />,
 })
 

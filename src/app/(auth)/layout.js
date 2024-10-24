@@ -1,3 +1,5 @@
+import Footer from './Footer'
+
 export const metadata = {
     title: 'Renewe',
 }
@@ -19,7 +21,8 @@ const Layout = ({ children }) => {
                             data-theme="light"
                             className="card bg-base-100 rounded-lg p-5">
                             {children}
-                        </div>
+                        </div>{' '}
+                        <Footer />
                     </div>
                 </div>
             </div>
