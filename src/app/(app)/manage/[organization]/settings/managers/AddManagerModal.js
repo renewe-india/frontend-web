@@ -60,7 +60,6 @@ function AddManagerModal({
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <SearchComponent
-                            placeholder="Search Username"
                             searchUrl="/users/search"
                             scopes={[]}
                             resultLabelKey="username"

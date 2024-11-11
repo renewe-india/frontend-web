@@ -11,7 +11,7 @@ function JobIndex({ jobs }) {
             title="Jobs"
             topMargin="mt-2"
             TopSideButtonLink={{
-                href: `/manage/${organization.name}/jobs/add-new`,
+                href: `/manage/${organization.name}/jobs/create`,
                 text: 'Add New Job',
             }}>
             <div className="container mx-auto lg:p-6">

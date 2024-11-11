@@ -34,7 +34,7 @@ const JobCard = ({ title, views, applications, status, jobId }) => {
                 <Eye size={20} />
                 <span>{views} views</span>
             </div>
-            <div className="mt-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
+            <div className="mt-4 flex flex-col space-y-2 sm:space-y-0 md:flex-row sm:flex-row sm:justify-between sm:items-center">
                 <div className="flex space-x-4">
                     <button
                         onClick={handlePostSimilarJob}

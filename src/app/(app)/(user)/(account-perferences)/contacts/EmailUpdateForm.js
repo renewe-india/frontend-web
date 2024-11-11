@@ -69,7 +69,6 @@ const EmailUpdateForm = ({ emails, fetchContact }) => {
 
     const handleDeleteConfirmation = index => {
         const emailToDelete = emails[index]
-        console.log(emailToDelete)
         setCurrentEmail(emailToDelete)
         setIsDeleteModalOpen(true)
     }
@@ -115,11 +114,11 @@ const EmailUpdateForm = ({ emails, fetchContact }) => {
                         className="flex flex-col lg:flex-row items-left lg:items-center bg-base-100 gap-3 mb-2 p-2 border border-primary rounded">
                         <div className="flex items-center flex-1">
                             {email.is_verified ? (
-                                <SealCheck className="w-8 h-8 text-green-600 mr-2" />
+                                <SealCheck className="w-8 h-8 text-green-600 mr-2 flex-shrink-0" />
                             ) : (
-                                <SealQuestion className="w-8 h-8 text-red-600 mr-2" />
+                                <SealQuestion className="w-8 h-8 text-red-600 mr-2 flex-shrink-0" />
                             )}
-                            {email.data}
+                            <span className="truncate">{email.data}</span>
                         </div>
                         <div className="flex items-center justify-between gap-2">
                             {email.is_verified ? (

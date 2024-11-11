@@ -3,7 +3,6 @@
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 import InputField from '@/components/ui/InputField'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { Lock } from '@phosphor-icons/react'
@@ -16,7 +15,6 @@ const PasswordReset = () => {
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
 
     const submitForm = event => {
         event.preventDefault()
@@ -26,7 +24,6 @@ const PasswordReset = () => {
             password,
             password_confirmation: passwordConfirmation,
             setErrors,
-            setStatus,
         })
     }
 
@@ -36,9 +33,6 @@ const PasswordReset = () => {
 
     return (
         <>
-            {/* Session Status */}
-            <AuthSessionStatus className="mb-4" status={status} />
-
             <form onSubmit={submitForm}>
                 {/* Email Address */}
                 <div>

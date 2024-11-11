@@ -81,11 +81,13 @@ function SearchComponent({
     return (
         <>
             <div className="card bg-base-100 rounded-lg ">
-                <label className="pt-0 label label-text font-semibold">
-                    <div className="text-base lg:text-2xl font-bold">
-                        {placeholder}
-                    </div>
-                </label>
+                {placeholder && (
+                    <label className="pt-0 label label-text font-semibold">
+                        <div className="text-base lg:text-2xl font-bold">
+                            {placeholder}
+                        </div>
+                    </label>
+                )}
                 <div className="relative">
                     <input
                         placeholder={placeholder}

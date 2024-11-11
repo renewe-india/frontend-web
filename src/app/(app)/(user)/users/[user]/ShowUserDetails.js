@@ -44,12 +44,12 @@ function ShowUserDetails({ username }) {
         <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-5">
             <div className="relative w-full h-64 rounded-lg">
                 <Image
-                    src={`${userDetails.backdrop.url}`}
+                    data={userDetails?.backdrop}
                     className="w-full h-full object-cover rounded-lg"
                 />
                 <div className="absolute -bottom-20 left-5">
                     <Image
-                        src={`${userDetails.avatar.url}`}
+                        data={userDetails?.avatar}
                         className="avatar w-36 rounded-full border-4 border-white"
                     />
                 </div>

@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import PhoneNumberInput from './PhoneNumberInput'
-import TitleCard from '@/components/dashboard/Cards/TitleCard'
 import EmailInput from './EmailInput'
 import SocialMediaInput from './SocialMediaInput'
 import { useOrganization } from '@/context/OrganizationContext'
@@ -66,13 +65,12 @@ function ContactSettings({ countryCodes }) {
                         org={org.name}
                         fetchContact={fetchContactInfo}
                     />
-                    <TitleCard title="Social Media" topMargin={'mt-2'}>
-                        <SocialMediaInput
-                            socialLinks={socialLinks}
-                            updateSocialLinks={setSocialLinks}
-                            org={org.name}
-                        />
-                    </TitleCard>{' '}
+
+                    <SocialMediaInput
+                        socialLinks={socialLinks}
+                        updateSocialLinks={setSocialLinks}
+                        org={org.name}
+                    />
                 </div>
             </div>
         </div>

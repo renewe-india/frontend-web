@@ -51,7 +51,7 @@ function StockIndex() {
             title="Stock Management"
             topMargin="mt-2"
             TopSideButtonLink={{
-                href: `/manage/${organization.name}/stocks/add-new`,
+                href: `/manage/${organization.name}/stocks/create`,
                 text: 'Add New Stocks',
             }}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

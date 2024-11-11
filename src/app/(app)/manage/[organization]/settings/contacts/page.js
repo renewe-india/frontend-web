@@ -1,7 +1,7 @@
 import axios from '@/lib/axios'
 import ContactSettings from './ContactSettings'
 
-export default async function ContactSettingsPage() {
+export default async function Contacts() {
     let countryCodes = []
 
     try {

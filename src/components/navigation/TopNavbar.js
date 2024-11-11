@@ -26,7 +26,7 @@ const AvatarSkeleton = () => (
 )
 
 const TopNavbar = memo(() => {
-    const { user } = useAuth({ middleware: 'guest' })
+    const { user } = useAuth({ middleware: 'auth' })
     const { data: avatar } = useSWR(
         user ? `/media/users/${user.username}/avatar/first` : null,
         fetcher,

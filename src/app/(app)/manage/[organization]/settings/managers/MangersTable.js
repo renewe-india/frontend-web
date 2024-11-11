@@ -1,13 +1,21 @@
 'use client'
 
-import React, { useEffect, useState, useCallback, Suspense, lazy } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
-const ManagerItem = lazy(() => import('./ManagerItem'))
-const EditManagerModal = lazy(() => import('./EditManagerModal'))
-const AddManagerModal = lazy(() => import('./AddManagerModal'))
-const DeleteConfirmationModal = lazy(() =>
-    import('@/components/dashboard/DeleteConfirmationModal'),
+import dynamic from 'next/dynamic'
+const ManagerItem = dynamic(() => import('./ManagerItem'), {
+    ssr: false,
+})
+const EditManagerModal = dynamic(() => import('./EditManagerModal'), {
+    ssr: false,
+})
+const AddManagerModal = dynamic(() => import('./AddManagerModal'), {
+    ssr: false,
+})
+const DeleteConfirmationModal = dynamic(
+    () => import('@/components/dashboard/DeleteConfirmationModal'),
+    { ssr: false },
 )
 
 function ManagersTable({ organizationName }) {
@@ -35,9 +43,7 @@ function ManagersTable({ organizationName }) {
     const fetchManagersRole = useCallback(async () => {
         try {
             const response = await axios.get('/enums/data', {
-                params: {
-                    enum_path: 'OrganizationManagerRole',
-                },
+                params: { enum_path: 'OrganizationManagerRole' },
             })
             const managersRolesData = response.data.data
             const managersRolesOptions = Object.entries(managersRolesData).map(
@@ -105,19 +111,18 @@ function ManagersTable({ organizationName }) {
     const openAddNewManagerModal = () => setIsAddModalOpen(true)
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="card bg-base-100 rounded-lg mx-2 md:mx-0 mb-2 p-5 flex flex-col gap-5">
-                <div className="flex justify-between items-center underline decoration-primary">
-                    <div className="text-2xl font-bold">Business Managers</div>
-                    <div className="inline-block float-right">
-                        <button
-                            className="btn px-6 btn-sm normal-case btn-primary"
-                            onClick={openAddNewManagerModal}>
-                            Add New
-                        </button>
-                    </div>
+        <div className="card bg-base-200 rounded-lg mx-2 md:mx-0 mb-2 p-5 flex flex-col gap-5">
+            <div className="flex justify-between items-center underline decoration-primary">
+                <div className="text-2xl font-bold">Business Managers</div>
+                <div className="inline-block float-right">
+                    <button
+                        className="btn px-6 btn-sm normal-case btn-primary"
+                        onClick={openAddNewManagerModal}>
+                        Add New
+                    </button>
                 </div>
             </div>
+
             {managers && (
                 <div className="px-5 flex flex-col gap-2">
                     <div className="flex justify-between font-bold">
@@ -160,7 +165,7 @@ function ManagersTable({ organizationName }) {
                     />
                 </div>
             )}
-        </Suspense>
+        </div>
     )
 }
 

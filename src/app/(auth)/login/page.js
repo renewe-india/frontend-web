@@ -3,12 +3,10 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { SignIn } from '@phosphor-icons/react'
 
-const page = () => {
-    const searchParams = useSearchParams()
+const LoginPage = () => {
     const { login } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/',
@@ -20,14 +18,15 @@ const page = () => {
     const [errors, setErrors] = useState({})
 
     useEffect(() => {
-        const queryUsername = searchParams.get('username')
-        const queryPassword = searchParams.get('password')
+        const query = new URLSearchParams(window.location.search)
+        const queryUsername = query.get('username')
+        const queryPassword = query.get('password')
 
         if (queryUsername && queryPassword) {
             setUsername(queryUsername)
             setPassword(queryPassword)
         }
-    }, [searchParams])
+    }, [])
 
     const submitForm = async event => {
         event.preventDefault()
@@ -47,7 +46,7 @@ const page = () => {
     }, [errors])
 
     return (
-        <>
+        <div>
             <div className="pb-5">
                 <div className="flex justify-between items-center">
                     <div>
@@ -62,8 +61,7 @@ const page = () => {
                             htmlFor="username"
                             className="pt-0 label label-text font-semibold">
                             <span>
-                                Username
-                                <span className="text-error">*</span>
+                                Username <span className="text-error">*</span>
                             </span>
                         </label>
                         <div className="flex-1 relative">
@@ -89,8 +87,7 @@ const page = () => {
                             htmlFor="password"
                             className="pt-0 label label-text font-semibold">
                             <span>
-                                Password
-                                <span className="text-error">*</span>
+                                Password <span className="text-error">*</span>
                             </span>
                         </label>
                         <div className="flex-1 relative">
@@ -135,8 +132,8 @@ const page = () => {
                     </Link>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
-export default page
+export default LoginPage

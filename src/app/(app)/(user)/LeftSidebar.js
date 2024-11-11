@@ -24,7 +24,7 @@ const GuestBackdrop = () => (
 )
 
 const LeftSidebar = memo(() => {
-    const { user } = useAuth({ middleware: 'guest' })
+    const { user } = useAuth({ middleware: 'auth' })
     const { data } = useSWR(user ? `/users/${user.username}` : null, fetcher)
     const guestAvatar = useMemo(() => <GuestAvatar />, [])
     const guestBackdrop = useMemo(() => <GuestBackdrop />, [])
