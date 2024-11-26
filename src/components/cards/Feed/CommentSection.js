@@ -10,7 +10,7 @@ import {
 import dynamic from 'next/dynamic'
 import React, { useState, useEffect } from 'react'
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false })
-const CommentSection = ({ postId }) => {
+const CommentSection = () => {
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false)
     const [userComment, setUserComment] = useState('')

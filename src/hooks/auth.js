@@ -9,7 +9,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const fetcher = async () => {
         try {
             const response = await axios.get('/user')
-            return response.data
+            return response.data.data
         } catch (error) {
             if (error.response.status === 401) {
                 // Handle unauthorized access

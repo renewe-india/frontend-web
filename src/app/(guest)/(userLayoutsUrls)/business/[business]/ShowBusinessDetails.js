@@ -6,7 +6,6 @@ import Image from '@/components/Image'
 import AboutSection from './(tabs)/AboutSection'
 import JobsSection from './(tabs)/JobsSection'
 import DetailsSection from './(tabs)/(detailsTab)/DetailsSection'
-import { Plus } from '@phosphor-icons/react'
 import FollowButton from '@/components/ui/FollowButton'
 
 async function fetchBusinessDetails(businessName) {

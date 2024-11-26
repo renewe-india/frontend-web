@@ -12,28 +12,19 @@ import {
     Sun,
     Users,
 } from '@phosphor-icons/react'
-import axios from '@/lib/axios'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
-import useSWR from 'swr'
 import { ThemeContext } from '@/context/ThemeContext'
-import { motion } from 'framer-motion' // Import motion
+import { motion } from 'framer-motion'
 
 const Image = dynamic(() => import('@/components/Image'), { ssr: false })
-
-const fetcher = url => axios.get(url).then(res => res.data)
 const AvatarSkeleton = () => (
     <div className="rounded-full avatar w-7 h-7 bg-gray-300 animate-pulse" />
 )
 
 const TopNavbar = memo(() => {
     const { user } = useAuth({ middleware: 'auth' })
-    const { data: avatar } = useSWR(
-        user ? `/media/users/${user.username}/avatar/first` : null,
-        fetcher,
-    )
     const { theme, toggleTheme } = useContext(ThemeContext)
-
     const [prevScrollPos, setPrevScrollPos] = useState(0)
     const [visible, setVisible] = useState(true)
     const [isMobile, setIsMobile] = useState(false)
@@ -58,7 +49,7 @@ const TopNavbar = memo(() => {
     }, [])
 
     useEffect(() => {
-        if (!isMobile) return // Only apply scroll hide on mobile
+        if (!isMobile) return
 
         const handleScroll = () => {
             const currentScrollPos = window.pageYOffset
@@ -88,12 +79,12 @@ const TopNavbar = memo(() => {
                             <div className="flex items-center gap-2">
                                 {!user ? (
                                     <List className="h-5 inline-block w-5" />
-                                ) : !avatar ? (
+                                ) : !user.avatar ? (
                                     <AvatarSkeleton />
                                 ) : (
                                     <Image
                                         data={
-                                            avatar?.data || {
+                                            user?.avatar || {
                                                 url: '/images/user.svg',
                                             }
                                         }

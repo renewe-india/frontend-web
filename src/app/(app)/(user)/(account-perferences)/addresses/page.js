@@ -47,9 +47,9 @@ const Page = () => {
         ])
     }
 
-    const handleEdit = address => {
+    const handleEdit = () => {
         // Implement edit logic
-        console.log('Edit', address)
+        //console.log('Edit', address)
     }
 
     const handleDelete = uuid => {
