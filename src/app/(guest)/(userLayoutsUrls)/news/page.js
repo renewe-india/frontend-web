@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { SkeletonCard } from '@/components/skeletons/NewsSkeleton'
 import Loading from '@/components/ui/Loading'
-import NewsCard from './NewsCard'
+import NewsCard from '@/components/cards/News/NewsCard'
 
 const News = () => {
     const [articles, setArticles] = useState([])

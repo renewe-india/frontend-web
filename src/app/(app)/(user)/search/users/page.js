@@ -14,7 +14,6 @@ export default function UserSearch() {
     const search = searchParams.get('search')
     const [searchResults, setSearchResults] = useState([])
     const [loading, setLoading] = useState(true)
-    // const [error, setError] = useState(null)
     const [sortCriteria, setSortCriteria] = useState('')
     const [filters, setFilters] = useState([])
 
@@ -29,8 +28,6 @@ export default function UserSearch() {
                 filters: appliedFilters,
             })
             setSearchResults(response.data.data)
-        } catch (err) {
-            // setError('Failed to fetch search results')
         } finally {
             setLoading(false)
         }
@@ -55,15 +52,11 @@ export default function UserSearch() {
     }
 
     if (loading) {
-        return (
-            <div className="card bg-base-200 rounded-lg p-5">
-                <Loading />
-            </div>
-        )
+        return <Loading />
     }
 
     return (
-        <div className="card bg-base-100 space-y-2">
+        <div className="card space-y-2">
             <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-3">
                 <div className="flex flex-row gap-3 items-center flex-wrap">
                     <div className="flex flex-row gap-3 items-center ">

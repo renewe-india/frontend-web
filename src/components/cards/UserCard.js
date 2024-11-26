@@ -1,5 +1,6 @@
-import { Users, Plus, ShieldCheck, PaperPlaneTilt } from '@phosphor-icons/react'
+import { Users, ShieldCheck, PaperPlaneTilt } from '@phosphor-icons/react'
 import Image from '../Image'
+import FollowButton from '../ui/FollowButton'
 
 export default function UserCard({ user }) {
     return (
@@ -18,11 +19,8 @@ export default function UserCard({ user }) {
                             <div className="flex items-start">
                                 {user.name} • <ShieldCheck size={20} />
                             </div>
-                            <div className="lg:flex hidden gap-10">
-                                <button className="btn btn-primary btn-sm text-white rounded-full flex items-center ml-2">
-                                    <Plus size={20} />
-                                    Follow
-                                </button>
+                            <div className="lg:flex hidden gap-5">
+                                <FollowButton AddNew={true} />
                                 <button className="btn bg-base-100 normal-case btn-sm flex items-center gap-1">
                                     <PaperPlaneTilt size={18} weight="bold" />
                                     <span>Message</span>
@@ -73,11 +71,8 @@ export default function UserCard({ user }) {
             </a>
 
             {/* Follow and Message Buttons for Small Screens */}
-            <div className="lg:hidden flex items-center justify-start mt-4">
-                <button className="btn btn-primary btn-sm text-white rounded-full flex items-center ml-2">
-                    <Plus size={20} />
-                    Follow
-                </button>
+            <div className="lg:hidden flex items-center justify-start gap-2 mt-4">
+                <FollowButton AddNew={true} />
                 <button className="btn bg-base-100 normal-case btn-sm flex items-center gap-1">
                     <PaperPlaneTilt size={18} weight="bold" />
                     <span>Message</span>

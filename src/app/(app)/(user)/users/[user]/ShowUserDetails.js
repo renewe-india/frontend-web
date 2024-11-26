@@ -83,7 +83,7 @@ function ShowUserDetails({ username }) {
                 <div className="flex">
                     <button
                         onClick={nameFollow}
-                        className="btn bg-base-100 normal-case btn-sm flex items-center gap-1">
+                        className="btn btn-sm text-primary bg-base-100 normal-case btn-sm flex items-center gap-1">
                         <Plus size={18} weight="bold" />
                         <span>Follow</span>
                     </button>

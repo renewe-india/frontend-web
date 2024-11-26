@@ -12,31 +12,55 @@ import {
 } from '@phosphor-icons/react'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion' // Import motion
 
 function BottomNavbar() {
     const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const [prevScrollPos, setPrevScrollPos] = useState(0)
+    const [visible, setVisible] = useState(true)
 
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768)
         }
         handleResize()
-
         window.addEventListener('resize', handleResize)
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
+        return () => window.removeEventListener('resize', handleResize)
     }, [])
+
+    useEffect(() => {
+        if (!isMobile) return
+
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset
+            setVisible(
+                prevScrollPos > currentScrollPos || currentScrollPos < 10,
+            )
+            setPrevScrollPos(currentScrollPos)
+            if (!visible) {
+                setIsBottomDrawerOpen(false)
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [prevScrollPos, isMobile])
 
     if (!isMobile) return null
 
     return (
         <>
-            <div
-                className={`mb-14 transform -bottom-14 left-0 fixed w-full overflow-auto ease-in-out transition-all duration-100 z-10 border-t ${
-                    isBottomDrawerOpen ? '-translate-y-14' : 'translate-y-full'
-                }`}>
+            {/* Drawer Buttons: This will show when Post is clicked */}
+            <motion.div
+                className={`mb-14 transform left-0  fixed w-full overflow-auto ease-in-out transition-all duration-300 z-10 border-t ${
+                    isBottomDrawerOpen
+                        ? 'translate-y-0 bottom-0'
+                        : 'translate-y-full -bottom-14'
+                }`}
+                initial={{ y: 120 }}
+                animate={{ y: isBottomDrawerOpen ? 0 : 120 }}
+                transition={{ duration: 0.3 }}>
                 <div className="p-2 grid grid-cols-2 gap-2 bg-base-100 text-theme-dark dark:text-theme-light shadow dark:shadow-white">
                     <button
                         type="button"
@@ -71,12 +95,15 @@ function BottomNavbar() {
                         Buy Request
                     </button>
                 </div>
-            </div>
+            </motion.div>
 
-            <div
+            {/* Mobile Footer */}
+            <motion.div
                 id="mobile-footer"
-                style={{ transition: 'bottom 0.3s' }}
-                className="fixed z-40 w-full text-xs grid grid-cols-5 bg-inherit lg:hidden items-center bottom-0 text-theme-dark dark:text-theme-light shadow dark:shadow-white">
+                className="fixed z-40 w-full text-xs grid grid-cols-5 bg-inherit lg:hidden items-center bottom-0 text-theme-dark dark:text-theme-light shadow dark:shadow-white"
+                initial={{ y: 60 }}
+                animate={{ y: visible ? 0 : 60 }}
+                transition={{ duration: 0.3 }}>
                 <Link
                     href="/network"
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
@@ -89,6 +116,7 @@ function BottomNavbar() {
                     <Newspaper size={24} stroke={2} />
                     News
                 </Link>
+                {/* Post Button to Toggle Drawer */}
                 <button
                     onClick={() => setIsBottomDrawerOpen(!isBottomDrawerOpen)}
                     className="flex flex-col items-center p-2 hover:bg-gray-200 hover:dark:bg-gray-800">
@@ -107,7 +135,7 @@ function BottomNavbar() {
                     <Briefcase size={24} stroke={2} />
                     Jobs
                 </Link>
-            </div>
+            </motion.div>
         </>
     )
 }

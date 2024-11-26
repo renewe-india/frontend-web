@@ -3,7 +3,7 @@ import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export default function SearchComponent() {
+export default function MainSearchDropdown() {
     const [searchTerm, setSearchTerm] = useState('')
     const categories = [
         'users',
@@ -59,7 +59,7 @@ export default function SearchComponent() {
                     <div className="indicator rounded-full">
                         <button
                             type="submit"
-                            className="btn bg-base-100 join-item">
+                            className="btn btn-primary join-item">
                             <MagnifyingGlass size={24} />
                         </button>
                     </div>

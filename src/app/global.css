@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Define an animation for delayed tooltip [like,comment,repost,share]appearance */
+@keyframes delayedFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .tooltip {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .group:hover .tooltip {
+    animation: delayedFadeIn 0.3s ease 1s forwards; /* 2s delay, then fades in */
+  }
+  

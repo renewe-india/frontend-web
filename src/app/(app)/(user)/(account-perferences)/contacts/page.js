@@ -4,6 +4,7 @@ import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
 import PhoneNumberUpdateForm from './PhoneNumberUpdateForm'
 import EmailUpdateForm from './EmailUpdateForm'
+import Heading from '@/components/ui/Heading'
 
 export default function ContactEdit() {
     const { user } = useAuth({ middleware: 'auth' })
@@ -51,19 +52,13 @@ export default function ContactEdit() {
     }
 
     return (
-        <div className="card bg-base-200 rounded-lg p-5 ">
-            <div className="mb-2">
-                <h2 className="text-2xl font-bold">
-                    Update Contact Information
-                </h2>
-                <div className="divider my-0" />
-            </div>
+        <Heading title={'Update Contact Information'}>
             <PhoneNumberUpdateForm
                 phoneNumbers={phoneNumbers}
                 fetchContact={fetchContactInfo}
                 countryCodes={countryCodes}
             />
             <EmailUpdateForm emails={emails} fetchContact={fetchContactInfo} />
-        </div>
+        </Heading>
     )
 }

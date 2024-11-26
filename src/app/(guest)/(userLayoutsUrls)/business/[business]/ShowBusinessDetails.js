@@ -6,6 +6,8 @@ import Image from '@/components/Image'
 import AboutSection from './(tabs)/AboutSection'
 import JobsSection from './(tabs)/JobsSection'
 import DetailsSection from './(tabs)/(detailsTab)/DetailsSection'
+import { Plus } from '@phosphor-icons/react'
+import FollowButton from '@/components/ui/FollowButton'
 
 async function fetchBusinessDetails(businessName) {
     let businessDetails = {}
@@ -54,7 +56,8 @@ function ShowBusinessDetails({ businessName }) {
             </div>
             <div className="mx-5 py-2 mt-12 flex flex-col gap-2">
                 <div className="font-bold text-base md:text-xl flex items-center gap-2">
-                    {businessDetails.display_name}
+                    <div>{businessDetails.display_name} </div>
+                    <FollowButton />
                 </div>
                 <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
                     {businessDetails.tagline}

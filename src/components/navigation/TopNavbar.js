@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, memo } from 'react'
+import React, { useState, useEffect, useContext, memo } from 'react'
 import dynamic from 'next/dynamic'
 import {
     BellRinging,
@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import useSWR from 'swr'
 import { ThemeContext } from '@/context/ThemeContext'
+import { motion } from 'framer-motion' // Import motion
 
 const Image = dynamic(() => import('@/components/Image'), { ssr: false })
 
@@ -33,6 +34,10 @@ const TopNavbar = memo(() => {
     )
     const { theme, toggleTheme } = useContext(ThemeContext)
 
+    const [prevScrollPos, setPrevScrollPos] = useState(0)
+    const [visible, setVisible] = useState(true)
+    const [isMobile, setIsMobile] = useState(false)
+
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
 
     const handleToggle = e => {
@@ -43,10 +48,36 @@ const TopNavbar = memo(() => {
         }
     }
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768)
+        }
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    useEffect(() => {
+        if (!isMobile) return // Only apply scroll hide on mobile
+
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset
+            setVisible(
+                prevScrollPos > currentScrollPos || currentScrollPos < 10,
+            )
+            setPrevScrollPos(currentScrollPos)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [prevScrollPos, isMobile])
+
     return (
-        <div
+        <motion.div
             id="navbar"
-            style={{ transition: 'top 0.3s' }}
+            initial={{ y: 0 }}
+            animate={{ y: visible ? 0 : -60 }} // Animate the top navbar
+            transition={{ duration: 0.3 }}
             className="fixed z-40 w-full lg:h-14 text-sm px-5 shadow dark:shadow-white bg-inherit">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center">
@@ -61,7 +92,11 @@ const TopNavbar = memo(() => {
                                     <AvatarSkeleton />
                                 ) : (
                                     <Image
-                                        data={avatar.data}
+                                        data={
+                                            avatar?.data || {
+                                                url: '/images/user.svg',
+                                            }
+                                        }
                                         customClass="rounded-full avatar w-7"
                                     />
                                 )}
@@ -159,7 +194,7 @@ const TopNavbar = memo(() => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 })
 TopNavbar.displayName = 'TopNavbar'

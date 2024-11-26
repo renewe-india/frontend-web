@@ -15,7 +15,7 @@ module.exports = {
             opacity: ['disabled'],
         },
     },
-    plugins: [require('@tailwindcss/forms'), require('daisyui')],
+    plugins: [require('daisyui')],
     daisyui: {
         themes: ['light', 'dark'],
         darkTheme: 'dark', // name of one of the included themes for dark mode

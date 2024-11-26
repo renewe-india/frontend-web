@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import SubmitButton from '@/components/ui/SubmitButton'
 import InputField from '@/components/ui/InputField'
 import ErrorDisplay from '../ui/ErrorDisplay'
+import Heading from '../ui/Heading'
 
 const CreateOrganizationForm = ({ type }) => {
     const router = useRouter()
@@ -36,14 +37,10 @@ const CreateOrganizationForm = ({ type }) => {
     }
 
     return (
-        <div className="card bg-base-200 rounded-lg p-5">
-            <div className="pb-5">
-                <div className="text-2xl font-bold">
-                    Create a New {type.charAt(0).toUpperCase() + type.slice(1)}
-                </div>
-
-                <div className="divider my-0" />
-            </div>
+        <Heading
+            title={`Create a New ${
+                type.charAt(0).toUpperCase() + type.slice(1)
+            }`}>
             <div>
                 <form
                     method="POST"
@@ -68,7 +65,7 @@ const CreateOrganizationForm = ({ type }) => {
                     />
                 </form>
             </div>
-        </div>
+        </Heading>
     )
 }
 

@@ -14,7 +14,6 @@ export default function BusinessSearch() {
     const search = searchParams.get('search')
     const [searchResults, setSearchResults] = useState([])
     const [loading, setLoading] = useState(true)
-    // const [error, setError] = useState(null)
     const [sortCriteria, setSortCriteria] = useState('')
     const [filters, setFilters] = useState([])
     const defaultFilter = { field: 'type', operator: '=', value: 'business' }
@@ -30,8 +29,6 @@ export default function BusinessSearch() {
                 filters: [defaultFilter, ...appliedFilters],
             })
             setSearchResults(response.data.data)
-        } catch (err) {
-            // setError('Failed to fetch search results')
         } finally {
             setLoading(false)
         }
@@ -56,11 +53,7 @@ export default function BusinessSearch() {
     }
 
     if (loading) {
-        return (
-            <div className="card bg-base-200 rounded-lg p-5">
-                <Loading />
-            </div>
-        )
+        return <Loading />
     }
 
     return (

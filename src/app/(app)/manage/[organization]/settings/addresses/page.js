@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TitleCard from '@/components/dashboard/Cards/TitleCard'
-import AddressCard from './AddressCard'
+import AddressCard from '@/components/cards/AddressCard'
 
 const OrganizationComponent = ({ params }) => {
     const organizationName = params.organization
@@ -74,14 +74,26 @@ const OrganizationComponent = ({ params }) => {
     const handleDelete = async uuid => {
         alert(uuid)
     }
-
     const handleSetDefault = async uuid => {
-        alert(uuid)
+        setAddresses(prevAddresses =>
+            prevAddresses.map(address =>
+                address.uuid === uuid
+                    ? { ...address, is_default: !address.is_default }
+                    : address,
+            ),
+        )
     }
 
     const handleSetPublicPrivate = async uuid => {
-        alert(uuid)
+        setAddresses(prevAddresses =>
+            prevAddresses.map(address =>
+                address.uuid === uuid
+                    ? { ...address, is_public: !address.is_public }
+                    : address,
+            ),
+        )
     }
+
     useEffect(() => {
         setAddresses(defaultAddresses)
         setTimeout(() => {
@@ -89,22 +101,22 @@ const OrganizationComponent = ({ params }) => {
         }, 2000)
     }, [organizationName])
     return (
-        <TitleCard title="Addresses" topMargin={'mt-2'}>
+        <TitleCard
+            title="Addresses"
+            topMargin={'mt-2'}
+            TopSideButtonLink={{ text: 'create New', href: '' }}>
             <div className="container mx-auto lg:p-4">
                 {loading ? (
                     <div className="text-center">Loading...</div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {addresses.map((address, idx) => (
-                            <AddressCard
-                                key={idx}
-                                address={address}
-                                onEdit={handleEdit}
-                                onDelete={handleDelete}
-                                onSetDefault={handleSetDefault}
-                                onSetPublicPrivate={handleSetPublicPrivate}
-                            />
-                        ))}
+                        <AddressCard
+                            addresses={addresses}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                            onSetDefault={handleSetDefault}
+                            onSetPublicPrivate={handleSetPublicPrivate}
+                        />
                     </div>
                 )}
                 {/* {error && (
