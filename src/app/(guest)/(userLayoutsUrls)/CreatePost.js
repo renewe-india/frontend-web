@@ -3,19 +3,24 @@ import Image from '@/components/Image'
 import { Article, Briefcase, Images } from '@phosphor-icons/react'
 import React from 'react'
 import CreatePostModal from './CreatePostModal'
+import { useAuth } from '@/hooks/auth'
 
 function CreatePost() {
+    const { user } = useAuth({ middleware: 'auth' })
+    if (!user) {
+        return null
+    }
     return (
         <>
             <div className="card bg-base-200 rounded-lg p-5">
                 <div className="flex flex-col space-y-4">
-                    <div className="flex gap-4 w-full">
+                    <div className="flex gap-4 items-center w-full">
                         {/* Profile Image */}
-                        <div className="avatar">
+                        <div className="avatar w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                             <Image
-                                src="https://via.placeholder.com/50"
+                                data={user?.avatar}
                                 alt="Profile"
-                                customClass="!rounded-full"
+                                customClass="w-full h-full object-cover"
                             />
                         </div>
                         {/* Input Field */}
@@ -25,9 +30,9 @@ function CreatePost() {
                                     .getElementById('create-post-modal')
                                     .showModal()
                             }}
-                            className="input input-primary input-bordered rounded-full flex items-center justify-start w-full h-12">
+                            className="input input-primary input-bordered rounded-full flex items-center justify-start w-full h-12 cursor-pointer">
                             <div className="text-gray-500">
-                                start a New Post{' '}
+                                Start a New Post
                             </div>
                         </div>
                     </div>

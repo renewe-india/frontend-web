@@ -8,6 +8,7 @@ import Loading from '@/components/ui/Loading'
 import SortBy from './SortBy'
 import FilterDrawer from './FilterDrawer'
 import { XCircle } from '@phosphor-icons/react'
+import NoResultFound from '@/components/ui/NoResultFound'
 
 export default function UserSearch() {
     const searchParams = useSearchParams()
@@ -102,15 +103,7 @@ export default function UserSearch() {
                         ))}
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center justify-center  text-center">
-                        <img
-                            src="/result_not_found.svg"
-                            alt="No results found"
-                            width={200}
-                            height={200}
-                        />
-                        <div className="mt-4">No results found.</div>
-                    </div>
+                    <NoResultFound search={search} />
                 )}
             </div>
         </div>

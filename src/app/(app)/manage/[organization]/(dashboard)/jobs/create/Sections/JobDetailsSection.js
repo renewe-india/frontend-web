@@ -1,47 +1,24 @@
 'use client'
 
-// import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import FormSection from './FormSection'
+import useFetchOptions from '@/hooks/useFetchOptions'
 
-const InputText = dynamic(() =>
-    import('@/components/dashboard/Input/InputText'),
+const InputText = dynamic(
+    () => import('@/components/dashboard/Input/InputText'),
+    { ssr: false },
 )
-const SelectBox = dynamic(() =>
-    import('@/components/dashboard/Input/SelectBox'),
+const SelectBox = dynamic(
+    () => import('@/components/dashboard/Input/SelectBox'),
+    { ssr: false },
 )
 
 const JobDetailsSection = ({ formData, updateFormValue }) => {
-    // const [jobTypeOptions, setJobTypeOptions] = useState([])
-    let jobTypeOptions = []
-    // useEffect(() => {
-    //     const fetchJobTypes = async () => {
-    //         const cachedJobTypes = localStorage.getItem('jobTypeOptions')
-    //         const cachedTimestamp = localStorage.getItem('jobTypeTimestamp')
-    //         const isCacheValid =
-    //             cachedTimestamp &&
-    //             Date.now() - cachedTimestamp < 24 * 60 * 60 * 1000
-
-    //         if (cachedJobTypes && isCacheValid) {
-    //             setJobTypeOptions(JSON.parse(cachedJobTypes))
-    //         } else {
-    //             const response = await axios.get('/enums/JobBoard/Type')
-    //             const jobTypes = Object.entries(response.data.data).map(
-    //                 ([key, value]) => ({
-    //                     value: key,
-    //                     label: value,
-    //                 }),
-    //             )
-
-    //             localStorage.setItem('jobTypeOptions', JSON.stringify(jobTypes))
-    //             localStorage.setItem('jobTypeTimestamp', Date.now())
-
-    //             setJobTypeOptions(jobTypes)
-    //         }
-    //     }
-
-    //     fetchJobTypes()
-    // }, [])
+    const jobTypeOptions = useFetchOptions(
+        '/enums/JobBoard/Type',
+        'jobTypeOptions',
+        true,
+    )
 
     return (
         <FormSection title="Job Details">

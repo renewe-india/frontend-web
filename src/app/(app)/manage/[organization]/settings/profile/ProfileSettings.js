@@ -4,35 +4,20 @@ import { useOrganization } from '@/context/OrganizationContext'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
 import dynamic from 'next/dynamic'
-const TitleCard = dynamic(
-    () => import('@/components/dashboard/Cards/TitleCard'),
-    {
-        loading: () => <div>Loading...</div>,
-    },
+const TitleCard = dynamic(() =>
+    import('@/components/dashboard/Cards/TitleCard'),
 )
-const InputText = dynamic(
-    () => import('@/components/dashboard/Input/InputText'),
-    {
-        loading: () => <div>Loading...</div>,
-    },
+const InputText = dynamic(() =>
+    import('@/components/dashboard/Input/InputText'),
 )
-const TextAreaInput = dynamic(
-    () => import('@/components/dashboard/Input/TextAreaInput'),
-    {
-        loading: () => <div>Loading...</div>,
-    },
+const TextAreaInput = dynamic(() =>
+    import('@/components/dashboard/Input/TextAreaInput'),
 )
-const SelectBox = dynamic(
-    () => import('@/components/dashboard/Input/SelectBox'),
-    {
-        loading: () => <div>Loading...</div>,
-    },
+const SelectBox = dynamic(() =>
+    import('@/components/dashboard/Input/SelectBox'),
 )
-const DatePickerInput = dynamic(
-    () => import('@/components/dashboard/Input/DatePickerInput'),
-    {
-        loading: () => <div>Loading...</div>,
-    },
+const DatePickerInput = dynamic(() =>
+    import('@/components/dashboard/Input/DatePickerInput'),
 )
 
 function ProfileSettings({ companySizeOptions, companyTypeOptions }) {

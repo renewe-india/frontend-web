@@ -7,6 +7,7 @@ import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import SuccessDisplay from '@/components/ui/SuccessDisplay'
+import useFetchOptions from '@/hooks/useFetchOptions'
 
 const StaticProfileForm = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -16,6 +17,7 @@ const StaticProfileForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
+    const genderOptions = useFetchOptions('/enums/Main/Gender')
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -40,8 +42,6 @@ const StaticProfileForm = () => {
             setIsSubmitting(false)
         }
     }
-
-    const genderOptions = ['male', 'female', 'other']
 
     return (
         <div className="card bg-base-200 rounded-lg p-5 mb-2">

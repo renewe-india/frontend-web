@@ -4,7 +4,11 @@ import axios from '@/lib/axios'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { SkeletonCard } from '@/components/skeletons/NewsSkeleton'
 import Loading from '@/components/ui/Loading'
-import NewsCard from '@/components/cards/News/NewsCard'
+import dynamic from 'next/dynamic'
+
+const NewsCard = dynamic(() => import('@/components/cards/News/NewsCard'), {
+    loading: () => <SkeletonCard />,
+})
 
 const News = () => {
     const [articles, setArticles] = useState([])
@@ -85,9 +89,20 @@ const News = () => {
                 )}
                 {loading && articles.length > 0 && <Loading />}
                 {noMoreArticles && !loading && !articles.length && (
-                    <p className="text-xl text-gray-500">
-                        No more articles available.
-                    </p>
+                    <div className="card bg-base-200 rounded-lg p-5">
+                        <div className="flex flex-col items-center justify-center text-center">
+                            <img
+                                src="/notFound/new-article-not-found.svg"
+                                alt="No results found"
+                                width={400}
+                                height={400}
+                            />
+                            <div className="mb-4 text-2xl tracking-tight font-bold md:text-3xl ">
+                                Hold tight! Our team is busy gathering more
+                                articles just for you!
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

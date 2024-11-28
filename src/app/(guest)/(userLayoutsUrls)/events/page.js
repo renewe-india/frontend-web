@@ -1,62 +1,57 @@
-import { Calendar, MapPin } from '@phosphor-icons/react/dist/ssr'
+'use client'
 
-export const metadata = {
-    title: 'Events',
-}
+import EventCard from '@/components/cards/EventCard'
+import Loading from '@/components/ui/Loading'
+import axios from '@/lib/axios'
+import React, { useEffect, useState } from 'react'
 
 const Events = () => {
+    const [events, setEvents] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const response = await axios.get('/events')
+                setEvents(response.data.data || [])
+            } catch (error) {
+                setEvents([])
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchEvents()
+    }, [])
+
+    if (loading) {
+        return <Loading />
+    }
+
     return (
         <>
-            <div className="card bg-base-200 rounded-lg p-5">
-                <div>
-                    <a href="#" className="space-y-2">
-                        <div className="flex items-start">
-                            <div className="flex flex-col gap-1 flex-grow">
-                                <div className="font-bold">
-                                    Renewable Energy India Expo
-                                </div>
-                                <div className="inline-flex items-center gap-1">
-                                    <Calendar size={24} />
-                                    <div>3rd Oct, 24 - 5th Oct, 24</div>
-                                </div>
-
-                                <div className="inline-flex items-center gap-1">
-                                    <MapPin size={24} />
-                                    <div>
-                                        India Expo Center, Grater Noida, India
-                                    </div>
-                                </div>
-                                {/* <!--[if ENDBLOCK]><![endif]--> */}
-                            </div>
-                            <div className="flex items-end gap-2">
-                                <div className="avatar">
-                                    <div className="w-7 rounded-full !rounded !h-24 !w-24">
-                                        <img
-                                            src="https://picsum.photos/400"
-                                            alt="avatar"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
+            {events.length === 0 ? (
+                <div className="card bg-base-200 rounded-lg p-5">
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <img
+                            src="/notFound/event-not-found.svg"
+                            alt="No results found"
+                            width={400}
+                            height={400}
+                        />
+                        <div className="mb-4 text-2xl tracking-tight font-bold md:text-3xl ">
+                            No events available at the moment. Stay tuned for
+                            updates!
                         </div>
-                        <div>
-                            <div className="badge">Solar Exhibition</div>
-                            <div className="badge">India</div>
-                            <div className="badge">Delhi</div>
-                        </div>
-                        <p className="text-sm text-gray-500">
-                            Renewable Energy India Expo popularly known as REI
-                            offers an all-inclusive platform to domestic and
-                            international manufacturers, traders, buyers and
-                            professionals from across the renewable energy
-                            domain. REI is recognized as Asia’s Leading b2b expo
-                            focusing on Solar Energy, Wind Energy, Bio-Energy,
-                            Energy Storage and Electric Vehicles and charging
-                            infra.
-                        </p>
-                    </a>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className="grid grid-cols-1 gap-2">
+                    {events.map((event, id) => (
+                        <EventCard key={id} event={event} />
+                    ))}
+                </div>
+            )}
         </>
     )
 }

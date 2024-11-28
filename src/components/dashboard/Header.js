@@ -84,13 +84,8 @@ function Header() {
                             </li>
 
                             <li>
-                                <Link href={`/manage/${org.name}/profile`}>
-                                    Profile
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link href={`/manage/${org.name}/settings`}>
+                                <Link
+                                    href={`/manage/${org.name}/settings/profile`}>
                                     Settings
                                 </Link>
                             </li>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Plus, SealCheck, Trash, SealQuestion } from '@phosphor-icons/react'
-import VerificationModal from '@/components/ui/VerificationModal'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
-import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal'
+import VerificationModal from '@/components/modals/VerificationModal'
+import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal'
 
 function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
     const [newPhoneNumber, setNewPhoneNumber] = useState('')
@@ -11,7 +11,7 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
     const [currentPhone, setCurrentPhone] = useState(null)
     const [countryCode, setCountryCode] = useState('91')
     const [loading, setLoading] = useState(false)
-    const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const { notifySuccess, notifyError } = useToast()
 
     const addPhoneNumber = async () => {
@@ -83,14 +83,14 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
             notifyError('Error deleting phone number:', error)
         } finally {
             setCurrentPhone(null)
-            setIsDeletionModalOpen(false)
+            setIsDeleteModalOpen(false)
         }
     }
 
     const confirmDeletePhoneNumber = index => {
         const phone = phoneNumbers[index]
         setCurrentPhone(phone)
-        setIsDeletionModalOpen(true)
+        setIsDeleteModalOpen(true)
     }
 
     return (
@@ -171,9 +171,9 @@ function PhoneNumberInput({ phoneNumbers, fetchContact, countryCodes, org }) {
             />
 
             <DeleteConfirmationModal
-                isOpen={isDeletionModalOpen}
+                isOpen={isDeleteModalOpen}
                 onClose={() => {
-                    setIsDeletionModalOpen(false)
+                    setIsDeleteModalOpen(false)
                     setCurrentPhone(null)
                 }}
                 onConfirm={deletePhoneNumber}

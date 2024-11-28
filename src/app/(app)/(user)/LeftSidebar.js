@@ -47,7 +47,7 @@ const LeftSidebar = memo(() => {
 const SidebarContainer = ({ children }) => (
     <div
         id="left-sidebar"
-        className="hidden lg:flex flex-col gap-2 w-full col-span-1 lg:col-span-4 xl:col-span-3">
+        className="sticky top-16 z-10 hidden lg:flex flex-col gap-2 w-full ">
         {children}
     </div>
 )

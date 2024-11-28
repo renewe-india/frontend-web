@@ -70,7 +70,7 @@ function JobForm() {
     const handleSubmit = async e => {
         e.preventDefault()
         setErrors({})
-        setLoading(true) // Start loading
+        setLoading(true)
 
         try {
             const output = await saveContent()

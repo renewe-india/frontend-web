@@ -67,7 +67,7 @@ const LoginPage = () => {
                         <div className="flex-1 relative">
                             <input
                                 id="username"
-                                placeholder=""
+                                placeholder="Enter your Username"
                                 className="input input-primary w-full peer"
                                 type="text"
                                 value={username}
@@ -93,7 +93,7 @@ const LoginPage = () => {
                         <div className="flex-1 relative">
                             <input
                                 id="password"
-                                placeholder=""
+                                placeholder="Enter your Password"
                                 className="input input-primary w-full peer"
                                 type="password"
                                 value={password}

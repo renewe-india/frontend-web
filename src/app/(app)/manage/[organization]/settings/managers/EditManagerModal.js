@@ -43,7 +43,7 @@ function EditManagerModal({
                 />
             )}
 
-            <div className="modal-box w-72 p-8 rounded-lg shadow-lg bg-white relative">
+            <div className="modal-box w-72 p-8 rounded-lg shadow-lg bg-base-200 relative">
                 <form onSubmit={onSubmit}>
                     <button
                         type="button"

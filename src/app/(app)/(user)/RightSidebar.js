@@ -9,9 +9,7 @@ import React, { memo } from 'react'
 
 const RightSidebar = memo(() => {
     return (
-        <div
-            id="right-sidebar"
-            className="hidden xl:flex flex-col gap-2 col-span-1 md:col-span-3">
+        <div id="right-sidebar" className="hidden xl:flex flex-col gap-2 ">
             <div className="card bg-base-200 rounded-lg p-5">
                 <div className="pb-5">
                     <div className="flex justify-between items-center">

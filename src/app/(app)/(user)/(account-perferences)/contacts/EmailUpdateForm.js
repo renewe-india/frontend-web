@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Plus, SealCheck, SealQuestion, Trash } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
-import VerificationModal from '@/components/ui/VerificationModal'
-import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal'
 import { useAuth } from '@/hooks/auth'
+import VerificationModal from '@/components/modals/VerificationModal'
+import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal'
 
 const EmailUpdateForm = ({ emails, fetchContact }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -12,7 +12,7 @@ const EmailUpdateForm = ({ emails, fetchContact }) => {
     const [currentEmail, setCurrentEmail] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false) // New state
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
     const addEmail = async () => {
         if (newEmail && validateEmail(newEmail)) {

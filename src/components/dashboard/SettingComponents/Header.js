@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { List, Moon, Sun } from '@phosphor-icons/react'
-import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useOrganization } from '@/context/OrganizationContext'
 import Image from '@/components/Image'
@@ -50,35 +49,16 @@ function Header() {
                     />
                 </label>{' '}
                 {org && (
-                    <div className="dropdown dropdown-end ml-4">
-                        <div
-                            tabIndex={0}
-                            className="flex flex-row gap-2 items-center">
-                            <label className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <Image
-                                        customClass={'mask mask-squircle w-10'}
-                                        data={org.logo}
-                                        alt={org.name}
-                                    />
-                                </div>
-                            </label>
-                        </div>
-                        <ul
-                            tabIndex={0}
-                            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                            <li>
-                                <Link href={`/manage/${org.name}/profile`}>
-                                    Profile
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link href={`/manage/${org.name}/settings`}>
-                                    Settings
-                                </Link>
-                            </li>
-                        </ul>
+                    <div className="flex flex-row gap-2 items-center">
+                        <label className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full">
+                                <Image
+                                    customClass={'mask mask-squircle w-10'}
+                                    data={org.logo}
+                                    alt={org.name}
+                                />
+                            </div>
+                        </label>
                     </div>
                 )}
             </div>

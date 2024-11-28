@@ -5,6 +5,7 @@ import EmailInput from './EmailInput'
 import SocialMediaInput from './SocialMediaInput'
 import { useOrganization } from '@/context/OrganizationContext'
 import axios from '@/lib/axios'
+import Loading from '@/components/ui/Loading'
 
 function ContactSettings({ countryCodes }) {
     const org = useOrganization()
@@ -44,7 +45,7 @@ function ContactSettings({ countryCodes }) {
     }, [org])
 
     if (loading) {
-        return <div>Loading...</div>
+        return <Loading />
     }
 
     return (

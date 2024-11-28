@@ -1,7 +1,9 @@
 'use client'
 import InputField from '@/components/ui/InputField'
 import SelectField from '@/components/ui/SelectField'
-import React, { useState } from 'react'
+import useFetchOptions from '@/hooks/useFetchOptions' // Import the custom hook
+import axios from '@/lib/axios'
+import React, { useState, useEffect } from 'react'
 
 const AddAddressModal = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -14,6 +16,30 @@ const AddAddressModal = ({ onSubmit }) => {
         is_default: false,
         is_public: false,
     })
+
+    const typeOptions = useFetchOptions('/enums/Address/AddressType', '', false)
+    const countryOptions = useFetchOptions('/enums/Address/Country', '', false)
+    const [stateOptions, setStateOptions] = useState([])
+    useEffect(() => {
+        const fetchStates = async () => {
+            if (!formData.country) {
+                setStateOptions([])
+                return
+            }
+
+            const response = await axios.get(
+                `/enums/Address/States-${formData.country.replace(/\s+/g, '')}`,
+            )
+            const states = Object.entries(response.data.data).map(
+                ([key, value]) => ({
+                    value: key,
+                    label: value,
+                }),
+            )
+            setStateOptions(states)
+        }
+        fetchStates()
+    }, [formData.country])
 
     const handleChange = e => {
         const { name, value, type, checked } = e.target
@@ -28,9 +54,6 @@ const AddAddressModal = ({ onSubmit }) => {
         onSubmit(formData)
         document.getElementById('add_address_modal').close()
     }
-
-    const countries = ['United States', 'Canada', 'United Kingdom', 'Australia']
-    const states = ['California', 'New York', 'Texas', 'Florida']
 
     return (
         <dialog id="add_address_modal" className="modal">
@@ -47,7 +70,8 @@ const AddAddressModal = ({ onSubmit }) => {
                         name="type"
                         value={formData.type}
                         onChange={handleChange}
-                        options={['Home', 'Work', 'Other']}
+                        options={typeOptions}
+                        placeholder="Select Address Type"
                         required
                     />
 
@@ -86,7 +110,8 @@ const AddAddressModal = ({ onSubmit }) => {
                             name="country"
                             value={formData.country}
                             onChange={handleChange}
-                            options={countries}
+                            options={countryOptions}
+                            placeholder="Select Country"
                             required
                         />
 
@@ -95,8 +120,10 @@ const AddAddressModal = ({ onSubmit }) => {
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
-                            options={states}
+                            options={stateOptions}
+                            placeholder="Select State"
                             required
+                            disabled={!formData.country}
                         />
                     </div>
 

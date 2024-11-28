@@ -162,13 +162,16 @@ const Page = () => {
                             }
                             className={`input input-primary ${
                                 contactType === 'mobile' ? 'w-3/4' : 'w-full'
-                            } peer`}
-                            type="text"
+                            }`}
+                            type={contactType === 'email' ? 'text' : 'tel'}
+                            pattern={
+                                contactType === 'mobile'
+                                    ? '[0-9]{10}'
+                                    : undefined
+                            }
                             value={contact}
                             onChange={event => setContact(event.target.value)}
                             required
-                            autoFocus
-                            disabled={otpSent}
                         />
                         {otpSent && (
                             <button

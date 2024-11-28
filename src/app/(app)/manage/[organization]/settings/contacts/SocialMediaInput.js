@@ -54,8 +54,8 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
     return (
         <div className="card bg-base-100 rounded-lg  mb-5">
             <h3 className="text-xl font-semibold mb-4">Social Links</h3>
-            <div className="flex items-center mb-4">
-                <div className="flex flex-col md:flex-row lg:items-center mb-4">
+            <div className="flex-row items-center mb-4">
+                <div className="flex flex-col md:flex-row lg:items-center gap-2 mb-4">
                     <SelectBox
                         placeholder="Select a platform"
                         options={platformOptions}
@@ -66,17 +66,15 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
                         value={selectedPlatform}
                     />
                     {selectedPlatform === 'custom' && (
-                        <div className="flex flex-col md:flex-row items-center">
-                            <input
-                                type="text"
-                                value={customPlatformName}
-                                onChange={e =>
-                                    setCustomPlatformName(e.target.value)
-                                }
-                                placeholder="Enter custom social media name"
-                                className="input input-bordered mb-2 md:mb-0 w-full md:mr-2"
-                            />
-                        </div>
+                        <input
+                            type="text"
+                            value={customPlatformName}
+                            onChange={e =>
+                                setCustomPlatformName(e.target.value)
+                            }
+                            placeholder="Enter custom social media name"
+                            className="input input-bordered  w-full md:mr-2"
+                        />
                     )}
                     <input
                         type="text"

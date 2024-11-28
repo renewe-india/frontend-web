@@ -67,9 +67,9 @@ const TopNavbar = memo(() => {
         <motion.div
             id="navbar"
             initial={{ y: 0 }}
-            animate={{ y: visible ? 0 : -60 }} // Animate the top navbar
+            animate={{ y: visible ? 0 : -60 }}
             transition={{ duration: 0.3 }}
-            className="fixed z-40 w-full lg:h-14 text-sm px-5 shadow dark:shadow-white bg-inherit">
+            className="fixed z-40 w-full lg:h-14 text-sm px-2 lg:px-5 shadow dark:shadow-white bg-inherit">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center">
                     <div className="flex items-center gap-2 md:gap-5">
@@ -183,6 +183,13 @@ const TopNavbar = memo(() => {
                             />
                         </label>
                     </div>
+                    {!user && (
+                        <Link
+                            href="/login"
+                            className="btn btn-sm btn-primary btn-outline">
+                            Login
+                        </Link>
+                    )}
                 </div>
             </div>
         </motion.div>

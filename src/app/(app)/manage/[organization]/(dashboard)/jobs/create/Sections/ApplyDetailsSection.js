@@ -1,8 +1,8 @@
 'use client'
 
-// import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import FormSection from './FormSection'
+import useFetchOptions from '@/hooks/useFetchOptions'
 const InputText = dynamic(
     () => import('@/components/dashboard/Input/InputText'),
     { ssr: false },
@@ -13,39 +13,11 @@ const SelectBox = dynamic(
 )
 
 const ApplyDetailsSection = ({ formData, updateFormValue }) => {
-    // const [applyViaOptions, setApplyViaOptions] = useState([])
-    let applyViaOptions = []
-    // useEffect(() => {
-    //     const fetchApplyViaOptions = async () => {
-    //         const cachedApplyViaOptions = localStorage.getItem(
-    //             'applyViaOptions',
-    //         )
-    //         const cachedTimestamp = localStorage.getItem('applyViaTimestamp')
-    //         const isCacheValid =
-    //             cachedTimestamp &&
-    //             Date.now() - cachedTimestamp < 24 * 60 * 60 * 1000
-
-    //         if (cachedApplyViaOptions && isCacheValid) {
-    //             setApplyViaOptions(JSON.parse(cachedApplyViaOptions))
-    //         } else {
-    //             const response = await axios.get('/enums/JobBoard/ApplyVia')
-    //             const applyViaData = Object.entries(response.data.data).map(
-    //                 ([key, value]) => ({
-    //                     value: key,
-    //                     label: value,
-    //                 }),
-    //             )
-    //             localStorage.setItem(
-    //                 'applyViaOptions',
-    //                 JSON.stringify(applyViaData),
-    //             )
-    //             localStorage.setItem('applyViaTimestamp', Date.now())
-    //         }
-    //     }
-
-    //     fetchApplyViaOptions()
-    // }, [])
-
+    const applyViaOptions = useFetchOptions(
+        '/enums/JobBoard/ApplyVia',
+        'applyViaOptions',
+        true,
+    )
     return (
         <FormSection title="Application Details">
             <SelectBox

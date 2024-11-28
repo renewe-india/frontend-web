@@ -1,5 +1,5 @@
-import VerificationModal from '@/components/ui/VerificationModal'
-import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal'
+import VerificationModal from '@/components/modals/VerificationModal'
+import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import { Plus, SealCheck, Trash, SealQuestion } from '@phosphor-icons/react'

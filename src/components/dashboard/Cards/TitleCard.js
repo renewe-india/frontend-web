@@ -1,7 +1,13 @@
 import Link from 'next/link'
 import Subtitle from '../Typography/Subtitle'
 
-function TitleCard({ title, children, topMargin, TopSideButtonLink }) {
+function TitleCard({
+    title,
+    children,
+    topMargin,
+    TopSideButtonLink,
+    TopSideButton,
+}) {
     return (
         <div
             className={
@@ -20,6 +26,13 @@ function TitleCard({ title, children, topMargin, TopSideButtonLink }) {
                             {TopSideButtonLink.text}
                         </div>
                     </Link>
+                )}
+                {TopSideButton && (
+                    <div onClick={TopSideButton.onClick}>
+                        <div className="btn btn-primary  sm:mt-0 mt-2">
+                            {TopSideButton.text}
+                        </div>
+                    </div>
                 )}
             </div>
 

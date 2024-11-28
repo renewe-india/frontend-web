@@ -181,7 +181,7 @@ function ShowAssociationDetails({ associationName }) {
                 }`}>
                 <div className="flex flex-col items-center justify-center  text-center">
                     <img
-                        src="/result_not_found.svg"
+                        src="/notFound/result_not_found.svg"
                         alt="No results found"
                         width={200}
                         height={200}

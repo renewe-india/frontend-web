@@ -1,4 +1,11 @@
-import { AddressBook, At, Desk, House, SealCheck } from '@phosphor-icons/react'
+import {
+    AddressBook,
+    At,
+    BuildingOffice,
+    Desk,
+    House,
+    SealCheck,
+} from '@phosphor-icons/react'
 
 const iconClasses = `h-6 w-6`
 
@@ -7,6 +14,11 @@ const routes = [
         path: '/',
         icon: <House className={iconClasses} />,
         name: 'Home',
+    },
+    {
+        path: 'profile',
+        icon: <BuildingOffice className={iconClasses} />,
+        name: 'Company Profile',
     },
     {
         path: 'managers',

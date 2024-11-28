@@ -160,11 +160,12 @@ function SkillComponent({
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 col-spans-1">
+                    <div className="flex lg:flex-row flex-col lg:items-center gap-2 col-spans-1">
                         <input
                             type="number"
                             className="input input-bordered"
                             placeholder="Experience"
+                            min={'0'}
                             value={experience}
                             onChange={e => setExperience(e.target.value)}
                         />

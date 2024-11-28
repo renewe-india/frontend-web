@@ -1,98 +1,60 @@
 'use client'
-import {
-    ShareNetwork,
-    Heart,
-    Money,
-    PlusSquare,
-    MapPin,
-    Buildings,
-    CalendarCheck,
-    CheckCircle,
-    Repeat,
-} from '@phosphor-icons/react/dist/ssr'
-import { useRouter } from 'next/navigation'
-import React from 'react'
 
-const Card = () => {
-    const router = useRouter()
+import JobCard from '@/components/cards/JobCard'
+import Loading from '@/components/ui/Loading'
+// import axios from '@/lib/axios'
+import React, { useEffect, useState } from 'react'
+
+const JobPage = () => {
+    const [jobs, setJobs] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchJobs = async () => {
+            try {
+                //const response = await axios.get('/api/v1/jobboard')
+                setJobs([])
+            } catch (error) {
+                setJobs([])
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchJobs()
+    }, [])
+
+    if (loading) {
+        return <Loading />
+    }
+
     return (
-        <div className="card bg-base-200 rounded-lg p-5">
-            <div className="pb-5">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <div className="text-2xl font-bold">Sales Manager</div>
-                        <div className="text-gray-500 text-sm mt-1">
-                            2 Days Remaining
+        <>
+            {jobs.length === 0 ? (
+                <div className="card bg-base-200 rounded-lg p-5">
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <img
+                            src="/notFound/job-not-found.svg"
+                            alt="No results found"
+                            width={400}
+                            height={400}
+                        />
+
+                        <div className="mb-4 text-2xl tracking-tight font-bold md:text-3xl ">
+                            We're gearing up for something great! Stay tuned for
+                            upcoming Job roles!
                         </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button
-                            type="button"
-                            // onClick={() => job_post_share_1.showModal()}
-                            className="btn normal-case btn-circle btn-sm">
-                            <span className="block">
-                                <ShareNetwork size={24} />
-                            </span>
-                        </button>
-                        <button
-                            type="button"
-                            className="btn normal-case btn-circle btn-sm">
-                            <span className="block">
-                                <Heart size={24} />
-                            </span>
-                        </button>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-1">
-                        <div className="inline-flex items-center gap-1">
-                            <Money size={24} />
-                            <div>₹1,000,000.00/Year</div>
-                        </div>
-                        <div className="inline-flex items-center gap-1">
-                            <PlusSquare size={24} /> <div>₹200,000.00/Year</div>
-                        </div>
-                        <div className="inline-flex items-center gap-1">
-                            <MapPin size={24} />
-                            <div>Mumbai, India</div>
-                        </div>
-                        <div className="inline-flex items-center gap-1">
-                            <Buildings size={24} />
-                            <div>Full Time</div>
-                        </div>
-                        <div className="inline-flex items-center gap-1">
-                            <CalendarCheck size={24} />
-                            <div>3-5 Years</div>
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                        <div className="badge">Family Health Insurance</div>
-                        <div className="badge">Travel Allowance</div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 justify-center justify-items-center">
-                        <button
-                            className="btn normal-case w-full btn-outline"
-                            onClick={() => router.push('/jobs/view')}>
-                            <span className="block">
-                                <CheckCircle size={24} />
-                            </span>
-                            Apply
-                            <div className="badge">26</div>
-                        </button>
-                        <button className="btn normal-case w-full btn-outline ">
-                            <span className="block">
-                                <Repeat size={24} />
-                            </span>
-                            Repost
-                            <div className="badge">169</div>
-                        </button>
-                    </div>
+            ) : (
+                <div className="grid grid-cols-1 gap-2">
+                    {jobs.map(job => (
+                        <JobCard key={job.id} job={job} />
+                    ))}
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     )
 }
 
-export default Card
+export default JobPage

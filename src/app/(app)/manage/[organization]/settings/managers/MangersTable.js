@@ -4,6 +4,8 @@ import React, { useEffect, useState, useCallback } from 'react'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
 import dynamic from 'next/dynamic'
+import useFetchOptions from '@/hooks/useFetchOptions'
+import Loading from '@/components/ui/Loading'
 const ManagerItem = dynamic(() => import('./ManagerItem'), {
     ssr: false,
 })
@@ -14,7 +16,7 @@ const AddManagerModal = dynamic(() => import('./AddManagerModal'), {
     ssr: false,
 })
 const DeleteConfirmationModal = dynamic(
-    () => import('@/components/dashboard/DeleteConfirmationModal'),
+    () => import('@/components/modals/DeleteConfirmationModal'),
     { ssr: false },
 )
 
@@ -25,11 +27,13 @@ function ManagersTable({ organizationName }) {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [roles, setRoles] = useState([])
-    const [managersRoles, setManagersRoles] = useState([])
     const [deleteManager, setDeleteManager] = useState(null)
     const { notifySuccess, notifyError } = useToast()
+    const managersRoles = useFetchOptions('/enums/Main/OrganizationManagerRole')
+    const [loading, setLoading] = useState(true)
 
     const fetchManagers = useCallback(async () => {
+        setLoading(true)
         try {
             const response = await axios.get(
                 `/organizations/${organizationName}/managers`,
@@ -37,31 +41,14 @@ function ManagersTable({ organizationName }) {
             setManagers(response.data.data)
         } catch (error) {
             notifyError('Error fetching Managers:', error)
+        } finally {
+            setLoading(false)
         }
     }, [organizationName])
 
-    const fetchManagersRole = useCallback(async () => {
-        try {
-            const response = await axios.get('/enums/data', {
-                params: { enum_path: 'OrganizationManagerRole' },
-            })
-            const managersRolesData = response.data.data
-            const managersRolesOptions = Object.entries(managersRolesData).map(
-                ([key, value]) => ({
-                    value: key,
-                    label: value,
-                }),
-            )
-            setManagersRoles(managersRolesOptions)
-        } catch (error) {
-            notifyError('Error fetching Managers Roles:', error)
-        }
-    }, [])
-
     useEffect(() => {
         fetchManagers()
-        fetchManagersRole()
-    }, [fetchManagers, fetchManagersRole])
+    }, [fetchManagers])
 
     const handleEditClick = manager => {
         setCurrentManager(manager)
@@ -109,9 +96,11 @@ function ManagersTable({ organizationName }) {
     }
 
     const openAddNewManagerModal = () => setIsAddModalOpen(true)
-
+    if (loading) {
+        return <Loading />
+    }
     return (
-        <div className="card bg-base-200 rounded-lg mx-2 md:mx-0 mb-2 p-5 flex flex-col gap-5">
+        <div className="card bg-base-200 rounded-lg mx-2 md:mx-0 mb-2 lg:p-5 flex flex-col gap-5">
             <div className="flex justify-between items-center underline decoration-primary">
                 <div className="text-2xl font-bold">Business Managers</div>
                 <div className="inline-block float-right">
@@ -157,11 +146,12 @@ function ManagersTable({ organizationName }) {
                         managersRoles={managersRoles}
                         onAddManager={fetchManagers}
                     />
+
                     <DeleteConfirmationModal
-                        isModalOpen={isDeleteModalOpen}
-                        setIsModalOpen={setIsDeleteModalOpen}
+                        isOpen={isDeleteModalOpen}
+                        onClose={() => setIsDeleteModalOpen(false)}
                         onConfirm={handleDeleteConfirm}
-                        managerName={deleteManager?.name}
+                        contact={deleteManager?.name}
                     />
                 </div>
             )}

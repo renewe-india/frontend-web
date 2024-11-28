@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import { Plus, SealCheck, SealQuestion, Trash } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
-import VerificationModal from '@/components/ui/VerificationModal'
-import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal'
+import VerificationModal from '@/components/modals/VerificationModal'
+import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal'
 
 function EmailInput({ emails, fetchContact, org }) {
     const [newEmail, setNewEmail] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [currentEmail, setCurrentEmail] = useState(null)
     const [emailToDelete, setEmailToDelete] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -76,7 +76,7 @@ function EmailInput({ emails, fetchContact, org }) {
 
     const confirmDeleteEmail = index => {
         setEmailToDelete(emails[index])
-        setIsDeletionModalOpen(true)
+        setIsDeleteModalOpen(true)
     }
 
     const deleteEmail = async () => {
@@ -90,7 +90,7 @@ function EmailInput({ emails, fetchContact, org }) {
             } catch (error) {
                 notifyError('Error deleting email!')
             } finally {
-                setIsDeletionModalOpen(false)
+                setIsDeleteModalOpen(false)
             }
         }
     }
@@ -158,8 +158,8 @@ function EmailInput({ emails, fetchContact, org }) {
             />
 
             <DeleteConfirmationModal
-                isOpen={isDeletionModalOpen}
-                onClose={() => setIsDeletionModalOpen(false)}
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={deleteEmail}
                 contact={emailToDelete?.data}
             />
