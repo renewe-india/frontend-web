@@ -6,7 +6,7 @@ import { useState } from 'react'
 export default function MainSearchDropdown() {
     const [searchTerm, setSearchTerm] = useState('')
     const categories = [
-        'users',
+        'user',
         'products',
         'services',
         'business',

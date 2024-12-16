@@ -1,12 +1,7 @@
-'use client'
-
-import { useAuth } from '@/hooks/auth'
 import Loading from '@/components/ui/Loading'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import axios from '@/lib/axios'
 import dynamic from 'next/dynamic'
 import Navigation from '@/components/navigation/Navigation'
+import { UserProvider } from '@/context/UserContext'
 
 const LeftSidebar = dynamic(() => import('./LeftSidebar'), {
     loading: () => <Loading />,
@@ -15,36 +10,8 @@ const RightSidebar = dynamic(() => import('./RightSidebar'), {
     loading: () => <Loading />,
 })
 const AppLayout = ({ children }) => {
-    const { user: authUser } = useAuth({
-        middleware: 'auth',
-    })
-    const [isLoading, setIsLoading] = useState(true)
-    const router = useRouter()
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                await axios.get('/user')
-
-                setIsLoading(false)
-            } catch (error) {
-                router.push('/login')
-            }
-        }
-
-        if (!authUser) {
-            fetchUserData()
-        } else {
-            setIsLoading(false)
-        }
-    }, [authUser, router])
-
-    if (isLoading) {
-        return <Loading />
-    }
-
     return (
-        <>
+        <UserProvider>
             <Navigation />
             <div className="container mx-auto my-auto py-16">
                 <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2 px-2">
@@ -65,7 +32,7 @@ const AppLayout = ({ children }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </UserProvider>
     )
 }
 

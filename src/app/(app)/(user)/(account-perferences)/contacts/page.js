@@ -1,13 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
-import { useAuth } from '@/hooks/auth'
 import PhoneNumberUpdateForm from './PhoneNumberUpdateForm'
 import EmailUpdateForm from './EmailUpdateForm'
 import Heading from '@/components/ui/Heading'
+import Loading from '@/components/ui/Loading'
+import { useUser } from '@/context/UserContext'
 
 export default function ContactEdit() {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useUser()
     const [phoneNumbers, setPhoneNumbers] = useState([])
     const [emails, setEmails] = useState([])
     const [loading, setLoading] = useState(true)
@@ -48,7 +49,7 @@ export default function ContactEdit() {
     }, [user])
 
     if (loading) {
-        return <div>Loading...</div>
+        return <Loading />
     }
 
     return (

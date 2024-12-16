@@ -3,14 +3,22 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axios from '@/lib/axios'
-import UserCard from '@/components/cards/UserCard'
 import Loading from '@/components/ui/Loading'
-import SortBy from './SortBy'
+import SortBy from './Sortby'
 import FilterDrawer from './FilterDrawer'
 import { XCircle } from '@phosphor-icons/react'
+import OrganizationCard from '@/components/cards/OrganizationCard'
 import NoResultFound from '@/components/ui/NoResultFound'
+import UserCard from '../cards/UserCard'
 
-export default function UserSearch() {
+export default function SearchPageComponent({
+    searchEndpoint,
+    defaultFilter,
+    resultCard,
+    filterLabels,
+    filterConfig,
+    sortOptions,
+}) {
     const searchParams = useSearchParams()
     const search = searchParams.get('search')
     const [searchResults, setSearchResults] = useState([])
@@ -20,13 +28,15 @@ export default function UserSearch() {
 
     const fetchSearchResults = async (sortBy, appliedFilters) => {
         try {
-            const decodedSearchTerm = decodeURIComponent(search)
-            const response = await axios.post(`/users/search`, {
+            const decodedSearchTerm = decodeURIComponent(search || '')
+            const response = await axios.post(searchEndpoint, {
                 search: {
                     value: decodedSearchTerm,
                 },
                 sort: sortBy ? [sortBy] : [],
-                filters: appliedFilters,
+                filters: defaultFilter
+                    ? [defaultFilter, ...appliedFilters]
+                    : appliedFilters,
             })
             setSearchResults(response.data.data)
         } finally {
@@ -40,40 +50,30 @@ export default function UserSearch() {
         }
     }, [search, sortCriteria, filters])
 
-    const handleApplyFilters = newFilters => {
-        setFilters(newFilters)
-    }
-    const handleSortChange = value => {
-        setSortCriteria(value)
-    }
+    const handleApplyFilters = newFilters => setFilters(newFilters)
+
+    const handleSortChange = value => setSortCriteria(value)
+
     const handleRemoveFilter = index => {
         const updatedFilters = [...filters]
         updatedFilters.splice(index, 1)
         setFilters(updatedFilters)
     }
 
-    if (loading) {
-        return <Loading />
-    }
-
     return (
-        <div className="card space-y-2">
+        <div className="card bg-base-100 space-y-2">
             <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-3">
                 <div className="flex flex-row gap-3 items-center flex-wrap">
-                    <div className="flex flex-row gap-3 items-center ">
-                        <FilterDrawer onApplyFilters={handleApplyFilters} />
-                    </div>
-
+                    <FilterDrawer
+                        onApplyFilters={handleApplyFilters}
+                        filterConfig={filterConfig}
+                    />
                     {filters.map((filter, index) => (
                         <button
                             key={index}
                             className="btn btn-outline btn-sm flex items-center gap-2 text-left whitespace-normal break-words"
                             onClick={() => handleRemoveFilter(index)}>
-                            {filter.field === 'gender' &&
-                                `Gender: ${filter.value}`}
-                            {filter.field === 'date_of_birth' &&
-                                `Date of Birth After: ${filter.value}`}
-
+                            {filterLabels(filter)}
                             <XCircle size={16} />
                         </button>
                     ))}
@@ -85,22 +85,36 @@ export default function UserSearch() {
                 </div>
                 <div className="flex items-center space-x-2 mx-4">
                     <span className="text-xs">Sort by:</span>
-                    <SortBy onSortChange={handleSortChange} />
+                    <SortBy
+                        onSortChange={handleSortChange}
+                        sortOptions={sortOptions}
+                    />
                 </div>
             </div>
-
             <div className="card bg-base-200 rounded-lg p-5">
-                <div className=" mb-3">
+                <div className="mb-3">
                     <h1 className="text-sm">
                         {searchResults.length} result
                         {searchResults.length !== 1 ? 's' : ''} found
                     </h1>
                 </div>
-                {searchResults.length > 0 ? (
+                {loading ? (
+                    <Loading />
+                ) : searchResults.length > 0 ? (
                     <div className="space-y-4">
-                        {searchResults.map(user => (
-                            <UserCard key={user.username} user={user} />
-                        ))}
+                        {searchResults.map(result =>
+                            resultCard === 'user' ? (
+                                <UserCard
+                                    key={result.name || result.username}
+                                    user={result}
+                                />
+                            ) : (
+                                <OrganizationCard
+                                    key={result.name || result.username}
+                                    organization={result}
+                                />
+                            ),
+                        )}
                     </div>
                 ) : (
                     <NoResultFound search={search} />

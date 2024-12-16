@@ -3,28 +3,32 @@
 import { Plus, ShieldCheck } from '@phosphor-icons/react'
 import React, { memo, Suspense } from 'react'
 import Link from 'next/link'
-import { useAuth } from '@/hooks/auth'
 import AvatarSkeleton from '@/components/skeletons/AvatarSkeleton'
 import BackdropSkeleton from '@/components/skeletons/BackdropSkeleton'
 import FollowButton from '@/components/ui/FollowButton'
 import dynamic from 'next/dynamic'
-
+import LeftSidebarSkeleton from '@/components/skeletons/LeftSidebarSkeleton'
+import { useUser } from '@/context/UserContext'
 const Image = dynamic(() => import('@/components/Image'))
 
-// Common Skeleton Wrapper
 const SkeletonWrapper = ({ children, fallback }) => (
     <Suspense fallback={fallback}>{children}</Suspense>
 )
 
-// Fallback Defaults
 const defaultAvatar = '/images/user.svg'
 const defaultBackdrop = '/images/backdrop.svg'
 
-// Sidebar Component
 const LeftSidebar = memo(() => {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useUser()
 
-    // Render for Unauthenticated Users
+    if (isLoading) {
+        return (
+            <SidebarContainer>
+                <LeftSidebarSkeleton />
+            </SidebarContainer>
+        )
+    }
+
     if (!user) {
         return (
             <SidebarContainer>
@@ -34,7 +38,6 @@ const LeftSidebar = memo(() => {
         )
     }
 
-    // Render for Authenticated Users
     return (
         <SidebarContainer>
             <UserProfile user={user} />
@@ -43,7 +46,6 @@ const LeftSidebar = memo(() => {
     )
 })
 
-// Sidebar Layout Wrapper
 const SidebarContainer = ({ children }) => (
     <div
         id="left-sidebar"
@@ -52,7 +54,6 @@ const SidebarContainer = ({ children }) => (
     </div>
 )
 
-// User Profile Section
 const UserProfile = ({ user }) => (
     <div className="relative flex flex-col rounded-[1rem] bg-base-200 p-5 text-center">
         <figure className="mb-5 mx-5">
@@ -68,7 +69,7 @@ const UserProfile = ({ user }) => (
                 <SkeletonWrapper fallback={<AvatarSkeleton />}>
                     <Image
                         data={user?.avatar || { url: defaultAvatar }}
-                        customClass="w-20 rounded-full"
+                        customClass="w-20 rounded-full border-4 border-white"
                     />
                 </SkeletonWrapper>
             </div>
@@ -82,8 +83,6 @@ const UserProfile = ({ user }) => (
         </div>
     </div>
 )
-
-// Employment Section
 const EmploymentSection = () => (
     <div className="card bg-base-200 rounded-lg p-5">
         <div className="pb-5">
@@ -115,9 +114,7 @@ const TrendingTopic = ({ topic }) => (
                 <div className="text-sm text-gray-500 font-medium mb-1">
                     {topic.category}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-800">
-                    {topic.title}
-                </h3>
+                <h3 className="text-xl font-semibold">{topic.title}</h3>
                 <div className="text-sm text-blue-500 mt-1">
                     Trending with{' '}
                     <span className="font-semibold">{topic.related}</span>
@@ -177,8 +174,6 @@ const FollowSuggestion = ({ user }) => (
         <FollowButton />
     </div>
 )
-
-// Mock Data for Trends and Follow Suggestions
 const trendingTopics = [
     {
         category: 'Trending in India',

@@ -29,10 +29,6 @@ function SearchBusiness({ setCreateNewBusinessForm }) {
             try {
                 const response = await axios.post('/businesses/search', {
                     scopes: [{ name: 'doNotHaveManagers' }],
-
-                    headers: {
-                        Accept: 'application/json',
-                    },
                 })
 
                 setResults(response.data.data)

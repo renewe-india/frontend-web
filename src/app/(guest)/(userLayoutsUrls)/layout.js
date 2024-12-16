@@ -1,6 +1,7 @@
 import Loading from '@/components/ui/Loading'
 import Navigation from '@/components/navigation/Navigation'
 import dynamic from 'next/dynamic'
+import { UserProvider } from '@/context/UserContext'
 
 const LeftSidebar = dynamic(() => import('@/app/(app)/(user)/LeftSidebar'), {
     loading: () => <Loading />,
@@ -11,7 +12,7 @@ const RightSidebar = dynamic(() => import('@/app/(app)/(user)/RightSidebar'), {
 
 const AppLayout = ({ children }) => {
     return (
-        <>
+        <UserProvider>
             <Navigation />
             <div className="container mx-auto my-auto py-16">
                 <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2 px-2">
@@ -32,7 +33,7 @@ const AppLayout = ({ children }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </UserProvider>
     )
 }
 

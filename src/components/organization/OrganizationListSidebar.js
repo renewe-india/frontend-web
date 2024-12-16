@@ -1,14 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import { Plus } from '@phosphor-icons/react'
+import useSWR from 'swr'
 import axios from '@/lib/axios'
 
-const fetchOrganizations = async type => {
-    const response = await axios.get(`/my/${type}/organizations/list`)
-    return response.data.data
-}
+const fetcher = url => axios.get(url).then(res => res.data.data)
 
 const truncateName = name => {
     const words = name.split(' ')
@@ -16,25 +14,15 @@ const truncateName = name => {
 }
 
 const OrganizationList = ({ type, handleLinkClick }) => {
-    const [organizations, setOrganizations] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        const getOrganizations = async () => {
-            setLoading(true)
-            setError(null)
-            try {
-                const data = await fetchOrganizations(type)
-                setOrganizations(data)
-            } catch (err) {
-                setError('Failed to load organizations.')
-            } finally {
-                setLoading(false)
-            }
-        }
-        getOrganizations()
-    }, [type])
+    const { data: organizations = [], error, isLoading } = useSWR(
+        `/my/${type}/organizations/list`,
+        fetcher,
+        {
+            refreshInterval: 0,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        },
+    )
 
     const createLink = useMemo(() => {
         switch (type) {
@@ -47,7 +35,7 @@ const OrganizationList = ({ type, handleLinkClick }) => {
         }
     }, [type])
 
-    if (loading) {
+    if (isLoading) {
         return (
             <ul className="menu dropdown-content z-[1] bg-base-100">
                 {[...Array(3)].map((_, index) => (
@@ -62,7 +50,7 @@ const OrganizationList = ({ type, handleLinkClick }) => {
     }
 
     if (error) {
-        return <p>{error}</p>
+        return <p>Failed to load organizations.</p>
     }
 
     return (
@@ -72,7 +60,7 @@ const OrganizationList = ({ type, handleLinkClick }) => {
                     <Link
                         href={`/manage/${org.name}`}
                         className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                        onClick={() => handleLinkClick()}>
+                        onClick={handleLinkClick}>
                         <img
                             src={org.logo.url}
                             className="h-5 w-5 overflow-hidden rounded"
@@ -86,7 +74,7 @@ const OrganizationList = ({ type, handleLinkClick }) => {
                 <Link
                     href={createLink}
                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
-                    onClick={() => handleLinkClick()}>
+                    onClick={handleLinkClick}>
                     <Plus size={24} stroke={2} />
                     Create New {type.charAt(0).toUpperCase() + type.slice(1)}
                 </Link>

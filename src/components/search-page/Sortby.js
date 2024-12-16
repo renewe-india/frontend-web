@@ -1,16 +1,10 @@
 import { useState } from 'react'
-import {
-    IdentificationBadge,
-    Calendar,
-    ArrowDown,
-    ArrowUp,
-    CaretUpDown,
-} from '@phosphor-icons/react'
+import { ArrowDown, ArrowUp, CaretUpDown } from '@phosphor-icons/react'
 
-export default function SortBy({ onSortChange }) {
+export default function SortBy({ onSortChange, sortOptions }) {
     const [selectedSort, setSelectedSort] = useState({
-        field: 'company_size',
-        direction: 'asc',
+        field: '',
+        direction: '',
     })
 
     const handleSortChange = (field, direction) => {
@@ -19,35 +13,18 @@ export default function SortBy({ onSortChange }) {
             selectedSort.direction === direction
         ) {
             setSelectedSort({ field: '', direction: '' })
-            onSortChange()
+            onSortChange(null)
         } else {
-            setSelectedSort({ field, direction })
-            onSortChange({ field, direction })
+            const newSort = { field, direction }
+            setSelectedSort(newSort)
+            onSortChange(newSort)
         }
     }
 
     const handleClearFilter = () => {
         setSelectedSort({ field: '', direction: '' })
-        onSortChange()
+        onSortChange(null)
     }
-
-    const options = [
-        {
-            label: 'Company Size',
-            field: 'company_size',
-            icon: <IdentificationBadge size={24} />,
-        },
-        {
-            label: 'Company Type',
-            field: 'company_type',
-            icon: <IdentificationBadge size={24} />,
-        },
-        {
-            label: 'Date of Inc.',
-            field: 'date_of_incorporation',
-            icon: <Calendar size={24} />,
-        },
-    ]
 
     return (
         <div className="dropdown dropdown-bottom dropdown-end">
@@ -59,7 +36,7 @@ export default function SortBy({ onSortChange }) {
                 {selectedSort.field && (
                     <>
                         {
-                            options.find(
+                            sortOptions.find(
                                 option => option.field === selectedSort.field,
                             )?.label
                         }
@@ -75,7 +52,7 @@ export default function SortBy({ onSortChange }) {
             <ul
                 tabIndex={0}
                 className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                {options.map(option => (
+                {sortOptions.map(option => (
                     <li key={option.field}>
                         <div className="cursor-pointer flex items-center">
                             <input
@@ -92,7 +69,6 @@ export default function SortBy({ onSortChange }) {
                                 }
                             />
                             <span className="ml-2 flex items-center">
-                                {option.icon}
                                 <span className="ml-2">{option.label}</span>
                                 {selectedSort.field === option.field &&
                                     (selectedSort.direction === 'asc' ? (

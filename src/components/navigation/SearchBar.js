@@ -75,12 +75,12 @@ function Search() {
                                 <input
                                     type="radio"
                                     name="search_model"
-                                    value="users"
+                                    value="user"
                                     className="radio"
                                     defaultChecked
                                     onChange={handleModelChange}
                                 />
-                                <span>Users</span>
+                                <span>User</span>
                             </label>
                             <label className="flex gap-3">
                                 <input

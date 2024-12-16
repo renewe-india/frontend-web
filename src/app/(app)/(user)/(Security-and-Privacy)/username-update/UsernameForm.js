@@ -1,20 +1,27 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from '@/components/ui/InputField'
 import SubmitButton from '@/components/ui/SubmitButton'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
-import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import SuccessDisplay from '@/components/ui/SuccessDisplay'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@/context/UserContext'
 
 const UsernameForm = () => {
-    const { user } = useAuth({ middleware: 'auth' })
-    const [username, setUsername] = useState(user.username || '')
+    const { user, isLoading } = useUser()
+    const [username, setUsername] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const router = useRouter()
+
+    useEffect(() => {
+        if (!isLoading) {
+            setUsername(user?.username)
+        }
+    }, [user])
+
     const handleSubmit = async e => {
         e.preventDefault()
         setIsSubmitting(true)
@@ -27,8 +34,7 @@ const UsernameForm = () => {
 
             if (response.status === 204) {
                 setSuccess('Username Updated Successfully!')
-                setTimeout(() => setSuccess(null), 3000)
-                setTimeout(() => router.push('/'), 4000)
+                setTimeout(() => setSuccess(null), router.push('/'), 3000)
             }
         } catch (err) {
             setError(err.response.data.errors)
@@ -58,7 +64,7 @@ const UsernameForm = () => {
                     label="Update Username"
                     submittingLabel="Updating Username..."
                 />
-                {success && <SuccessDisplay Success={success} />}
+                {success && <SuccessDisplay success={success} />}
             </form>
         </div>
     )

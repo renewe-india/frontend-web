@@ -98,18 +98,24 @@ function SearchComponent({
                         onChange={handleChange}
                         autoComplete="off"
                     />
-                    {results.length > 0 && (
+                    {query && (
                         <ul className="dropdown-content z-[1] absolute left-0 w-full mt-1 bg-base-100 rounded-b-lg">
-                            {results.map((result, index) => (
-                                <li key={index} className="menu">
-                                    <div
-                                        onClick={() =>
-                                            handleResultClick(result)
-                                        }>
-                                        {result[resultLabelKey]}
-                                    </div>
+                            {results.length > 0 || isSelecting ? (
+                                results.map((result, index) => (
+                                    <li key={index} className="menu">
+                                        <div
+                                            onClick={() =>
+                                                handleResultClick(result)
+                                            }>
+                                            {result[resultLabelKey]}
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <li className="menu">
+                                    <div>No result found!</div>
                                 </li>
-                            ))}
+                            )}
                         </ul>
                     )}
                 </div>

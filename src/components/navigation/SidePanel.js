@@ -30,10 +30,11 @@ import {
     AddressBook,
 } from '@phosphor-icons/react'
 import OrganizationList from '@/components/organization/OrganizationListSidebar'
+import { useUser } from '@/context/UserContext'
 
 function SidePanel() {
-    const { logout, user } = useAuth()
-
+    const { logout } = useAuth()
+    const { user } = useUser()
     const handleLogout = () => {
         logout()
     }

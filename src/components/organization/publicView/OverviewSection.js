@@ -1,25 +1,11 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
-const Carousel = dynamic(() => import('./Carousel'), {
-    loading: () => <div>Loading...</div>,
-})
-const HeroProductList = dynamic(
-    () => import('@/components/cards/HeroProductCard'),
-    {
-        loading: () => <div>Loading...</div>,
-    },
-)
-const CertificationSection = dynamic(() => import('./CertificationSection'), {
-    loading: () => <div>Loading...</div>,
-})
-
-const DetailsSection = ({
-    description,
+const OverviewSection = ({
+    selectedTab,
     companySize,
     companyType,
-    selectedTab,
-    businessName,
+    description,
+    children,
 }) => {
     return (
         <div
@@ -27,7 +13,7 @@ const DetailsSection = ({
             className={`tab-content space-y-2 ${
                 selectedTab === 1 ? 'block' : 'hidden'
             }`}>
-            <div className="bg-base-100 dark:bg-gray-700 border-base-300 p-5 rounded-box">
+            <div className="bg-base-100 border-base-300 rounded-box p-5">
                 <div className="text-xl font-bold">Overview</div>
                 <div className="text-sm text-justify my-5">{description}</div>
                 <div>
@@ -56,17 +42,9 @@ const DetailsSection = ({
                     </div>
                 </div>
             </div>
-            <div className="bg-base-100  border-base-300 p-5 rounded-box">
-                <Carousel />
-            </div>
-            <div className="bg-base-100  border-base-300 p-5 rounded-box">
-                <CertificationSection businessName={businessName} />
-            </div>{' '}
-            <div className="bg-base-100  border-base-300 p-5 rounded-box">
-                <HeroProductList />
-            </div>
+            {children && <>{children}</>}
         </div>
     )
 }
 
-export default DetailsSection
+export default OverviewSection

@@ -33,24 +33,29 @@ const AddressCard = ({
                             </button>
                         </div>
                         {/* Default Star Toggle */}
-                        <button
-                            onClick={() => onSetDefault(address.uuid)}
-                            className="mr-2 relative group">
-                            {address.is_default ? (
-                                <Star size={24} weight="fill" color="#f2d307" />
-                            ) : (
-                                <Star size={24} weight="regular" />
-                            )}
-                            <span className="tooltip absolute mb-2 bottom-full left-1/2 transform -translate-x-1/2 text-white bg-black px-2 py-1 rounded-md">
-                                Default
-                            </span>
-                        </button>
+                        <div
+                            className="tooltip tooltip-top"
+                            data-tip={'Default'}>
+                            <button
+                                onClick={() => onSetDefault(address.uuid)}
+                                className="mr-2 relative group">
+                                {address.is_default ? (
+                                    <Star
+                                        size={24}
+                                        weight="fill"
+                                        color="#f2d307"
+                                    />
+                                ) : (
+                                    <Star size={24} weight="regular" />
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="mt-4">
                     <p className="font-medium">{address.line_1}</p>
                     {address.line_2 && <p>{address.line_2}</p>}
-                    <p>{`${address.state}, ${address.country}`}</p>
+                    <p>{`${address.state}, ${address.country},${address.postal_code}`}</p>
                 </div>
 
                 <div className="mt-4 flex lg:flex-row flex-col justify-between gap-5">

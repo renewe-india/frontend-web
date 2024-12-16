@@ -6,18 +6,13 @@ import { useToast } from '@/context/ToastContext'
 import dynamic from 'next/dynamic'
 import useFetchOptions from '@/hooks/useFetchOptions'
 import Loading from '@/components/ui/Loading'
-const ManagerItem = dynamic(() => import('./ManagerItem'), {
+const ManagerRow = dynamic(() => import('./ManagerRow'), {
     ssr: false,
 })
-const EditManagerModal = dynamic(() => import('./EditManagerModal'), {
-    ssr: false,
-})
-const AddManagerModal = dynamic(() => import('./AddManagerModal'), {
-    ssr: false,
-})
-const DeleteConfirmationModal = dynamic(
-    () => import('@/components/modals/DeleteConfirmationModal'),
-    { ssr: false },
+const EditManagerModal = dynamic(() => import('./EditManagerModal'))
+const AddManagerModal = dynamic(() => import('./AddManagerModal'))
+const DeleteConfirmationModal = dynamic(() =>
+    import('@/components/modals/DeleteConfirmationModal'),
 )
 
 function ManagersTable({ organizationName }) {
@@ -113,14 +108,14 @@ function ManagersTable({ organizationName }) {
             </div>
 
             {managers && (
-                <div className="px-5 flex flex-col gap-2">
+                <div className="lg:px-5 flex flex-col gap-2">
                     <div className="flex justify-between font-bold">
                         <div className="w-1/2 pl-2">Name</div>
                         <div className="w-1/4">Role</div>
                         <div className="w-1/4" />
                     </div>
                     {managers.map((manager, index) => (
-                        <ManagerItem
+                        <ManagerRow
                             key={index}
                             manager={manager}
                             onEditClick={handleEditClick}

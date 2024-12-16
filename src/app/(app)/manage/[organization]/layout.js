@@ -1,49 +1,30 @@
 'use client'
 
 import useSWR from 'swr'
-import { useEffect } from 'react'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
 import Loading from '@/components/ui/Loading'
 import { OrganizationContext } from '@/context/OrganizationContext'
 import { ToastContainer } from 'react-toastify'
 import { ToastProvider } from '@/context/ToastContext'
-import { useRouter } from 'next/navigation'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
 const DashBoardLayout = ({ children, params }) => {
-    const router = useRouter()
     const organizationName = params.organization
     const { user } = useAuth({ middleware: 'auth' })
 
-    const { data: organizationData, error } = useSWR(
+    const { data: organizationData, isLoading } = useSWR(
         user ? `/organizations/${organizationName}` : null,
         fetcher,
         {
             revalidateOnFocus: false,
-            revalidateOnReconnect: false,
+            revalidateOnReconnect: true,
             dedupingInterval: 60000,
         },
     )
 
-    const isLoading = !user || (!organizationData && !error)
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                await axios.get('/user')
-            } catch (error) {
-                router.push('/login')
-            }
-        }
-
-        if (!user) {
-            fetchUserData()
-        }
-    }, [user])
-
-    if (isLoading) {
+    if (isLoading || !organizationData) {
         return <Loading />
     }
     return (

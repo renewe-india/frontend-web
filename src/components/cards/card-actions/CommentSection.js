@@ -1,3 +1,4 @@
+import Loading from '@/components/ui/Loading'
 import {
     DotsThree,
     EyeSlash,
@@ -204,7 +205,7 @@ const CommentSection = () => {
             {/* Dynamic Comments List */}
             <div>
                 {loading ? (
-                    <p>Loading comments...</p>
+                    <Loading />
                 ) : comments.length > 0 ? (
                     comments.map(comment => (
                         <div

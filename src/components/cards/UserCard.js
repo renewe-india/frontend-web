@@ -1,6 +1,10 @@
-import { Users, ShieldCheck, PaperPlaneTilt } from '@phosphor-icons/react'
 import Image from '../Image'
 import FollowButton from '../ui/FollowButton'
+import {
+    Users,
+    ShieldCheck,
+    PaperPlaneTilt,
+} from '@phosphor-icons/react/dist/ssr'
 
 export default function UserCard({ user }) {
     return (

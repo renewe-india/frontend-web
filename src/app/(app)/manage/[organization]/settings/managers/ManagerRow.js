@@ -2,7 +2,7 @@ import React from 'react'
 import Image from '@/components/Image'
 import { DotsThree, PencilSimple, Trash } from '@phosphor-icons/react/dist/ssr'
 
-function ManagerItem({ manager, onEditClick, onDeleteClick }) {
+function ManagerRow({ manager, onEditClick, onDeleteClick }) {
     return (
         <div className="flex flex-row items-center bg-base-100 justify-between px-2 md:px-4 py-4 rounded-lg shadow gap-2 md:gap-0">
             <div className="flex flex-row items-center gap-3 w-1/2">
@@ -26,12 +26,12 @@ function ManagerItem({ manager, onEditClick, onDeleteClick }) {
             <div className="w-1/4 flex justify-end">
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="m-1">
-                        <DotsThree size={32} />
+                        <DotsThree size={24} />
                     </div>
                     <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow">
                         <li>
                             <button onClick={() => onEditClick(manager)}>
-                                <PencilSimple size={20} color="#3f00e7" />
+                                <PencilSimple size={20} color="#7480ff" />
                                 Edit
                             </button>
                         </li>
@@ -48,4 +48,4 @@ function ManagerItem({ manager, onEditClick, onDeleteClick }) {
     )
 }
 
-export default ManagerItem
+export default ManagerRow

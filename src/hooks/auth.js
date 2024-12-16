@@ -1,3 +1,4 @@
+'use client'
 import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect } from 'react'
@@ -19,7 +20,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
-    const { data: user, error, mutate } = useSWR(
+    const { data: user, error, mutate, isValidating } = useSWR(
         () => (middleware !== 'guest' ? '/user' : null),
         fetcher,
         {
@@ -27,6 +28,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             shouldRetryOnError: false,
         },
     )
+
+    const isLoading = !user && !error && isValidating
 
     const csrf = async () => {
         await axios.get('/sanctum/csrf-cookie')
@@ -154,9 +157,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const logout = async () => {
-        if (!error) {
-            await axios.post('/logout').then(() => mutate())
-        }
+        await axios.post('/logout').then(() => mutate())
+
+        document.cookie.split(';').forEach(cookie => {
+            const cookieName = cookie.split('=')[0].trim()
+            document.cookie = `${cookieName}=; max-age=0; path=/; domain=${window.location.hostname}`
+        })
+
         window.location.pathname = '/login'
     }
 
@@ -183,6 +190,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     return {
         user,
+        isLoading,
         login,
         onboardingOtp,
         register,

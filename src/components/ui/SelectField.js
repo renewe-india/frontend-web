@@ -18,7 +18,7 @@ const SelectField = ({
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="input input-primary w-full peer rounded"
+                className="select select-primary w-full"
                 required={required}>
                 <option disabled value="">
                     {placeholder}

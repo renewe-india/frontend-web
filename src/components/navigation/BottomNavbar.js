@@ -133,9 +133,9 @@ function BottomNavbar() {
                     <PlusSquare size={24} stroke={2} />
                     Post
                 </button>
-                <Link href="/events" className={getLinkClass('events')}>
+                <Link href="/meet" className={getLinkClass('meet')}>
                     <GlobeStand size={24} stroke={2} />
-                    Events
+                    Meet
                 </Link>
                 <Link href="/jobs" className={getLinkClass('jobs')}>
                     <Briefcase size={24} stroke={2} />

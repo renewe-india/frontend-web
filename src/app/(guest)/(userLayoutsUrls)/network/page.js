@@ -4,7 +4,10 @@ export const metadata = {
 
 const Network = () => {
     return (
-        <>
+        <div className="space-y-2">
+            <div className="card bg-base-200 rounded-lg p-5">
+                <h2 className="font-semibold">Connect</h2>
+            </div>
             <div className="card bg-base-200 rounded-lg p-5">
                 <div className="flex flex-col items-center justify-center text-center">
                     <img
@@ -21,7 +24,7 @@ const Network = () => {
                     <p className="mb-4 text-lg  text-gray-500 dark:text-gray-400" />
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

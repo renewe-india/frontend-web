@@ -8,26 +8,30 @@ import SuccessDisplay from '@/components/ui/SuccessDisplay'
 import { useRouter } from 'next/navigation'
 
 const PasswordForm = () => {
-    const [currentPassword, setCurrentPassword] = useState('')
-    const [newPassword, setNewPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const router = useRouter()
+
     const handleSubmit = async e => {
         e.preventDefault()
         setIsSubmitting(true)
         setError(null)
+
+        const formData = new FormData(e.target)
+        const currentPassword = formData.get('currentPassword')
+        const newPassword = formData.get('newPassword')
+        const confirmPassword = formData.get('confirmPassword')
 
         if (newPassword !== confirmPassword) {
             setError({ password: ['Passwords do not match'] })
             setIsSubmitting(false)
             return
         }
+
         if (newPassword === currentPassword) {
             setError({
-                password: ['You cannot put Same Password as Old Password'],
+                password: ['You cannot use the same password as the old one'],
             })
             setIsSubmitting(false)
             return
@@ -39,20 +43,21 @@ const PasswordForm = () => {
                 password: newPassword,
                 password_confirmation: confirmPassword,
             })
-
-            if (response.status === 200) {
+            if (response.status === 204) {
                 setSuccess('Password Updated Successfully!')
-                setTimeout(() => setSuccess(null), 3000)
-                setCurrentPassword('')
-                setNewPassword('')
-                setConfirmPassword('')
+                setTimeout(() => {
+                    setSuccess(null)
+                    e.target.reset()
+                    router.push('/')
+                }, 3000)
             }
         } catch (err) {
-            setError(err.response.data.errors)
+            setError(
+                err.response?.data?.errors || 'An unexpected error occurred',
+            )
             setTimeout(() => setError(null), 3000)
         } finally {
             setIsSubmitting(false)
-            router.push('/login')
         }
     }
 
@@ -65,45 +70,33 @@ const PasswordForm = () => {
                     label="Current Password"
                     type="password"
                     name="currentPassword"
-                    placeholder="Current Password"
-                    value={currentPassword}
-                    onChange={e => setCurrentPassword(e.target.value)}
+                    placeholder="********"
                     required
                 />
                 {error?.old_password && (
-                    <div>
-                        <ErrorDisplay errors={error.old_password} />
-                    </div>
+                    <ErrorDisplay errors={error.old_password} />
                 )}
                 <InputField
                     label="New Password"
                     type="password"
                     name="newPassword"
-                    placeholder="New Password"
-                    value={newPassword}
-                    onChange={e => setNewPassword(e.target.value)}
+                    placeholder="********"
                     required
                 />
                 <InputField
                     label="Confirm New Password"
                     type="password"
                     name="confirmPassword"
-                    placeholder="Confirm New Password"
-                    value={confirmPassword}
-                    onChange={e => setConfirmPassword(e.target.value)}
+                    placeholder="********"
                     required
                 />
-                {error?.password && (
-                    <div>
-                        <ErrorDisplay errors={error.password} />
-                    </div>
-                )}
+                {error?.password && <ErrorDisplay errors={error.password} />}
                 <SubmitButton
                     isSubmitting={isSubmitting}
                     label="Update Password"
                     submittingLabel="Updating Password..."
                 />
-                {success && <SuccessDisplay Success={success} />}
+                {success && <SuccessDisplay success={success} />}
             </form>
         </div>
     )

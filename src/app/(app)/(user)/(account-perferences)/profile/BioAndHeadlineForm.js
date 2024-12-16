@@ -1,20 +1,27 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from '@/components/ui/InputField'
 import TextAreaField from '@/components/ui/TextAreaField'
 import SubmitButton from '@/components/ui/SubmitButton'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
-import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import SuccessDisplay from '@/components/ui/SuccessDisplay'
+import { useUser } from '@/context/UserContext'
 
 const BioAndHeadlineForm = () => {
-    const { user } = useAuth({ middleware: 'auth' })
-    const [headline, setHeadline] = useState(user.headline || '')
-    const [bio, setBio] = useState(user.bio || '')
+    const { user, isLoading } = useUser()
+    const [headline, setHeadline] = useState('')
+    const [bio, setBio] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
+
+    useEffect(() => {
+        if (!isLoading) {
+            setHeadline(user?.headline || '')
+            setBio(user?.bio || '')
+        }
+    }, [user])
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -32,7 +39,7 @@ const BioAndHeadlineForm = () => {
                 setTimeout(() => setSuccess(null), 3000)
             }
         } catch (err) {
-            setError(err.response.data.errors)
+            setError(err.response?.data.errors)
             setTimeout(() => setError(null), 3000)
         } finally {
             setIsSubmitting(false)
@@ -72,7 +79,7 @@ const BioAndHeadlineForm = () => {
                     label="Update Bio & Headline"
                     submittingLabel="Updating Bio & Headline..."
                 />
-                {success && <SuccessDisplay Success={success} />}
+                {success && <SuccessDisplay success={success} />}
             </form>
         </div>
     )

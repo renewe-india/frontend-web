@@ -13,9 +13,9 @@ import {
     Users,
 } from '@phosphor-icons/react'
 import Link from 'next/link'
-import { useAuth } from '@/hooks/auth'
 import { ThemeContext } from '@/context/ThemeContext'
 import { motion } from 'framer-motion'
+import { useUser } from '@/context/UserContext'
 
 const Image = dynamic(() => import('@/components/Image'), { ssr: false })
 const AvatarSkeleton = () => (
@@ -23,7 +23,7 @@ const AvatarSkeleton = () => (
 )
 
 const TopNavbar = memo(() => {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useUser()
     const { theme, toggleTheme } = useContext(ThemeContext)
     const [prevScrollPos, setPrevScrollPos] = useState(0)
     const [visible, setVisible] = useState(true)
@@ -102,13 +102,13 @@ const TopNavbar = memo(() => {
                         </Link>
                     </div>
                     <div className="hidden lg:flex items-center gap-2 text-theme-dark dark:text-theme-light">
-                        <ul className="menu rounded-md hidden md:flex md:flex-row items-center ">
+                        <ul className="menu px-0 rounded-md hidden md:flex md:flex-row items-center gap-2">
                             <li>
                                 <Link
                                     href="/network"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
                                     <Users size={24} stroke={2} />
-                                    <span className="mary-hideable whitespace-nowrap">
+                                    <span className="whitespace-nowrap">
                                         Network
                                     </span>
                                 </Link>
@@ -116,29 +116,29 @@ const TopNavbar = memo(() => {
                             <li>
                                 <Link
                                     href="/news"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
                                     <Newspaper size={24} stroke={2} />
-                                    <span className="mary-hideable whitespace-nowrap">
+                                    <span className="whitespace-nowrap">
                                         News
                                     </span>
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/events"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
+                                    href="/meet"
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
                                     <GlobeStand size={24} stroke={2} />
-                                    <span className="mary-hideable whitespace-nowrap">
-                                        Events
+                                    <span className="whitespace-nowrap">
+                                        Meet
                                     </span>
                                 </Link>
                             </li>
                             <li>
                                 <Link
                                     href="/jobs"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit">
+                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
                                     <Briefcase size={24} stroke={2} />
-                                    <span className="mary-hideable whitespace-nowrap">
+                                    <span className="whitespace-nowrap">
                                         Jobs
                                     </span>
                                 </Link>

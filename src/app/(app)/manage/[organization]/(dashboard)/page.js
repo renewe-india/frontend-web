@@ -8,7 +8,7 @@ function page({ params }) {
             <div className="hero-content">
                 <div className="max-w-md">
                     <TemplatePointers />
-                    <Link href={`/manage/${organizationName}/profile`}>
+                    <Link href={`/manage/${organizationName}/settings/profile`}>
                         <button className="mt-5 btn bg-base-100 btn-outline">
                             Get Started
                         </button>

@@ -3,10 +3,10 @@ import Image from '@/components/Image'
 import { Article, Briefcase, Images } from '@phosphor-icons/react'
 import React from 'react'
 import CreatePostModal from './CreatePostModal'
-import { useAuth } from '@/hooks/auth'
+import { useUser } from '@/context/UserContext'
 
 function CreatePost() {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useUser()
     if (!user) {
         return null
     }

@@ -1,127 +1,84 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import axios from '@/lib/axios'
-import Loading from '@/components/ui/Loading'
-import Image from '@/components/Image'
-import AboutSection from './(tabs)/AboutSection'
-import JobsSection from './(tabs)/JobsSection'
-import DetailsSection from './(tabs)/(detailsTab)/DetailsSection'
-import FollowButton from '@/components/ui/FollowButton'
 
-async function fetchBusinessDetails(businessName) {
-    let businessDetails = {}
+import OverviewSection from '@/components/organization/publicView/OverviewSection'
+import TabsNavigation from '@/components/organization/publicView/TabsNavigation'
+import { PaperPlaneTilt, Plus } from '@phosphor-icons/react'
+import dynamic from 'next/dynamic'
+import React, { useState } from 'react'
 
-    try {
-        const response = await axios.get(`/organizations/${businessName}`)
-        businessDetails = response.data.data
-    } catch (error) {
-        // Handle error
-    }
+const JobsSection = dynamic(() =>
+    import('@/components/organization/publicView/JobsSection'),
+)
+const AboutSection = dynamic(() =>
+    import('@/components/organization/publicView/AboutSection'),
+)
+const Carousel = dynamic(() => import('./(tabs)/(OverviewTab)/Carousel'))
+const HeroProductList = dynamic(() =>
+    import('@/components/cards/HeroProductCard'),
+)
+const CertificationSection = dynamic(() =>
+    import('./(tabs)/(OverviewTab)/CertificationSection'),
+)
 
-    return businessDetails
-}
-
-function ShowBusinessDetails({ businessName }) {
-    const [businessDetails, setBusinessDetails] = useState({})
-    const [loading, setLoading] = useState(true)
+function ShowBusinessDetails({ businessDetails }) {
     const [selectedTab, setSelectedTab] = useState(1)
 
-    useEffect(() => {
-        if (businessName) {
-            fetchBusinessDetails(businessName).then(details => {
-                setBusinessDetails(details)
-                setLoading(false)
-            })
-        }
-    }, [businessName])
-
-    if (loading) {
-        return <Loading />
+    const nameFollow = () => {
+        //check api
+        //setIsFollowing(prevState => !prevState)
+        // console.log(isFollowing ? 'Unfollowed' : 'Followed')
     }
-
+    const tabs = ['Overview', 'About', 'Jobs']
     return (
-        <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-5">
-            <div className="relative w-full h-64 rounded-lg">
-                <Image
-                    src={businessDetails.backdrop?.url}
-                    className="w-full h-full object-cover rounded-lg"
+        <>
+            <div className="flex flex-row gap-2 mx-5 mb-2">
+                <div className="flex">
+                    <button
+                        onClick={nameFollow}
+                        className="btn bg-base-100 normal-case btn-sm flex items-center gap-1">
+                        <Plus size={18} weight="bold" />
+                        <span>Follow</span>
+                    </button>
+                </div>
+                <div className="flex">
+                    <button className="btn bg-base-100 normal-case btn-sm flex items-center gap-1">
+                        <PaperPlaneTilt size={18} weight="bold" />
+                        <span>Message</span>
+                    </button>
+                </div>
+            </div>
+            <TabsNavigation
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+                tabs={tabs}
+            />
+            {selectedTab === 1 && (
+                <OverviewSection
+                    selectedTab={selectedTab}
+                    description={businessDetails.description}
+                    companySize={businessDetails.company_size}
+                    companyType={businessDetails.company_type}>
+                    <div className="bg-base-100  border-base-300 p-5 rounded-box">
+                        <Carousel />
+                    </div>
+                    <div className="bg-base-100  border-base-300 p-5 rounded-box">
+                        <CertificationSection
+                            businessName={businessDetails.display_name}
+                        />
+                    </div>
+                    <div className="bg-base-100  border-base-300 p-5 rounded-box">
+                        <HeroProductList />
+                    </div>
+                </OverviewSection>
+            )}
+            {selectedTab === 2 && (
+                <AboutSection
+                    selectedTab={selectedTab}
+                    shortDescription={businessDetails.short_description}
                 />
-                <div className="absolute -bottom-20 left-5">
-                    <Image
-                        src={businessDetails.logo?.url}
-                        className="avatar w-36 rounded-full border-4 border-white"
-                    />
-                </div>
-            </div>
-            <div className="mx-5 py-2 mt-12 flex flex-col gap-2">
-                <div className="font-bold text-base md:text-xl flex items-center gap-2">
-                    <div>{businessDetails.display_name} </div>
-                    <FollowButton />
-                </div>
-                <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
-                    {businessDetails.tagline}
-                </div>
-                <div className="text-gray-500 text-xs md:text-sm">
-                    <time dateTime={businessDetails.date_of_incorporation}>
-                        {new Date(
-                            businessDetails.date_of_incorporation,
-                        ).toLocaleString('default', {
-                            month: 'long',
-                            day: 'numeric',
-                        })}
-                        ,{' '}
-                        {new Date(
-                            businessDetails.date_of_incorporation,
-                        ).getFullYear()}
-                    </time>
-                </div>
-            </div>
-            <div
-                role="tablist"
-                className="tabs tabs-lifted mx-5 mb-2 dark:bg-gray-800">
-                <button
-                    role="tab"
-                    className={`tab bg-transparent text-lg ${
-                        selectedTab === 1 ? 'font-bold' : ''
-                    }`}
-                    aria-selected={selectedTab === 1}
-                    onClick={() => setSelectedTab(1)}>
-                    Overview
-                </button>
-                <button
-                    role="tab"
-                    className={`tab bg-transparent text-lg ${
-                        selectedTab === 2 ? 'font-bold' : ''
-                    }`}
-                    aria-selected={selectedTab === 2}
-                    onClick={() => setSelectedTab(2)}>
-                    About
-                </button>
-
-                <button
-                    role="tab"
-                    className={`tab bg-transparent text-lg ${
-                        selectedTab === 3 ? 'font-bold' : ''
-                    }`}
-                    aria-selected={selectedTab === 3}
-                    onClick={() => setSelectedTab(3)}>
-                    Jobs
-                </button>
-            </div>
-            <DetailsSection
-                description={businessDetails.description}
-                companySize={businessDetails.company_size}
-                companyType={businessDetails.company_type}
-                selectedTab={selectedTab}
-                businessName={businessDetails.display_name}
-            />
-            <AboutSection
-                shortDescription={businessDetails.short_description}
-                selectedTab={selectedTab}
-            />
-
-            <JobsSection selectedTab={selectedTab} />
-        </div>
+            )}
+            {selectedTab === 3 && <JobsSection selectedTab={selectedTab} />}
+        </>
     )
 }
 

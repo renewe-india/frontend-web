@@ -3,122 +3,125 @@ import React, { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
 import dynamic from 'next/dynamic'
 import Heading from '@/components/ui/Heading'
-import { useAuth } from '@/hooks/auth'
 import Loading from '@/components/ui/Loading'
 import NoResultFound from '@/components/ui/NoResultFound'
+import AddAddressModal from '@/components/modals/AddAddressModal'
+import { useUser } from '@/context/UserContext'
 
 const AddressCard = dynamic(() => import('@/components/cards/AddressCard'), {
     loading: () => <Loading />,
 })
-const ErrorDisplay = dynamic(() => import('@/components/ui/ErrorDisplay'), {
-    ssr: false,
-})
-const AddAddressModal = dynamic(
-    () => import('@/components/modals/AddAddressModal'),
-    {
-        ssr: false,
-    },
-)
+const ErrorDisplay = dynamic(() => import('@/components/ui/ErrorDisplay'))
 
-const Page = () => {
+const AddressPage = () => {
     const [addresses, setAddresses] = useState([])
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useUser()
+    const [loading, setLoading] = useState(true)
     const [errors, setErrors] = useState([])
+    const [addressToEdit, setAddressToEdit] = useState(null)
+
+    const fetchAddresses = async () => {
+        setErrors([])
+        setLoading(true)
+        try {
+            const response = await axios.get(
+                `/users/${user.username}/addresses`,
+            )
+            setAddresses(response.data.data)
+        } catch (error) {
+            setErrors(error?.response?.data?.errors || [])
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        const fetchAddresses = async () => {
-            try {
-                const response = await axios.get(
-                    `/users/${user.username}/addresses`,
-                )
-                setAddresses(response.data.data)
-            } catch (error) {
-                setErrors(error?.response?.data?.errors || [])
-            }
-        }
-        fetchAddresses()
-    }, [user.username])
+        if (user) fetchAddresses()
+    }, [user?.username])
 
-    // Add new address
     const handleAddAddress = async newAddress => {
+        setLoading(true)
         try {
-            const response = await axios.post(
-                `/users/${user.username}/addresses`,
-                newAddress,
-            )
-            setAddresses([...addresses, response.data])
+            await axios.post(`/users/${user.username}/addresses`, newAddress)
+            fetchAddresses()
         } catch (error) {
             setErrors(error?.response?.data?.errors || [])
+        } finally {
+            setLoading(false)
         }
     }
 
-    // Edit address
-    const handleEdit = async (uuid, updatedAddress) => {
+    const handleEditAddress = async updatedAddress => {
+        setLoading(true)
         try {
             await axios.patch(
-                `/users/${user.username}/addresses/${uuid}`,
+                `/users/${user.username}/addresses/${updatedAddress.uuid}`,
                 updatedAddress,
             )
-            setAddresses(prevAddresses =>
-                prevAddresses.map(addr =>
-                    addr.uuid === uuid ? { ...addr, ...updatedAddress } : addr,
-                ),
-            )
-        } catch (error) {
-            setErrors(error?.response?.data?.errors || [])
-        }
-    }
-
-    // Delete address
-    const handleDelete = async uuid => {
-        try {
-            await axios.delete(`/users/${user.username}/addresses/${uuid}`)
-            setAddresses(addresses.filter(addr => addr.uuid !== uuid))
-        } catch (error) {
-            setErrors(error?.response?.data?.errors || [])
-        }
-    }
-
-    // Toggle default address
-    const handleSetDefault = async uuid => {
-        try {
-            const address = addresses.find(addr => addr.uuid === uuid)
-            await axios.patch(`/users/${user.username}/addresses/${uuid}`, {
-                is_default: !address.is_default,
-            })
-            setAddresses(prevAddresses =>
-                prevAddresses.map(addr =>
-                    addr.uuid === uuid
-                        ? { ...addr, is_default: !addr.is_default }
-                        : { ...addr, is_default: false },
-                ),
-            )
-        } catch (error) {
-            setErrors(error?.response?.data?.errors || [])
-        }
-    }
-
-    // Toggle public/private
-    const handleSetPublicPrivate = async uuid => {
-        try {
-            const address = addresses.find(addr => addr.uuid === uuid)
-            await axios.patch(`/users/${user.username}/addresses/${uuid}`, {
-                is_public: !address.is_public,
-            })
-            setAddresses(prevAddresses =>
-                prevAddresses.map(addr =>
-                    addr.uuid === uuid
-                        ? { ...addr, is_public: !addr.is_public }
+            setAddresses(prev =>
+                prev.map(addr =>
+                    addr.uuid === updatedAddress.uuid
+                        ? { ...addr, ...updatedAddress }
                         : addr,
                 ),
             )
         } catch (error) {
             setErrors(error?.response?.data?.errors || [])
+        } finally {
+            setLoading(false)
         }
     }
 
-    if (!addresses) {
-        return <Loading />
+    const handleDeleteAddress = async uuid => {
+        setLoading(true)
+        try {
+            await axios.delete(`/users/${user.username}/addresses/${uuid}`)
+            fetchAddresses()
+        } catch (error) {
+            setErrors(error?.response?.data?.errors || [])
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleSetDefault = async uuid => {
+        setLoading(true)
+        try {
+            const address = addresses.find(addr => addr.uuid === uuid)
+            await axios.patch(`/users/${user.username}/addresses/${uuid}`, {
+                is_default: !address.is_default,
+            })
+            fetchAddresses()
+        } catch (error) {
+            setErrors(error?.response?.data?.errors || [])
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleSetPublicPrivate = async uuid => {
+        setLoading(true)
+        try {
+            const address = addresses.find(addr => addr.uuid === uuid)
+            await axios.patch(`/users/${user.username}/addresses/${uuid}`, {
+                is_public: !address.is_public,
+            })
+            fetchAddresses()
+        } catch (error) {
+            setErrors(error?.response?.data?.errors || [])
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleOpenModal = (address = null) => {
+        setAddressToEdit(address)
+        document.getElementById('add_address_modal').showModal()
+    }
+
+    const handleCloseModal = () => {
+        setAddressToEdit(null)
+        document.getElementById('add_address_modal').close()
     }
 
     return (
@@ -126,28 +129,37 @@ const Page = () => {
             <Heading
                 title="Addresses"
                 buttonName="Add New Address"
-                setOpen={() =>
-                    document.getElementById('add_address_modal').showModal()
-                }>
+                setOpen={() => handleOpenModal()}>
                 <ErrorDisplay errors={errors} />
-                {addresses.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <AddressCard
-                            addresses={addresses}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
-                            onSetDefault={handleSetDefault}
-                            onSetPublicPrivate={handleSetPublicPrivate}
-                        />
-                    </div>
+                {!loading ? (
+                    addresses.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {addresses.map(address => (
+                                <AddressCard
+                                    key={address.uuid}
+                                    address={address}
+                                    onEdit={() => handleOpenModal(address)}
+                                    onDelete={handleDeleteAddress}
+                                    onSetDefault={handleSetDefault}
+                                    onSetPublicPrivate={handleSetPublicPrivate}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <NoResultFound text={'You do not have any address.'} />
+                    )
                 ) : (
-                    <NoResultFound text={'You do not have any address.'} />
+                    <Loading />
                 )}
             </Heading>
 
-            <AddAddressModal onSubmit={handleAddAddress} />
+            <AddAddressModal
+                address={addressToEdit}
+                onSubmit={addressToEdit ? handleEditAddress : handleAddAddress}
+                onClose={handleCloseModal}
+            />
         </>
     )
 }
 
-export default Page
+export default AddressPage

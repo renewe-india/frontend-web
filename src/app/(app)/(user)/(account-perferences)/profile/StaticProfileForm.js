@@ -1,23 +1,31 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from '@/components/ui/InputField'
 import SelectField from '@/components/ui/SelectField'
 import SubmitButton from '@/components/ui/SubmitButton'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
-import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import SuccessDisplay from '@/components/ui/SuccessDisplay'
 import useFetchOptions from '@/hooks/useFetchOptions'
+import { useUser } from '@/context/UserContext'
 
 const StaticProfileForm = () => {
-    const { user } = useAuth({ middleware: 'auth' })
-    const [name, setName] = useState(user.name || '')
-    const [gender, setGender] = useState(user.gender || '')
-    const [dateOfBirth, setDateOfBirth] = useState(user.date_of_birth || '')
+    const { user, isLoading } = useUser()
+    const [name, setName] = useState('')
+    const [gender, setGender] = useState('')
+    const [dateOfBirth, setDateOfBirth] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const genderOptions = useFetchOptions('/enums/Main/Gender')
+
+    useEffect(() => {
+        if (!isLoading) {
+            setName(user?.name)
+            setGender(user?.gender)
+            setDateOfBirth(user?.date_of_birth)
+        }
+    }, [user])
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -86,7 +94,7 @@ const StaticProfileForm = () => {
                     label="Update Details"
                     submittingLabel="Updating Details..."
                 />
-                {success && <SuccessDisplay Success={success} />}
+                {success && <SuccessDisplay success={success} />}
             </form>
         </div>
     )

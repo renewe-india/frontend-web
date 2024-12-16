@@ -54,7 +54,7 @@ function StockIndex() {
                 href: `/manage/${organization.name}/stocks/create`,
                 text: 'Add New Stocks',
             }}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {stockData.map(stock => (
                     <div
                         key={stock.id}

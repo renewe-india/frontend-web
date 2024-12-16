@@ -1,16 +1,16 @@
 import VerificationModal from '@/components/modals/VerificationModal'
 import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal'
-import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 import { Plus, SealCheck, Trash, SealQuestion } from '@phosphor-icons/react'
 import React, { useState } from 'react'
+import { useUser } from '@/context/UserContext'
 
 const PhoneNumberUpdateForm = ({
     phoneNumbers,
     fetchContact,
     countryCodes,
 }) => {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useUser()
     const [newPhoneNumber, setNewPhoneNumber] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentPhone, setCurrentPhone] = useState(null)

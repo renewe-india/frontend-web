@@ -3,6 +3,7 @@ import { List, Moon, Sun } from '@phosphor-icons/react'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useOrganization } from '@/context/OrganizationContext'
 import Image from '@/components/Image'
+import Link from 'next/link'
 
 function Header() {
     const org = useOrganization()
@@ -47,18 +48,20 @@ function Header() {
                         size={24}
                         stroke={2}
                     />
-                </label>{' '}
+                </label>
                 {org && (
                     <div className="flex flex-row gap-2 items-center">
-                        <label className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <Image
-                                    customClass={'mask mask-squircle w-10'}
-                                    data={org.logo}
-                                    alt={org.name}
-                                />
-                            </div>
-                        </label>
+                        <Link href={`/manage/${org.name}/settings/profile`}>
+                            <label className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <Image
+                                        customClass={'mask mask-squircle w-10'}
+                                        data={org.logo}
+                                        alt={org.name}
+                                    />
+                                </div>
+                            </label>
+                        </Link>
                     </div>
                 )}
             </div>

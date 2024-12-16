@@ -10,6 +10,7 @@ const InputField = ({
     required,
     labelClassName,
     className,
+    props,
 }) => {
     return (
         <div>
@@ -33,6 +34,7 @@ const InputField = ({
                         : 'input input-primary w-full peer '
                 }
                 required={required}
+                {...props}
             />
         </div>
     )
