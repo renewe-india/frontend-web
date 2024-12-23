@@ -1,44 +1,26 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import ClaimableOrganizationCard from '@/components/organization/ClaimableOrganizationCard'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 
-function ClaimableBusiness() {
+function ClaimableBusiness({ businessesAvailableToClaim }) {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [
-        businessesAvailableToClaim,
-        setBusinessesAvailableToClaim,
-    ] = useState([])
-
+    const [error, setError] = useState(null)
     const handleClaim = async name => {
+        setError(null)
         setIsSubmitting(true)
         try {
             await axios.post(`/organizations/${name}/claim`)
             router.push(`/manage/${name}`)
         } catch (error) {
-            // console.error('Error claiming business:', error);
+            setError(error.response.data.errors)
         } finally {
             setIsSubmitting(false)
         }
     }
-
-    useEffect(() => {
-        const fetchBusinessesAvailableToClaim = async () => {
-            try {
-                const response = await axios.get(
-                    '/organizations/available-to-claim',
-                )
-                setBusinessesAvailableToClaim(response.data.data || [])
-            } catch (error) {
-                // console.error('Error fetching businesses:', error);
-                setBusinessesAvailableToClaim([])
-            }
-        }
-
-        fetchBusinessesAvailableToClaim()
-    }, [])
 
     if (businessesAvailableToClaim.length === 0) {
         return null
@@ -50,9 +32,17 @@ function ClaimableBusiness() {
                 <h2 className="text-2xl font-bold">
                     Businesses Available to Claim:{' '}
                     {businessesAvailableToClaim.length}
-                </h2>{' '}
+                </h2>
                 <div className="divider my-0" />
             </div>
+            {error && (
+                <ErrorDisplay
+                    errors={error}
+                    onClose={() => {
+                        setError(null)
+                    }}
+                />
+            )}
             {businessesAvailableToClaim.map(business => (
                 <ClaimableOrganizationCard
                     key={business.name}

@@ -1,16 +1,15 @@
-'use client'
 import {
     Buildings,
     CalendarDots,
     CurrencyInr,
     MapPinArea,
-} from '@phosphor-icons/react'
+} from '@phosphor-icons/react/dist/ssr'
 import React, { memo } from 'react'
 
 const RightSidebar = memo(() => {
     return (
         <div id="right-sidebar" className="hidden xl:flex flex-col gap-2 ">
-            <div className="card bg-base-200 rounded-lg p-5">
+            <div className="card bg-base-200 rounded-lg p-5 shadow-md">
                 <div className="pb-5">
                     <div className="flex justify-between items-center">
                         <div className="text-2xl font-bold">
@@ -28,11 +27,6 @@ const RightSidebar = memo(() => {
                                             <img src="https://picsum.photos/300" />
                                         </div>
                                     </div>
-                                    <div>
-                                        {/*[if BLOCK]><![endif]*/}
-
-                                        {/*[if BLOCK]><![endif]*/}
-                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -41,11 +35,11 @@ const RightSidebar = memo(() => {
                                 </div>
                                 <div className="text-sm text-gray-500 flex gap-2">
                                     <CalendarDots size={24} />
-                                    3rd Oct, 23 - 6th Oct, 23
+                                    3rd Jan, 24 - 6th Jan, 24
                                 </div>
                                 <div className="text-sm text-gray-500 flex gap-2">
                                     <MapPinArea size={24} />
-                                    India Expo Center, Grater Noida, India
+                                    India Expo Center, Greater Noida, India
                                 </div>
                                 <div className="text-sm text-gray-500 flex gap-2">
                                     <Buildings size={24} />
@@ -63,11 +57,6 @@ const RightSidebar = memo(() => {
                                         <img src="https://picsum.photos/300" />
                                     </div>
                                 </div>
-                                <div>
-                                    {/*[if BLOCK]><![endif]*/}
-
-                                    {/*[if BLOCK]><![endif]*/}
-                                </div>
                             </div>
                             <div>
                                 <div className="font-semibold">
@@ -75,11 +64,11 @@ const RightSidebar = memo(() => {
                                 </div>
                                 <div className="text-sm text-gray-500 flex gap-2">
                                     <CalendarDots size={24} />
-                                    3rd Oct, 23 - 6th Oct, 23
+                                    3rd Jan, 24 - 6th Jan, 24
                                 </div>
                                 <div className="text-sm text-gray-500 flex gap-2">
                                     <MapPinArea size={24} />
-                                    India Expo Center, Grater Noida, India
+                                    India Expo Center, Greater Noida, India
                                 </div>
                                 <div className="text-sm text-gray-500 flex gap-2">
                                     <Buildings size={24} />
@@ -90,7 +79,7 @@ const RightSidebar = memo(() => {
                     </div>
                 </div>
             </div>
-            <div className="card bg-base-200 rounded-lg p-5">
+            <div className="card bg-base-200 rounded-lg p-5 shadow-md">
                 <div className="pb-5">
                     <div className="flex justify-between items-center">
                         <div>
@@ -109,7 +98,7 @@ const RightSidebar = memo(() => {
                         </div>
                         <div className="text-sm text-gray-500 flex gap-2">
                             <MapPinArea size={24} />
-                            Hariyana, India
+                            Haryana, India
                         </div>
                         <div className="text-sm text-gray-500 flex gap-2">
                             <CurrencyInr size={18} />
@@ -127,7 +116,7 @@ const RightSidebar = memo(() => {
                         </div>
                         <div className="text-sm text-gray-500 flex gap-2">
                             <MapPinArea size={24} />
-                            Hariyana, India
+                            Haryana, India
                         </div>
                         <div className="text-sm text-gray-500 flex gap-2">
                             <CurrencyInr size={18} />

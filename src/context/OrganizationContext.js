@@ -1,3 +1,4 @@
+'use client'
 import { createContext, useContext } from 'react'
 
 const OrganizationContext = createContext(null)

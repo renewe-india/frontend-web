@@ -22,6 +22,7 @@ const NewsCardBasic = ({ article, children }) => {
                     <figure className="relative w-full aspect-video overflow-hidden">
                         <Image
                             data={article?.header}
+                            src="https://picsum.photos/1000/1000"
                             alt={article?.headline}
                             customClass="absolute inset-0 w-full h-full object-contain"
                         />

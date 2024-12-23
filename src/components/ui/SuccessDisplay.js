@@ -2,6 +2,9 @@ import { WarningCircle } from '@phosphor-icons/react'
 import React from 'react'
 
 function SuccessDisplay({ success }) {
+    if (!success) {
+        return null
+    }
     return (
         <div
             role="alert"

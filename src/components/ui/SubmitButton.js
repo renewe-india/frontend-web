@@ -1,13 +1,14 @@
 import React from 'react'
+import Spinner from './Spinner'
 
 const SubmitButton = ({
-    isSubmitting,
+    isSubmitting = false,
     label,
-    submittingLabel,
     onClick,
     type = 'submit',
     className = 'btn normal-case btn-primary',
     disabled = false,
+    children,
 }) => {
     return (
         <button
@@ -17,7 +18,15 @@ const SubmitButton = ({
                 isSubmitting ? 'opacity-90 cursor-not-allowed' : ''
             }`}
             disabled={isSubmitting || disabled}>
-            <span>{isSubmitting ? submittingLabel : label}</span>
+            {isSubmitting ? null : children}
+            <span>
+                {label &&
+                    (isSubmitting ? (
+                        <Spinner spinColor="text-neutral" />
+                    ) : (
+                        label
+                    ))}
+            </span>
         </button>
     )
 }

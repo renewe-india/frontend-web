@@ -93,10 +93,12 @@ export default function SearchPageComponent({
             </div>
             <div className="card bg-base-200 rounded-lg p-5">
                 <div className="mb-3">
-                    <h1 className="text-sm">
-                        {searchResults.length} result
-                        {searchResults.length !== 1 ? 's' : ''} found
-                    </h1>
+                    {searchResults.length > 1 && (
+                        <h1 className="text-sm">
+                            {searchResults.length} result
+                            {searchResults.length !== 1 ? 's' : ''} found
+                        </h1>
+                    )}
                 </div>
                 {loading ? (
                     <Loading />

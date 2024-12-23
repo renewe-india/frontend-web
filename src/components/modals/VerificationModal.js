@@ -16,7 +16,6 @@ function VerificationModal({ isOpen, onClose, onVerify, methodType, contact }) {
         newOtp[index] = value
         setOtp(newOtp.join(''))
 
-        // Automatically focus the next input if a digit is entered
         if (value && index < 5) {
             document.getElementById(`otp-input-${index + 1}`).focus()
         }
@@ -32,7 +31,7 @@ function VerificationModal({ isOpen, onClose, onVerify, methodType, contact }) {
                     ✕
                 </button>
 
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-xl font-semibold mb-4 truncate block">
                     Verify {methodType}: {contact}
                 </h2>
                 <div className="flex gap-2 justify-center">
@@ -46,6 +45,7 @@ function VerificationModal({ isOpen, onClose, onVerify, methodType, contact }) {
                             maxLength="1"
                             placeholder="-"
                             className="input input-primary p-0 w-10 h-12 text-center text-lg"
+                            required
                         />
                     ))}
                 </div>

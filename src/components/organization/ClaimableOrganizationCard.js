@@ -22,7 +22,6 @@ const ClaimableOrganizationCard = ({ business, onClaim, isSubmitting }) => {
                 <SubmitButton
                     isSubmitting={isSubmitting}
                     label="Claim this Business"
-                    submittingLabel="Claiming"
                     onClick={() => onClaim(business.name)}
                     type="button"
                     className="btn normal-case btn-primary self-end lg:self-auto w-full lg:w-auto"

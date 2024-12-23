@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import {
     BellRinging,
     Briefcase,
-    GlobeStand,
+    Globe,
     List,
     MagnifyingGlass,
     Moon,
@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
 import { motion } from 'framer-motion'
 import { useUser } from '@/context/UserContext'
+import { usePathname } from 'next/navigation'
 
 const Image = dynamic(() => import('@/components/Image'), { ssr: false })
 const AvatarSkeleton = () => (
@@ -30,6 +31,12 @@ const TopNavbar = memo(() => {
     const [isMobile, setIsMobile] = useState(false)
 
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
+    const path = usePathname()
+    const [currentPath, setCurrentPath] = useState('')
+
+    useEffect(() => {
+        setCurrentPath(path)
+    }, [path])
 
     const handleToggle = e => {
         if (e.target.checked) {
@@ -63,6 +70,11 @@ const TopNavbar = memo(() => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [prevScrollPos, isMobile])
 
+    const getLinkClass = path => {
+        return currentPath && currentPath.includes(path)
+            ? 'my-0.5 rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2 text-success'
+            : 'my-0.5 rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2 text-gray-500 hover:bg-base-300'
+    }
     return (
         <motion.div
             id="navbar"
@@ -106,8 +118,8 @@ const TopNavbar = memo(() => {
                             <li>
                                 <Link
                                     href="/network"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
-                                    <Users size={24} stroke={2} />
+                                    className={getLinkClass('/network')}>
+                                    <Users size={24} stroke={2} weight="fill" />
                                     <span className="whitespace-nowrap">
                                         Network
                                     </span>
@@ -116,8 +128,12 @@ const TopNavbar = memo(() => {
                             <li>
                                 <Link
                                     href="/news"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
-                                    <Newspaper size={24} stroke={2} />
+                                    className={getLinkClass('/news')}>
+                                    <Newspaper
+                                        size={24}
+                                        stroke={2}
+                                        weight="fill"
+                                    />
                                     <span className="whitespace-nowrap">
                                         News
                                     </span>
@@ -126,8 +142,8 @@ const TopNavbar = memo(() => {
                             <li>
                                 <Link
                                     href="/meet"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
-                                    <GlobeStand size={24} stroke={2} />
+                                    className={getLinkClass('/meet')}>
+                                    <Globe size={24} stroke={2} weight="fill" />
                                     <span className="whitespace-nowrap">
                                         Meet
                                     </span>
@@ -136,8 +152,12 @@ const TopNavbar = memo(() => {
                             <li>
                                 <Link
                                     href="/jobs"
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2">
-                                    <Briefcase size={24} stroke={2} />
+                                    className={getLinkClass('/jobs')}>
+                                    <Briefcase
+                                        size={24}
+                                        stroke={2}
+                                        weight="fill"
+                                    />
                                     <span className="whitespace-nowrap">
                                         Jobs
                                     </span>
@@ -149,22 +169,22 @@ const TopNavbar = memo(() => {
                 <div className="p-2 relative flex items-center gap-2 lg:gap-5">
                     <label
                         htmlFor="search"
-                        className="btn btn-sm btn-outline rounded-full btn-circle md:btn-wide">
-                        <MagnifyingGlass size={24} stroke={2} />
+                        className="btn btn-sm btn-circle relative text-gray-500 rounded-full md:btn-wide">
+                        <MagnifyingGlass size={24} stroke={2} weight="fill" />
                         <span className="hidden md:block">Search</span>
                     </label>
                     {user && (
                         <label
                             htmlFor="notifications"
-                            className="btn btn-circle btn-sm relative btn-outline">
-                            <BellRinging size={24} stroke={2} />
+                            className="btn btn-circle btn-sm relative text-gray-500">
+                            <BellRinging size={24} stroke={2} weight="fill" />
                             <div className="badge badge-error absolute -right-2 -top-2 badge-xs">
                                 9+
                             </div>
                         </label>
                     )}
                     <div className="block">
-                        <label className="swap swap-rotate w-8 h-8 btn btn-circle btn-xs relative btn-outline">
+                        <label className="swap swap-rotate w-8 h-8 btn btn-circle btn-xs relative text-gray-500 ">
                             <input
                                 type="checkbox"
                                 onChange={handleToggle}
@@ -175,11 +195,13 @@ const TopNavbar = memo(() => {
                                 className="swap-on fill-current w-5 h-5"
                                 size={24}
                                 stroke={2}
+                                weight="fill"
                             />
                             <Moon
                                 className="swap-off fill-current w-5 h-5"
                                 size={24}
                                 stroke={2}
+                                weight="fill"
                             />
                         </label>
                     </div>

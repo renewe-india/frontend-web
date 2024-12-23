@@ -94,73 +94,89 @@ const AddAddressModal = ({ address, onSubmit, onClose }) => {
                     {address ? 'Edit Address' : 'Add New Address'}
                 </h3>
                 <form onSubmit={handleSubmit} className="space-y-4 py-4">
-                    <SelectField
-                        label="Address Type"
-                        name="type"
-                        value={formData?.type}
-                        onChange={handleChange}
-                        options={typeOptions}
-                        placeholder="Select Address Type"
-                        required
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                        <InputField
-                            label="Name"
-                            type="text"
-                            name="name"
-                            value={formData?.name}
+                    <div>
+                        <SelectField
+                            label="Address Type"
+                            name="type"
+                            value={formData?.type}
                             onChange={handleChange}
-                            placeholder="Name"
-                            required
-                        />
-                        <InputField
-                            label="Postal code"
-                            type="text"
-                            name="postal_code"
-                            pattern="[0-9]{6}"
-                            value={formData?.postal_code}
-                            onChange={handleChange}
-                            placeholder="Postal code"
+                            options={typeOptions}
+                            placeholder="Select Address Type"
                             required
                         />
                     </div>
-                    <InputField
-                        label="Address Line 1"
-                        type="text"
-                        name="line_1"
-                        value={formData?.line_1}
-                        onChange={handleChange}
-                        placeholder="Street Address"
-                        required
-                    />
-                    <InputField
-                        label="Address Line 2"
-                        type="text"
-                        name="line_2"
-                        value={formData?.line_2}
-                        onChange={handleChange}
-                        placeholder="Apartment, suite, etc."
-                    />
                     <div className="grid grid-cols-2 gap-4">
-                        <SelectField
-                            label="Country"
-                            name="country"
-                            value={formData?.country}
+                        <div>
+                            {' '}
+                            <InputField
+                                label="Name"
+                                type="text"
+                                name="name"
+                                value={formData?.name}
+                                onChange={handleChange}
+                                placeholder="Name"
+                                required
+                            />
+                        </div>
+                        <div>
+                            {' '}
+                            <InputField
+                                label="Postal code"
+                                type="text"
+                                name="postal_code"
+                                pattern="[0-9]{6}"
+                                value={formData?.postal_code}
+                                onChange={handleChange}
+                                placeholder="Postal code"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <InputField
+                            label="Address Line 1"
+                            type="text"
+                            name="line_1"
+                            value={formData?.line_1}
                             onChange={handleChange}
-                            options={countryOptions}
-                            placeholder="Select Country"
+                            placeholder="Street Address"
                             required
                         />
-                        <SelectField
-                            label="State"
-                            name="state"
-                            value={formData?.state}
+                    </div>
+                    <div>
+                        <InputField
+                            label="Address Line 2"
+                            type="text"
+                            name="line_2"
+                            value={formData?.line_2}
                             onChange={handleChange}
-                            options={stateOptions}
-                            placeholder="Select State"
-                            required
-                            disabled={!formData?.country}
+                            placeholder="Apartment, suite, etc."
                         />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <SelectField
+                                label="Country"
+                                name="country"
+                                value={formData?.country}
+                                onChange={handleChange}
+                                options={countryOptions}
+                                placeholder="Select Country"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <SelectField
+                                label="State"
+                                name="state"
+                                value={formData?.state}
+                                onChange={handleChange}
+                                options={stateOptions}
+                                placeholder="Select State"
+                                required
+                                disabled={!formData?.country}
+                            />
+                        </div>
                     </div>
                     <div className="flex justify-between items-center">
                         <div className="form-control">

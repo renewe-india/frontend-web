@@ -15,9 +15,6 @@ const SkeletonWrapper = ({ children, fallback }) => (
     <Suspense fallback={fallback}>{children}</Suspense>
 )
 
-const defaultAvatar = '/images/user.svg'
-const defaultBackdrop = '/images/backdrop.svg'
-
 const LeftSidebar = memo(() => {
     const { user, isLoading } = useUser()
 
@@ -55,36 +52,43 @@ const SidebarContainer = ({ children }) => (
 )
 
 const UserProfile = ({ user }) => (
-    <div className="relative flex flex-col rounded-[1rem] bg-base-200 p-5 text-center">
-        <figure className="mb-5 mx-5">
+    <Link
+        href={`/users/${user?.username}`}
+        className="relative flex flex-col rounded-[1rem] bg-base-200 text-center shadow-md">
+        <div className="relative w-full h-auto rounded-lg">
             <SkeletonWrapper fallback={<BackdropSkeleton />}>
                 <Image
-                    data={user?.backdrop || { url: defaultBackdrop }}
-                    customClass="align-middle"
+                    data={user?.backdrop}
+                    className="w-full h-full object-cover rounded-lg"
                 />
             </SkeletonWrapper>
-        </figure>
-        <div>
-            <div className="flex justify-center -mt-16">
+            <div className="flex justify-center -mt-10">
                 <SkeletonWrapper fallback={<AvatarSkeleton />}>
                     <Image
-                        data={user?.avatar || { url: defaultAvatar }}
-                        customClass="w-20 rounded-full border-4 border-white"
+                        data={user?.avatar}
+                        className="avatar sm:w-20 rounded-full border-4 border-base-100"
                     />
+                    {user?.is_verified && (
+                        <ShieldCheck
+                            size={28}
+                            color="#00a400"
+                            weight="fill"
+                            className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-1"
+                        />
+                    )}
                 </SkeletonWrapper>
             </div>
-            <div className="font-semibold flex items-center justify-center gap-2 mt-4">
-                <ShieldCheck size={24} stroke={2} color="red" weight="bold" />
-                <span>{user?.name || 'Anonymous'}</span>
-            </div>
-            <div className="text-sm text-gray-500">
-                {user?.headline || 'No headline available'}
+        </div>
+        <div className="py-2 mt-2 flex flex-col gap-2">
+            <div className="mx-5 text-base font-semibold ">{user?.name}</div>
+            <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
+                {user?.headline}
             </div>
         </div>
-    </div>
+    </Link>
 )
 const EmploymentSection = () => (
-    <div className="card bg-base-200 rounded-lg p-5">
+    <div className="card bg-base-200 rounded-lg p-5 shadow-md">
         <div className="pb-5">
             <h2 className="text-2xl font-bold">My Employments</h2>
         </div>
@@ -99,7 +103,7 @@ const EmploymentSection = () => (
 
 // Trending Topics Section
 const TrendingSection = () => (
-    <div className="relative flex flex-col gap-2 rounded-[1rem] bg-base-200 py-5">
+    <div className="relative flex flex-col gap-2 rounded-[1rem] bg-base-200 py-5 shadow-md">
         <h2 className="text-2xl font-bold pb-5 px-5">What's Going on</h2>
         {trendingTopics.map((topic, idx) => (
             <TrendingTopic key={idx} topic={topic} />
@@ -163,12 +167,12 @@ const FollowSuggestion = ({ user }) => (
         <div className="flex items-center gap-3">
             <div className="avatar">
                 <div className="w-12 rounded-full">
-                    <img src={user.avatar} alt={user.name} />
+                    <img src={user?.avatar} alt={user?.name} />
                 </div>
             </div>
             <div>
-                <span className="font-bold text-base">{user.name}</span>
-                <p className="text-gray-500 text-sm">{user.username}</p>
+                <span className="font-bold text-base">{user?.name}</span>
+                <p className="text-gray-500 text-sm">{user?.username}</p>
             </div>
         </div>
         <FollowButton />

@@ -7,6 +7,7 @@ import axios from '@/lib/axios'
 import Pagination from '@/components/ui/Pagination'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/ui/Loading'
+import { useToast } from '@/context/ToastContext'
 
 const AddAddressModal = dynamic(() =>
     import('@/components/modals/AddAddressModal'),
@@ -23,7 +24,8 @@ const OrganizationComponent = ({ params }) => {
     const [currentPageURL, setCurrentPageURL] = useState(
         `/organizations/${organizationName}/addresses`,
     )
-    const [addressToEdit, setAddressToEdit] = useState(null) // Track address being edited
+    const [addressToEdit, setAddressToEdit] = useState(null)
+    const { notifySuccess, notifyError } = useToast()
 
     const fetchAddresses = async url => {
         setLoading(true)
@@ -40,19 +42,21 @@ const OrganizationComponent = ({ params }) => {
     }
 
     const handlePageChange = url => {
-        setLoading(true)
         setCurrentPageURL(url)
     }
 
     const handleAddAddress = async newAddress => {
         try {
-            await axios.post(
+            const response = await axios.post(
                 `/organizations/${organizationName}/addresses`,
                 newAddress,
             )
-            fetchAddresses(currentPageURL)
+            setAddresses(prev => [...prev, response.data.data])
+            notifySuccess('Address added successfully!')
         } catch (error) {
-            setError(error?.response?.data?.errors || [])
+            notifyError(
+                error?.response?.data?.errors || 'Failed to add address.',
+            )
         }
     }
 
@@ -62,52 +66,104 @@ const OrganizationComponent = ({ params }) => {
                 `/organizations/${organizationName}/addresses/${updatedAddress.uuid}`,
                 updatedAddress,
             )
-            fetchAddresses(currentPageURL)
-        } catch (error) {
-            setError(error?.response?.data?.errors || [])
-        }
-    }
-
-    const handleDelete = uuid => {
-        alert(`Delete Address UUID: ${uuid}`)
-        setAddresses(prev => prev.filter(address => address.uuid !== uuid))
-    }
-
-    const handleSetDefault = async uuid => {
-        setLoading(true)
-        try {
-            const address = addresses.find(addr => addr.uuid === uuid)
-            await axios.patch(
-                `/organizations/${organizationName}/addresses/${uuid}`,
-                {
-                    is_default: !address.is_default,
-                },
+            setAddresses(prev =>
+                prev.map(addr =>
+                    addr.uuid === updatedAddress.uuid
+                        ? { ...addr, ...updatedAddress }
+                        : addr,
+                ),
             )
-            fetchAddresses()
+            notifySuccess('Address updated successfully!')
         } catch (error) {
-            setError(error?.response?.data?.errors || [])
-        } finally {
-            setLoading(false)
+            notifyError(
+                error?.response?.data?.errors || 'Failed to update address.',
+            )
+        }
+    }
+    const handleDelete = async uuid => {
+        try {
+            await axios.delete(
+                `/organizations/${organizationName}/addresses/${uuid}`,
+            )
+            setAddresses(prev => prev.filter(address => address.uuid !== uuid))
+            notifySuccess('Address deleted successfully!')
+        } catch (error) {
+            notifyError(
+                error?.response?.data?.errors || 'Failed to delete address.',
+            )
         }
     }
 
-    const handleSetPublicPrivate = async uuid => {
-        setLoading(true)
-        try {
-            const address = addresses.find(addr => addr.uuid === uuid)
-            await axios.patch(
-                `/organizations/${organizationName}/addresses/${uuid}`,
-                {
-                    is_public: !address.is_public,
-                },
-            )
-            fetchAddresses()
-        } catch (error) {
-            setError(error?.response?.data?.errors || [])
-        } finally {
-            setLoading(false)
+    const handleSetDefault = (() => {
+        let isRequestPending = false
+
+        return async uuid => {
+            if (isRequestPending) return
+
+            isRequestPending = true
+            try {
+                const address = addresses.find(addr => addr.uuid === uuid)
+                setAddresses(prev =>
+                    prev.map(addr => ({
+                        ...addr,
+                        is_default:
+                            addr.uuid === uuid
+                                ? !addr.is_default
+                                : addr.is_default,
+                    })),
+                )
+                await axios.patch(
+                    `/organizations/${organizationName}/addresses/${uuid}`,
+                    {
+                        is_default: !address.is_default,
+                    },
+                )
+
+                notifySuccess('Address default status updated successfully!')
+            } catch (error) {
+                notifyError(
+                    error?.response?.data?.errors ||
+                        'Failed to update default status.',
+                )
+            } finally {
+                isRequestPending = false
+            }
         }
-    }
+    })()
+    const handleSetPublicPrivate = (() => {
+        let isRequestPending = false
+
+        return async uuid => {
+            if (isRequestPending) return
+
+            isRequestPending = true
+            try {
+                const address = addresses.find(addr => addr.uuid === uuid)
+                setAddresses(prev =>
+                    prev.map(addr =>
+                        addr.uuid === uuid
+                            ? { ...addr, is_public: !addr.is_public }
+                            : addr,
+                    ),
+                )
+                await axios.patch(
+                    `/organizations/${organizationName}/addresses/${uuid}`,
+                    {
+                        is_public: !address.is_public,
+                    },
+                )
+
+                notifySuccess('Address visibility updated successfully!')
+            } catch (error) {
+                notifyError(
+                    error?.response?.data?.errors ||
+                        'Failed to update visibility.',
+                )
+            } finally {
+                isRequestPending = false
+            }
+        }
+    })()
 
     const handleOpenModal = (address = null) => {
         setAddressToEdit(address)

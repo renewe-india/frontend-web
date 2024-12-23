@@ -47,6 +47,8 @@ function SearchComponent({
     }, [clearTrigger])
 
     const fetchResults = useCallback(async () => {
+        setResults([])
+        setErrors([])
         if (query.trim() === '' || isSelecting) {
             setResults([])
             return
@@ -66,7 +68,7 @@ function SearchComponent({
             const response = await axios.post(searchUrl, payload)
             setResults(response.data.data)
         } catch (error) {
-            setErrors(['An unexpected error occurred. Please try again later.'])
+            setErrors(error.response.data.message)
         }
     }, [query, searchUrl, scopes, isSelecting])
 
@@ -113,14 +115,17 @@ function SearchComponent({
                                 ))
                             ) : (
                                 <li className="menu">
-                                    <div>No result found!</div>
+                                    {errors.length > 0 ? (
+                                        <ErrorDisplay errors={errors} />
+                                    ) : (
+                                        <div>No result found!</div>
+                                    )}
                                 </li>
                             )}
                         </ul>
                     )}
                 </div>
             </div>
-            <ErrorDisplay errors={errors} />
         </>
     )
 }

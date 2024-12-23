@@ -13,7 +13,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             return response.data.data
         } catch (error) {
             if (error.response.status === 401) {
-                // Handle unauthorized access
                 return null
             }
             throw error
@@ -163,7 +162,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             const cookieName = cookie.split('=')[0].trim()
             document.cookie = `${cookieName}=; max-age=0; path=/; domain=${window.location.hostname}`
         })
-
+        localStorage.clear()
         window.location.pathname = '/login'
     }
 

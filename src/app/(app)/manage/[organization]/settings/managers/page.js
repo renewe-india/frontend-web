@@ -1,3 +1,4 @@
+import { getData } from '@/actions/getData'
 import MangersTable from './MangersTable'
 export const metadata = {
     title: 'Managers',
@@ -5,10 +6,15 @@ export const metadata = {
 
 async function organizationManagers({ params }) {
     const organizationName = params.organization
-
+    const { data: managers } = await getData(
+        `/organizations/${organizationName}/managers`,
+    )
     return (
         <>
-            <MangersTable organizationName={organizationName} />
+            <MangersTable
+                managers={managers}
+                organizationName={organizationName}
+            />
         </>
     )
 }

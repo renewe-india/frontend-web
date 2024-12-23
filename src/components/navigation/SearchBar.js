@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 function Search() {
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedModel, setSelectedModel] = useState('users')
+    const [selectedModel, setSelectedModel] = useState('user')
     const router = useRouter()
 
     const handleInputChange = e => {

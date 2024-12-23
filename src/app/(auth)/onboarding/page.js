@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import axios from '@/lib/axios'
 import {
-    EnvelopeOpen,
     EnvelopeSimple,
     SealCheck,
-    SealQuestion,
     ArrowClockwise,
 } from '@phosphor-icons/react'
 import Loading from '@/components/ui/Loading'
+import SubmitButton from '@/components/ui/SubmitButton'
+import Spinner from '@/components/ui/Spinner'
 
 const Page = () => {
     const { onboardingOtp, onboardingVerifyOtp } = useAuth({
@@ -209,17 +209,14 @@ const Page = () => {
                 {errors?.otp && errors.otp.length > 0 && (
                     <ErrorDisplay errors={errors.otp} />
                 )}
-                <button
-                    type="submit"
-                    className="btn normal-case btn-primary"
-                    disabled={sendingOtp || verifyingOtp}>
+                <SubmitButton disabled={sendingOtp || verifyingOtp}>
                     {sendingOtp ? (
                         <>
-                            <EnvelopeOpen size={24} /> Sending...
+                            <Spinner spinColor="text-neutral" /> Sending...
                         </>
                     ) : verifyingOtp ? (
                         <>
-                            <SealQuestion size={24} /> Verifying...
+                            <Spinner spinColor="text-neutral" /> Verifying...
                         </>
                     ) : otpSent ? (
                         <>
@@ -230,7 +227,7 @@ const Page = () => {
                             <EnvelopeSimple size={24} /> Send OTP
                         </>
                     )}
-                </button>
+                </SubmitButton>
             </form>
         </>
     )

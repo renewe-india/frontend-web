@@ -4,6 +4,13 @@ import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import {
+    GenderFemale,
+    GenderMale,
+    GenderNonbinary,
+} from '@phosphor-icons/react'
+import SubmitButton from '@/components/ui/SubmitButton'
+import Spinner from '@/components/ui/Spinner'
 
 const RegisterPage = () => {
     const { register } = useAuth({
@@ -187,21 +194,7 @@ const RegisterPage = () => {
                                     className={`btn normal-case btn-outline ${
                                         gender === 'male' && 'btn-primary'
                                     }`}>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round">
-                                        <path d="M10 14m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
-                                        <path d="M19 5l-5.4 5.4" />
-                                        <path d="M19 5h-5" />
-                                        <path d="M19 5v5" />
-                                    </svg>
+                                    <GenderMale size="24" weight="duotone" />
                                     Male
                                 </button>
                                 <button
@@ -210,20 +203,7 @@ const RegisterPage = () => {
                                     className={`btn normal-case btn-outline lg:p-0 ${
                                         gender === 'female' && 'btn-primary'
                                     }`}>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round">
-                                        <path d="M12 9m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
-                                        <path d="M12 14v7" />
-                                        <path d="M9 18h6" />
-                                    </svg>
+                                    <GenderFemale size="24" weight="duotone" />
                                     Female
                                 </button>
                                 <button
@@ -232,19 +212,10 @@ const RegisterPage = () => {
                                     className={`btn normal-case btn-outline ${
                                         gender === 'other' && 'btn-primary'
                                     }`}>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round">
-                                        <path d="M12 12m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" />
-                                        <path d="M7 12h11" />
-                                    </svg>
+                                    <GenderNonbinary
+                                        size="24"
+                                        weight="duotone"
+                                    />
                                     Other
                                 </button>
                                 <input
@@ -258,14 +229,13 @@ const RegisterPage = () => {
                             )}
                         </div>
                     </div>
-                    <button
-                        type="submit"
-                        className="btn normal-case w-full btn-primary"
-                        disabled={isSubmitting}>
-                        {isSubmitting
-                            ? 'Registering...'
-                            : 'Complete Verification'}
-                    </button>
+                    <SubmitButton label="Complete Verification">
+                        {isSubmitting ? (
+                            <Spinner spinColor="text-neutral" />
+                        ) : (
+                            <></>
+                        )}
+                    </SubmitButton>
                 </form>
             </div>
         </>

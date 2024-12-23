@@ -2,7 +2,6 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import useSWR from 'swr'
-import { useRouter } from 'next/navigation'
 import axios from '@/lib/axios'
 
 const UserContext = createContext()
@@ -15,29 +14,24 @@ const fetcher = url => axios.get(url).then(res => res.data.data)
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const router = useRouter()
 
-    const { data: fetchedUser, error, isValidating } = useSWR(
-        '/user',
-        fetcher,
-        {
-            revalidateOnFocus: false,
-            revalidateOnReconnect: true,
-            dedupingInterval: 60000,
-        },
-    )
+    const { data: fetchedUser, isValidating } = useSWR('/user', fetcher, {
+        revalidateOnFocus: false,
+        revalidateOnMount: false,
+        revalidateOnReconnect: true,
+        revalidateIfStale: true,
+        dedupingInterval: 3600000,
+    })
 
     useEffect(() => {
         if (fetchedUser) {
             setUser(fetchedUser)
         }
-        if (error?.response?.status === 401) {
-            router.push('/login')
-        }
-    }, [fetchedUser, error, router])
+    }, [fetchedUser])
 
     return (
-        <UserContext.Provider value={{ user, isLoading: isValidating }}>
+        <UserContext.Provider
+            value={{ user, isLoading: !user && isValidating }}>
             {children}
         </UserContext.Provider>
     )

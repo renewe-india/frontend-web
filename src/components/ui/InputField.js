@@ -13,15 +13,17 @@ const InputField = ({
     props,
 }) => {
     return (
-        <div>
-            <label
-                className={
-                    'pt-0 label label-text font-semibold' +
-                    ' ' +
-                    `${labelClassName}`
-                }>
-                <span>{label}</span>
-            </label>
+        <>
+            {label && (
+                <label
+                    className={
+                        'pt-0 label label-text font-semibold' +
+                        ' ' +
+                        `${labelClassName}`
+                    }>
+                    <span>{label}</span>
+                </label>
+            )}
             <input
                 type={type}
                 name={name}
@@ -36,7 +38,7 @@ const InputField = ({
                 required={required}
                 {...props}
             />
-        </div>
+        </>
     )
 }
 

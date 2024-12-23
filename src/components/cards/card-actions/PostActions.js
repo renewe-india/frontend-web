@@ -10,6 +10,7 @@ import {
     Handshake,
     Confetti,
 } from '@phosphor-icons/react/dist/ssr'
+import CommentSection from './CommentSection'
 
 const reactions = [
     {
@@ -34,48 +35,86 @@ const reactions = [
     },
 ]
 
-const PostActions = ({ likes, comments, reposts, onCommentClick }) => (
-    <div className="p-2">
-        <div className=" flex justify-between border-b border-gray-200 dark:border-gray-600 pb-1">
-            <div className="text-xs text-gray-500">
-                {likes > 0 && <span> {likes} Likes</span>}
+const PostActions = ({ likes, comments, reposts }) => {
+    const [showComments, setShowComments] = useState(false)
+
+    return (
+        <div className="p-2">
+            <div className="flex justify-between border-b border-gray-200 dark:border-gray-600 pb-1">
+                <div className="text-xs text-gray-500">
+                    {likes > 0 && <span>{likes} Likes</span>}
+                </div>
+
+                <div className="text-xs text-gray-500 flex gap-4">
+                    {comments > 0 && <span>{comments} comments</span>}
+                    {reposts > 0 && <span>{reposts} reposts</span>}
+                </div>
             </div>
+            <div className="grid grid-cols-4 lg:gap-2 gap-0">
+                {/* Like Dropdown */}
+                <LikeDropdown />
 
-            <div className="text-xs text-gray-500 flex gap-4">
-                {comments > 0 && <span>{comments} comments</span>}
-                {reposts > 0 && <span>{reposts} reposts</span>}
+                {/* Comment Button */}
+                <ActionButton
+                    icon={<ChatCenteredText size={16} />}
+                    label="Comment"
+                    onClick={() => setShowComments(true)}
+                />
+
+                {/* Repost Button with Dropdown */}
+                <div className="dropdown dropdown-end text-center">
+                    <ActionButton
+                        icon={<ArrowsClockwise size={16} />}
+                        label="Repost"
+                    />
+
+                    <ul
+                        tabIndex={0}
+                        className="dropdown-content menu bg-base-100 rounded-box z-[1] w-60 sm:w-72 p-2 shadow ">
+                        <li>
+                            <button className="btn w-full h-16">
+                                <div className="flex flex-row text-left items-start gap-5">
+                                    <ArrowsClockwise
+                                        size={16}
+                                        className="shrink-0"
+                                    />
+                                    <div className="flex flex-col gap-1">
+                                        <span className="font-bold">
+                                            Repost
+                                        </span>
+                                        <p>
+                                            Instantly Repost this post to share
+                                            with others.
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Share Button */}
+                <ActionButton
+                    icon={<PaperPlaneTilt size={16} />}
+                    label="Share"
+                />
             </div>
+            {showComments && <CommentSection />}
         </div>
-        <div className="grid grid-cols-4 lg:gap-2 gap-0 ">
-            {/* Like Dropdown */}
-            <LikeDropdown />
-
-            {/* Comment Button */}
-            <ActionButton
-                icon={<ChatCenteredText size={16} />}
-                label="Comment"
-                onClick={onCommentClick}
-            />
-
-            {/* Repost Button */}
-            <ActionButton icon={<ArrowsClockwise size={16} />} label="Repost" />
-
-            {/* Share Button */}
-            <ActionButton icon={<PaperPlaneTilt size={16} />} label="Share" />
-        </div>
-    </div>
-)
+    )
+}
 
 const ActionButton = ({ icon, label, tooltip, onClick }) => (
     <div className="tooltip tooltip-top" data-tip={tooltip}>
         <button
-            className="btn btn-ghost w-full flex flex-row justify-center items-center relative group px-0"
+            className="btn btn-ghost w-full flex flex-row justify-center items-center relative group "
             onClick={onClick}>
             {icon}
             {label && <span className="hidden sm:block">{label}</span>}{' '}
         </button>
     </div>
 )
+
 const LikeDropdown = () => {
     const [selectedReaction, setSelectedReaction] = useState({
         icon: <ThumbsUp size={20} stroke={2} color="currentColor" />,

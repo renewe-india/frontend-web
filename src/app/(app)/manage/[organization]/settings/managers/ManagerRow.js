@@ -1,8 +1,47 @@
 import React from 'react'
 import Image from '@/components/Image'
-import { DotsThree, PencilSimple, Trash } from '@phosphor-icons/react/dist/ssr'
+import { DotsThree } from '@phosphor-icons/react/dist/ssr'
+import DeleteButton from '@/components/ui/DeleteButton'
+import EditManagerRolesButton from './EditManagerRolesButton'
+import axios from '@/lib/axios'
+import { useToast } from '@/context/ToastContext'
 
-function ManagerRow({ manager, onEditClick, onDeleteClick }) {
+function ManagerRow({ manager, setManagers, organizationName, managerRoles }) {
+    const { notifySuccess, notifyError } = useToast()
+    const handleDeleteConfirm = async manager => {
+        try {
+            await axios.patch(
+                `/organizations/${organizationName}/managers/${manager?.username}`,
+                { roles: [] },
+            )
+
+            setManagers(prev =>
+                prev.filter(manager => manager.username !== manager.username),
+            )
+            notifySuccess(`Manager ${manager?.username} deleted successfully!`)
+        } catch (error) {
+            notifyError(error.response.data.message)
+        }
+    }
+
+    const handleEditSubmit = async (roles, manager) => {
+        try {
+            await axios.patch(
+                `/organizations/${organizationName}/managers/${manager.username}`,
+                { roles: roles },
+            )
+            setManagers(prev =>
+                prev.map(manager =>
+                    manager.username === manager.username
+                        ? { ...manager, roles }
+                        : manager,
+                ),
+            )
+            notifySuccess(`Manager ${manager?.username} updated successfully!`)
+        } catch (error) {
+            notifyError(error.response.data.message)
+        }
+    }
     return (
         <div className="flex flex-row items-center bg-base-100 justify-between px-2 md:px-4 py-4 rounded-lg shadow gap-2 md:gap-0">
             <div className="flex flex-row items-center gap-3 w-1/2">
@@ -30,16 +69,17 @@ function ManagerRow({ manager, onEditClick, onDeleteClick }) {
                     </div>
                     <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow">
                         <li>
-                            <button onClick={() => onEditClick(manager)}>
-                                <PencilSimple size={20} color="#7480ff" />
-                                Edit
-                            </button>
+                            <EditManagerRolesButton
+                                currentManager={manager}
+                                onSubmit={handleEditSubmit}
+                                managerRoles={managerRoles}
+                            />
                         </li>
                         <li>
-                            <button onClick={() => onDeleteClick(manager)}>
-                                <Trash size={20} color="#f01800" />
-                                Delete
-                            </button>
+                            <DeleteButton
+                                itemName={manager?.username}
+                                onDelete={() => handleDeleteConfirm(manager)}
+                            />
                         </li>
                     </ul>
                 </div>

@@ -1,15 +1,18 @@
-import axios from '@/lib/axios'
 import ContactSettings from './ContactSettings'
+import { getData } from '@/actions/getData'
 
-export default async function Contacts() {
-    let countryCodes = []
+export default async function Contacts({ params }) {
+    const { organization } = params
+    const { data: countryCodes } = await getData('/address/countries/isd-codes')
+    const { data: contactsData } = await getData(
+        `/organizations/${organization}/contacts`,
+    )
 
-    try {
-        const response = await axios.get('/address/countries/isd-codes')
-        countryCodes = response.data.data
-    } catch (error) {
-        // console.error('Failed to fetch country codes:', error)
-    }
-
-    return <ContactSettings countryCodes={countryCodes} />
+    return (
+        <ContactSettings
+            organization={organization}
+            contactsData={contactsData}
+            countryCodes={countryCodes}
+        />
+    )
 }

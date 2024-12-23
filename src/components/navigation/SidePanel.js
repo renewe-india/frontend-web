@@ -1,8 +1,11 @@
 'use client'
-import { React } from 'react'
+import { React, memo } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
+import OrganizationList from '@/components/organization/OrganizationListSidebar'
+import { useUser } from '@/context/UserContext'
 import {
+    AddressBook,
     PlugsConnected,
     BagSimple,
     UsersFour,
@@ -27,10 +30,7 @@ import {
     ClockCounterClockwise,
     SealCheck,
     AddressBookTabs,
-    AddressBook,
-} from '@phosphor-icons/react'
-import OrganizationList from '@/components/organization/OrganizationListSidebar'
-import { useUser } from '@/context/UserContext'
+} from '@phosphor-icons/react/dist/ssr'
 
 function SidePanel() {
     const { logout } = useAuth()
@@ -141,7 +141,7 @@ function SidePanel() {
                             </li>
                             <li>
                                 <Link
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
                                     <Monitor size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
@@ -154,7 +154,7 @@ function SidePanel() {
                             </li>
                             <li>
                                 <Link
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
                                     <ChartLineUp size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
@@ -167,7 +167,7 @@ function SidePanel() {
                             </li>
                             <li>
                                 <Link
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
                                     <Certificate size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
@@ -180,7 +180,7 @@ function SidePanel() {
                             </li>
                             <li>
                                 <Link
-                                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                    className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
                                     <ChatCenteredText size={24} stroke={2} />
                                     <span className="mary-hideable whitespace-nowrap">
@@ -215,7 +215,7 @@ function SidePanel() {
                                             <ul className="mary-hideable">
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/profile"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -231,7 +231,7 @@ function SidePanel() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/verifications"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -247,7 +247,7 @@ function SidePanel() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/contacts"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -263,7 +263,7 @@ function SidePanel() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/addresses"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -291,7 +291,7 @@ function SidePanel() {
                                             <ul className="mary-hideable">
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/password-update"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -307,7 +307,7 @@ function SidePanel() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/username-update"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -323,7 +323,7 @@ function SidePanel() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                        className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                         href="/signed-in-history"
                                                         onClick={() =>
                                                             handleLinkClick()
@@ -362,7 +362,7 @@ function SidePanel() {
                                     <ul className="mary-hideable">
                                         <li>
                                             <Link
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
                                                 <Handshake
                                                     size={24}
@@ -378,7 +378,7 @@ function SidePanel() {
                                         </li>
                                         <li>
                                             <Link
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
                                                 <Ticket size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
@@ -391,7 +391,7 @@ function SidePanel() {
                                         </li>
                                         <li>
                                             <Link
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
                                                 <Vault size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
@@ -404,7 +404,7 @@ function SidePanel() {
                                         </li>
                                         <li>
                                             <Link
-                                                className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                                                className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
                                                 <XCircle size={24} stroke={2} />
                                                 <span className="mary-hideable whitespace-nowrap">
@@ -435,4 +435,4 @@ function SidePanel() {
     )
 }
 
-export default SidePanel
+export default memo(SidePanel)

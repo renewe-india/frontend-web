@@ -10,11 +10,14 @@ function EventCard({ events }) {
             month: 'short',
         })}, ${date.getFullYear()}`
     }
+
     return (
         <>
             {events ? (
                 events.map((event, idx) => (
-                    <div className="card bg-base-200 rounded-lg p-5" key={idx}>
+                    <div
+                        className="card bg-base-200 rounded-lg p-5 shadow-md"
+                        key={idx}>
                         <div>
                             <Link
                                 href={`/meet/${event.slug}`}

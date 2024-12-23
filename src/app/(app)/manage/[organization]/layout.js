@@ -3,10 +3,10 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
-import Loading from '@/components/ui/Loading'
 import { OrganizationContext } from '@/context/OrganizationContext'
 import { ToastContainer } from 'react-toastify'
 import { ToastProvider } from '@/context/ToastContext'
+import Spinner from '@/components/ui/Spinner'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
@@ -20,12 +20,16 @@ const DashBoardLayout = ({ children, params }) => {
         {
             revalidateOnFocus: false,
             revalidateOnReconnect: true,
-            dedupingInterval: 60000,
+            dedupingInterval: 3600000,
         },
     )
 
     if (isLoading || !organizationData) {
-        return <Loading />
+        return (
+            <div className="flex min-h-screen w-full items-center justify-center bg-inherit flex-col ">
+                <Spinner size="loading-lg" />
+            </div>
+        )
     }
     return (
         <OrganizationContext.Provider value={organizationData}>

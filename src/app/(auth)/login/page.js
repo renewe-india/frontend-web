@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { SignIn } from '@phosphor-icons/react'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 const LoginPage = () => {
     const { login } = useAuth({
@@ -108,13 +109,10 @@ const LoginPage = () => {
                     {errors.password && (
                         <ErrorDisplay errors={errors.password} />
                     )}
-                    <button
-                        type="submit"
-                        className="btn normal-case btn-primary"
-                        disabled={isSubmitting}>
+
+                    <SubmitButton isSubmitting={isSubmitting} label="Login">
                         <SignIn size={24} />
-                        {isSubmitting ? 'Logging in...' : 'Login'}
-                    </button>
+                    </SubmitButton>
                 </form>
                 <div className="mt-5 text-center font-semibold">
                     Can't Sign In?

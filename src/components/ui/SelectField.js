@@ -10,10 +10,12 @@ const SelectField = ({
     required,
 }) => {
     return (
-        <div>
-            <label className="pt-0 label label-text font-semibold">
-                <span>{label}</span>
-            </label>
+        <>
+            {label && (
+                <label className="pt-0 label label-text font-semibold">
+                    <span>{label}</span>
+                </label>
+            )}
             <select
                 name={name}
                 value={value}
@@ -29,7 +31,7 @@ const SelectField = ({
                     </option>
                 ))}
             </select>
-        </div>
+        </>
     )
 }
 

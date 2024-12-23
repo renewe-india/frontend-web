@@ -17,14 +17,14 @@ axios.interceptors.response.use(
 
             if (typeof window !== 'undefined') {
                 if (status === 403) {
-                    const previousPage = document.referrer || '/'
-                    window.location.href = previousPage
+                    // const previousPage = document.referrer || '/'
+                    // window.location.href = previousPage
                 } else if (status === 400) {
                     window.location.href = '/bad-request'
                 } else if (status === 404) {
                     window.location.href = '/page-not-found'
-                } else if (status === 500) {
-                    window.location.href = '/internal-server-error'
+                    // } else if (status === 500) {
+                    //     window.location.href = '/internal-server-error'
                 } else if (status === 422) {
                     return Promise.reject(error)
                 }

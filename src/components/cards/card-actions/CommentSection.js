@@ -10,7 +10,7 @@ import {
 } from '@phosphor-icons/react'
 import dynamic from 'next/dynamic'
 import React, { useState, useEffect } from 'react'
-const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false })
+const EmojiPicker = dynamic(() => import('emoji-picker-react'))
 const CommentSection = () => {
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false)

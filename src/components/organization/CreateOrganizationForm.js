@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import SubmitButton from '@/components/ui/SubmitButton'
 import InputField from '@/components/ui/InputField'
 import ErrorDisplay from '../ui/ErrorDisplay'
-import Heading from '../ui/Heading'
+import MainCard from '../ui/MainCard'
 
 const CreateOrganizationForm = ({ type }) => {
     const router = useRouter()
@@ -37,7 +37,7 @@ const CreateOrganizationForm = ({ type }) => {
     }
 
     return (
-        <Heading
+        <MainCard
             title={`Create a New ${
                 type.charAt(0).toUpperCase() + type.slice(1)
             }`}>
@@ -46,26 +46,25 @@ const CreateOrganizationForm = ({ type }) => {
                     method="POST"
                     onSubmit={handleCreateOrganization}
                     className="flex flex-col gap-3 form-control">
-                    <InputField
-                        label="Name"
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        required
-                    />
-                    {error && <ErrorDisplay errors={error.display_name} />}
+                    <div>
+                        <InputField
+                            label="Name"
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            required
+                        />
+                    </div>
+                    {error && <ErrorDisplay errors={error} />}
                     <SubmitButton
                         isSubmitting={isSubmitting}
                         label={`Create a New ${
                             type.charAt(0).toUpperCase() + type.slice(1)
                         }`}
-                        submittingLabel={`Creating a New ${
-                            type.charAt(0).toUpperCase() + type.slice(1)
-                        }...`}
                     />
                 </form>
             </div>
-        </Heading>
+        </MainCard>
     )
 }
 

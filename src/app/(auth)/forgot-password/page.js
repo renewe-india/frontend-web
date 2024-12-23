@@ -4,16 +4,12 @@ import { useAuth } from '@/hooks/auth'
 import { useState, useEffect, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
-import {
-    ArrowLeft,
-    EnvelopeOpen,
-    EnvelopeSimple,
-    SealCheck,
-    SealQuestion,
-} from '@phosphor-icons/react'
+import { ArrowLeft, EnvelopeSimple, SealCheck } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 import Loading from '@/components/ui/Loading'
 import dynamic from 'next/dynamic'
+import Spinner from '@/components/ui/Spinner'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 const ContactInputForm = dynamic(() => import('./ContactInputForm'), {
     loading: () => <Loading />,
@@ -103,7 +99,7 @@ const ForgotPasswordPage = () => {
 
     return (
         <>
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto">
                 {otpSent && (
                     <div className="flex items-center justify-between mb-4">
                         <button
@@ -148,15 +144,16 @@ const ForgotPasswordPage = () => {
                         />
                     )}
 
-                    {errors && <ErrorDisplay errors={errors} />}
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={isPending}>
+                    <ErrorDisplay
+                        errors={errors}
+                        onClose={() => setErrors(null)}
+                    />
+                    <SubmitButton disabled={isPending}>
                         {otpSent ? (
                             isPending ? (
                                 <>
-                                    <SealQuestion size={24} /> Verifying...
+                                    <Spinner spinColor="text-neutral" />
+                                    Verifying...
                                 </>
                             ) : (
                                 <>
@@ -165,14 +162,15 @@ const ForgotPasswordPage = () => {
                             )
                         ) : isPending ? (
                             <>
-                                <EnvelopeOpen size={24} /> Sending OTP...
+                                <Spinner spinColor="text-neutral" /> Sending
+                                OTP...
                             </>
                         ) : (
                             <>
                                 <EnvelopeSimple size={24} /> Send OTP
                             </>
                         )}
-                    </button>
+                    </SubmitButton>
                 </form>
             </div>
         </>

@@ -1,3 +1,4 @@
+'use client'
 import React, { createContext, useContext } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

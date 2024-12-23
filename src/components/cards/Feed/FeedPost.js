@@ -1,22 +1,18 @@
-import React, { useState } from 'react'
+'use client'
+import React from 'react'
 import Image from '@/components/Image'
-import dynamic from 'next/dynamic'
 import DescriptionWithToggle from '@/components/cards/card-actions/DescriptionWithToggle'
 import PostActions from '../card-actions/PostActions'
 import PostHeader from '../card-actions/PostHeader'
 
-const CommentSection = dynamic(() => import('../card-actions/CommentSection'))
-
 const FeedPost = ({ post }) => {
-    const [showComments, setShowComments] = useState(false)
-
     return (
         <PostHeader
             author={{
                 avatar: { url: post.authorImage },
                 name: post.authorName,
             }}
-            sharedAt={post.postTime}>
+            sharedAt={post.shared_at}>
             {/* Post Description */}
             <div className="px-4 pb-4">
                 <DescriptionWithToggle description={post.description} />
@@ -37,10 +33,7 @@ const FeedPost = ({ post }) => {
                 likes={post.likes}
                 comments={post.comments}
                 reposts={post.reposts}
-                onCommentClick={() => setShowComments(true)}
             />
-
-            {showComments && <CommentSection postId={post.id} />}
         </PostHeader>
     )
 }

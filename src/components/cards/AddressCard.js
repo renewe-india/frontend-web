@@ -10,7 +10,7 @@ const AddressCard = ({
     onSetPublicPrivate,
 }) => {
     return (
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-md">
             <div className="card-body">
                 <div className="flex justify-between items-start">
                     <div>
