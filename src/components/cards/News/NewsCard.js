@@ -3,7 +3,7 @@ import PostHeader from '../card-actions/PostHeader'
 import PostActions from '../card-actions/PostActions'
 import Link from 'next/link'
 
-const NewsCardWithActions = ({ article }) => {
+function NewsCardWithActions({ article }) {
     return (
         <NewsCardBasic article={article}>
             <PostActions
@@ -14,7 +14,7 @@ const NewsCardWithActions = ({ article }) => {
     )
 }
 
-const NewsCardBasic = ({ article, children }) => {
+function NewsCardBasic({ article, children }) {
     return (
         <PostHeader author={article?.author} sharedAt="23 min ago">
             <div className="flex flex-col gap-2">

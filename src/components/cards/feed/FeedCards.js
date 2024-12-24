@@ -6,7 +6,7 @@ import { NewsCardBasic, NewsCardWithActions } from '../news/NewsCard'
 import LikedCommentedWrapper from './feedWrappers/LikedCommentedWrapper'
 import PostActions from '../card-actions/PostActions'
 
-const FeedCards = ({ posts }) => {
+function FeedCards({ posts }) {
     const renderNewsCard = post => {
         const { via, content, author } = post
         const key = content?.slug

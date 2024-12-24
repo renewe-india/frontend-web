@@ -5,7 +5,7 @@ import DescriptionWithToggle from '@/components/cards/card-actions/DescriptionWi
 import PostActions from '../card-actions/PostActions'
 import PostHeader from '../card-actions/PostHeader'
 
-const FeedPost = ({ post }) => {
+function FeedPost({ post }) {
     return (
         <PostHeader
             author={{
