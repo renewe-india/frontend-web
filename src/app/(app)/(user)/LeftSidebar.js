@@ -135,7 +135,7 @@ const DropdownMenu = () => (
         <button tabIndex={0}>...</button>
         <ul
             tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-60">
+            className="z-10 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-60">
             <li>
                 <button className="flex items-center gap-2">
                     Not interested in this

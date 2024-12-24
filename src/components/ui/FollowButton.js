@@ -23,6 +23,16 @@ function FollowButton({ entityType, entityName, isFollowing }) {
     const showModal = () => {
         document.getElementById(modalId).showModal()
     }
+
+    if (!user) {
+        return (
+            <button
+                className={`z-10 btn btn-xs shadow-xl rounded-full btn-outline btn-neutral`}
+                onClick={() => (window.location.href = '/login')}>
+                <Plus size="12" weight="bold" /> Follow
+            </button>
+        )
+    }
     if (user?.username === entityName) return null
 
     return (
