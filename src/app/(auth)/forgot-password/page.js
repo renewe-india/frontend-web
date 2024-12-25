@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from '@/hooks/auth'
-import { useState, useEffect, useTransition } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { ArrowLeft, EnvelopeSimple, SealCheck } from '@phosphor-icons/react'
@@ -24,7 +24,6 @@ const ForgotPasswordPage = () => {
         redirectIfAuthenticated: '/',
     })
     const router = useRouter()
-    const [isPending, startTransition] = useTransition()
 
     const [contactType, setContactType] = useState('email')
     const [countryCode, setCountryCode] = useState('91')
@@ -35,6 +34,7 @@ const ForgotPasswordPage = () => {
     const [errors, setErrors] = useState(null)
     const [countryCodes, setCountryCodes] = useState([])
     const [loading, setLoading] = useState(true)
+    const [isProcessing, setIsProcessing] = useState(false) // New state to track processing
 
     const constructPayload = () => ({
         type: contactType,
@@ -45,29 +45,35 @@ const ForgotPasswordPage = () => {
     const handleOtpRequest = event => {
         event.preventDefault()
         setErrors(null)
+        setIsProcessing(true) // Start processing
 
-        startTransition(() => {
-            forgotPasswordOtp({
-                ...constructPayload(),
-                setErrors,
-                onSuccess: () => setOtpSent(true),
-            })
+        forgotPasswordOtp({
+            ...constructPayload(),
+            setErrors,
+            onSuccess: () => {
+                setOtpSent(true)
+                setIsProcessing(false)
+            },
+            onError: () => setIsProcessing(false),
         })
     }
 
     const handleResetPassword = event => {
         event.preventDefault()
         setErrors(null)
+        setIsProcessing(true)
 
-        startTransition(() => {
-            resetPassword({
-                ...constructPayload(),
-                otp,
-                password,
-                otp_confirmation: otp,
-                setErrors,
-                onSuccess: () => router.push('/login'),
-            })
+        resetPassword({
+            ...constructPayload(),
+            otp,
+            password,
+            otp_confirmation: otp,
+            setErrors,
+            onSuccess: () => {
+                router.push('/login')
+                setIsProcessing(false)
+            },
+            onError: () => setIsProcessing(false),
         })
     }
 
@@ -98,82 +104,75 @@ const ForgotPasswordPage = () => {
     }
 
     return (
-        <>
-            <div className="container mx-auto">
-                {otpSent && (
-                    <div className="flex items-center justify-between mb-4">
-                        <button
-                            type="button"
-                            onClick={resetForm}
-                            className="btn btn-secondary">
-                            <ArrowLeft size={24} weight="bold" /> Back
-                        </button>
-                        <h1 className="text-xl font-bold text-center flex-1">
-                            Enter New Password
-                        </h1>
-                    </div>
-                )}
+        <div className="container mx-auto">
+            {otpSent && (
+                <div className="flex items-center justify-between mb-4">
+                    <button
+                        type="button"
+                        onClick={resetForm}
+                        className="btn btn-secondary">
+                        <ArrowLeft size={24} weight="bold" /> Back
+                    </button>
+                    <h1 className="text-xl font-bold text-center flex-1">
+                        Enter New Password
+                    </h1>
+                </div>
+            )}
 
-                {!otpSent && (
-                    <p className="mb-4 text-gray-600">
-                        Forgot your password? No problem. Just let us know your
-                        email address or mobile number, and we'll send you an
-                        OTP to reset your password.
-                    </p>
-                )}
+            {!otpSent && (
+                <p className="mb-4 text-gray-600">
+                    Forgot your password? No problem. Just let us know your
+                    email address or mobile number, and we'll send you an OTP to
+                    reset your password.
+                </p>
+            )}
 
-                <form
-                    onSubmit={otpSent ? handleResetPassword : handleOtpRequest}
-                    className="flex flex-col gap-5">
-                    {!otpSent ? (
-                        <ContactInputForm
-                            contactType={contactType}
-                            setContactType={setContactType}
-                            countryCode={countryCode}
-                            setCountryCode={setCountryCode}
-                            contact={contact}
-                            setContact={setContact}
-                            countryCodes={countryCodes}
-                        />
-                    ) : (
-                        <OTPInputForm
-                            otp={otp}
-                            setOtp={setOtp}
-                            password={password}
-                            setPassword={setPassword}
-                        />
-                    )}
-
-                    <ErrorDisplay
-                        errors={errors}
-                        onClose={() => setErrors(null)}
+            <form
+                onSubmit={otpSent ? handleResetPassword : handleOtpRequest}
+                className="flex flex-col gap-5">
+                {!otpSent ? (
+                    <ContactInputForm
+                        contactType={contactType}
+                        setContactType={setContactType}
+                        countryCode={countryCode}
+                        setCountryCode={setCountryCode}
+                        contact={contact}
+                        setContact={setContact}
+                        countryCodes={countryCodes}
                     />
-                    <SubmitButton disabled={isPending}>
-                        {otpSent ? (
-                            isPending ? (
-                                <>
-                                    <Spinner spinColor="text-neutral" />
-                                    Verifying...
-                                </>
-                            ) : (
-                                <>
-                                    <SealCheck size={24} /> Reset Password
-                                </>
-                            )
-                        ) : isPending ? (
+                ) : (
+                    <OTPInputForm
+                        otp={otp}
+                        setOtp={setOtp}
+                        password={password}
+                        setPassword={setPassword}
+                    />
+                )}
+
+                <ErrorDisplay errors={errors} onClose={() => setErrors(null)} />
+                <SubmitButton disabled={isProcessing}>
+                    {otpSent ? (
+                        isProcessing ? (
                             <>
-                                <Spinner spinColor="text-neutral" /> Sending
-                                OTP...
+                                <Spinner spinColor="text-neutral" />
                             </>
                         ) : (
                             <>
-                                <EnvelopeSimple size={24} /> Send OTP
+                                <SealCheck size={24} /> Reset Password
                             </>
-                        )}
-                    </SubmitButton>
-                </form>
-            </div>
-        </>
+                        )
+                    ) : isProcessing ? (
+                        <>
+                            <Spinner spinColor="text-neutral" />
+                        </>
+                    ) : (
+                        <>
+                            <EnvelopeSimple size={24} /> Send OTP
+                        </>
+                    )}
+                </SubmitButton>
+            </form>
+        </div>
     )
 }
 

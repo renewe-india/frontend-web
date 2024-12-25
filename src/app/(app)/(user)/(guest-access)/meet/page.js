@@ -8,7 +8,7 @@ const MeetPage = async () => {
     const { data: events, meta } = await getPaginatedData(1, '/meet/events')
 
     return (
-        <div className="space-y-2">
+        <div className="space-y-5">
             <EventCard events={events} />
             {meta.last_page === 1 && <NoMoreEvents />}
             {meta.last_page !== 1 && <LoadMoreEvents />}

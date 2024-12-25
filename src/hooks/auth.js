@@ -25,6 +25,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         {
             revalidateOnFocus: false,
             shouldRetryOnError: false,
+            dedupingInterval: 1800000,
         },
     )
 
@@ -125,7 +126,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
-    const forgotPasswordOtp = async ({ setErrors, onSuccess, ...props }) => {
+    const forgotPasswordOtp = async ({
+        setErrors,
+        onSuccess,
+        onError,
+        ...props
+    }) => {
         await csrf()
         setErrors([])
         try {
@@ -134,10 +140,16 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         } catch (error) {
             if (error.response.status !== 422) throw error
             setErrors(error.response.data.errors)
+            onError()
         }
     }
 
-    const resetPassword = async ({ setErrors, onSuccess, ...props }) => {
+    const resetPassword = async ({
+        setErrors,
+        onSuccess,
+        onError,
+        ...props
+    }) => {
         await csrf()
         setErrors([])
         try {
@@ -146,6 +158,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         } catch (error) {
             if (error.response.status !== 422) throw error
             setErrors(error.response.data.errors)
+            onError()
         }
     }
 

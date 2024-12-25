@@ -9,6 +9,7 @@ import FollowButton from '@/components/ui/FollowButton'
 import dynamic from 'next/dynamic'
 import LeftSidebarSkeleton from '@/components/skeletons/LeftSidebarSkeleton'
 import { useUser } from '@/context/UserContext'
+import MainCard from '@/components/ui/MainCard'
 const Image = dynamic(() => import('@/components/Image'))
 
 const SkeletonWrapper = ({ children, fallback }) => (
@@ -52,43 +53,45 @@ const SidebarContainer = ({ children }) => (
 )
 
 const UserProfile = ({ user }) => (
-    <Link
-        href={`/users/${user?.username}`}
-        className="relative flex flex-col rounded-[1rem] bg-base-200 text-center shadow-md">
-        <div className="relative w-full h-auto rounded-lg">
-            <SkeletonWrapper fallback={<BackdropSkeleton />}>
-                <Image
-                    data={user?.backdrop}
-                    className="w-full h-full object-cover rounded-lg"
-                />
-            </SkeletonWrapper>
-            <div className="flex justify-center -mt-10">
-                <SkeletonWrapper fallback={<AvatarSkeleton />}>
+    <Link href={`/users/${user?.username}`}>
+        <MainCard CardClassName={'flex flex-col relative text-center'}>
+            <div className="relative w-full h-auto rounded-lg">
+                <SkeletonWrapper fallback={<BackdropSkeleton />}>
                     <Image
-                        data={user?.avatar}
-                        className="avatar sm:w-20 rounded-full border-4 border-base-100"
+                        data={user?.backdrop}
+                        className="w-full h-full object-cover rounded-lg"
                     />
-                    {user?.is_verified && (
-                        <ShieldCheck
-                            size={28}
-                            color="#00a400"
-                            weight="fill"
-                            className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-1"
-                        />
-                    )}
                 </SkeletonWrapper>
+                <div className="flex justify-center -mt-10">
+                    <SkeletonWrapper fallback={<AvatarSkeleton />}>
+                        <Image
+                            data={user?.avatar}
+                            className="avatar sm:w-20 rounded-full border-4 border-base-100"
+                        />
+                        {user?.is_verified && (
+                            <ShieldCheck
+                                size={28}
+                                color="#00a400"
+                                weight="fill"
+                                className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-1"
+                            />
+                        )}
+                    </SkeletonWrapper>
+                </div>
             </div>
-        </div>
-        <div className="py-2 mt-2 flex flex-col gap-2">
-            <div className="mx-5 text-base font-semibold ">{user?.name}</div>
-            <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
-                {user?.headline}
+            <div className="py-2 mt-2 flex flex-col gap-2">
+                <div className="mx-5 text-base font-semibold ">
+                    {user?.name}
+                </div>
+                <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
+                    {user?.headline}
+                </div>
             </div>
-        </div>
+        </MainCard>
     </Link>
 )
 const EmploymentSection = () => (
-    <div className="card bg-base-200 rounded-lg p-5 shadow-md">
+    <MainCard CardClassName="relative flex flex-col gap-2">
         <div className="pb-5">
             <h2 className="text-2xl font-bold">My Employments</h2>
         </div>
@@ -98,17 +101,17 @@ const EmploymentSection = () => (
             <Plus size={24} stroke={2} />
             <span>Add Employment</span>
         </Link>
-    </div>
+    </MainCard>
 )
 
 // Trending Topics Section
 const TrendingSection = () => (
-    <div className="relative flex flex-col gap-2 rounded-[1rem] bg-base-200 py-5 shadow-md">
+    <MainCard CardClassName="relative flex flex-col gap-2">
         <h2 className="text-2xl font-bold pb-5 px-5">What's Going on</h2>
         {trendingTopics.map((topic, idx) => (
             <TrendingTopic key={idx} topic={topic} />
         ))}
-    </div>
+    </MainCard>
 )
 
 const TrendingTopic = ({ topic }) => (
@@ -152,14 +155,14 @@ const DropdownMenu = () => (
 
 // Follow Suggestions Section
 const FollowSuggestions = () => (
-    <div className="relative flex flex-col gap-2 rounded-[1rem] bg-base-200 p-5">
+    <MainCard CardClassName="relative flex flex-col gap-2">
         <h2 className="text-2xl font-bold pb-5">Follow Suggestions</h2>
         <div className="space-y-4 w-full max-w-md mx-auto">
             {followSuggestions.map((user, idx) => (
                 <FollowSuggestion key={idx} user={user} />
             ))}
         </div>
-    </div>
+    </MainCard>
 )
 
 const FollowSuggestion = ({ user }) => (

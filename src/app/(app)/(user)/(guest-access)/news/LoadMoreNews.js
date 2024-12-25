@@ -2,6 +2,7 @@
 
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import { NewsCardWithActions } from '@/components/cards/news/NewsCard'
+import MainCard from '@/components/ui/MainCard'
 import Spinner from '@/components/ui/Spinner'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -49,7 +50,7 @@ export default function LoadMoreNews() {
 }
 export function NoMoreArticles() {
     return (
-        <div className="card bg-base-200 rounded-lg p-5">
+        <MainCard>
             <div className="flex flex-col items-center justify-center text-center">
                 <img
                     src="/notFound/new-article-not-found.svg"
@@ -62,6 +63,6 @@ export function NoMoreArticles() {
                     for you!
                 </div>
             </div>
-        </div>
+        </MainCard>
     )
 }

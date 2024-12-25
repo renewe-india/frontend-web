@@ -1,34 +1,32 @@
 'use client'
 
+import InputField from '@/components/ui/InputField'
+
 const OTPInputForm = ({ otp, setOtp, password, setPassword }) => {
     return (
         <>
             <div>
-                <label htmlFor="otp" className="block text-sm font-medium">
-                    OTP
-                </label>
-                <input
+                <InputField
                     id="otp"
+                    label="OTP"
                     type="number"
                     placeholder="Enter OTP"
-                    className="input input-primary w-full"
                     value={otp}
                     onChange={e => setOtp(e.target.value)}
                     required
+                    className="input input-primary w-full"
                 />
             </div>
             <div>
-                <label htmlFor="password" className="block text-sm font-medium">
-                    New Password
-                </label>
-                <input
+                <InputField
                     id="password"
+                    label="New Password"
                     type="password"
                     placeholder="Enter New Password"
-                    className="input input-primary w-full"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
+                    className="input input-primary w-full"
                 />
             </div>
         </>

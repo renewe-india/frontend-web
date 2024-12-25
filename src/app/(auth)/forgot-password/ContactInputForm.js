@@ -1,4 +1,5 @@
-'use client'
+import InputField from '@/components/ui/InputField'
+import React from 'react'
 
 const ContactInputForm = ({
     contactType,
@@ -50,22 +51,23 @@ const ContactInputForm = ({
                         ))}
                     </select>
                 )}
-                <input
-                    id="contact"
-                    placeholder={
-                        contactType === 'email'
-                            ? 'Email Address'
-                            : 'Mobile Number'
-                    }
-                    className={`input input-primary ${
-                        contactType === 'mobile' ? 'w-3/4' : 'w-full'
-                    }`}
-                    type={contactType === 'email' ? 'text' : 'tel'}
-                    pattern={contactType === 'mobile' ? '[0-9]{10}' : undefined}
-                    value={contact}
-                    onChange={event => setContact(event.target.value)}
-                    required
-                />
+                <div className="w-full">
+                    <InputField
+                        id="contact"
+                        type={contactType === 'email' ? 'text' : 'tel'}
+                        value={contact}
+                        onChange={event => setContact(event.target.value)}
+                        placeholder={
+                            contactType === 'email'
+                                ? 'Email Address'
+                                : 'Mobile Number'
+                        }
+                        required
+                        pattern={
+                            contactType === 'mobile' ? '[0-9]{10}' : undefined
+                        }
+                    />
+                </div>
             </div>
         </>
     )

@@ -2,6 +2,7 @@
 
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import EventCard from '@/components/cards/EventCard'
+import MainCard from '@/components/ui/MainCard'
 import Spinner from '@/components/ui/Spinner'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -48,7 +49,7 @@ export default function LoadMoreEvents() {
 
 export function NoMoreEvents() {
     return (
-        <div className="card bg-base-200 rounded-lg p-5">
+        <MainCard>
             <div className="flex flex-col items-center justify-center text-center">
                 <img
                     src="/notFound/event-not-found.svg"
@@ -60,6 +61,6 @@ export function NoMoreEvents() {
                     Hold tight! More events are coming soon!
                 </div>
             </div>
-        </div>
+        </MainCard>
     )
 }

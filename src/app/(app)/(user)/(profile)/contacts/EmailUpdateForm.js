@@ -90,7 +90,7 @@ const EmailUpdateForm = ({
                         key={index}
                         className="flex flex-col lg:flex-row items-left lg:items-center bg-base-100 gap-3 mb-2 p-2 border border-gray-600 rounded">
                         <div className="flex items-center flex-1 min-w-0">
-                            {email.is_verified ? (
+                            {email.is_otp_verified ? (
                                 <SealCheck
                                     className="w-8 h-8 text-green-600 mr-2 flex-shrink-0"
                                     weight="fill"
@@ -104,7 +104,7 @@ const EmailUpdateForm = ({
                             <span className="truncate block">{email.data}</span>
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                            {!email.is_verified && (
+                            {!email.is_otp_verified && (
                                 <VerifyButton
                                     itemName={email.data}
                                     sendOtp={async () =>

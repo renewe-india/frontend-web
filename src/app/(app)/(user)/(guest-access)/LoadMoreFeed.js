@@ -2,6 +2,7 @@
 
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import FeedCards from '@/components/cards/feed/FeedCards'
+import MainCard from '@/components/ui/MainCard'
 import Spinner from '@/components/ui/Spinner'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -41,13 +42,17 @@ export default function LoadMoreFeed() {
                     <Spinner />
                 </div>
             )}
-            {lastPage === page && <NoMoreFeed />}
+            {lastPage === page && (
+                <div className="my-5">
+                    <NoMoreFeed />
+                </div>
+            )}
         </div>
     )
 }
 export function NoMoreFeed() {
     return (
-        <div className="card bg-base-200 rounded-lg p-5 mt-2">
+        <MainCard>
             <div className="flex flex-col items-center justify-center text-center">
                 <img
                     src="/notFound/feed-not-found.svg"
@@ -60,6 +65,6 @@ export function NoMoreFeed() {
                     you!
                 </div>
             </div>
-        </div>
+        </MainCard>
     )
 }

@@ -94,6 +94,7 @@ const PhoneNumberUpdateForm = ({
                     className="input input-bordered input-primary w-3/5 lg:w-3/4 mr-2"
                     required
                     props={{
+                        min: '0',
                         minLength: '10',
                         maxLength: '10',
                         inputMode: 'numeric',
@@ -118,7 +119,7 @@ const PhoneNumberUpdateForm = ({
                         key={index}
                         className="flex flex-col lg:flex-row items-left lg:items-center gap-3 bg-base-100 justify-between mb-2 p-2 border border-gray-600 rounded">
                         <div className="flex items-center">
-                            {phone.is_verified ? (
+                            {phone.is_otp_verified ? (
                                 <SealCheck
                                     className="w-8 h-8 text-green-600 mr-2"
                                     weight="fill"
@@ -132,7 +133,7 @@ const PhoneNumberUpdateForm = ({
                             +{phone.country_code}-{phone.data}
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                            {!phone.is_verified && (
+                            {!phone.is_otp_verified && (
                                 <VerifyButton
                                     itemName={`+${phone.country_code}-${phone.data}`}
                                     sendOtp={async () =>

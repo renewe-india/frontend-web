@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        if (fetchedUser) {
+        if (!user && fetchedUser) {
             setUser(fetchedUser)
         }
     }, [fetchedUser])

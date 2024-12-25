@@ -1,4 +1,5 @@
 'use client'
+
 import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -12,6 +13,7 @@ import {
 import Loading from '@/components/ui/Loading'
 import SubmitButton from '@/components/ui/SubmitButton'
 import Spinner from '@/components/ui/Spinner'
+import InputField from '@/components/ui/InputField'
 
 const Page = () => {
     const { onboardingOtp, onboardingVerifyOtp } = useAuth({
@@ -87,8 +89,6 @@ const Page = () => {
             try {
                 const response = await axios.get('/address/countries/isd-codes')
                 setCountryCodes(response.data.data)
-            } catch (error) {
-                // console.error('Failed to fetch country codes:', error)
             } finally {
                 setLoading(false)
             }
@@ -153,26 +153,27 @@ const Page = () => {
                     )}
 
                     <div className="relative flex items-center w-full">
-                        <input
-                            id="contact"
-                            placeholder={
-                                contactType === 'email'
-                                    ? 'Email Address'
-                                    : 'Mobile Number'
-                            }
-                            className={`input input-primary ${
-                                contactType === 'mobile' ? 'w-3/4' : 'w-full'
-                            }`}
-                            type={contactType === 'email' ? 'text' : 'tel'}
-                            pattern={
-                                contactType === 'mobile'
-                                    ? '[0-9]{10}'
-                                    : undefined
-                            }
-                            value={contact}
-                            onChange={event => setContact(event.target.value)}
-                            required
-                        />
+                        <div className="w-full">
+                            <InputField
+                                id="contact"
+                                placeholder={
+                                    contactType === 'email'
+                                        ? 'Email Address'
+                                        : 'Mobile Number'
+                                }
+                                type={contactType === 'email' ? 'text' : 'tel'}
+                                value={contact}
+                                onChange={event =>
+                                    setContact(event.target.value)
+                                }
+                                required
+                                pattern={
+                                    contactType === 'mobile'
+                                        ? '[0-9]{10}'
+                                        : undefined
+                                }
+                            />
+                        </div>
                         {otpSent && (
                             <button
                                 type="button"
@@ -186,24 +187,17 @@ const Page = () => {
                 {errors?.data && <ErrorDisplay errors={errors.data} />}
                 {errors?.type && <ErrorDisplay errors={errors.type} />}
                 {otpSent && (
-                    <div>
-                        <label
-                            htmlFor="otp"
-                            className="pt-0 label label-text font-semibold">
-                            <span>OTP</span>
-                        </label>
-                        <div className="flex-1 relative">
-                            <input
-                                id="otp"
-                                placeholder=""
-                                className="input input-primary w-full peer"
-                                type="text"
-                                value={otp}
-                                onChange={event => setOtp(event.target.value)}
-                                required
-                                autoComplete="current-otp"
-                            />
-                        </div>
+                    <div className="w-full">
+                        <InputField
+                            id="otp"
+                            label="OTP"
+                            placeholder="Enter OTP"
+                            type="text"
+                            value={otp}
+                            onChange={event => setOtp(event.target.value)}
+                            required
+                            autoComplete="current-otp"
+                        />
                     </div>
                 )}
                 {errors?.otp && errors.otp.length > 0 && (

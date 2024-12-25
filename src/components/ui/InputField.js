@@ -1,4 +1,5 @@
 import React from 'react'
+import ErrorDisplay from './ErrorDisplay'
 
 const InputField = ({
     label,
@@ -10,6 +11,7 @@ const InputField = ({
     required,
     labelClassName,
     className,
+    error,
     props,
 }) => {
     return (
@@ -38,6 +40,7 @@ const InputField = ({
                 required={required}
                 {...props}
             />
+            {error && <ErrorDisplay errors={error} />}
         </>
     )
 }

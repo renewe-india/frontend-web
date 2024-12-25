@@ -4,7 +4,6 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import InputField from '@/components/ui/InputField'
-import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { Lock } from '@phosphor-icons/react'
 
 const PasswordReset = () => {
@@ -72,11 +71,10 @@ const PasswordReset = () => {
                         onChange={event =>
                             setPasswordConfirmation(event.target.value)
                         }
+                        error={errors}
                         required
                     />
                 </div>
-
-                <ErrorDisplay errors={errors} />
 
                 <div className="flex items-center justify-end mt-4">
                     <button

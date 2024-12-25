@@ -1,3 +1,5 @@
+import MainCard from '@/components/ui/MainCard'
+
 export const metadata = {
     title: 'Network',
 }
@@ -5,10 +7,10 @@ export const metadata = {
 const Network = () => {
     return (
         <div className="space-y-2">
-            <div className="card bg-base-200 rounded-lg p-5 shadow-md">
+            <MainCard>
                 <h2 className="font-semibold">Connect</h2>
-            </div>
-            <div className="card bg-base-200 rounded-lg p-5 shadow-md">
+            </MainCard>
+            <MainCard>
                 <div className="flex flex-col items-center justify-center text-center">
                     <img
                         src="/notFound/network-not-found.svg"
@@ -23,7 +25,7 @@ const Network = () => {
                     </div>
                     <p className="mb-4 text-lg  text-gray-500 dark:text-gray-400" />
                 </div>
-            </div>
+            </MainCard>
         </div>
     )
 }

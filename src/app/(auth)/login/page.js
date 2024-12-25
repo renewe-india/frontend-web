@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
-import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { SignIn } from '@phosphor-icons/react'
 import SubmitButton from '@/components/ui/SubmitButton'
+import InputField from '@/components/ui/InputField'
 
 const LoginPage = () => {
     const { login } = useAuth({
@@ -58,57 +58,31 @@ const LoginPage = () => {
             <div>
                 <form onSubmit={submitForm} className="flex flex-col gap-5">
                     <div>
-                        <label
-                            htmlFor="username"
-                            className="pt-0 label label-text font-semibold">
-                            <span>
-                                Username <span className="text-error">*</span>
-                            </span>
-                        </label>
-                        <div className="flex-1 relative">
-                            <input
-                                id="username"
-                                placeholder="Username"
-                                className="input input-primary w-full peer"
-                                type="text"
-                                value={username}
-                                onChange={event =>
-                                    setUsername(event.target.value)
-                                }
-                                required
-                                autoFocus
-                            />
-                        </div>
+                        <InputField
+                            label="Username"
+                            type="text"
+                            name="username"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                            placeholder="Username"
+                            error={errors.username}
+                            required
+                        />
                     </div>
-                    {errors.username && (
-                        <ErrorDisplay errors={errors.username} />
-                    )}
+
                     <div>
-                        <label
-                            htmlFor="password"
-                            className="pt-0 label label-text font-semibold">
-                            <span>
-                                Password <span className="text-error">*</span>
-                            </span>
-                        </label>
-                        <div className="flex-1 relative">
-                            <input
-                                id="password"
-                                placeholder="••••••••"
-                                className="input input-primary w-full peer"
-                                type="password"
-                                value={password}
-                                onChange={event =>
-                                    setPassword(event.target.value)
-                                }
-                                required
-                                autoComplete="current-password"
-                            />
-                        </div>
+                        <InputField
+                            label="Password"
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            error={errors.password}
+                            required
+                            autoComplete="current-password"
+                        />
                     </div>
-                    {errors.password && (
-                        <ErrorDisplay errors={errors.password} />
-                    )}
 
                     <SubmitButton isSubmitting={isSubmitting} label="Login">
                         <SignIn size={24} />

@@ -185,12 +185,13 @@ function ContactList({
                     </select>
                 )}
                 <input
-                    type={isPhone ? 'text' : 'email'}
+                    type={isPhone ? 'number' : 'email'}
                     value={newContact}
                     onChange={e => setNewContact(e.target.value)}
                     placeholder={`Add new ${
                         isPhone ? 'phone number' : 'email'
                     }`}
+                    min={'0'}
                     className="input input-bordered w-3/5 lg:w-3/4 mr-2"
                 />
                 <button
@@ -210,7 +211,7 @@ function ContactList({
                         key={index}
                         className="flex flex-col lg:flex-row items-left lg:items-center gap-3 justify-between bg-base-200 mb-2 p-2 border border-gray-600 rounded">
                         <div className="flex items-center">
-                            {contact.is_verified ? (
+                            {contact.is_otp_verified ? (
                                 <SealCheck className="w-8 h-8 text-green-600 mr-2" />
                             ) : (
                                 <SealQuestion className="w-8 h-8 mr-2" />

@@ -78,7 +78,6 @@ export default function ContactEdit() {
                         phone.uuid === contact.uuid
                             ? {
                                   ...phone,
-                                  is_verified: true,
                                   is_otp_verified: true,
                               }
                             : phone,
@@ -90,7 +89,6 @@ export default function ContactEdit() {
                         email.uuid === contact.uuid
                             ? {
                                   ...email,
-                                  is_verified: true,
                                   is_otp_verified: true,
                               }
                             : email,
