@@ -8,27 +8,40 @@ import PostActions from '../card-actions/PostActions'
 
 function FeedCards({ posts }) {
     const renderNewsCard = post => {
-        const { via, content, author } = post
-        const key = content?.slug
+        const { via, content: article, author, shared_at } = post
+        const key = article?.slug
 
         if (via === 'shared') {
             return (
-                <SharedWrapper key={key} author={author}>
-                    <NewsCardBasic article={content} />
+                <SharedWrapper key={key} author={author} sharedAt={shared_at}>
+                    <NewsCardBasic
+                        article={article}
+                        sharedAt={article?.published_at}
+                    />
                     <PostActions
-                        likes={content?.reaction_count}
-                        comments={content?.comments_count}
+                        likes={article?.reactions}
+                        comments={article?.comments}
+                        url={`/news/articles/${key}/comments`}
                     />
                 </SharedWrapper>
             )
         } else if (via === 'liked' || via === 'commented') {
             return (
                 <LikedCommentedWrapper key={key} author={author} via={via}>
-                    <NewsCardWithActions article={content} />
+                    <NewsCardWithActions
+                        article={article}
+                        sharedAt={shared_at}
+                    />
                 </LikedCommentedWrapper>
             )
         } else {
-            return <NewsCardWithActions key={key} article={content} />
+            return (
+                <NewsCardWithActions
+                    key={key}
+                    article={article}
+                    sharedAt={shared_at}
+                />
+            )
         }
     }
 

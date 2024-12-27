@@ -1,3 +1,4 @@
+import NetworkCard from '@/components/cards/NetworkCard'
 import MainCard from '@/components/ui/MainCard'
 
 export const metadata = {
@@ -8,7 +9,10 @@ const Network = () => {
     return (
         <div className="space-y-2">
             <MainCard>
-                <h2 className="font-semibold">Connect</h2>
+                <h2 className="font-semibold">Explore Your Network</h2>
+            </MainCard>
+            <MainCard CardClassName="grid grid-cols-2 sm:grid-cols-3">
+                <NetworkCard /> <NetworkCard /> <NetworkCard />
             </MainCard>
             <MainCard>
                 <div className="flex flex-col items-center justify-center text-center">

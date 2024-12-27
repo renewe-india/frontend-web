@@ -1,7 +1,11 @@
-import { X } from '@phosphor-icons/react'
+import { Faders, X } from '@phosphor-icons/react'
 import { useState } from 'react'
 
-export default function FilterDrawer({ onApplyFilters, filterConfig }) {
+export default function FilterDrawer({
+    onApplyFilters,
+    filterLength,
+    filterConfig,
+}) {
     const [filters, setFilters] = useState(() =>
         filterConfig.reduce((acc, { field }) => {
             acc[field] = ''
@@ -66,8 +70,14 @@ export default function FilterDrawer({ onApplyFilters, filterConfig }) {
             <div className="drawer-content">
                 <label
                     htmlFor="my-drawer-4"
-                    className="drawer-button btn btn-outline btn-sm btn-primary rounded-full">
-                    All filters
+                    className="drawer-button btn btn-outline btn-sm flex items-center gap-2 bg-base-100">
+                    <Faders size={16} />
+                    Filters
+                    {filterLength > 0 && (
+                        <span className="badge badge-ghost">
+                            {filterLength}
+                        </span>
+                    )}
                 </label>
             </div>
             <div className="drawer-side z-50">

@@ -3,7 +3,7 @@ import PostHeader from '../../card-actions/PostHeader'
 
 const SharedWrapper = ({ author, sharedAt, children }) => {
     return (
-        <PostHeader author={author} sharedAt={sharedAt} className="p-5">
+        <PostHeader author={author} sharedAt={sharedAt}>
             {children}
         </PostHeader>
     )

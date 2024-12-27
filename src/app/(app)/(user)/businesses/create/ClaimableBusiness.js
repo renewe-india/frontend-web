@@ -43,14 +43,16 @@ function ClaimableBusiness({ businessesAvailableToClaim }) {
                     }}
                 />
             )}
-            {businessesAvailableToClaim.map(business => (
-                <ClaimableOrganizationCard
-                    key={business.name}
-                    business={business}
-                    onClaim={handleClaim}
-                    isSubmitting={isSubmitting}
-                />
-            ))}
+            <div className="space-y-5">
+                {businessesAvailableToClaim.map(business => (
+                    <ClaimableOrganizationCard
+                        key={business.name}
+                        business={business}
+                        onClaim={handleClaim}
+                        isSubmitting={isSubmitting}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

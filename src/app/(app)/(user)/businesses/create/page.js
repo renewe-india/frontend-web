@@ -9,6 +9,7 @@ const page = async () => {
     const { data: businessesAvailableToClaim } = await getData(
         '/organizations/available-to-claim',
     )
+
     return (
         <>
             <ClaimableBusiness

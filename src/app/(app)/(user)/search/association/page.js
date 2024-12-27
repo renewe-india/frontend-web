@@ -1,6 +1,6 @@
 'use server'
 import SearchPageComponent from '@/components/search-page/SearchPageComponent'
-import { companyFilterConfig, filterLabels } from './associationFilterUtils'
+import { companyFilterConfig } from './associationFilterUtils'
 import { Suspense } from 'react'
 import Loading from '@/components/ui/Loading'
 
@@ -15,7 +15,6 @@ export default async function BusinessSearch() {
                     value: 'business',
                 }}
                 resultCard={'association'}
-                filterLabels={filterLabels}
                 filterConfig={companyFilterConfig}
                 sortOptions={[
                     { label: 'Company Size', field: 'company_size' },

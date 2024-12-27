@@ -11,7 +11,7 @@ const Pagination = ({ meta, onPageChange }) => {
                     <button
                         key={index}
                         className={`join-item btn ${
-                            link.active ? 'btn-active btn-primary' : ''
+                            link.active ? 'btn-active btn-neutral' : ''
                         }`}
                         onClick={() => link.url && onPageChange(link.url)}
                         dangerouslySetInnerHTML={{
@@ -28,7 +28,7 @@ const Pagination = ({ meta, onPageChange }) => {
                     <button
                         key={i}
                         className={`join-item btn ${
-                            link.active ? 'btn-active btn-primary' : ''
+                            link.active ? 'btn-active btn-neutral' : ''
                         }`}
                         onClick={() => link.url && onPageChange(link.url)}
                         dangerouslySetInnerHTML={{
@@ -56,7 +56,7 @@ const Pagination = ({ meta, onPageChange }) => {
                     <button
                         key={i}
                         className={`join-item btn ${
-                            link.active ? 'btn-active btn-primary' : ''
+                            link.active ? 'btn-active btn-neutral' : ''
                         }`}
                         onClick={() => link.url && onPageChange(link.url)}
                         dangerouslySetInnerHTML={{

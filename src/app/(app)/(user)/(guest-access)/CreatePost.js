@@ -4,6 +4,7 @@ import { Article, Briefcase, Images } from '@phosphor-icons/react'
 import React from 'react'
 import CreatePostModal from './CreatePostModal'
 import { useUser } from '@/context/UserContext'
+import MainCard from '@/components/ui/MainCard'
 
 function CreatePost() {
     const { user } = useUser()
@@ -12,7 +13,7 @@ function CreatePost() {
     }
     return (
         <>
-            <div className="card bg-base-200 rounded-lg p-5 shadow-md">
+            <MainCard>
                 <div className="flex flex-col space-y-4">
                     <div className="flex gap-4 items-center w-full">
                         {/* Profile Image */}
@@ -77,7 +78,7 @@ function CreatePost() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </MainCard>
             <CreatePostModal />
         </>
     )

@@ -1,6 +1,6 @@
 'use server'
 import SearchPageComponent from '@/components/search-page/SearchPageComponent'
-import { filterLabels, userFilterConfig } from './userFilterUtils'
+import { userFilterConfig } from './userFilterUtils'
 import Loading from '@/components/ui/Loading'
 import { Suspense } from 'react'
 export default async function UserSearch() {
@@ -9,7 +9,6 @@ export default async function UserSearch() {
             <SearchPageComponent
                 searchEndpoint="/users/search"
                 resultCard={'user'}
-                filterLabels={filterLabels}
                 filterConfig={userFilterConfig}
                 sortOptions={[
                     { label: 'Name', field: 'name' },

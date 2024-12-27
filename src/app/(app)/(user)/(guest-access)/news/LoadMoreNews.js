@@ -35,7 +35,11 @@ export default function LoadMoreNews() {
     return (
         <>
             {articles.map((article, index) => (
-                <NewsCardWithActions key={index} article={article} />
+                <NewsCardWithActions
+                    key={index}
+                    article={article}
+                    sharedAt={article?.published_at}
+                />
             ))}
             {page !== lastPage && (
                 <div

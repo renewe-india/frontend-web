@@ -10,9 +10,9 @@ export async function getPaginatedData(page, apiUrl) {
 
         const data = await response.data.data
         const meta = await response.data.meta
+
         return { data, meta }
     } catch (error) {
-        // console.log(error)
         return { data: [], meta: { last_page: 1 } }
     }
 }

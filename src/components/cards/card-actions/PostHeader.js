@@ -4,27 +4,41 @@ import { BookmarkSimple, EyeSlash, Flag } from '@phosphor-icons/react'
 import Link from 'next/link'
 import React from 'react'
 import FollowButton from '@/components/ui/FollowButton'
+import { ShieldCheck } from '@phosphor-icons/react/dist/ssr'
+import MainCard from '@/components/ui/MainCard'
 
 const PostHeader = ({ author, sharedAt, children, className }) => {
     return (
-        <div className="card card-bordered shadow-md bg-base-200 rounded-lg">
+        <MainCard CardClassName="card-bordered">
             <div className="flex items-center justify-between p-4">
                 <div className="flex items-start gap-3">
                     <Link href={`/users/${author?.username}`}>
-                        <div className="flex items-start gap-3">
-                            <Image
-                                data={author?.avatar}
-                                src="https://capecoraltech.edu/wp-content/uploads/2016/01/tutor-8-3.jpg"
-                                alt={author?.name}
-                                className="w-10 h-10 rounded-full"
-                            />
+                        <div className="flex items-center gap-3">
+                            <div className="relative flex justify-center ">
+                                <Image
+                                    data={author?.avatar}
+                                    alt={author?.name}
+                                    className="avatar w-10 sm:w-12 rounded-full border-1 border-base-100"
+                                />
+                                {author?.is_verified && (
+                                    <ShieldCheck
+                                        size={16}
+                                        color="#00a400"
+                                        weight="duotone"
+                                        className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-0.5"
+                                    />
+                                )}
+                            </div>
                             <div className="flex flex-col">
-                                <span className="font-semibold">
+                                <span className="text-sm font-semibold ">
                                     {author?.name}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                    {author?.headline}
                                 </span>
                                 {sharedAt && (
                                     <span className="text-sm text-gray-500">
-                                        {sharedAt}
+                                        {sharedAt?.formatted}
                                     </span>
                                 )}
                             </div>
@@ -67,7 +81,7 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                 </div>
             </div>
             <div className={className}> {children}</div>
-        </div>
+        </MainCard>
     )
 }
 

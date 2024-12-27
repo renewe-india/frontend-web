@@ -8,7 +8,11 @@ const NewsPage = async () => {
     return (
         <div className="space-y-5">
             {articles.map((article, index) => (
-                <NewsCardWithActions key={index} article={article} />
+                <NewsCardWithActions
+                    key={index}
+                    article={article}
+                    sharedAt={article?.published_at}
+                />
             ))}
             {meta.last_page === 1 && <NoMoreArticles />}
             {meta.last_page !== 1 && <LoadMoreNews />}

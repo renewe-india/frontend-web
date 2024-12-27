@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { ArrowDown, ArrowUp, CaretUpDown } from '@phosphor-icons/react'
+import {
+    ArrowDown,
+    ArrowUp,
+    CaretDown,
+    CaretUp,
+    CaretUpDown,
+} from '@phosphor-icons/react'
 
 export default function SortBy({ onSortChange, sortOptions }) {
     const [selectedSort, setSelectedSort] = useState({
@@ -31,9 +37,13 @@ export default function SortBy({ onSortChange, sortOptions }) {
             <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-xs rounded-full text-left whitespace-normal break-words px-2 max-w-full flex flex-col items-center">
-                <CaretUpDown size={16} />
-                {selectedSort.field && (
+                className="btn btn-xs rounded-full bg-base-100 text-left whitespace-normal break-words px-2 max-w-full flex flex-col items-center">
+                {!selectedSort.field ? (
+                    <>
+                        <span>Sort</span>
+                        <CaretUpDown size={16} />
+                    </>
+                ) : (
                     <>
                         {
                             sortOptions.find(
@@ -41,9 +51,9 @@ export default function SortBy({ onSortChange, sortOptions }) {
                             )?.label
                         }
                         {selectedSort.direction === 'asc' ? (
-                            <ArrowUp size={16} />
+                            <CaretUp size={16} />
                         ) : (
-                            <ArrowDown size={16} />
+                            <CaretDown size={16} />
                         )}
                     </>
                 )}
@@ -51,13 +61,13 @@ export default function SortBy({ onSortChange, sortOptions }) {
 
             <ul
                 tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                className="dropdown-content menu bg-base-100 rounded-box z-[11] w-52 p-2 shadow">
                 {sortOptions.map(option => (
                     <li key={option.field}>
                         <div className="cursor-pointer flex items-center">
                             <input
                                 type="checkbox"
-                                className="checkbox checkbox-primary"
+                                className="checkbox checkbox-neutral"
                                 checked={selectedSort.field === option.field}
                                 onChange={() =>
                                     handleSortChange(
@@ -82,7 +92,7 @@ export default function SortBy({ onSortChange, sortOptions }) {
                 ))}
                 <li>
                     <button
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-neutral"
                         onClick={handleClearFilter}>
                         Clear all filters
                     </button>

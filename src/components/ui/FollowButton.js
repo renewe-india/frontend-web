@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { Check, Plus } from '@phosphor-icons/react'
 import React, { useState } from 'react'
 
-function FollowButton({ entityType, entityName, isFollowing }) {
+function FollowButton({ entityType, entityName, isFollowing, buttonSize }) {
     const { user } = useUser()
     const [follow, setFollow] = useState(isFollowing || false)
     const modalId = `unfollow_modal_${entityName}`
@@ -38,7 +38,7 @@ function FollowButton({ entityType, entityName, isFollowing }) {
     return (
         <>
             <button
-                className={`z-10 btn btn-xs shadow-xl rounded-full btn-outline
+                className={`z-10 btn btn-xs shadow-xl rounded-full btn-outline ${buttonSize}
                 ${follow ? '' : 'btn-neutral'} `}
                 onClick={follow ? showModal : handleFollow}>
                 {follow ? (

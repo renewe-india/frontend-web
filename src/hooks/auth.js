@@ -25,7 +25,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         {
             revalidateOnFocus: false,
             shouldRetryOnError: false,
-            dedupingInterval: 1800000,
         },
     )
 

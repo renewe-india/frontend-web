@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import {
     ThumbsUp,
     ChatCenteredText,
-    ArrowsClockwise,
+    Repeat,
     PaperPlaneTilt,
     Heart,
     Smiley,
     Handshake,
     Confetti,
 } from '@phosphor-icons/react/dist/ssr'
-import CommentSection from './CommentSection'
+import CommentSection from './comments/CommentSection'
 
 const reactions = [
     {
@@ -35,21 +35,40 @@ const reactions = [
     },
 ]
 
-const PostActions = ({ likes, comments, reposts }) => {
+const PostActions = ({ likes, comments, reposts, url }) => {
     const [showComments, setShowComments] = useState(false)
 
     return (
-        <div className="p-2">
-            <div className="flex justify-between border-b border-gray-200 dark:border-gray-600 pb-1">
-                <div className="text-xs text-gray-500">
-                    {likes > 0 && <span>{likes} Likes</span>}
+        <>
+            <div className="mt-2 flex flex-wrap justify-between items-center border-b border-neutral-content pb-1">
+                <div className="inline-flex items-center text-xs text-gray-500 flex-1 min-w-0">
+                    {likes.count > 0 && (
+                        <>
+                            <Heart
+                                size={20}
+                                stroke={2}
+                                color="#c81438"
+                                weight="fill"
+                                className="flex-shrink-0 mr-1"
+                            />
+                            <span className="block sm:hidden ">
+                                {likes.abbreviate_count}
+                            </span>
+                            <span className="hidden sm:block truncate">
+                                Liked by {likes.text}
+                            </span>
+                        </>
+                    )}
                 </div>
 
-                <div className="text-xs text-gray-500 flex gap-4">
-                    {comments > 0 && <span>{comments} comments</span>}
+                <div className="text-xs text-gray-500 flex gap-4 mt-1 sm:mt-0">
+                    {comments.count > 0 && (
+                        <span>{comments.abbreviate_count} comments</span>
+                    )}
                     {reposts > 0 && <span>{reposts} reposts</span>}
                 </div>
             </div>
+
             <div className="grid grid-cols-4 lg:gap-2 gap-0">
                 {/* Like Dropdown */}
                 <LikeDropdown />
@@ -63,21 +82,15 @@ const PostActions = ({ likes, comments, reposts }) => {
 
                 {/* Repost Button with Dropdown */}
                 <div className="dropdown dropdown-end text-center">
-                    <ActionButton
-                        icon={<ArrowsClockwise size={16} />}
-                        label="Repost"
-                    />
+                    <ActionButton icon={<Repeat size={16} />} label="Repost" />
 
                     <ul
                         tabIndex={0}
-                        className="dropdown-content menu bg-base-100 rounded-box z-[1] w-60 sm:w-72 p-2 shadow ">
+                        className="dropdown-content menu bg-base-100 rounded-box z-15 w-60 sm:w-72 p-2 shadow ">
                         <li>
                             <button className="btn w-full h-16">
                                 <div className="flex flex-row text-left items-start gap-5">
-                                    <ArrowsClockwise
-                                        size={16}
-                                        className="shrink-0"
-                                    />
+                                    <Repeat size={16} className="shrink-0" />
                                     <div className="flex flex-col gap-1">
                                         <span className="font-bold">
                                             Repost
@@ -99,8 +112,10 @@ const PostActions = ({ likes, comments, reposts }) => {
                     label="Share"
                 />
             </div>
-            {showComments && <CommentSection />}
-        </div>
+            {showComments && (
+                <CommentSection url={url} commentsCount={comments.count} />
+            )}
+        </>
     )
 }
 

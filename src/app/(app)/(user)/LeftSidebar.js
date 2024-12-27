@@ -1,6 +1,6 @@
 'use client'
 
-import { Plus, ShieldCheck } from '@phosphor-icons/react'
+import { Plus } from '@phosphor-icons/react'
 import React, { memo, Suspense } from 'react'
 import Link from 'next/link'
 import AvatarSkeleton from '@/components/skeletons/AvatarSkeleton'
@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic'
 import LeftSidebarSkeleton from '@/components/skeletons/LeftSidebarSkeleton'
 import { useUser } from '@/context/UserContext'
 import MainCard from '@/components/ui/MainCard'
+import Avatar from '@/components/ui/AvatarImage'
 const Image = dynamic(() => import('@/components/Image'))
 
 const SkeletonWrapper = ({ children, fallback }) => (
@@ -59,23 +60,19 @@ const UserProfile = ({ user }) => (
                 <SkeletonWrapper fallback={<BackdropSkeleton />}>
                     <Image
                         data={user?.backdrop}
+                        alt={user?.name}
                         className="w-full h-full object-cover rounded-lg"
                     />
                 </SkeletonWrapper>
                 <div className="flex justify-center -mt-10">
                     <SkeletonWrapper fallback={<AvatarSkeleton />}>
-                        <Image
-                            data={user?.avatar}
-                            className="avatar sm:w-20 rounded-full border-4 border-base-100"
+                        <Avatar
+                            avatarUrl={user?.avatar}
+                            alt={user?.name}
+                            size="lg"
+                            border={true}
+                            isVerified={user?.is_verified}
                         />
-                        {user?.is_verified && (
-                            <ShieldCheck
-                                size={28}
-                                color="#00a400"
-                                weight="fill"
-                                className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-1"
-                            />
-                        )}
                     </SkeletonWrapper>
                 </div>
             </div>

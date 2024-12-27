@@ -6,16 +6,16 @@ import axios from '@/lib/axios'
 import Loading from '@/components/ui/Loading'
 import SortBy from './Sortby'
 import FilterDrawer from './FilterDrawer'
-import { XCircle } from '@phosphor-icons/react'
+import { ArrowCounterClockwise } from '@phosphor-icons/react'
 import OrganizationCard from '@/components/cards/OrganizationCard'
 import NoResultFound from '@/components/ui/NoResultFound'
 import UserCard from '../cards/UserCard'
+import Pagination from '../ui/Pagination'
 
 export default function SearchPageComponent({
     searchEndpoint,
     defaultFilter,
     resultCard,
-    filterLabels,
     filterConfig,
     sortOptions,
 }) {
@@ -25,11 +25,13 @@ export default function SearchPageComponent({
     const [loading, setLoading] = useState(true)
     const [sortCriteria, setSortCriteria] = useState('')
     const [filters, setFilters] = useState([])
+    const [meta, setMeta] = useState(null)
+    const [currentPageURL, setCurrentPageURL] = useState(searchEndpoint)
 
     const fetchSearchResults = async (sortBy, appliedFilters) => {
         try {
             const decodedSearchTerm = decodeURIComponent(search || '')
-            const response = await axios.post(searchEndpoint, {
+            const response = await axios.post(currentPageURL, {
                 search: {
                     value: decodedSearchTerm,
                 },
@@ -38,6 +40,7 @@ export default function SearchPageComponent({
                     ? [defaultFilter, ...appliedFilters]
                     : appliedFilters,
             })
+            setMeta(response.data.meta)
             setSearchResults(response.data.data)
         } finally {
             setLoading(false)
@@ -46,60 +49,64 @@ export default function SearchPageComponent({
 
     useEffect(() => {
         if (search) {
-            fetchSearchResults(sortCriteria, filters)
+            fetchSearchResults(sortCriteria, filters, currentPageURL)
         }
-    }, [search, sortCriteria, filters])
+    }, [search, sortCriteria, filters, currentPageURL])
 
     const handleApplyFilters = newFilters => setFilters(newFilters)
 
     const handleSortChange = value => setSortCriteria(value)
 
-    const handleRemoveFilter = index => {
-        const updatedFilters = [...filters]
-        updatedFilters.splice(index, 1)
-        setFilters(updatedFilters)
+    const handlePageChange = url => {
+        setCurrentPageURL(url)
+        window.scrollTo(0, 0)
     }
 
     return (
-        <div className="card bg-base-100 space-y-2">
-            <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-3">
-                <div className="flex flex-row gap-3 items-center flex-wrap">
-                    <FilterDrawer
-                        onApplyFilters={handleApplyFilters}
-                        filterConfig={filterConfig}
-                    />
-                    {filters.map((filter, index) => (
-                        <button
-                            key={index}
-                            className="btn btn-outline btn-sm flex items-center gap-2 text-left whitespace-normal break-words"
-                            onClick={() => handleRemoveFilter(index)}>
-                            {filterLabels(filter)}
-                            <XCircle size={16} />
-                        </button>
-                    ))}
+        <div className="space-y-2">
+            <div className="card bg-base-200 rounded-lg p-5">
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-wrap items-center gap-3 flex-1">
+                        <div>
+                            <FilterDrawer
+                                onApplyFilters={handleApplyFilters}
+                                filterConfig={filterConfig}
+                                filterLength={filters.length}
+                            />
+                        </div>
+
+                        {filters.length > 0 && (
+                            <button
+                                className="btn btn-ghost btn-sm flex items-center gap-2 bg-base-100"
+                                onClick={() => setFilters([])}>
+                                <ArrowCounterClockwise size={16} />
+                                Reset
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="flex-shrink-0">
+                        <SortBy
+                            onSortChange={handleSortChange}
+                            sortOptions={sortOptions}
+                        />
+                    </div>
                 </div>
             </div>
             <div className="flex items-center justify-between">
+                {searchResults.length > 1 && (
+                    <div className="flex items-center space-x-2 mx-4">
+                        <span className="text-xs">
+                            {searchResults.length} result
+                            {searchResults.length !== 1 ? 's' : ''} found
+                        </span>
+                    </div>
+                )}
                 <div className="flex-1 ml-2">
                     <div className="divider my-0" />
                 </div>
-                <div className="flex items-center space-x-2 mx-4">
-                    <span className="text-xs">Sort by:</span>
-                    <SortBy
-                        onSortChange={handleSortChange}
-                        sortOptions={sortOptions}
-                    />
-                </div>
             </div>
             <div className="card bg-base-200 rounded-lg p-5">
-                <div className="mb-3">
-                    {searchResults.length > 1 && (
-                        <h1 className="text-sm">
-                            {searchResults.length} result
-                            {searchResults.length !== 1 ? 's' : ''} found
-                        </h1>
-                    )}
-                </div>
                 {loading ? (
                     <Loading />
                 ) : searchResults.length > 0 ? (
@@ -122,6 +129,9 @@ export default function SearchPageComponent({
                     <NoResultFound search={search} />
                 )}
             </div>
+            {meta && meta.last_page === 1 && (
+                <Pagination meta={meta} onPageChange={handlePageChange} />
+            )}
         </div>
     )
 }

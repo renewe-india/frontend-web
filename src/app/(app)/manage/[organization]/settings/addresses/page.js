@@ -219,7 +219,7 @@ const OrganizationComponent = ({ params }) => {
                     )}
                 </div>
             </TitleCard>
-            {meta && meta.current_page !== meta.last_page && (
+            {meta && meta.last_page === 1 && (
                 <Pagination meta={meta} onPageChange={handlePageChange} />
             )}
             <AddAddressModal
