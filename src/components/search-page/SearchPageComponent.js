@@ -129,7 +129,7 @@ export default function SearchPageComponent({
                     <NoResultFound search={search} />
                 )}
             </div>
-            {meta && meta.last_page === 1 && (
+            {meta && meta.last_page !== 1 && (
                 <Pagination meta={meta} onPageChange={handlePageChange} />
             )}
         </div>

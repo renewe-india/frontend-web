@@ -77,6 +77,19 @@ const AddAddressModal = ({ address, onSubmit, onClose }) => {
         e.preventDefault()
         onSubmit(formData)
         onClose()
+        setFormData({
+            type: '',
+            name: '',
+            line_1: '',
+            line_2: '',
+            country: '',
+            state: '',
+            postal_code: '',
+            is_default: false,
+            is_public: false,
+            tax_name: null,
+            tax_number: null,
+        })
     }
 
     return (

@@ -50,7 +50,7 @@ const CommentInput = ({
     return (
         <div className="flex gap-4 mb-4 flex-wrap">
             <Image
-                data={user.avatar}
+                data={user?.avatar}
                 alt="User "
                 className="w-10 h-10 rounded-full items-start"
             />
@@ -97,8 +97,8 @@ const CommentInput = ({
                                     ref={emojiPickerRef}
                                     className={`absolute z-10 ${
                                         userComment || userImage
-                                            ? 'bottom-12 -left-20'
-                                            : 'bottom-12 right-0'
+                                            ? 'top-12 -left-32'
+                                            : 'top-12 -right-10'
                                     }`}>
                                     <button
                                         className="z-20 btn btn-circle btn-xs absolute -top-2 -right-2 bg-base-100"

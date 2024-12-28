@@ -4,7 +4,7 @@ import { Users } from '@phosphor-icons/react/dist/ssr'
 
 export default function UserCard({ user }) {
     return (
-        <div className="card w-full bg-base-100 shadow-md rounded-lg border p-4">
+        <div className="card w-full bg-base-100 shadow-md rounded-lg p-4">
             {/* Profile Image and Name */}
             <div className="flex items-center w-full justify-between">
                 {/* Left side: Avatar, Name, and Headline */}

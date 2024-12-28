@@ -5,29 +5,31 @@ import { DotsThree, EyeSlash, Flag, ThumbsUp } from '@phosphor-icons/react'
 const CommentItem = ({ comment }) => {
     return (
         <div
-            key={comment.id}
+            key={comment?.id}
             className="flex items-start gap-4 py-4 border-b border-gray-200">
             <Avatar
-                avatarUrl={comment.author.avatar}
-                alt={comment.author.name}
+                avatarUrl={comment?.author?.avatar}
+                alt={comment?.author?.name}
                 size="base"
-                isVerified={comment.author.is_verified}
+                isVerified={comment?.author?.is_verified}
                 additionalClasses=""
             />
             <div className="flex-1">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h4 className="font-semibold">{comment.author.name}</h4>
+                        <h4 className="font-semibold">
+                            {comment?.author?.name}
+                        </h4>
                         <span className="text-sm text-gray-500">
-                            {comment.headline}
+                            {comment?.headline}
                         </span>
                     </div>
                     <div className="text-sm text-gray-500">15 min ago</div>
                 </div>
-                <p className="mt-2">{comment.comment}</p>
-                {comment.contentImage && (
+                <p className="mt-2">{comment?.comment}</p>
+                {comment?.contentImage && (
                     <img
-                        src={comment.contentImage}
+                        src={comment?.contentImage}
                         alt="Content"
                         className="mt-2 rounded-lg max-w-full h-auto"
                     />
@@ -45,7 +47,7 @@ const CommentItem = ({ comment }) => {
                 </button>
                 <ul
                     tabIndex={0}
-                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    className="z-10 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li>
                         <button className="flex items-center gap-2">
                             <EyeSlash size={24} />

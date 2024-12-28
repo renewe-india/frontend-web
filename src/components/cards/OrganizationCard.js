@@ -4,7 +4,7 @@ import { Users } from '@phosphor-icons/react'
 
 export default function OrganizationCard({ organization }) {
     return (
-        <div className="card w-full bg-base-100 shadow-md rounded-lg border p-4">
+        <div className="card w-full bg-base-100 shadow-md rounded-lg p-4">
             {/* Organization Logo and Name */}
             <div className="flex items-center w-full justify-between">
                 {/* Left side: Avatar, Name, and Tagline */}

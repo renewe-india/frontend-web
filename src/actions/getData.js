@@ -8,9 +8,11 @@ export async function getData(apiUrl) {
     try {
         const response = await axios.get(apiUrl, { headers })
         const data = response.data.data
-
+        if (response.data.meta) {
+            return { data, meta: response.data.meta }
+        }
         return { data }
     } catch (error) {
-        return { data: [] }
+        return { data: null }
     }
 }

@@ -9,7 +9,7 @@ const Network = () => {
     return (
         <div className="space-y-2">
             <MainCard>
-                <h2 className="font-semibold">Explore Your Network</h2>
+                <h2 className="text-2xl font-bold">Explore Your Network</h2>
             </MainCard>
             <MainCard CardClassName="grid grid-cols-2 sm:grid-cols-3">
                 <NetworkCard /> <NetworkCard /> <NetworkCard />

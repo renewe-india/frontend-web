@@ -5,6 +5,8 @@ import PostActions from '@/components/cards/card-actions/PostActions'
 import Avatar from '@/components/ui/AvatarImage'
 import FollowButton from '@/components/ui/FollowButton'
 import MoreOptions from './MoreOptions'
+import EditorJsRenderer from '@/components/EditorJsRenderer'
+import MainCard from '@/components/ui/MainCard'
 
 const ArticlePage = async ({ params }) => {
     const slug = params.slug
@@ -12,7 +14,7 @@ const ArticlePage = async ({ params }) => {
 
     return (
         <>
-            {article && (
+            {article !== null ? (
                 <article className="max-w-4xl mx-auto bg-base-200 rounded-lg shadow-lg overflow-hidden">
                     <div className="relative">
                         {/* Author section */}
@@ -79,7 +81,7 @@ const ArticlePage = async ({ params }) => {
                     {/* Article Content */}
                     <div className="p-6 space-y-6">
                         <div className="space-y-4">
-                            <h1 className="text-3xl font-bold tracking-tight">
+                            <h1 className="text-4xl font-bold tracking-tight">
                                 {article?.headline}
                             </h1>
                             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -90,7 +92,9 @@ const ArticlePage = async ({ params }) => {
                         <div className="divider" />
 
                         <div className="prose prose-gray dark:prose-invert max-w-none">
-                            {article?.body}
+                            <EditorJsRenderer
+                                content={JSON.parse(article?.body?.json)}
+                            />
                         </div>
 
                         {/* Engagement Section */}
@@ -125,6 +129,20 @@ const ArticlePage = async ({ params }) => {
                         )}
                     </div>
                 </article>
+            ) : (
+                <MainCard>
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <img
+                            src="/errorCode/404.svg"
+                            alt="No results found"
+                            width={400}
+                            height={400}
+                        />
+                        <div className="mb-4 text-2xl tracking-tight font-bold md:text-3xl ">
+                            Hold tight! This article is not published yet!
+                        </div>
+                    </div>
+                </MainCard>
             )}
         </>
     )

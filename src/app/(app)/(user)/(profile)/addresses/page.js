@@ -7,10 +7,10 @@ import Loading from '@/components/ui/Loading'
 import NoResultFound from '@/components/ui/NoResultFound'
 import AddAddressModal from '@/components/modals/AddAddressModal'
 import { useUser } from '@/context/UserContext'
+import Pagination from '@/components/ui/Pagination'
+import { getData } from '@/actions/getData'
 
-const AddressCard = dynamic(() => import('@/components/cards/AddressCard'), {
-    loading: () => <Loading />,
-})
+const AddressCard = dynamic(() => import('@/components/cards/AddressCard'))
 const ErrorDisplay = dynamic(() => import('@/components/ui/ErrorDisplay'))
 
 const AddressPage = () => {
@@ -19,15 +19,20 @@ const AddressPage = () => {
     const [loading, setLoading] = useState(true)
     const [errors, setErrors] = useState([])
     const [addressToEdit, setAddressToEdit] = useState(null)
+    const [meta, setMeta] = useState(null)
+    const [currentPageURL, setCurrentPageURL] = useState()
 
     const fetchAddresses = async () => {
         setErrors([])
         setLoading(true)
         try {
-            const response = await axios.get(
-                `/users/${user.username}/addresses`,
+            const { data, meta } = await getData(
+                currentPageURL
+                    ? currentPageURL
+                    : `/users/${user?.username}/addresses`,
             )
-            setAddresses(response.data.data)
+            setAddresses(data)
+            setMeta(meta)
         } catch (error) {
             setErrors(error?.response?.data?.errors)
         } finally {
@@ -36,11 +41,10 @@ const AddressPage = () => {
     }
 
     useEffect(() => {
-        if (user) fetchAddresses()
+        if (user?.username) fetchAddresses()
     }, [user?.username])
 
     const handleAddAddress = async newAddress => {
-        setLoading(true)
         try {
             const response = await axios.post(
                 `/users/${user.username}/addresses`,
@@ -49,13 +53,10 @@ const AddressPage = () => {
             setAddresses(prev => [...prev, response.data.data])
         } catch (error) {
             setErrors(error?.response?.data?.errors)
-        } finally {
-            setLoading(false)
         }
     }
 
     const handleEditAddress = async updatedAddress => {
-        setLoading(true)
         try {
             await axios.patch(
                 `/users/${user.username}/addresses/${updatedAddress.uuid}`,
@@ -70,25 +71,19 @@ const AddressPage = () => {
             )
         } catch (error) {
             setErrors(error?.response?.data?.errors || [])
-        } finally {
-            setLoading(false)
         }
     }
 
     const handleDeleteAddress = async uuid => {
-        setLoading(true)
         try {
             await axios.delete(`/users/${user.username}/addresses/${uuid}`)
             setAddresses(prev => prev.filter(addr => addr.uuid !== uuid))
         } catch (error) {
             setErrors(error?.response?.data?.errors || [])
-        } finally {
-            setLoading(false)
         }
     }
 
     const handleSetDefault = async uuid => {
-        setLoading(true)
         try {
             const address = addresses.find(addr => addr.uuid === uuid)
             await axios.patch(`/users/${user.username}/addresses/${uuid}`, {
@@ -102,13 +97,10 @@ const AddressPage = () => {
             )
         } catch (error) {
             setErrors(error?.response?.data?.errors || [])
-        } finally {
-            setLoading(false)
         }
     }
 
     const handleSetPublicPrivate = async uuid => {
-        setLoading(true)
         try {
             const address = addresses.find(addr => addr.uuid === uuid)
             await axios.patch(`/users/${user.username}/addresses/${uuid}`, {
@@ -123,8 +115,6 @@ const AddressPage = () => {
             )
         } catch (error) {
             setErrors(error?.response?.data?.errors || [])
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -137,7 +127,10 @@ const AddressPage = () => {
         setAddressToEdit(null)
         document.getElementById('add_address_modal').close()
     }
-
+    const handlePageChange = url => {
+        setCurrentPageURL(url)
+        window.scrollTo(0, 0)
+    }
     return (
         <>
             <MainCard
@@ -166,7 +159,9 @@ const AddressPage = () => {
                     <Loading />
                 )}
             </MainCard>
-
+            {meta && meta.last_page !== 1 && (
+                <Pagination meta={meta} onPageChange={handlePageChange} />
+            )}
             <AddAddressModal
                 address={addressToEdit}
                 onSubmit={addressToEdit ? handleEditAddress : handleAddAddress}

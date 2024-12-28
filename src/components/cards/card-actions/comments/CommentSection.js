@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import CommentInput from './CommentInput'
@@ -5,6 +7,7 @@ import { useUser } from '@/context/UserContext'
 import CommentItem from './CommentItem'
 import Spinner from '@/components/ui/Spinner'
 import axios from '@/lib/axios'
+import { useRouter } from 'next/navigation'
 
 const CommentSection = ({ commentsCount, url }) => {
     const { user } = useUser()
@@ -14,7 +17,7 @@ const CommentSection = ({ commentsCount, url }) => {
     const [page, setPage] = useState(0)
     const [lastPage, setLastPage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-
+    const router = useRouter()
     const fetchComments = async pageNumber => {
         try {
             setIsLoading(true)
@@ -46,6 +49,10 @@ const CommentSection = ({ commentsCount, url }) => {
         setComments(prevComments => [newComment, ...prevComments])
         setUserComment('')
         setUserImage(null)
+    }
+    if (!user) {
+        router.push('/login')
+        return null
     }
 
     return (
