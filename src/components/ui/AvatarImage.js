@@ -13,7 +13,7 @@ export default function Avatar({
 }) {
     const sizes = {
         sm: 'w-7',
-        base: 'w-10',
+        base: 'w-12',
         md: 'w-16',
         lg: 'w-24',
         xl: 'w-32',

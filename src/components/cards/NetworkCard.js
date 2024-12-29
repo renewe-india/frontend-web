@@ -63,7 +63,7 @@ export default function NetworkCard({ onDismiss }) {
                     entityType="users"
                     entityName={user?.username}
                     isFollowing={user?.is_following}
-                    buttonSize="btn-wide w-full max-w-[180px]"
+                    buttonStyle="btn-wide w-full max-w-[180px]"
                 />
             </div>
         </div>

@@ -61,7 +61,7 @@ const ArticlePage = async ({ params }) => {
                                         isFollowing={
                                             article?.author?.is_following
                                         }
-                                        buttonSize="glass text-white"
+                                        buttonStyle="glass text-white"
                                     />
                                     <MoreOptions />
                                 </div>

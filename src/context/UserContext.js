@@ -15,7 +15,7 @@ const fetcher = url => axios.get(url).then(res => res.data.data)
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null)
 
-    const { data: fetchedUser, isValidating } = useSWR('/user', fetcher, {
+    const { data: fetchedUser, isLoading } = useSWR('/user', fetcher, {
         revalidateOnFocus: false,
         revalidateOnMount: false,
         revalidateOnReconnect: true,
@@ -30,8 +30,7 @@ export const UserProvider = ({ children }) => {
     }, [fetchedUser])
 
     return (
-        <UserContext.Provider
-            value={{ user, isLoading: !user && isValidating }}>
+        <UserContext.Provider value={{ user, isLoading: isLoading }}>
             {children}
         </UserContext.Provider>
     )

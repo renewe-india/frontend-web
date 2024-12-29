@@ -1,11 +1,10 @@
 'use client'
-import Image from '@/components/Image'
 import { BookmarkSimple, EyeSlash, Flag } from '@phosphor-icons/react'
 import Link from 'next/link'
 import React from 'react'
 import FollowButton from '@/components/ui/FollowButton'
-import { ShieldCheck } from '@phosphor-icons/react/dist/ssr'
 import MainCard from '@/components/ui/MainCard'
+import Avatar from '@/components/ui/AvatarImage'
 
 const PostHeader = ({ author, sharedAt, children, className }) => {
     return (
@@ -14,21 +13,14 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                 <div className="flex items-start gap-3">
                     <Link href={`/users/${author?.username}`}>
                         <div className="flex items-center gap-3">
-                            <div className="relative flex justify-center ">
-                                <Image
-                                    data={author?.avatar}
-                                    alt={author?.name}
-                                    className="avatar w-10 sm:w-12 rounded-full border-1 border-base-100"
-                                />
-                                {author?.is_verified && (
-                                    <ShieldCheck
-                                        size={16}
-                                        color="#00a400"
-                                        weight="duotone"
-                                        className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-0.5"
-                                    />
-                                )}
-                            </div>
+                            <Avatar
+                                avatarUrl={author?.avatar}
+                                alt={author?.name}
+                                size="base"
+                                isVerified={author?.is_verified}
+                                border={true}
+                                additionalClasses="flex-shrink-0"
+                            />
                             <div className="flex flex-col">
                                 <span className="text-sm font-semibold ">
                                     {author?.name}

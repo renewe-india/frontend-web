@@ -1,6 +1,14 @@
 import React from 'react'
 import Avatar from '@/components/ui/AvatarImage'
-import { DotsThree, EyeSlash, Flag, ThumbsUp } from '@phosphor-icons/react'
+import {
+    DotsThree,
+    EyeSlash,
+    Flag,
+    // Pencil,
+    ThumbsUp,
+} from '@phosphor-icons/react'
+import Link from 'next/link'
+// import DeleteButton from '@/components/ui/DeleteButton'
 
 const CommentItem = ({ comment }) => {
     return (
@@ -16,15 +24,17 @@ const CommentItem = ({ comment }) => {
             />
             <div className="flex-1">
                 <div className="flex items-center justify-between">
-                    <div>
+                    <Link href={`/users/${comment?.author?.username}`}>
                         <h4 className="font-semibold">
                             {comment?.author?.name}
                         </h4>
                         <span className="text-sm text-gray-500">
-                            {comment?.headline}
+                            {comment?.author?.headline}
                         </span>
+                    </Link>
+                    <div className="text-sm text-gray-500">
+                        {comment?.published_at?.formatted}
                     </div>
-                    <div className="text-sm text-gray-500">15 min ago</div>
                 </div>
                 <p className="mt-2">{comment?.comment}</p>
                 {comment?.contentImage && (
@@ -47,16 +57,29 @@ const CommentItem = ({ comment }) => {
                 </button>
                 <ul
                     tabIndex={0}
-                    className="z-10 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    className="z-10 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-60">
+                    {/* <li>
+                        <button className="flex items-center gap-2">
+                            <Pencil size={24} />
+                            <span>Edit</span>
+                        </button>
+                    </li> */}
+                    {/* <li>
+                        <DeleteButton
+                            name={' comment'}
+                            itemName={comment?.uuid}
+                            onDelete={() => console.log('Delete')}
+                        />
+                    </li> */}
                     <li>
                         <button className="flex items-center gap-2">
-                            <EyeSlash size={24} />
+                            <EyeSlash size={24} weight="duotone" />
                             <span>I don't want to see this</span>
                         </button>
                     </li>
                     <li>
                         <button className="flex items-center gap-2">
-                            <Flag size={24} />
+                            <Flag size={24} weight="duotone" />
                             <span>Report</span>
                         </button>
                     </li>

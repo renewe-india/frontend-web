@@ -1,7 +1,7 @@
 import { Trash } from '@phosphor-icons/react'
 import React from 'react'
 
-function DeleteButton({ style, itemName, onDelete }) {
+function DeleteButton({ style, itemName, onDelete, name }) {
     const modalId = `delete_modal_${itemName}`
 
     const openModal = () => {
@@ -23,7 +23,7 @@ function DeleteButton({ style, itemName, onDelete }) {
             <button
                 onClick={openModal}
                 className={
-                    'btn btn-sm bg-red-600 text-white mr-2 flex items-center' +
+                    'btn btn-sm bg-red-600 text-white mr-2 flex items-center ' +
                     `${style ? style : ''}`
                 }>
                 <Trash className="w-5 h-5" /> Delete
@@ -45,8 +45,9 @@ function DeleteButton({ style, itemName, onDelete }) {
                     </form>
                     <h3 className="font-bold text-lg">Confirm Deletion</h3>
                     <p className="py-4">
-                        Are you sure you want to delete <b>{itemName}</b>? This
-                        action cannot be undone.
+                        Are you sure you want to delete{' '}
+                        <b>{name ? name : itemName}</b>? This action cannot be
+                        undone.
                     </p>
                     <div className="flex justify-end gap-2">
                         <button
