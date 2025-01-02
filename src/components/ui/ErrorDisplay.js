@@ -1,4 +1,4 @@
-import { WarningCircle, X } from '@phosphor-icons/react'
+import { WarningCircle, X } from '@phosphor-icons/react/dist/ssr'
 import React from 'react'
 
 const ErrorDisplay = ({ errors, message, onClose }) => {
@@ -35,19 +35,19 @@ const ErrorDisplay = ({ errors, message, onClose }) => {
         return null
     }
     return (
-        <div className="text-red-500">
+        <div className=" text-red-500">
             {Array.isArray(errorContent) ? (
                 errorContent.map((error, index) => (
                     <div
                         key={index}
                         role="alert"
                         className="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-center justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105">
-                        <div className="flex items-center">
+                        <div className="flex items-start">
                             <WarningCircle
                                 size={24}
                                 className="flex-shrink-0 mr-2"
                             />
-                            <p className="text-xs font-semibold">
+                            <p className="text-xs font-semibold break-all">
                                 Error - {renderError(error)}
                             </p>
                         </div>
@@ -63,13 +63,13 @@ const ErrorDisplay = ({ errors, message, onClose }) => {
             ) : (
                 <div
                     role="alert"
-                    className="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-center justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105">
-                    <div className="flex items-center">
+                    className="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-start justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105 overflow-hidden">
+                    <div className="flex items-start">
                         <WarningCircle
                             size={24}
                             className="flex-shrink-0 mr-2"
                         />
-                        <p className="text-xs font-semibold">
+                        <p className="text-xs font-semibold break-all">
                             Error - {renderError(errorContent)}
                         </p>
                     </div>

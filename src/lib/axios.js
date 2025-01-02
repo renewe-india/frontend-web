@@ -26,12 +26,25 @@ axios.interceptors.response.use(
                     window.location.href = `${previousPage}?error=${errorMessage}`
                 } else if (status === 400) {
                     window.location.href = '/bad-request'
-                } else if (status === 404) {
-                    window.location.href = '/page-not-found'
+                    // } else if (status === 404) {
+                    //     window.location.href = '/page-not-found'
                     // } else if (status === 500) {
                     //     window.location.href = '/internal-server-error'
                 } else if (status === 422) {
                     return Promise.reject(error)
+                } else if (status === 419) {
+                    document.cookie.split(';').forEach(cookie => {
+                        const name = cookie.split('=')[0].trim()
+                        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+                    })
+
+                    localStorage.clear()
+                    sessionStorage.clear()
+
+                    const errorMessage = encodeURIComponent(
+                        'Something went wrong, please try again.',
+                    )
+                    window.location.href = `/login?error=${errorMessage}`
                 }
             }
         } else {

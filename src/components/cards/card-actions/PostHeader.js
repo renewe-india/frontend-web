@@ -8,8 +8,8 @@ import Avatar from '@/components/ui/AvatarImage'
 
 const PostHeader = ({ author, sharedAt, children, className }) => {
     return (
-        <MainCard CardClassName="card-bordered">
-            <div className="flex items-center justify-between p-4">
+        <MainCard CardClassName="card-bordered !p-2">
+            <div className="flex items-center justify-between ">
                 <div className="flex items-start gap-3">
                     <Link href={`/users/${author?.username}`}>
                         <div className="flex items-center gap-3">
@@ -17,8 +17,13 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                                 avatarUrl={author?.avatar}
                                 alt={author?.name}
                                 size="base"
-                                isVerified={author?.is_verified}
+                                // isVerified={author?.is_verified}
                                 border={true}
+                                borderStyle={`border-2 ${
+                                    author?.is_verified
+                                        ? 'border-green-300'
+                                        : 'border-base-100'
+                                }`}
                                 additionalClasses="flex-shrink-0"
                             />
                             <div className="flex flex-col">

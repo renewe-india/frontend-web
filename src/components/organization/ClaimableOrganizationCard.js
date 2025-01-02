@@ -32,7 +32,7 @@ const ClaimableOrganizationCard = ({ business, onClaim, isSubmitting }) => {
                         )}
 
                         {/* Followers Information */}
-                        {business?.followers?.count > 0 && (
+                        {business?.followed_by?.count > 0 && (
                             <div className="flex items-start text-gray-600 mb-2">
                                 <Users
                                     size={16}
@@ -42,11 +42,14 @@ const ClaimableOrganizationCard = ({ business, onClaim, isSubmitting }) => {
 
                                 <div className="text-xs lg:text-sm">
                                     <span>
-                                        {business?.followers?.abbreviate_count}{' '}
+                                        {
+                                            business?.followed_by
+                                                ?.abbreviate_count
+                                        }{' '}
                                         followers
                                     </span>
                                     <span className="font-semibold"> • </span>
-                                    <span>{business?.followers?.text}</span>
+                                    <span>{business?.followed_by?.text}</span>
                                 </div>
                             </div>
                         )}

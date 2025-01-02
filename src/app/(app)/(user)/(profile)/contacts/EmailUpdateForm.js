@@ -117,6 +117,7 @@ const EmailUpdateForm = ({
                             <DeleteButton
                                 itemName={`${email.data}`}
                                 onDelete={() => handleDelete(email)}
+                                style="bg-red-600 text-white flex items-center mr-2"
                             />
                         </div>
                     </li>

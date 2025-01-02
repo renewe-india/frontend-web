@@ -3,40 +3,41 @@
 import React, { useEffect, useState } from 'react'
 import Spinner from './Spinner'
 import ErrorDisplay from './ErrorDisplay'
-import Image from '../Image'
-import { Users } from '@phosphor-icons/react/dist/ssr'
+import { UserCircleCheck, Users } from '@phosphor-icons/react/dist/ssr'
 import Link from 'next/link'
 import FollowButton from './FollowButton'
 import { useInView } from 'react-intersection-observer'
 import { getPaginatedData } from '@/actions/get-paginated-data'
+import Avatar from './AvatarImage'
 
-function FollowersListModal({
-    modalId = 'followers_modal',
-    followersCount,
+function RelationshipListModal({
+    count,
     entityName,
     entityType,
+    relationshipType = 'followed-by',
 }) {
-    const [followers, setFollowers] = useState([])
+    const modalId = `${relationshipType}-modal-${entityName}`
+    const [relationships, setRelationships] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState()
     const { ref, inView } = useInView()
 
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-    const getFollowers = async () => {
+    const getRelationships = async () => {
         setLoading(true)
         try {
             const { data, meta } = await getPaginatedData(
                 page,
-                `/followers/${entityType}/${entityName}`,
+                `/${entityType}/${entityName}/${relationshipType}/users`,
             )
-            setFollowers(data)
+
+            setRelationships(data)
             setLastPage(meta.last_page)
         } catch (error) {
             setError(
-                error?.response?.data?.message || 'Failed to fetch followers.',
+                error?.response?.data?.message ||
+                    `Failed to fetch ${relationshipType}.`,
             )
         } finally {
             setLoading(false)
@@ -46,50 +47,77 @@ function FollowersListModal({
     const openModal = () => {
         const modal = document.getElementById(modalId)
         modal.showModal()
-        if (followers.length === 0) {
-            getFollowers()
+        if (relationships.length === 0 && count?.count > 0) {
+            getRelationships()
         }
     }
 
-    const loadMoreFollowers = async () => {
+    const loadMoreRelationships = async () => {
         try {
-            await delay(500)
             const nextPage = page + 1
-            const { data: newFollowers, meta } = await getPaginatedData(
+            const { data: newRelationships, meta } = await getPaginatedData(
                 nextPage,
-                `/followers/${entityType}/${entityName}`,
+                `/${entityType}/${entityName}/${relationshipType}/users`,
             )
 
-            setFollowers(prev => [...prev, ...newFollowers])
+            setRelationships(prev => [...prev, ...newRelationships])
             setLastPage(meta.last_page)
             setPage(nextPage)
         } catch (error) {
-            setError('Failed to load more followers.')
+            setError(`Failed to load more ${relationshipType}.`)
         }
     }
 
     useEffect(() => {
         if (inView && page < lastPage) {
-            loadMoreFollowers()
+            loadMoreRelationships()
         }
     }, [inView])
 
-    if (!followersCount || followersCount.count <= 0) return null
-
     return (
         <>
-            {/* Button to Open Followers Modal */}
+            {/* Button to Open Relationship Modal */}
             <button
                 onClick={openModal}
-                className="text-left text-gray-500 text-xs md:text-sm cursor-pointer hover:underline">
-                {followersCount?.abbreviate_count} followers •{' '}
-                {followersCount?.text}
+                className="cursor-pointer hover:underline inline-flex gap-2">
+                <Users weight="fill" size={'20'} className="flex-shrink-0" />
+                {count?.count > 0 ? (
+                    relationshipType === 'followed-by' ? (
+                        <>
+                            {count?.abbreviate_count} followers • {count?.text}
+                        </>
+                    ) : (
+                        <>0 {relationshipType}</>
+                    )
+                ) : (
+                    <>You do not have any follower.</>
+                )}
             </button>
 
-            {/* Followers Modal */}
+            {/* Relationship Modal */}
             <dialog id={modalId} className="modal">
-                <div className="modal-box max-w-lg">
-                    <h3 className="font-bold text-lg">Followers</h3>
+                <div className="modal-box pt-0 max-w-lg">
+                    <div className="sticky top-0 bg-base-100 py-4 z-30 ">
+                        <span className="text-2xl font-bold flex gap-2 flex-shrink-0">
+                            <UserCircleCheck
+                                weight="duotone"
+                                size={32}
+                                color="#00a400"
+                                className="flex-shrink-0 bg-green-100 rounded-full p-1"
+                            />
+                            {relationshipType === 'followed-by' ? (
+                                <>Followers</>
+                            ) : (
+                                <> {relationshipType}</>
+                            )}
+                        </span>{' '}
+                        <form method="dialog">
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                                ✕
+                            </button>
+                        </form>
+                    </div>
+
                     <ErrorDisplay
                         errors={error}
                         onClose={() => setError(null)}
@@ -98,31 +126,38 @@ function FollowersListModal({
                         <div className="flex items-center justify-center">
                             <Spinner />
                         </div>
-                    ) : followers && followers.length > 0 ? (
-                        <ul className="mt-4 space-y-2">
-                            {followers.map((follower, index) => (
+                    ) : relationships && relationships.length > 0 ? (
+                        <ul className="mt-4 space-y-2  h-auto">
+                            {relationships.map(relationship => (
                                 <li
-                                    key={follower?.username || index}
+                                    key={relationship?.username}
                                     className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-2 bg-base-300 rounded-md">
                                     <Link
-                                        href={`/users/${follower?.username}`}
+                                        href={`/users/${relationship?.username}`}
                                         className="flex items-center">
-                                        <Image
-                                            data={follower?.avatar}
-                                            alt={follower?.name}
-                                            className="w-10 h-10 rounded-full"
+                                        <Avatar
+                                            avatarUrl={relationship?.avatar}
+                                            alt={relationship?.name}
+                                            size="base"
+                                            border={true}
+                                            borderStyle={`border-2 ${
+                                                relationship?.is_verified
+                                                    ? 'border-green-300'
+                                                    : 'border-base-100'
+                                            }`}
+                                            additionalClasses="flex-shrink-0"
                                         />
                                         <div className="ml-4 max-w-[200px] sm:max-w-[350px]">
                                             <h2 className="card-title text-base font-semibold flex items-center">
-                                                {follower?.name}
+                                                {relationship?.name}
                                             </h2>
-                                            {follower?.headline && (
+                                            {relationship?.headline && (
                                                 <p className="text-sm text-gray-600 truncate">
-                                                    {follower?.headline}
+                                                    {relationship?.headline}
                                                 </p>
                                             )}
-                                            {/* Followers Information */}
-                                            {follower?.followers?.count > 0 && (
+                                            {relationship?.followed_by?.count >
+                                                0 && (
                                                 <div className="flex items-start text-gray-600 mb-2">
                                                     <Users
                                                         size={16}
@@ -132,8 +167,8 @@ function FollowersListModal({
                                                     <div className="text-xs lg:text-sm">
                                                         <span>
                                                             {
-                                                                follower
-                                                                    ?.followers
+                                                                relationship
+                                                                    ?.followed_by
                                                                     ?.abbreviate_count
                                                             }{' '}
                                                             followers
@@ -144,8 +179,8 @@ function FollowersListModal({
                                                         </span>
                                                         <span>
                                                             {
-                                                                follower
-                                                                    ?.followers
+                                                                relationship
+                                                                    ?.followed_by
                                                                     ?.text
                                                             }
                                                         </span>
@@ -156,8 +191,8 @@ function FollowersListModal({
                                     </Link>
 
                                     <FollowButton
-                                        isFollowing={follower?.is_following}
-                                        entityName={follower?.username}
+                                        isFollowing={relationship?.is_following}
+                                        entityName={relationship?.username}
                                         entityType="users"
                                         buttonStyle="bg-base-100"
                                     />
@@ -166,7 +201,11 @@ function FollowersListModal({
                         </ul>
                     ) : (
                         <p className="py-4 text-gray-500">
-                            No followers found.
+                            {relationshipType === 'followed-by' ? (
+                                <>You do not have any followers.</>
+                            ) : (
+                                <>You do not have any {relationshipType}.</>
+                            )}
                         </p>
                     )}
                     {page < lastPage && (
@@ -177,6 +216,7 @@ function FollowersListModal({
                         </div>
                     )}
                 </div>
+
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>
                 </form>
@@ -185,4 +225,4 @@ function FollowersListModal({
     )
 }
 
-export default FollowersListModal
+export default RelationshipListModal

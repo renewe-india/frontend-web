@@ -1,9 +1,10 @@
 'use server'
 import axios from '@/lib/axios'
 import RequestHeader from '@/lib/RequestHeader'
-
-export async function getPaginatedData(page, apiUrl) {
-    const url = `${apiUrl}?page=${page}`
+export async function getPaginatedData(page, apiUrl, limit) {
+    const url = limit
+        ? `${apiUrl}?page=${page}&limit=${limit}`
+        : `${apiUrl}?page=${page}`
     const headers = await RequestHeader()
     try {
         const response = await axios.get(url, { headers })

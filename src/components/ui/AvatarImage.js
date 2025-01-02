@@ -10,6 +10,7 @@ export default function Avatar({
     isVerified = false,
     border = false,
     additionalClasses = '',
+    borderStyle = 'border-4 border-base-100',
 }) {
     const sizes = {
         sm: 'w-7',
@@ -26,7 +27,7 @@ export default function Avatar({
         xl: 28,
     }
 
-    const borderStyles = border ? 'border-4 border-base-100' : ''
+    const borderStyles = border ? `${borderStyle}` : ''
 
     return (
         <div

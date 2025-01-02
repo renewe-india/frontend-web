@@ -5,7 +5,7 @@ import { getData } from '@/actions/getData'
 export async function generateMetadata({ params }) {
     const associationName = params.association
     return {
-        title: `Renewe - ${associationName}`,
+        title: `RenewE - ${associationName}`,
     }
 }
 

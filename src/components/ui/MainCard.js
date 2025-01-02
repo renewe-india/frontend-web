@@ -4,7 +4,7 @@ function MainCard({ title, children, buttonName, setOpen, CardClassName }) {
     return (
         <div
             className={
-                'card bg-base-200 rounded-lg p-2 sm:p-5  shadow-md ' +
+                'card bg-base-200 rounded-lg p-2 sm:p-5 shadow-md ' +
                 `${CardClassName}`
             }>
             {title && (

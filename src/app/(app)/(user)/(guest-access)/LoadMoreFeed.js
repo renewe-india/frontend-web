@@ -13,10 +13,10 @@ export default function LoadMoreFeed() {
     const [lastPage, setLastPage] = useState()
     const { ref, inView } = useInView()
 
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+    // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
     const loadMorePosts = async () => {
-        await delay(500)
+        // await delay(500)
         const nextPage = page + 1
         const { data: newPosts, meta } =
             (await getPaginatedData(nextPage, '/feeds')) ?? []
@@ -33,7 +33,7 @@ export default function LoadMoreFeed() {
     }, [inView])
 
     return (
-        <div className="mt-5">
+        <div className="mt-2">
             <FeedCards posts={posts} />
             {page !== lastPage && (
                 <div
@@ -43,7 +43,7 @@ export default function LoadMoreFeed() {
                 </div>
             )}
             {lastPage === page && (
-                <div className="my-5">
+                <div className="my-2">
                     <NoMoreFeed />
                 </div>
             )}

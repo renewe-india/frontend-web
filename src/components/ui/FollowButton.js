@@ -11,13 +11,13 @@ function FollowButton({ entityType, entityName, isFollowing, buttonStyle }) {
 
     const handleFollow = async () => {
         setFollow(true)
-        await axios.post(`/follow/${entityType}/${entityName}`)
+        await axios.post(`/${entityType}/${entityName}/follow`)
     }
 
     const handleUnFollow = async () => {
         document.getElementById(modalId).close()
         setFollow(false)
-        await axios.post(`/unfollow/${entityType}/${entityName}`)
+        await axios.post(`/${entityType}/${entityName}/unfollow`)
     }
 
     const showModal = () => {
@@ -27,7 +27,7 @@ function FollowButton({ entityType, entityName, isFollowing, buttonStyle }) {
     if (!user) {
         return (
             <button
-                className={`z-10 btn btn-xs shadow-xl rounded-full btn-outline btn-neutral`}
+                className={`z-10 btn btn-xs shadow-xl rounded-full btn-outline btn-neutral ${buttonStyle}`}
                 onClick={() => (window.location.href = '/login')}>
                 <Plus size="12" weight="bold" /> Follow
             </button>

@@ -13,10 +13,7 @@ export default function LoadMoreEvents() {
     const [lastPage, setLastPage] = useState()
     const { ref, inView } = useInView()
 
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-
     const loadMoreEvents = async () => {
-        await delay(500)
         const nextPage = page + 1
         const { data: newEvents, meta } =
             (await getPaginatedData(nextPage, '/meet/events')) ?? []

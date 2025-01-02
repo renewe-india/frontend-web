@@ -23,10 +23,10 @@ function page() {
                     </div>
                     <section className="about-section text-center max-w-3xl mx-auto">
                         <h1 className="text-5xl font-light mb-4">
-                            About Renewe
+                            About RenewE
                         </h1>
                         <p className="text-lg">
-                            Welcome to Renewe, a platform designed to connect
+                            Welcome to RenewE, a platform designed to connect
                             professionals in the renewable energy industry. Our
                             mission is to make the world a greener place by
                             offering innovative and eco-friendly energy products

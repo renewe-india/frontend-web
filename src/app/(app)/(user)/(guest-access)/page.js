@@ -7,7 +7,6 @@ import { getPaginatedData } from '@/actions/get-paginated-data'
 
 const Home = async () => {
     const { data: posts, meta } = await getPaginatedData(1, '/feeds')
-
     return (
         <div className="space-y-2">
             <MainSearchDropdown />

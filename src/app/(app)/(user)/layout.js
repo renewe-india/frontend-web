@@ -1,11 +1,9 @@
-'use client'
 import Navigation from '@/components/navigation/Navigation'
 import dynamic from 'next/dynamic'
 import { UserProvider } from '@/context/UserContext'
 import GlobalCompactFooter from '@/components/ui/GlobalCompactFooter'
-import usePopover from '@/lib/showPopover'
-import Popover from '@/components/ui/Popover'
 import { Suspense } from 'react'
+import PopoverWrapper from '@/context/PopOverWrapper'
 const LeftSidebar = dynamic(() => import('@/app/(app)/(user)/LeftSidebar'))
 const RightSidebar = dynamic(() => import('@/app/(app)/(user)/RightSidebar'))
 
@@ -38,8 +36,4 @@ export default function AppLayout({ children }) {
             </div>
         </UserProvider>
     )
-}
-function PopoverWrapper() {
-    const errorMessage = usePopover()
-    return errorMessage ? <Popover message={errorMessage} /> : null
 }

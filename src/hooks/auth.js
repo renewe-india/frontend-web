@@ -168,12 +168,17 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const logout = async () => {
+        document.cookie.split(';').forEach(cookie => {
+            const [name] = cookie.split('=')
+            const cookieName = name.trim()
+
+            if (cookieName === 'last-auth-check') {
+                document.cookie = `${cookieName}=; max-age=0; path=/; domain=${window.location.hostname}`
+            }
+        })
+
         await axios.post('/logout').then(() => mutate())
 
-        document.cookie.split(';').forEach(cookie => {
-            const cookieName = cookie.split('=')[0].trim()
-            document.cookie = `${cookieName}=; max-age=0; path=/; domain=${window.location.hostname}`
-        })
         localStorage.clear()
         window.location.pathname = '/login'
     }

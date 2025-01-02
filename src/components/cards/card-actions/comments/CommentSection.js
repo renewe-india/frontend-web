@@ -8,6 +8,7 @@ import CommentItem from './CommentItem'
 import Spinner from '@/components/ui/Spinner'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
+import ErrorDisplay from '@/components/ui/ErrorDisplay'
 
 const CommentSection = ({ commentsCount, url }) => {
     const { user } = useUser()
@@ -18,10 +19,15 @@ const CommentSection = ({ commentsCount, url }) => {
     const [lastPage, setLastPage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const [errors, setErrors] = useState(null)
+
     const fetchComments = async pageNumber => {
         try {
             setIsLoading(true)
-            const { data, meta } = await getPaginatedData(pageNumber, url)
+            const { data, meta } = await getPaginatedData(
+                pageNumber,
+                `${url}/comments`,
+            )
             setComments(prev => (pageNumber === 1 ? data : [...prev, ...data]))
             setLastPage(meta.last_page)
             setPage(pageNumber)
@@ -43,12 +49,43 @@ const CommentSection = ({ commentsCount, url }) => {
     const handlePostComment = async () => {
         if (userComment.trim() === '') return
 
-        const response = await axios.post(url, { comment: userComment })
+        const response = await axios.post(`${url}/comments`, {
+            comment: userComment,
+        })
         const newComment = response.data.data
 
         setComments(prevComments => [newComment, ...prevComments])
         setUserComment('')
         setUserImage(null)
+    }
+
+    const handleDelete = async uuid => {
+        try {
+            await axios.delete(`${url}/comments/${uuid}`)
+            setComments(prevComments =>
+                prevComments.filter(comment => comment.uuid !== uuid),
+            )
+        } catch (err) {
+            setErrors(err.response.data.message)
+        }
+    }
+
+    const handleEdit = async (uuid, newComment) => {
+        try {
+            await axios.patch(`${url}/comments/${uuid}`, {
+                comment: newComment,
+            })
+
+            setComments(prevComments =>
+                prevComments.map(comment =>
+                    comment.uuid === uuid
+                        ? { ...comment, comment: newComment }
+                        : comment,
+                ),
+            )
+        } catch (err) {
+            setErrors(err.response.data.message)
+        }
     }
     if (!user) {
         router.push('/login')
@@ -65,6 +102,7 @@ const CommentSection = ({ commentsCount, url }) => {
                 setUserImage={setUserImage}
                 handlePostComment={handlePostComment}
             />
+            <ErrorDisplay errors={errors} onClose={() => setErrors(null)} />
             <div>
                 {isLoading ? (
                     <div className="flex justify-center mt-4">
@@ -72,10 +110,17 @@ const CommentSection = ({ commentsCount, url }) => {
                     </div>
                 ) : comments.length > 0 ? (
                     comments.map((comment, idx) => (
-                        <CommentItem key={idx} comment={comment} />
+                        <CommentItem
+                            key={idx}
+                            comment={comment}
+                            onDelete={handleDelete}
+                            onEdit={handleEdit}
+                        />
                     ))
                 ) : (
-                    <p>Be the first to comment on this post.</p>
+                    <div className="text-sm text-gray-500">
+                        Be the first to comment on this post.
+                    </div>
                 )}
             </div>
             <LoadMoreButton

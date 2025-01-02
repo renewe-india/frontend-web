@@ -11,8 +11,9 @@ export async function getData(apiUrl) {
         if (response.data.meta) {
             return { data, meta: response.data.meta }
         }
-        return { data }
+        return { data, error: null }
     } catch (error) {
-        return { data: null }
+        console.error(error.response)
+        return { data: null, error: error.response }
     }
 }

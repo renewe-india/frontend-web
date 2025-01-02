@@ -79,6 +79,7 @@ function ManagerRow({ manager, setManagers, organizationName, managerRoles }) {
                             <DeleteButton
                                 itemName={manager?.username}
                                 onDelete={() => handleDeleteConfirm(manager)}
+                                style="bg-red-600 text-white flex items-center mr-2"
                             />
                         </li>
                     </ul>

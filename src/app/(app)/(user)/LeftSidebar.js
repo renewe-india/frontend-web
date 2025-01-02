@@ -11,6 +11,7 @@ import LeftSidebarSkeleton from '@/components/skeletons/LeftSidebarSkeleton'
 import { useUser } from '@/context/UserContext'
 import MainCard from '@/components/ui/MainCard'
 import Avatar from '@/components/ui/AvatarImage'
+import { Pencil } from '@phosphor-icons/react/dist/ssr'
 const Image = dynamic(() => import('@/components/Image'))
 
 const SkeletonWrapper = ({ children, fallback }) => (
@@ -28,7 +29,7 @@ const LeftSidebar = memo(() => {
         )
     }
 
-    if (!user) {
+    if (!user && !isLoading) {
         return (
             <SidebarContainer>
                 <TrendingSection />
@@ -54,14 +55,14 @@ const SidebarContainer = ({ children }) => (
 )
 
 const UserProfile = ({ user }) => (
-    <Link href={`/users/${user?.username}`}>
-        <MainCard CardClassName={'flex flex-col relative text-center'}>
+    <MainCard CardClassName={'flex flex-col relative text-center !p-2'}>
+        <Link href={`/users/${user?.username}`}>
             <div className="relative w-full h-auto rounded-lg">
                 <SkeletonWrapper fallback={<BackdropSkeleton />}>
                     <Image
                         data={user?.backdrop}
                         alt={user?.name}
-                        className="w-full h-full object-cover rounded-lg"
+                        customClass="w-full h-40 object-cover rounded-lg"
                     />
                 </SkeletonWrapper>
                 <div className="flex justify-center -mt-10">
@@ -72,20 +73,28 @@ const UserProfile = ({ user }) => (
                             size="lg"
                             border={true}
                             isVerified={user?.is_verified}
+                            additionalClasses=""
                         />
                     </SkeletonWrapper>
                 </div>
             </div>
-            <div className="py-2 mt-2 flex flex-col gap-2">
-                <div className="mx-5 text-base font-semibold ">
-                    {user?.name}
-                </div>
+        </Link>
+        <div className=" mt-2 flex flex-col gap-2 items-center">
+            <h2 className="card-title ">{user?.name}</h2>
+            {user?.headline ? (
                 <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
                     {user?.headline}
                 </div>
-            </div>
-        </MainCard>
-    </Link>
+            ) : (
+                <Link
+                    href={`/profile`}
+                    className="btn btn-wide bg-base-300 normal-case btn-xs flex gap-2 items-center justify-center">
+                    <Pencil weight="fill" size={16} className="flex-shrink-0" />
+                    <span>Edit Profile</span>
+                </Link>
+            )}
+        </div>
+    </MainCard>
 )
 const EmploymentSection = () => (
     <MainCard CardClassName="relative flex flex-col gap-2">

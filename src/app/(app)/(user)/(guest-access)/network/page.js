@@ -6,13 +6,30 @@ export const metadata = {
 }
 
 const Network = () => {
+    const user = {
+        name: 'Melissa Gerhold DDS',
+        username: 'cf601a7a-0ffd-43ee-81d7-4a7bef2ca8e1',
+        headline: 'Global Branding Officer at Kessler, Kessler and Kessler',
+        is_verified: false,
+        is_following: false,
+        followed_by: {
+            count: 26,
+            abbreviate_count: '26',
+            text: 'Mr. Tremaine Parisian Jr., Jay Grant and 24 others',
+        },
+        avatar: {
+            url: 'http://localhost:8000/images/placeholder/user.svg',
+            srcset: null,
+        },
+    }
     return (
         <div className="space-y-2">
             <MainCard>
                 <h2 className="text-2xl font-bold">Explore Your Network</h2>
             </MainCard>
-            <MainCard CardClassName="grid grid-cols-2 sm:grid-cols-3">
-                <NetworkCard /> <NetworkCard /> <NetworkCard />
+            <MainCard CardClassName="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <NetworkCard entity={user} /> <NetworkCard user={user} />
+                <NetworkCard user={user} /> <NetworkCard user={user} />
             </MainCard>
             <MainCard>
                 <div className="flex flex-col items-center justify-center text-center">

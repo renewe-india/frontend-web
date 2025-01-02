@@ -15,7 +15,7 @@ export default function CompanyFooter() {
                                 className="h-5"
                             />
                         </a>
-                        <p className="text-sm">Renewe © 2024</p>
+                        <p className="text-sm">RenewE © 2024</p>
                     </div>
 
                     {/* General Section */}
@@ -62,7 +62,7 @@ export default function CompanyFooter() {
 
                     {/* Browse Renewe Section */}
                     <div>
-                        <h2 className="footer-title">Browse Renewe</h2>
+                        <h2 className="footer-title">Browse RenewE</h2>
                         <ul className="space-y-2">
                             <li>
                                 <a href="#" className="link link-hover">

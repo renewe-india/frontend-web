@@ -13,10 +13,7 @@ export default function LoadMoreNews() {
     const [lastPage, setLastPage] = useState()
     const { ref, inView } = useInView()
 
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-
     const loadMoreArticles = async () => {
-        await delay(500)
         const nextPage = page + 1
         const { data: newArticles, meta } =
             (await getPaginatedData(nextPage, '/news/articles')) ?? []

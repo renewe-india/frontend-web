@@ -11,7 +11,7 @@ const NewsPage = async () => {
             <MainCard CardClassName={'mb-2'}>
                 <h2 className="text-2xl font-bold">Energy News & Insights</h2>
             </MainCard>
-            <div className="space-y-5">
+            <div className="space-y-2">
                 {articles.map((article, index) => (
                     <NewsCardWithActions
                         key={index}

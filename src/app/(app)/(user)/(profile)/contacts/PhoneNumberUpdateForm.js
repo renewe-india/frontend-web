@@ -146,6 +146,7 @@ const PhoneNumberUpdateForm = ({
                             <DeleteButton
                                 itemName={`${phone.country_code}-${phone.data}`}
                                 onDelete={() => handleDelete(phone)}
+                                style="bg-red-600 text-white flex items-center mr-2"
                             />
                         </div>
                     </li>

@@ -5,8 +5,8 @@ import PostActions from '@/components/cards/card-actions/PostActions'
 import Avatar from '@/components/ui/AvatarImage'
 import FollowButton from '@/components/ui/FollowButton'
 import MoreOptions from './MoreOptions'
-import EditorJsRenderer from '@/components/EditorJsRenderer'
 import MainCard from '@/components/ui/MainCard'
+import EditorJsRenderer from '@/lib/utils/EditorJsRenderer'
 
 const ArticlePage = async ({ params }) => {
     const slug = params.slug
@@ -25,10 +25,16 @@ const ArticlePage = async ({ params }) => {
                                         avatarUrl={article?.author?.avatar}
                                         alt={article?.author?.name}
                                         size="md"
-                                        isVerified={
-                                            article?.author?.is_verified
-                                        }
+                                        // isVerified={
+                                        //     article?.author?.is_verified
+                                        // }
+
                                         border={true}
+                                        borderStyle={`border-2 ${
+                                            article?.author?.is_verified
+                                                ? 'border-green-300'
+                                                : 'border-base-100'
+                                        }`}
                                     />
                                     <div>
                                         <div className="flex items-center gap-2">
@@ -73,7 +79,7 @@ const ArticlePage = async ({ params }) => {
                             <Image
                                 data={article?.header}
                                 alt={article?.headline}
-                                className="object-cover"
+                                className="w-full"
                             />
                         </div>
                     </div>
@@ -101,7 +107,7 @@ const ArticlePage = async ({ params }) => {
                         <PostActions
                             likes={article?.reactions}
                             comments={article?.comments}
-                            url={`/news/articles/${article?.slug}/comments`}
+                            url={`/news/articles/${article?.slug}`}
                         />
 
                         {/* Editor Attribution */}

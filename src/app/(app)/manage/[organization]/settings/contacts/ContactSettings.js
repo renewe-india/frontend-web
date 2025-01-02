@@ -239,7 +239,7 @@ function ContactList({
                                 />
                             )}
                             <DeleteButton
-                                style="text-red-600 hover:bg-red-600 hover:text-white font-bold shadow-sm shadow-red-600"
+                                style="text-red-600 hover:bg-red-600 hover:text-white flex items-center mr-2 shadow-sm shadow-red-600 font-bold"
                                 itemName={
                                     isPhone
                                         ? `+${contact.country_code}-${contact.data}`

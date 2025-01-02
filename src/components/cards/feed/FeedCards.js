@@ -21,7 +21,7 @@ function FeedCards({ posts }) {
                     <PostActions
                         likes={article?.reactions}
                         comments={article?.comments}
-                        url={`/news/articles/${key}/comments`}
+                        url={`/news/articles/${key}`}
                     />
                 </SharedWrapper>
             )
@@ -60,7 +60,7 @@ function FeedCards({ posts }) {
     }
 
     return (
-        <div className="space-y-5">
+        <div className="space-y-2">
             {posts.map(post => renderContent(post))}
         </div>
     )

@@ -31,7 +31,7 @@ export default function UserCard({ user }) {
                             )}
 
                             {/* Followers Information */}
-                            {user?.followers?.count > 0 && (
+                            {user?.followed_by?.count > 0 && (
                                 <div className="flex items-start text-gray-600 mb-2">
                                     <Users
                                         size={16}
@@ -40,14 +40,14 @@ export default function UserCard({ user }) {
                                     />
                                     <div className="text-xs lg:text-sm">
                                         <span>
-                                            {user?.followers.abbreviate_count}{' '}
+                                            {user?.followed_by.abbreviate_count}{' '}
                                             followers
                                         </span>
                                         <span className="font-semibold">
                                             {' '}
                                             •{' '}
                                         </span>
-                                        <span>{user?.followers.text}</span>
+                                        <span>{user?.followed_by.text}</span>
                                     </div>
                                 </div>
                             )}

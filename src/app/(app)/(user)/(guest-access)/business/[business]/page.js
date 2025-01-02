@@ -4,7 +4,7 @@ import { getData } from '@/actions/getData'
 
 export async function generateMetadata({ params }) {
     return {
-        title: `Renewe - ${params.business}`,
+        title: `RenewE - ${params.business}`,
     }
 }
 

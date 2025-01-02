@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from '@/components/Image'
 import FollowButton from '@/components/ui/FollowButton'
-import FollowersListModal from '@/components/ui/FollowersListModal'
+import { formatDate } from '@/lib/utils/FormatDate'
+import Link from 'next/link'
 
 function HeaderSection({ organization }) {
     return (
@@ -29,33 +30,24 @@ function HeaderSection({ organization }) {
                         />
                     </div>
                     <div className="text-gray-500 text-xs md:text-sm">
-                        <time dateTime={organization?.date_of_incorporation}>
-                            <div
-                                className="lg:tooltip"
-                                data-tip="Date of Incorporation">
-                                <span className="font-semibold">DOI - </span>
-                            </div>
-                            {new Date(
-                                organization?.date_of_incorporation,
-                            ).toLocaleString('default', {
-                                month: 'long',
-                                day: 'numeric',
-                            })}
-                            ,{' '}
-                            {new Date(
-                                organization?.date_of_incorporation,
-                            ).getFullYear()}
+                        <time dateTime={organization?.date_of_birth}>
+                            <span>
+                                {formatDate(organization?.date_of_birth)}
+                            </span>
                         </time>
                     </div>
                 </div>
                 <div className="text-gray-500 line-clamp-1 max-w-2/4 text-xs md:text-sm">
                     {organization?.tagline}
                 </div>
-                <FollowersListModal
-                    followersCount={organization?.followers}
-                    entityName={organization?.name}
-                    entityType={'organizations'}
-                />
+                <div className="text-left text-gray-500 text-xs md:text-sm ">
+                    <Link
+                        href={`${organization.name}/following`}
+                        className="cursor-pointer hover:underline">
+                        {organization?.followed_by?.abbreviate_count} followers
+                        • {organization?.followed_by?.text}
+                    </Link>
+                </div>
             </div>
         </>
     )

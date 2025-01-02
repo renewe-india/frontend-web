@@ -29,7 +29,7 @@ export default function OrganizationCard({ organization }) {
                             )}
 
                             {/* Followers Information */}
-                            {organization?.followers?.count > 0 && (
+                            {organization?.followed_by?.count > 0 && (
                                 <div className="flex items-start text-gray-600 mb-2">
                                     <Users
                                         size={16}
@@ -40,7 +40,7 @@ export default function OrganizationCard({ organization }) {
                                     <div className="text-xs lg:text-sm">
                                         <span>
                                             {
-                                                organization?.followers
+                                                organization?.followed_by
                                                     ?.abbreviate_count
                                             }{' '}
                                             followers
@@ -50,7 +50,7 @@ export default function OrganizationCard({ organization }) {
                                             •{' '}
                                         </span>
                                         <span>
-                                            {organization?.followers?.text}
+                                            {organization?.followed_by?.text}
                                         </span>
                                     </div>
                                 </div>

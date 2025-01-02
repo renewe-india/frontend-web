@@ -1,7 +1,7 @@
 import { Trash } from '@phosphor-icons/react'
 import React from 'react'
 
-function DeleteButton({ style, itemName, onDelete, name }) {
+function DeleteButton({ style, itemName, weight, onDelete, name }) {
     const modalId = `delete_modal_${itemName}`
 
     const openModal = () => {
@@ -20,13 +20,8 @@ function DeleteButton({ style, itemName, onDelete, name }) {
     return (
         <>
             {/* Delete Button */}
-            <button
-                onClick={openModal}
-                className={
-                    'btn btn-sm bg-red-600 text-white mr-2 flex items-center ' +
-                    `${style ? style : ''}`
-                }>
-                <Trash className="w-5 h-5" /> Delete
+            <button onClick={openModal} className={`btn btn-sm ${style}`}>
+                <Trash weight={weight} className="w-5 h-5" /> Delete
             </button>
 
             {/* Confirmation Modal */}

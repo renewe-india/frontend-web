@@ -4,7 +4,7 @@ export default function GlobalCompactFooter() {
             <footer className=" footer items-center p-4 text-base-content">
                 <div className="relative flex flex-wrap gap-4 justify-self-end">
                     <div className="items-center flex flex-wrap link link-primary link-hover">
-                        <p>Renewe © 2024</p>
+                        <p>RenewE © 2024</p>
                     </div>
                     <a href="/about" className="link link-hover">
                         About
