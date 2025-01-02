@@ -168,14 +168,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const logout = async () => {
-        document.cookie.split(';').forEach(cookie => {
-            const [name] = cookie.split('=')
-            const cookieName = name.trim()
+        const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL
+        const url = new URL(frontendUrl)
+        const domain = url.hostname
 
-            if (cookieName === 'last-auth-check') {
-                document.cookie = `${cookieName}=; max-age=0; path=/; domain=${window.location.hostname}`
-            }
-        })
+        document.cookie = `last-auth-check=; max-age=0; path=/; domain=${domain}; secure`
 
         await axios.post('/logout').then(() => mutate())
 

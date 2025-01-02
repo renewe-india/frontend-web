@@ -33,11 +33,20 @@ export async function middleware(request) {
     const isAuthPage = authPages.includes(pathname)
 
     let isAuthenticated = false
+    const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL
+    const url = new URL(frontendUrl)
+    const domain = url.hostname
 
     if (!lastCheck || currentTime - lastCheck > 3600000) {
         isAuthenticated = await checkUser(headers)
         if (isAuthenticated) {
-            response.cookies.set('last-auth-check', currentTime.toString())
+            response.cookies.set('last-auth-check', currentTime.toString(), {
+                path: '/',
+                domain,
+                secure: process.env.NODE_ENV === 'production',
+                httpOnly: false,
+                maxAge: 3600,
+            })
             if (isAuthPage) {
                 return NextResponse.redirect(new URL('/', request.url))
             }
