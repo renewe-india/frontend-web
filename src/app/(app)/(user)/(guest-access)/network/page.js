@@ -28,8 +28,8 @@ const Network = () => {
                 <h2 className="text-2xl font-bold">Explore Your Network</h2>
             </MainCard>
             <MainCard CardClassName="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                <NetworkCard entity={user} /> <NetworkCard user={user} />
-                <NetworkCard user={user} /> <NetworkCard user={user} />
+                <NetworkCard entity={user} /> <NetworkCard entity={user} />
+                <NetworkCard entity={user} /> <NetworkCard entity={user} />
             </MainCard>
             <MainCard>
                 <div className="flex flex-col items-center justify-center text-center">
