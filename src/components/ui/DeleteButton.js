@@ -39,7 +39,7 @@ function DeleteButton({ style, itemName, weight, onDelete, name }) {
                         </button>
                     </form>
                     <h3 className="font-bold text-lg">Confirm Deletion</h3>
-                    <p className="py-4">
+                    <p className="py-4 break-all">
                         Are you sure you want to delete{' '}
                         <b>{name ? name : itemName}</b>? This action cannot be
                         undone.

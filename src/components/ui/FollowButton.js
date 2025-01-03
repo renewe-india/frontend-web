@@ -58,7 +58,7 @@ function FollowButton({ entityType, entityName, isFollowing, buttonStyle }) {
                     <h3 className="font-bold text-lg">
                         Unfollow {entityName}?
                     </h3>
-                    <p className="py-4">
+                    <p className="py-4 break-all">
                         Stop seeing posts from {entityName} on your feed.{' '}
                         {entityName} won’t be notified that you’ve unfollowed.
                     </p>

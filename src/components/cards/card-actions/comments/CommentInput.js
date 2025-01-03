@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Smiley, Image as ImageIcon, X } from '@phosphor-icons/react'
 import Image from '@/components/Image'
+import Avatar from '@/components/ui/AvatarImage'
 
 const CommentInput = ({
     user,
@@ -48,26 +49,30 @@ const CommentInput = ({
     }
 
     return (
-        <div className="flex gap-4 mb-4 flex-wrap">
-            <Image
-                data={user?.avatar}
-                alt="User "
-                className="w-10 h-10 rounded-full items-start"
+        <div className="flex gap-4 mb-4 flex-wrap items-start">
+            <Avatar
+                avatarUrl={user?.avatar}
+                alt={user?.author?.name}
+                size="base"
+                isVerified={user?.is_verified}
             />
-            <div className="flex-1 relative items-center w-full sm:w-auto">
-                <input
-                    type="text"
+            <div className="flex-1 relative w-full sm:w-auto">
+                {/* Textarea with padding only when there is an image or user comment */}
+                <textarea
                     value={userComment}
-                    onChange={e => setUserComment(e.target.value)}
+                    onChange={e => {
+                        setUserComment(e.target.value)
+                        e.target.style.height = 'auto'
+                        e.target.style.height = `${e.target.scrollHeight}px`
+                    }}
                     placeholder="Add a comment..."
-                    className={`input input-bordered w-full ${
-                        userImage
-                            ? 'pt-5 pb-40'
-                            : userComment
-                            ? 'pt-5 pb-16'
-                            : ''
+                    className={`textarea textarea-bordered w-full ${
+                        userImage ? 'pb-24' : userComment ? 'pb-10' : ''
                     }`}
+                    style={{ overflow: 'hidden' }}
                 />
+
+                {/* Emoji Picker and Image Upload Button */}
                 <div
                     className={`absolute flex items-center gap-2 ${
                         userComment || userImage
@@ -85,7 +90,29 @@ const CommentInput = ({
                             />
                         </label>
                     )}
+
                     <div className="relative">
+                        {/* Image Preview and Removal */}
+                        {userImage && (
+                            <div
+                                className={`absolute z-10 w-20 h-20 bottom-0 left-10`}>
+                                <Image
+                                    src={userImage}
+                                    alt="Image Preview"
+                                    width={80}
+                                    height={80}
+                                    className="object-cover rounded-md"
+                                />
+                                <button
+                                    className="btn btn-circle btn-xs absolute top-0 right-0 bg-base-100"
+                                    onClick={removeImage}
+                                    style={{
+                                        transform: 'translate(50%, -50%)',
+                                    }}>
+                                    <X size={12} />
+                                </button>
+                            </div>
+                        )}
                         <Smiley
                             size={20}
                             className="cursor-pointer"
@@ -112,6 +139,8 @@ const CommentInput = ({
                         )}
                     </div>
                 </div>
+
+                {/* Post Button */}
                 <div
                     className={`absolute ${
                         userComment || userImage ? 'right-4 bottom-4' : ''
@@ -119,28 +148,11 @@ const CommentInput = ({
                     {(userComment || userImage) && (
                         <button
                             onClick={handlePostComment}
-                            className="btn btn-primary btn-sm w-full sm:w-auto mt-4 sm:mt-0">
-                            Post
+                            className="btn btn-primary rounded-full btn-sm w-full sm:w-auto mt-4 sm:mt-0">
+                            Comment
                         </button>
                     )}
                 </div>
-                {userImage && (
-                    <div className="absolute left-4 top-8 mt-2 w-20 h-20">
-                        <Image
-                            src={userImage}
-                            alt="Image Preview"
-                            width={80}
-                            height={80}
-                            className="object-cover rounded-md"
-                        />
-                        <button
-                            className="btn btn-circle btn-xs absolute top-0 right-0 bg-base-100"
-                            onClick={removeImage}
-                            style={{ transform: 'translate(50%, -50%)' }}>
-                            <X size={12} />
-                        </button>
-                    </div>
-                )}
             </div>
         </div>
     )

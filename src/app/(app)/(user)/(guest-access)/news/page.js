@@ -7,22 +7,18 @@ const NewsPage = async () => {
     const { data: articles, meta } = await getPaginatedData(1, '/news/articles')
 
     return (
-        <>
-            <MainCard CardClassName={'mb-2'}>
-                <h2 className="text-2xl font-bold">Energy News & Insights</h2>
-            </MainCard>
-            <div className="space-y-2">
-                {articles.map((article, index) => (
-                    <NewsCardWithActions
-                        key={index}
-                        article={article}
-                        sharedAt={article?.published_at}
-                    />
-                ))}
-                {meta.last_page === 1 && <NoMoreArticles />}
-                {meta.last_page !== 1 && <LoadMoreNews />}
-            </div>
-        </>
+        <div className="space-y-2">
+            <MainCard title={'Energy News & Insights'} />
+            {articles.map((article, index) => (
+                <NewsCardWithActions
+                    key={index}
+                    article={article}
+                    sharedAt={article?.published_at}
+                />
+            ))}
+            {meta.last_page === 1 && <NoMoreArticles />}
+            {meta.last_page !== 1 && <LoadMoreNews />}
+        </div>
     )
 }
 

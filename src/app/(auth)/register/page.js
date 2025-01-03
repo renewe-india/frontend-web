@@ -9,7 +9,6 @@ import {
     GenderNonbinary,
 } from '@phosphor-icons/react'
 import SubmitButton from '@/components/ui/SubmitButton'
-import Spinner from '@/components/ui/Spinner'
 import InputField from '@/components/ui/InputField'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 
@@ -160,9 +159,10 @@ const RegisterPage = () => {
                         )}
                     </div>
 
-                    <SubmitButton label="Complete Verification">
-                        {isSubmitting && <Spinner spinColor="text-neutral" />}
-                    </SubmitButton>
+                    <SubmitButton
+                        isSubmitting={isSubmitting}
+                        label="Complete Verification"
+                    />
                 </form>
             </div>
         </>

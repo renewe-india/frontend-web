@@ -15,7 +15,7 @@ export default function CompanyFooter() {
                                 className="h-5"
                             />
                         </a>
-                        <p className="text-sm">RenewE © 2024</p>
+                        <p className="text-sm">RenewE © 2025</p>
                     </div>
 
                     {/* General Section */}

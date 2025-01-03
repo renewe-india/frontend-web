@@ -25,7 +25,7 @@ function ManagersTable({ managers: managersData, organizationName }) {
 
     return (
         <div className="card bg-base-200 rounded-lg mx-2 md:mx-0 mb-2 lg:p-5 flex flex-col gap-5">
-            <div className="flex justify-between items-center underline decoration-primary">
+            <div className="flex justify-between items-center">
                 <div className="text-2xl font-bold">Business Managers</div>
                 <div className="inline-block float-right">
                     <AddManagerButton

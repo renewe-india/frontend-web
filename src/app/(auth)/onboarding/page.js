@@ -12,7 +12,6 @@ import {
 } from '@phosphor-icons/react'
 import Loading from '@/components/ui/Loading'
 import SubmitButton from '@/components/ui/SubmitButton'
-import Spinner from '@/components/ui/Spinner'
 import InputField from '@/components/ui/InputField'
 
 const Page = () => {
@@ -203,16 +202,8 @@ const Page = () => {
                 {errors?.otp && errors.otp.length > 0 && (
                     <ErrorDisplay errors={errors.otp} />
                 )}
-                <SubmitButton disabled={sendingOtp || verifyingOtp}>
-                    {sendingOtp ? (
-                        <>
-                            <Spinner spinColor="text-neutral" /> Sending...
-                        </>
-                    ) : verifyingOtp ? (
-                        <>
-                            <Spinner spinColor="text-neutral" /> Verifying...
-                        </>
-                    ) : otpSent ? (
+                <SubmitButton isSubmitting={sendingOtp || verifyingOtp}>
+                    {otpSent ? (
                         <>
                             <SealCheck size={24} /> Verify
                         </>

@@ -54,9 +54,6 @@ const StaticProfileForm = () => {
 
     return (
         <>
-            <h3 className="text-xl font-semibold mb-4">
-                Update Profile Details
-            </h3>
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 form-control">

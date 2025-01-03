@@ -8,7 +8,6 @@ import { ArrowLeft, EnvelopeSimple, SealCheck } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 import Loading from '@/components/ui/Loading'
 import dynamic from 'next/dynamic'
-import Spinner from '@/components/ui/Spinner'
 import SubmitButton from '@/components/ui/SubmitButton'
 
 const ContactInputForm = dynamic(() => import('./ContactInputForm'), {
@@ -150,20 +149,10 @@ const ForgotPasswordPage = () => {
                 )}
 
                 <ErrorDisplay errors={errors} onClose={() => setErrors(null)} />
-                <SubmitButton disabled={isProcessing}>
+                <SubmitButton isSubmitting={isProcessing}>
                     {otpSent ? (
-                        isProcessing ? (
-                            <>
-                                <Spinner spinColor="text-neutral" />
-                            </>
-                        ) : (
-                            <>
-                                <SealCheck size={24} /> Reset Password
-                            </>
-                        )
-                    ) : isProcessing ? (
                         <>
-                            <Spinner spinColor="text-neutral" />
+                            <SealCheck size={24} /> Reset Password
                         </>
                     ) : (
                         <>

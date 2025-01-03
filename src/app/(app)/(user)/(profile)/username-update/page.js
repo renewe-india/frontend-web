@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import InputField from '@/components/ui/InputField'
 import SubmitButton from '@/components/ui/SubmitButton'
-import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import axios from '@/lib/axios'
 import SuccessDisplay from '@/components/ui/SuccessDisplay'
 import { useRouter } from 'next/navigation'
@@ -55,10 +54,11 @@ const page = () => {
                     name="username"
                     placeholder="Username"
                     value={username}
+                    error={error?.username}
                     onChange={e => setUsername(e.target.value)}
                     required
                 />
-                {error && <ErrorDisplay errors={error.username} />}
+
                 <SubmitButton
                     isSubmitting={isSubmitting}
                     label="Update Username"

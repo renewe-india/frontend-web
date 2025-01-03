@@ -11,20 +11,22 @@ import {
 const classes = {
     header: {
         h1: 'text-3xl font-bold',
-        h2: 'text-2xl font-semibold',
+        h2: 'text-2xl font-bold',
         h3: 'text-xl font-semibold',
         h4: 'text-lg font-semibold',
         h5: 'text-base font-semibold',
         h6: 'text-sm font-semibold',
     },
-    paragraph: 'text-lg text-justify',
+    paragraph: 'text-base sm:text-lg text-justify',
     list: {
         ol: {
-            container: 'list-decimal list-inside text-lg text-justify ml-4',
+            container:
+                'list-decimal list-inside text-base sm:text-lg text-left ml-4',
             listItem: 'list-item-class',
         },
         ul: {
-            container: 'list-disc list-inside text-lg text-justify  ml-4',
+            container:
+                'list-disc list-inside text-base sm:text-lg text-left ml-4',
             listItem: 'list-item-class',
         },
     },

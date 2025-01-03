@@ -47,7 +47,8 @@ function LeftSidebar({ organizationData }) {
                                     pathname === route.path
                                         ? 'font-semibold bg-base-200'
                                         : 'font-normal'
-                                }`}>
+                                }`}
+                                onClick={close}>
                                 {route.icon} {route.name}
                                 {pathname === route.path && (
                                     <span

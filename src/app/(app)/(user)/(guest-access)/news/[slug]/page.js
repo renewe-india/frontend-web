@@ -20,39 +20,31 @@ const ArticlePage = async ({ params }) => {
                         {/* Author section */}
                         <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/60 to-transparent p-4 z-10">
                             <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-3">
                                     <Avatar
                                         avatarUrl={article?.author?.avatar}
                                         alt={article?.author?.name}
-                                        size="md"
-                                        // isVerified={
-                                        //     article?.author?.is_verified
-                                        // }
-
-                                        border={true}
-                                        borderStyle={`border-2 ${
+                                        size="base"
+                                        isVerified={
                                             article?.author?.is_verified
-                                                ? 'border-green-300'
-                                                : 'border-base-100'
-                                        }`}
+                                        }
                                     />
                                     <div>
+                                        <Link
+                                            href={`/users/${article?.author?.username}`}
+                                            className="font-semibold text-sm sm:text-base text-white hover:underline">
+                                            {article?.author?.name}
+                                        </Link>
+
                                         <div className="flex items-center gap-2">
-                                            <Link
-                                                href={`/users/${article?.author?.username}`}
-                                                className="font-semibold text-white hover:underline">
-                                                {article?.author?.name}
-                                            </Link>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <p className="text-sm text-gray-200">
+                                            <p className="text-xs sm:text-sm text-gray-200">
                                                 {
                                                     article?.published_at
                                                         ?.formatted
                                                 }
                                             </p>
                                             {article?.author?.headline && (
-                                                <span className="text-sm text-gray-300">
+                                                <span className="text-xs sm:text-sm text-gray-300">
                                                     ·{' '}
                                                     {article?.author?.headline}
                                                 </span>
@@ -67,7 +59,7 @@ const ArticlePage = async ({ params }) => {
                                         isFollowing={
                                             article?.author?.is_following
                                         }
-                                        buttonStyle="glass text-white"
+                                        buttonStyle="glass text-base-100"
                                     />
                                     <MoreOptions />
                                 </div>
@@ -87,10 +79,10 @@ const ArticlePage = async ({ params }) => {
                     {/* Article Content */}
                     <div className="p-6 space-y-6">
                         <div className="space-y-4">
-                            <h1 className="text-4xl font-bold tracking-tight">
+                            <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
                                 {article?.headline}
                             </h1>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
+                            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                                 {article?.summary}
                             </p>
                         </div>

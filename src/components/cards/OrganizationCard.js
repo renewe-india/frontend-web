@@ -1,6 +1,6 @@
-import Avatar from '../ui/AvatarImage'
+import OrganizationLogo from '../organization/OrganizationLogo'
 import FollowButton from '../ui/FollowButton'
-import { Users } from '@phosphor-icons/react'
+import { Users } from '@phosphor-icons/react/dist/ssr'
 
 export default function OrganizationCard({ organization }) {
     return (
@@ -10,12 +10,11 @@ export default function OrganizationCard({ organization }) {
                 {/* Left side: Avatar, Name, and Tagline */}
                 <a href={`/${organization?.type}/${organization?.name}`}>
                     <div className="flex items-center">
-                        <Avatar
-                            avatarUrl={organization?.logo}
+                        <OrganizationLogo
+                            LogoUrl={organization?.logo}
                             alt={organization?.display_name}
                             size="md"
-                            isVerified={true}
-                            additionalClasses="flex-shrink-0"
+                            isVerified={organization?.is_verified}
                         />
 
                         <div className="ml-4 max-w-[200px] sm:max-w-[350px]">

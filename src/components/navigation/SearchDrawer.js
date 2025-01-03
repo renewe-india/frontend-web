@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { X, MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 
-function Search() {
+function SearchDrawer() {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedModel, setSelectedModel] = useState('user')
     const router = useRouter()
@@ -19,9 +19,12 @@ function Search() {
     const handleSearch = () => {
         if (searchTerm.trim() === '') return
 
+        const checkbox = document.getElementById('search')
         router.push(
             `/search/${selectedModel}?search=${encodeURIComponent(searchTerm)}`,
         )
+        setSearchTerm('')
+        if (checkbox) checkbox.checked = false
     }
 
     return (
@@ -160,4 +163,4 @@ function Search() {
     )
 }
 
-export default Search
+export default SearchDrawer

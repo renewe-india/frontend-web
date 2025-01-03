@@ -17,14 +17,7 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                                 avatarUrl={author?.avatar}
                                 alt={author?.name}
                                 size="base"
-                                // isVerified={author?.is_verified}
-                                border={true}
-                                borderStyle={`border-2 ${
-                                    author?.is_verified
-                                        ? 'border-green-300'
-                                        : 'border-base-100'
-                                }`}
-                                additionalClasses="flex-shrink-0"
+                                isVerified={author?.is_verified}
                             />
                             <div className="flex flex-col">
                                 <span className="text-sm font-semibold ">
@@ -34,7 +27,7 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                                     {author?.headline}
                                 </span>
                                 {sharedAt && (
-                                    <span className="text-sm text-gray-500">
+                                    <span className="text-xs text-gray-500">
                                         {sharedAt?.formatted}
                                     </span>
                                 )}

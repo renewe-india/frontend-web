@@ -1,8 +1,8 @@
 import React from 'react'
 import SubmitButton from '@/components/ui/SubmitButton'
 import { Users } from '@phosphor-icons/react'
-import Avatar from '../ui/AvatarImage'
 import Link from 'next/link'
+import OrganizationLogo from './OrganizationLogo'
 
 const ClaimableOrganizationCard = ({ business, onClaim, isSubmitting }) => {
     return (
@@ -13,12 +13,11 @@ const ClaimableOrganizationCard = ({ business, onClaim, isSubmitting }) => {
                 <Link
                     href={`/business/${business.name}`}
                     className="flex items-start self-start">
-                    <Avatar
-                        avatarUrl={business?.logo}
+                    <OrganizationLogo
+                        LogoUrl={business?.logo}
                         alt={business?.display_name}
                         size="md"
                         isVerified={business?.is_verified}
-                        additionalClasses="flex-shrink-0"
                     />
 
                     <div className="ml-4 max-w-[200px] sm:max-w-[300px]">

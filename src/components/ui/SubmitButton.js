@@ -18,15 +18,9 @@ const SubmitButton = ({
                 isSubmitting ? 'opacity-90 cursor-not-allowed' : ''
             }`}
             disabled={isSubmitting || disabled}>
-            {isSubmitting ? null : children}
-            <span>
-                {label &&
-                    (isSubmitting ? (
-                        <Spinner spinColor="text-neutral" />
-                    ) : (
-                        label
-                    ))}
-            </span>
+            {isSubmitting ? <Spinner spinColor="text-neutral" /> : children}
+
+            {isSubmitting ? null : label && <span>{label}</span>}
         </button>
     )
 }

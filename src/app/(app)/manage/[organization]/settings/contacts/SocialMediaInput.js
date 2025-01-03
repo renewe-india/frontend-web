@@ -53,7 +53,9 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
 
     return (
         <div className="card bg-base-100 rounded-lg  mb-5">
-            <h3 className="text-xl font-semibold mb-4">Social Links</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-4">
+                Social Links
+            </h3>
             <div className="flex-row items-center mb-4">
                 <div className="flex flex-col md:flex-row lg:items-center gap-2 mb-4">
                     <SelectBox

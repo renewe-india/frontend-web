@@ -10,7 +10,7 @@ const Network = () => {
         name: 'Melissa Gerhold DDS',
         username: 'cf601a7a-0ffd-43ee-81d7-4a7bef2ca8e1',
         headline: 'Global Branding Officer at Kessler, Kessler and Kessler',
-        is_verified: false,
+        is_verified: true,
         is_following: false,
         followed_by: {
             count: 26,
@@ -24,10 +24,9 @@ const Network = () => {
     }
     return (
         <div className="space-y-2">
-            <MainCard>
-                <h2 className="text-2xl font-bold">Explore Your Network</h2>
-            </MainCard>
-            <MainCard CardClassName="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <MainCard
+                title={'Explore Your Network'}
+                mainClassName="grid grid-cols-2 sm:grid-cols-3 gap-2 ">
                 <NetworkCard entity={user} /> <NetworkCard entity={user} />
                 <NetworkCard entity={user} /> <NetworkCard entity={user} />
             </MainCard>

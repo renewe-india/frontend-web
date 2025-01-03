@@ -1,50 +1,28 @@
 'use client'
 
 import Image from '../Image'
-import { ShieldCheck } from '@phosphor-icons/react/dist/ssr'
 
 export default function Avatar({
     avatarUrl,
     alt,
     size = 'md',
     isVerified = false,
-    border = false,
-    additionalClasses = '',
-    borderStyle = 'border-4 border-base-100',
 }) {
     const sizes = {
-        sm: 'w-7',
-        base: 'w-12',
-        md: 'w-16',
-        lg: 'w-24',
-        xl: 'w-32',
+        sm: 'p-px w-7 border',
+        base: 'p-0.5 w-10 sm:w-12 border-2',
+        md: 'p-1 w-12 sm:w-16 border-2',
+        lg: 'p-1 w-16 sm:w-24 border-4',
+        xl: 'p-1 w-24 sm:w-32 md:w-36 border-4',
     }
 
-    const badgeSizes = {
-        sm: 10,
-        md: 20,
-        lg: 28,
-        xl: 28,
-    }
-
-    const borderStyles = border ? `${borderStyle}` : ''
+    const borderStyles = isVerified ? 'border-green-500' : 'border-base-100'
 
     return (
-        <div
-            className={`relative flex justify-center items-center ${additionalClasses}`}>
-            <Image
-                data={avatarUrl}
-                alt={alt}
-                className={`avatar rounded-full flex-shrink-0 ${sizes[size]} ${borderStyles}`}
-            />
-            {isVerified && (
-                <ShieldCheck
-                    size={badgeSizes[size]}
-                    color="#00a400"
-                    weight="duotone"
-                    className="absolute -bottom-2 right-1/2 transform translate-x-1/2 bg-base-100 flex-shrink-0 rounded-full p-0.5"
-                />
-            )}
-        </div>
+        <Image
+            data={avatarUrl}
+            alt={alt}
+            className={`avatar rounded-full flex-shrink-0 bg-base-300 ${sizes[size]} ${borderStyles}`}
+        />
     )
 }

@@ -79,7 +79,7 @@ function RelationshipListModal({
             {/* Button to Open Relationship Modal */}
             <button
                 onClick={openModal}
-                className="cursor-pointer hover:underline inline-flex gap-2">
+                className="link link-hover inline-flex gap-2 text-left">
                 <Users weight="fill" size={'20'} className="flex-shrink-0" />
                 {count?.count > 0 ? (
                     relationshipType === 'followed-by' ? (
@@ -139,13 +139,9 @@ function RelationshipListModal({
                                             avatarUrl={relationship?.avatar}
                                             alt={relationship?.name}
                                             size="base"
-                                            border={true}
-                                            borderStyle={`border-2 ${
+                                            isVerified={
                                                 relationship?.is_verified
-                                                    ? 'border-green-300'
-                                                    : 'border-base-100'
-                                            }`}
-                                            additionalClasses="flex-shrink-0"
+                                            }
                                         />
                                         <div className="ml-4 max-w-[200px] sm:max-w-[350px]">
                                             <h2 className="card-title text-base font-semibold flex items-center">

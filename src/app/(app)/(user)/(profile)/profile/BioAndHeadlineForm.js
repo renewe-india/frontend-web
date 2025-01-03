@@ -47,9 +47,6 @@ const BioAndHeadlineForm = () => {
 
     return (
         <>
-            <h3 className="text-xl font-semibold mb-4">
-                Update Headline and Bio
-            </h3>
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 form-control">

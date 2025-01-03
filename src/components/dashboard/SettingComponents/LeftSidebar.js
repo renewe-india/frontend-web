@@ -15,7 +15,7 @@ function LeftSidebar({ organizationData }) {
     const org = useOrganization()
     const [showManagersButton, setShowManagersButton] = useState(null)
     const close = () => {
-        document.getElementById('left-sidebar-drawer').click()
+        document.getElementById('left-sidebar-drawer-setting').click()
     }
     useEffect(() => {
         if (org) {
@@ -27,7 +27,10 @@ function LeftSidebar({ organizationData }) {
     }
     return (
         <div className="drawer-side lg:z-30 z-50">
-            <label htmlFor="left-sidebar-drawer" className="drawer-overlay" />
+            <label
+                htmlFor="left-sidebar-drawer-setting"
+                className="drawer-overlay"
+            />
             <ul className="menu pt-2 w-80 bg-base-100 min-h-full text-base-content">
                 <button
                     className="btn btn-ghost bg-base-300 btn-circle z-50 top-0 right-0 mt-4 mr-2 absolute lg:hidden"
@@ -54,7 +57,8 @@ function LeftSidebar({ organizationData }) {
                                         pathname === route.path
                                             ? 'font-semibold text-green-700 bg-base-200 text-lg'
                                             : 'font-normal text-lg'
-                                    }`}>
+                                    }`}
+                                    onClick={close}>
                                     {route.icon} {route.name}
                                     {pathname === route.path && (
                                         <span
@@ -70,7 +74,8 @@ function LeftSidebar({ organizationData }) {
                                         pathname === route.path
                                             ? 'font-semibold text-green-700 bg-base-200 text-lg'
                                             : 'font-normal text-lg'
-                                    }`}>
+                                    }`}
+                                    onClick={close}>
                                     {route.icon} {route.name}
                                     {pathname === route.path && (
                                         <span

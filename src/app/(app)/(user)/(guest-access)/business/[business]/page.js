@@ -1,6 +1,7 @@
 import ShowBusinessDetails from './ShowBusinessDetails'
 import HeaderSection from '@/components/organization/publicView/HeaderSection'
 import { getData } from '@/actions/getData'
+import MainCard from '@/components/ui/MainCard'
 
 export async function generateMetadata({ params }) {
     return {
@@ -15,9 +16,9 @@ export default async function BusinessShow({ params }) {
     )
 
     return (
-        <div className="card bg-base-200 rounded-lg p-5 flex flex-col gap-5">
+        <MainCard CardClassName="flex flex-col gap-5">
             <HeaderSection organization={businessDetails} />
             <ShowBusinessDetails businessDetails={businessDetails} />
-        </div>
+        </MainCard>
     )
 }

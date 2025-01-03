@@ -21,7 +21,7 @@ function Header() {
             {/* Menu toggle for mobile view */}
             <div className="flex-1 gap-2">
                 <label
-                    htmlFor="left-sidebar-drawer"
+                    htmlFor="left-sidebar-drawer-setting"
                     className="btn  drawer-button lg:hidden">
                     <List className="h-5 inline-block w-5" />
                 </label>

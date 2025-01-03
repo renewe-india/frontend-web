@@ -24,7 +24,7 @@ const AdminLayout = ({ children }) => {
         <div id="main-content" className="w-full min-h-screen">
             <div className="drawer lg:drawer-open">
                 <input
-                    id="left-sidebar-drawer"
+                    id="left-sidebar-drawer-setting"
                     type="checkbox"
                     className="drawer-toggle"
                 />

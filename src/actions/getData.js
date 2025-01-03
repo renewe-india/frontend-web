@@ -13,7 +13,6 @@ export async function getData(apiUrl) {
         }
         return { data, error: null }
     } catch (error) {
-        console.error(error.response)
         return { data: null, error: error.response }
     }
 }

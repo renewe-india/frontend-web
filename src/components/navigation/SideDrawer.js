@@ -32,7 +32,7 @@ import {
     AddressBookTabs,
 } from '@phosphor-icons/react/dist/ssr'
 
-function SidePanel() {
+function SideDrawer() {
     const { logout } = useAuth()
     const { user } = useUser()
     const handleLogout = () => {
@@ -435,4 +435,4 @@ function SidePanel() {
     )
 }
 
-export default memo(SidePanel)
+export default memo(SideDrawer)

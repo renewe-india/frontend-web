@@ -1,10 +1,10 @@
 export default function GlobalCompactFooter() {
     return (
         <div className=" w-full sm:max-w-md mx-auto">
-            <footer className=" footer items-center p-4 text-base-content">
+            <footer className=" footer items-center p-5 text-base-content">
                 <div className="relative flex flex-wrap gap-4 justify-self-end">
-                    <div className="items-center flex flex-wrap link link-primary link-hover">
-                        <p>RenewE © 2024</p>
+                    <div className="items-center flex flex-wrap link link-success link-hover">
+                        <p>RenewE © 2025</p>
                     </div>
                     <a href="/about" className="link link-hover">
                         About

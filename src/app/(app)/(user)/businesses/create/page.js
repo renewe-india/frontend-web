@@ -6,17 +6,15 @@ const CreateOrganizationForm = dynamic(() =>
 )
 const ClaimableBusiness = dynamic(() => import('./ClaimableBusiness'))
 const page = async () => {
-    const { data: businessesAvailableToClaim } = await getData(
+    const { data: claimableBusinesses } = await getData(
         '/organizations/available-to-claim',
     )
 
     return (
-        <>
-            <ClaimableBusiness
-                businessesAvailableToClaim={businessesAvailableToClaim}
-            />
+        <div className="space-y-2">
+            <ClaimableBusiness claimableBusinesses={claimableBusinesses} />
             <CreateOrganizationForm type="business" />
-        </>
+        </div>
     )
 }
 

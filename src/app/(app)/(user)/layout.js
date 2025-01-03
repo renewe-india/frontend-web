@@ -14,7 +14,7 @@ export default function AppLayout({ children }) {
             <Suspense fallback={null}>
                 <PopoverWrapper />
             </Suspense>
-            <div className="container mx-auto my-auto py-16">
+            <div className="container mx-auto my-auto py-12 sm:py-16">
                 <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2 px-2">
                     <div className="lg:col-span-4 xl:col-span-3">
                         <LeftSidebar />

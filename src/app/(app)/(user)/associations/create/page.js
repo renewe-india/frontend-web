@@ -5,11 +5,7 @@ export const metadata = {
 }
 
 const AssociationCreate = () => {
-    return (
-        <>
-            <CreateOrganizationForm type="association" />
-        </>
-    )
+    return <CreateOrganizationForm type="association" />
 }
 
 export default AssociationCreate

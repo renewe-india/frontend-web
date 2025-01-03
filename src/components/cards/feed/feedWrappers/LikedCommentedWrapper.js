@@ -15,7 +15,6 @@ const LikedCommentedWrapper = ({ author, via, children }) => {
                         alt={author?.name}
                         size="sm"
                         isVerified={author?.is_verified}
-                        additionalClasses="flex-shrink-0"
                     />
 
                     <div className="inline-flex items-center min-w-0 flex-grow">

@@ -24,7 +24,7 @@ const page = async ({ params }) => {
                             color="#2478ff"
                             className="flex-shrink-0 bg-blue-100 rounded-full p-1"
                         />
-                        <div className=" text-2xl font-bold ">
+                        <div className="text-lg sm:text-2xl font-bold ">
                             {username} follows {userFollowingMeta.total}{' '}
                             peoples.{' '}
                         </div>

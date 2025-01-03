@@ -3,6 +3,7 @@ export const formatDate = date => {
 
     const month = formattedDate.toLocaleString('default', { month: 'long' })
     const day = formattedDate.getDate()
+    const year = formattedDate.getFullYear()
 
-    return `${month} ${day}`
+    return `${month} ${day}, ${year}`
 }

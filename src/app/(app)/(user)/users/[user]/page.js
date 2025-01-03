@@ -2,8 +2,7 @@ import { getData } from '@/actions/getData'
 import Image from '@/components/Image'
 import FollowButton from '@/components/ui/FollowButton'
 import MainCard from '@/components/ui/MainCard'
-import MoreInfo from './MoreInfo'
-import { ShieldCheck } from '@phosphor-icons/react/dist/ssr'
+import UserInfo from './UserInfo'
 import ErrorClose from './ErrorClose'
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import NetworkCard from '@/components/cards/NetworkCard'
@@ -16,6 +15,7 @@ import {
 import Link from 'next/link'
 import React from 'react'
 import RelationshipListModal from '@/components/ui/RelationshipListModal'
+import Avatar from '@/components/ui/AvatarImage'
 
 export const metadata = {
     title: 'User Show',
@@ -41,7 +41,6 @@ export default async function UserShow({ params }) {
         return <ErrorClose error={error?.data?.message} />
     }
 
-    console.log(userFollowing)
     return (
         <div className="space-y-2">
             <MainCard CardClassName={'flex flex-col gap-5'}>
@@ -51,27 +50,21 @@ export default async function UserShow({ params }) {
                         className="w-full h-full object-cover rounded-lg"
                     />
                     <div className="absolute -bottom-16 md:-bottom-20 left-5">
-                        <Image
-                            data={userDetails?.avatar}
-                            className="avatar w-24 sm:w-32 md:w-36 rounded-full border-4 border-base-100"
+                        <Avatar
+                            avatarUrl={userDetails?.avatar}
+                            alt={userDetails?.name}
+                            size="xl"
+                            isVerified={userDetails?.is_verified}
                         />
-                        {userDetails?.is_verified && (
-                            <ShieldCheck
-                                size={28}
-                                color="#00a400"
-                                weight="duotone"
-                                className="absolute -bottom-2 right-1/2 transform translate-x-1/2 flex-shrink-0 bg-base-100 rounded-full p-1"
-                            />
-                        )}
                     </div>
                 </div>
-                <div className="mx-5 py-2 mt-16 flex flex-col gap-2">
+                <div className="mx-5 sm:py-2 mt-14 sm:mt-16 flex flex-col gap-4">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                         {/* Name and Follow Button */}
                         <div className="w-full flex flex-col sm:flex-row sm:items-center gap-2">
                             {/* Name */}
                             <div>
-                                <span className="font-bold text-base md:text-xl">
+                                <span className="font-bold text-xl md:text-2xl">
                                     {userDetails?.name}
                                 </span>
 
@@ -97,9 +90,8 @@ export default async function UserShow({ params }) {
                             entityName={userDetails?.username}
                             entityType="users"
                         />
+                        <UserInfo user={userDetails} />
                     </div>
-
-                    <MoreInfo user={userDetails} />
                 </div>
             </MainCard>
             {userDetails?.headline && userDetails?.bio && (
@@ -116,7 +108,7 @@ export default async function UserShow({ params }) {
 
             <MainCard CardClassName="space-y-4">
                 <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold flex gap-2 flex-shrink-0">
+                    <span className="text-xl font-bold flex gap-2 flex-shrink-0">
                         <UserCircleCheck
                             weight="duotone"
                             size={32}
@@ -140,18 +132,18 @@ export default async function UserShow({ params }) {
                             <div className="flex gap-2">
                                 <User
                                     weight="duotone"
-                                    size={32}
+                                    size={24}
                                     color="#2478ff"
                                     className="flex-shrink-0 bg-blue-100 rounded-full p-1"
                                 />
-                                <div className="text-lg font-semibold">
+                                <div className="text-base font-semibold">
                                     {userFollowingMeta.total} Peoples
                                 </div>
                             </div>
                             <Link
                                 href={`${username}/following/users`}
-                                className="font-semibold text-base flex gap-2">
-                                See all <ArrowRight size="24" weight="bold" />
+                                className="font-semibold text-base flex gap-2 items-center">
+                                See all <ArrowRight size="16" weight="bold" />
                             </Link>{' '}
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -168,7 +160,7 @@ export default async function UserShow({ params }) {
                         <div className="flex gap-2 items-center">
                             <User
                                 weight="duotone"
-                                size={32}
+                                size={24}
                                 color="#2478ff"
                                 className="flex-shrink-0 bg-blue-100 rounded-full p-1"
                             />
@@ -187,19 +179,19 @@ export default async function UserShow({ params }) {
                             <div className="flex gap-2">
                                 <Briefcase
                                     weight="duotone"
-                                    size={32}
+                                    size={24}
                                     color="#b85dcb"
                                     className="flex-shrink-0 bg-purple-100 rounded-full p-1"
                                 />
-                                <div className="text-lg font-semibold">
+                                <div className="text-base font-semibold">
                                     {organizationFollowingMeta.total}{' '}
                                     Organizations
                                 </div>
                             </div>
                             <Link
                                 href={`${username}/following/users`}
-                                className="font-semibold text-base flex gap-2">
-                                See all <ArrowRight size="24" weight="bold" />
+                                className="font-semibold text-sm flex gap-2 items-center">
+                                See all <ArrowRight size="16" weight="bold" />
                             </Link>{' '}
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -207,7 +199,7 @@ export default async function UserShow({ params }) {
                                 <NetworkCard
                                     key={org?.name}
                                     entity={org}
-                                    entityType={'organizations'}
+                                    entityType={org?.type}
                                 />
                             ))}
                         </div>
@@ -217,7 +209,7 @@ export default async function UserShow({ params }) {
                         <div className="flex gap-2 items-center">
                             <Briefcase
                                 weight="duotone"
-                                size={32}
+                                size={24}
                                 color="#b85dcb"
                                 className="flex-shrink-0 bg-purple-100 rounded-full p-1"
                             />

@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 import { Plus, SealCheck, SealQuestion } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
-import Spinner from '@/components/ui/Spinner'
 import SocialMediaInput from './SocialMediaInput'
 import DeleteButton from '@/components/ui/DeleteButton'
 import VerifyButton from '@/components/ui/VerifyButton'
+import SubmitButton from '@/components/ui/SubmitButton'
+import TitleCard from '@/components/dashboard/Cards/TitleCard'
 
 export default function ContactSettings({
     contactsData,
@@ -94,51 +95,46 @@ export default function ContactSettings({
     }
 
     return (
-        <div>
-            <div className="card w-full p-6 bg-base-100 shadow-xl mt-2">
-                <div className="text-xl font-semibold">Contact</div>
-                <div className="divider my-1" />
-
-                <div className="h-full w-full">
-                    {['mobile', 'email'].map(type => (
-                        <ContactList
-                            key={type}
-                            title={`Manage ${
-                                type === 'mobile' ? 'Phone Numbers' : 'Emails'
-                            }`}
-                            contacts={contacts.filter(
-                                contact => contact.type === type,
-                            )}
-                            onAdd={data =>
-                                handleAddContact(type, data.data, {
-                                    country_code: data.countryCode,
-                                })
-                            }
-                            onVerify={handleVerify}
-                            onDelete={handleDeleteContact}
-                            countryCodes={countryCodes}
-                            isPhone={type === 'mobile'}
-                            loading={loading}
-                            sendOtp={sendOtp}
-                        />
-                    ))}
-
-                    <SocialMediaInput
-                        socialLinks={contacts.filter(
-                            contact => contact.type === 'social-media',
+        <TitleCard title="Contact Settings">
+            <div className="h-full w-full">
+                {['mobile', 'email'].map(type => (
+                    <ContactList
+                        key={type}
+                        title={`Manage ${
+                            type === 'mobile' ? 'Phone Numbers' : 'Emails'
+                        }`}
+                        contacts={contacts.filter(
+                            contact => contact.type === type,
                         )}
-                        updateSocialLinks={updatedLinks =>
-                            setContacts(prev => [
-                                ...prev.filter(
-                                    contact => contact.type !== 'social-media',
-                                ),
-                                ...updatedLinks,
-                            ])
+                        onAdd={data =>
+                            handleAddContact(type, data.data, {
+                                country_code: data.countryCode,
+                            })
                         }
+                        onVerify={handleVerify}
+                        onDelete={handleDeleteContact}
+                        countryCodes={countryCodes}
+                        isPhone={type === 'mobile'}
+                        loading={loading}
+                        sendOtp={sendOtp}
                     />
-                </div>
+                ))}
+
+                <SocialMediaInput
+                    socialLinks={contacts.filter(
+                        contact => contact.type === 'social-media',
+                    )}
+                    updateSocialLinks={updatedLinks =>
+                        setContacts(prev => [
+                            ...prev.filter(
+                                contact => contact.type !== 'social-media',
+                            ),
+                            ...updatedLinks,
+                        ])
+                    }
+                />
             </div>
-        </div>
+        </TitleCard>
     )
 }
 
@@ -168,7 +164,7 @@ function ContactList({
 
     return (
         <div className="card bg-base-100 rounded-lg mb-5">
-            <h3 className="text-xl font-semibold mb-4">{title}</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-4">{title}</h3>
             <form
                 className="flex items-center mb-4"
                 onSubmit={handleAddContact}>
@@ -194,16 +190,9 @@ function ContactList({
                     min={'0'}
                     className="input input-bordered w-3/5 lg:w-3/4 mr-2"
                 />
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={loading}>
-                    {loading ? (
-                        <Spinner spinColor="text-neutral" />
-                    ) : (
-                        <Plus className="w-5 h-5" weight="bold" />
-                    )}
-                </button>
+                <SubmitButton isSubmitting={loading}>
+                    <Plus className="w-5 h-5" weight="bold" />
+                </SubmitButton>
             </form>
             <ul>
                 {contacts.map((contact, index) => (

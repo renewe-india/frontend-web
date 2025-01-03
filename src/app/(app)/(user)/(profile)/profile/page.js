@@ -10,7 +10,7 @@ const BioAndHeadlineForm = dynamic(() => import('./BioAndHeadlineForm'))
 const ProfileEdit = () => {
     return (
         <div className="space-y-2">
-            <MainCard title={'Profile'}>
+            <MainCard title={'Update Profile'}>
                 <BioAndHeadlineForm />
             </MainCard>
             <MainCard>

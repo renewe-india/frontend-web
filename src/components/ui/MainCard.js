@@ -1,6 +1,13 @@
 import React from 'react'
 
-function MainCard({ title, children, buttonName, setOpen, CardClassName }) {
+function MainCard({
+    title,
+    children,
+    buttonName,
+    setOpen,
+    CardClassName,
+    mainClassName,
+}) {
     return (
         <div
             className={
@@ -10,7 +17,9 @@ function MainCard({ title, children, buttonName, setOpen, CardClassName }) {
             {title && (
                 <div className="flex justify-between items-center mb-2">
                     <div className="flex-grow">
-                        <h2 className="text-2xl font-bold">{title}</h2>
+                        <h2 className="text-xl sm:text-2xl font-bold">
+                            {title}
+                        </h2>
                         <div className="divider my-0" />
                     </div>
                     {buttonName && setOpen && (
@@ -22,7 +31,7 @@ function MainCard({ title, children, buttonName, setOpen, CardClassName }) {
                     )}
                 </div>
             )}
-            {children}
+            <div className={`${mainClassName}`}>{children}</div>
         </div>
     )
 }

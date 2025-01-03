@@ -2,7 +2,6 @@
 
 import OverviewSection from '@/components/organization/publicView/OverviewSection'
 import TabsNavigation from '@/components/organization/publicView/TabsNavigation'
-import FollowButton from '@/components/ui/FollowButton'
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 
@@ -20,15 +19,6 @@ function ShowAssociationDetails({ associationDetails }) {
     const tabs = ['Overview', 'About', 'Jobs']
     return (
         <>
-            <div className="flex flex-row gap-2 mx-5 mb-2">
-                <div className="flex">
-                    <FollowButton
-                        entityType={'organizations'}
-                        entityName={associationDetails.name}
-                        isFollowing={associationDetails.is_following}
-                    />
-                </div>
-            </div>
             <TabsNavigation
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
@@ -37,15 +27,13 @@ function ShowAssociationDetails({ associationDetails }) {
             {selectedTab === 1 && (
                 <OverviewSection
                     selectedTab={selectedTab}
-                    description={associationDetails.description}
-                    companySize={associationDetails.company_size}
-                    companyType={associationDetails.company_type}
+                    shortDescription={associationDetails.short_description}
                 />
             )}
             {selectedTab === 2 && (
                 <AboutSection
                     selectedTab={selectedTab}
-                    shortDescription={associationDetails.short_description}
+                    organization={associationDetails}
                 />
             )}
             {selectedTab === 3 && <JobsSection selectedTab={selectedTab} />}

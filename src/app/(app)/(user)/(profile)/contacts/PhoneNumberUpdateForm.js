@@ -3,10 +3,10 @@ import { Plus, SealCheck, SealQuestion } from '@phosphor-icons/react'
 import React, { useState } from 'react'
 import { useUser } from '@/context/UserContext'
 import InputField from '@/components/ui/InputField'
-import Spinner from '@/components/ui/Spinner'
 import DeleteButton from '@/components/ui/DeleteButton'
 import VerifyButton from '@/components/ui/VerifyButton'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 const PhoneNumberUpdateForm = ({
     phoneNumbers,
@@ -68,7 +68,9 @@ const PhoneNumberUpdateForm = ({
 
     return (
         <>
-            <h3 className="text-xl font-semibold mb-4">Update Phone Number</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4">
+                Phone Number
+            </h3>
             {error && (
                 <ErrorDisplay errors={error} onClose={() => setError(null)} />
             )}
@@ -101,16 +103,12 @@ const PhoneNumberUpdateForm = ({
                     }}
                 />
 
-                <button
+                <SubmitButton
+                    isSubmitting={loading}
                     type="submit"
-                    className="btn btn-primary"
-                    disabled={loading}>
-                    {loading ? (
-                        <Spinner spinColor="text-neutral" />
-                    ) : (
-                        <Plus className="w-5 h-5" weight="bold" />
-                    )}
-                </button>
+                    className="btn btn-primary">
+                    <Plus className="w-5 h-5" weight="bold" />
+                </SubmitButton>
             </form>
 
             <ul>

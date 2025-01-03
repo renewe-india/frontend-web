@@ -113,13 +113,10 @@ export default function SearchPageComponent({
                     <div className="space-y-4">
                         {searchResults.map(result =>
                             resultCard === 'user' ? (
-                                <UserCard
-                                    key={result.name || result.username}
-                                    user={result}
-                                />
+                                <UserCard key={result.username} user={result} />
                             ) : (
                                 <OrganizationCard
-                                    key={result.name || result.username}
+                                    key={result.name}
                                     organization={result}
                                 />
                             ),

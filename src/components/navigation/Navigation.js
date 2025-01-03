@@ -2,18 +2,20 @@ import dynamic from 'next/dynamic'
 import TopNavbar from '@/components/navigation/TopNavbar'
 import NotificationPanel from './NotificationPanel'
 
-const SidePanel = dynamic(() => import('@/components/navigation/SidePanel'))
+const SideDrawer = dynamic(() => import('@/components/navigation/SideDrawer'))
 const BottomNavbar = dynamic(() =>
     import('@/components/navigation/BottomNavbar'),
 )
-const SearchBar = dynamic(() => import('@/components/navigation/SearchBar'))
+const SearchDrawer = dynamic(() =>
+    import('@/components/navigation/SearchDrawer'),
+)
 
 const Navigation = () => {
     return (
         <>
-            <SidePanel />
+            <SideDrawer />
             <NotificationPanel />
-            <SearchBar />
+            <SearchDrawer />
             <TopNavbar />
             <BottomNavbar />
         </>

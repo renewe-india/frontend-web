@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import InputField from '@/components/ui/InputField'
 import { Lock } from '@phosphor-icons/react'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 const PasswordReset = () => {
     const searchParams = useSearchParams()
@@ -77,12 +78,10 @@ const PasswordReset = () => {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <button
-                        type="submit"
-                        className="w-full btn normal-case btn-primary">
+                    <SubmitButton>
                         <Lock size={24} />
                         Reset Password
-                    </button>
+                    </SubmitButton>
                 </div>
             </form>
         </>

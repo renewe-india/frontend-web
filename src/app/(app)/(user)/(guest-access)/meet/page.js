@@ -10,9 +10,7 @@ const MeetPage = async () => {
 
     return (
         <div className="space-y-2">
-            <MainCard>
-                <h2 className="text-2xl font-bold">Explore Upcoming Meets</h2>
-            </MainCard>
+            <MainCard title={'Explore Upcoming Meets'} />
             <EventCard events={events} />
             {meta.last_page === 1 && <NoMoreEvents />}
             {meta.last_page !== 1 && <LoadMoreEvents />}

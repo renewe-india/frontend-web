@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Plus, SealCheck, SealQuestion } from '@phosphor-icons/react'
 import axios from '@/lib/axios'
 import { useUser } from '@/context/UserContext'
-import Spinner from '@/components/ui/Spinner'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import DeleteButton from '@/components/ui/DeleteButton'
 import VerifyButton from '@/components/ui/VerifyButton'
+import InputField from '@/components/ui/InputField'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 const EmailUpdateForm = ({
     emails,
@@ -61,28 +62,27 @@ const EmailUpdateForm = ({
 
     return (
         <>
-            <h3 className="text-xl font-semibold mb-4">Update Email</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4">
+                {' '}
+                Email
+            </h3>
             {error && (
                 <ErrorDisplay errors={error} onClose={() => setError(null)} />
             )}
             <form onSubmit={handleAddEmail} className="flex items-center mb-4">
-                <input
+                <InputField
                     type="email"
                     value={newEmail}
                     onChange={e => setNewEmail(e.target.value)}
                     placeholder="Add new email"
                     className="input input-bordered input-primary w-full mr-2"
                 />
-                <button
+                <SubmitButton
+                    isSubmitting={loading}
                     type="submit"
-                    className="btn btn-primary"
-                    disabled={loading}>
-                    {loading ? (
-                        <Spinner spinColor="text-neutral" />
-                    ) : (
-                        <Plus className="w-5 h-5" weight="bold" />
-                    )}
-                </button>
+                    className="btn btn-primary">
+                    <Plus className="w-5 h-5" weight="bold" />
+                </SubmitButton>
             </form>
             <ul>
                 {emails.map((email, index) => (

@@ -71,9 +71,7 @@ const UserProfile = ({ user }) => (
                             avatarUrl={user?.avatar}
                             alt={user?.name}
                             size="lg"
-                            border={true}
                             isVerified={user?.is_verified}
-                            additionalClasses=""
                         />
                     </SkeletonWrapper>
                 </div>

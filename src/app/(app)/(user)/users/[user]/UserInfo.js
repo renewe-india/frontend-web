@@ -11,7 +11,7 @@ import {
 } from '@phosphor-icons/react/dist/ssr'
 import React from 'react'
 
-const MoreInfo = ({ user }) => {
+const UserInfo = ({ user }) => {
     const modalId = `more_info_modal`
     const openModal = async () => {
         document.getElementById(modalId).showModal()
@@ -25,7 +25,7 @@ const MoreInfo = ({ user }) => {
             {/* verify Button */}
             <button
                 onClick={openModal}
-                className=" text-primary hover:font-semibold my-2 flex items-center">
+                className="text-xs text-primary hover:font-semibold flex items-center">
                 <Info className="w-5 h-5 mr-2" /> More Info
             </button>
 
@@ -113,4 +113,4 @@ const MoreInfo = ({ user }) => {
     )
 }
 
-export default MoreInfo
+export default UserInfo

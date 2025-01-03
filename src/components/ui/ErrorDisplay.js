@@ -35,7 +35,7 @@ const ErrorDisplay = ({ errors, message, onClose }) => {
         return null
     }
     return (
-        <div className=" text-red-500">
+        <div className="mt-2 text-red-500 space-y-2">
             {Array.isArray(errorContent) ? (
                 errorContent.map((error, index) => (
                     <div

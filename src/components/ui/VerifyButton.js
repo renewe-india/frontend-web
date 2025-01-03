@@ -58,7 +58,7 @@ function VerifyButton({ style, itemName, sendOtp, methodType, onVerify }) {
                             ✕
                         </button>
                     </form>
-                    <h3 className="font-bold text-lg">
+                    <h3 className="font-bold text-lg break-all">
                         Verify Your {methodType} : {itemName}
                     </h3>
                     <div className="flex gap-2 justify-center">
