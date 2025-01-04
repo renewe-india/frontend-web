@@ -9,6 +9,8 @@ import Spinner from '@/components/ui/Spinner'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import SubmitButton from '@/components/ui/SubmitButton'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const CommentSection = ({ commentsCount, url }) => {
     const { user } = useUser()
@@ -93,7 +95,7 @@ const CommentSection = ({ commentsCount, url }) => {
     }
 
     return (
-        <div className="bg-inherit rounded-lg shadow p-4 m-2">
+        <div className={cn('bg-inherit rounded-lg shadow p-4 m-2')}>
             <CommentInput
                 user={user}
                 userComment={userComment}
@@ -104,24 +106,30 @@ const CommentSection = ({ commentsCount, url }) => {
             />
             <ErrorDisplay errors={errors} onClose={() => setErrors(null)} />
             <div>
-                {isLoading ? (
-                    <div className="flex justify-center mt-4">
+                <div
+                    className={cn('flex justify-center mt-4', {
+                        hidden: !isLoading,
+                    })}>
+                    <ConditionalRender condition={isLoading}>
                         <Spinner />
-                    </div>
-                ) : comments.length > 0 ? (
-                    comments.map((comment, idx) => (
+                    </ConditionalRender>
+                </div>
+                <ConditionalRender
+                    condition={!isLoading && comments.length > 0}>
+                    {comments.map((comment, idx) => (
                         <CommentItem
                             key={idx}
                             comment={comment}
                             onDelete={handleDelete}
                             onEdit={handleEdit}
                         />
-                    ))
-                ) : (
+                    ))}
+                </ConditionalRender>
+                <ConditionalRender condition={comments.length === 0}>
                     <div className="text-sm text-gray-500">
                         Be the first to comment on this post.
                     </div>
-                )}
+                </ConditionalRender>
             </div>
             <LoadMoreButton
                 isLoading={isLoading}
@@ -134,16 +142,17 @@ const CommentSection = ({ commentsCount, url }) => {
 
 const LoadMoreButton = ({ isLoading, handleLoadMore, hasMore }) => {
     return (
-        hasMore && (
+        <ConditionalRender condition={hasMore}>
             <div className="flex justify-center mt-4">
-                <button
+                <SubmitButton
+                    type="button"
                     onClick={handleLoadMore}
                     className="btn btn-outline btn-sm"
-                    disabled={isLoading}>
-                    {isLoading ? <Spinner /> : 'Load More Comments'}
-                </button>
+                    isSubmitting={isLoading}
+                    label={'Load More Comments'}
+                />
             </div>
-        )
+        </ConditionalRender>
     )
 }
 export default CommentSection

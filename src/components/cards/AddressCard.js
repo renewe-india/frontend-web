@@ -1,6 +1,7 @@
 import React from 'react'
 import { PencilSimple, Trash, Star } from '@phosphor-icons/react'
 import Link from 'next/link'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const AddressCard = ({
     address,
@@ -10,7 +11,7 @@ const AddressCard = ({
     onSetPublicPrivate,
 }) => {
     return (
-        <div className="card bg-base-100 shadow-md">
+        <div className={cn('card bg-base-100 shadow-md')}>
             <div className="card-body">
                 <div className="flex justify-between items-start">
                     <div>
@@ -39,23 +40,28 @@ const AddressCard = ({
                             <button
                                 onClick={() => onSetDefault(address.uuid)}
                                 className="mr-2 relative group">
-                                {address.is_default ? (
+                                <ConditionalRender
+                                    condition={address.is_default}>
                                     <Star
                                         size={24}
                                         weight="fill"
                                         color="#f2d307"
                                     />
-                                ) : (
+                                </ConditionalRender>
+                                <ConditionalRender
+                                    condition={!address.is_default}>
                                     <Star size={24} weight="regular" />
-                                )}
+                                </ConditionalRender>
                             </button>
                         </div>
                     </div>
                 </div>
                 <div className="mt-4">
                     <p className="font-medium">{address.line_1}</p>
-                    {address.line_2 && <p>{address.line_2}</p>}
-                    <p>{`${address.state}, ${address.country},${address.postal_code}`}</p>
+                    <ConditionalRender condition={address.line_2}>
+                        <p>{address.line_2}</p>
+                    </ConditionalRender>
+                    <p>{`${address.state}, ${address.country}, ${address.postal_code}`}</p>
                 </div>
 
                 <div className="mt-4 flex lg:flex-row flex-col justify-between gap-5">
@@ -72,7 +78,6 @@ const AddressCard = ({
                                     }
                                     checked={address.is_public}
                                 />
-
                                 <span className="label-text">Public</span>
                             </label>
                         </div>

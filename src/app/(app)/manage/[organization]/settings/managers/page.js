@@ -10,12 +10,7 @@ async function organizationManagers({ params }) {
         `/organizations/${organizationName}/managers`,
     )
     return (
-        <>
-            <MangersTable
-                managers={managers}
-                organizationName={organizationName}
-            />
-        </>
+        <MangersTable managers={managers} organizationName={organizationName} />
     )
 }
 

@@ -4,6 +4,7 @@ import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import axios from '@/lib/axios'
 import Link from 'next/link'
 import { Plus } from '@phosphor-icons/react'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 function SearchBusiness({ setCreateNewBusinessForm }) {
     const [business, setBusiness] = useState('')
@@ -62,7 +63,7 @@ function SearchBusiness({ setCreateNewBusinessForm }) {
                         onChange={handleChange}
                         autoComplete="off"
                     />
-                    {results.length > 0 && (
+                    <ConditionalRender condition={results.length > 0}>
                         <ul className="dropdown-content z-[1] absolute left-0 w-full mt-1 bg-base-100 rounded-b-lg">
                             {results.map((result, index) => (
                                 <li key={index} className="menu">
@@ -72,7 +73,9 @@ function SearchBusiness({ setCreateNewBusinessForm }) {
                                 </li>
                             ))}
                             <li
-                                className="menu"
+                                className={cn('menu', {
+                                    'cursor-pointer': true,
+                                })}
                                 onClick={handleCreateNewBusiness}>
                                 <a>
                                     <Plus size={24} stroke={2} />
@@ -80,7 +83,7 @@ function SearchBusiness({ setCreateNewBusinessForm }) {
                                 </a>
                             </li>
                         </ul>
-                    )}
+                    </ConditionalRender>
                 </div>
             </div>
             <ErrorDisplay errors={errors} />

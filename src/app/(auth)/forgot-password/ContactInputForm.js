@@ -1,5 +1,6 @@
 import InputField from '@/components/ui/InputField'
 import React from 'react'
+import { ConditionalRender, cn } from '@/lib/utils'
 
 const ContactInputForm = ({
     contactType,
@@ -38,10 +39,10 @@ const ContactInputForm = ({
             </div>
 
             <div className="flex items-center gap-2">
-                {contactType === 'mobile' && (
+                <ConditionalRender condition={contactType === 'mobile'}>
                     <select
                         id="countryCode"
-                        className="input input-primary w-1/4"
+                        className={cn('input input-primary w-1/4')}
                         value={countryCode}
                         onChange={event => setCountryCode(event.target.value)}>
                         {countryCodes.map(code => (
@@ -50,7 +51,7 @@ const ContactInputForm = ({
                             </option>
                         ))}
                     </select>
-                )}
+                </ConditionalRender>
                 <div className="w-full">
                     <InputField
                         id="contact"

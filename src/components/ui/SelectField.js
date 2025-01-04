@@ -1,4 +1,5 @@
 import React from 'react'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const SelectField = ({
     label,
@@ -11,16 +12,16 @@ const SelectField = ({
 }) => {
     return (
         <>
-            {label && (
-                <label className="pt-0 label label-text font-semibold">
+            <ConditionalRender condition={label}>
+                <label className={cn('pt-0 label label-text font-semibold')}>
                     <span>{label}</span>
                 </label>
-            )}
+            </ConditionalRender>
             <select
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="select select-primary w-full"
+                className={cn('select select-primary w-full')}
                 required={required}>
                 <option disabled value="">
                     {placeholder}

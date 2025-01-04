@@ -4,20 +4,24 @@ import Link from 'next/link'
 import Avatar from '../ui/AvatarImage'
 import FollowButton from '../ui/FollowButton'
 import OrganizationLogo from '../organization/OrganizationLogo'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 export default function NetworkCard({ entity, entityType, onDismiss }) {
     const isOrganization =
         entityType === 'business' || entityType === 'association'
     return (
-        <div className="bg-base-100 w-auto p-4 relative rounded-md shadow-md">
+        <div
+            className={cn(
+                'bg-base-100 w-auto p-4 relative rounded-md shadow-md',
+            )}>
             {/* Dismiss button */}
-            {onDismiss && (
+            <ConditionalRender condition={onDismiss}>
                 <button
                     onClick={onDismiss}
                     className="absolute right-2 top-2 p-1 rounded-full hover:bg-gray-100">
                     ✕
                 </button>
-            )}
+            </ConditionalRender>
 
             {/* Profile section */}
             <Link
@@ -54,17 +58,16 @@ export default function NetworkCard({ entity, entityType, onDismiss }) {
             </Link>
 
             {/* Mutual connections */}
-
-            <div className=" mb-8 flex items-center justify-center">
-                {entity?.followed_by.count > 0 && (
+            <div className="mb-8 flex items-center justify-center">
+                <ConditionalRender condition={entity?.followed_by.count > 0}>
                     <span className="mt-4 text-xs text-gray-600 text-center">
                         {entity?.followed_by.text} followed this
                     </span>
-                )}
+                </ConditionalRender>
             </div>
 
             {/* Follow button */}
-            <div className=" absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center">
                 <FollowButton
                     entityType={isOrganization ? 'organizations' : 'users'}
                     entityName={entity?.username || entity?.name}

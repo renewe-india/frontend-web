@@ -8,6 +8,7 @@ import DeleteButton from '@/components/ui/DeleteButton'
 import VerifyButton from '@/components/ui/VerifyButton'
 import SubmitButton from '@/components/ui/SubmitButton'
 import TitleCard from '@/components/dashboard/Cards/TitleCard'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 export default function ContactSettings({
     contactsData,
@@ -168,7 +169,7 @@ function ContactList({
             <form
                 className="flex items-center mb-4"
                 onSubmit={handleAddContact}>
-                {isPhone && (
+                <ConditionalRender condition={isPhone}>
                     <select
                         value={countryCode}
                         onChange={e => setCountryCode(e.target.value)}
@@ -179,7 +180,7 @@ function ContactList({
                             </option>
                         ))}
                     </select>
-                )}
+                </ConditionalRender>
                 <input
                     type={isPhone ? 'number' : 'email'}
                     value={newContact}
@@ -188,7 +189,10 @@ function ContactList({
                         isPhone ? 'phone number' : 'email'
                     }`}
                     min={'0'}
-                    className="input input-bordered w-3/5 lg:w-3/4 mr-2"
+                    className={cn(
+                        'input input-bordered mr-2',
+                        isPhone ? 'w-3/5 lg:w-3/4' : 'w-full',
+                    )}
                 />
                 <SubmitButton isSubmitting={loading}>
                     <Plus className="w-5 h-5" weight="bold" />
@@ -210,7 +214,7 @@ function ContactList({
                                 : contact.data}
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                            {!contact.is_verified && (
+                            <ConditionalRender condition={!contact.is_verified}>
                                 <VerifyButton
                                     style="text-success hover:bg-success hover:text-white font-bold shadow-sm shadow-green-600"
                                     itemName={
@@ -226,7 +230,7 @@ function ContactList({
                                         onVerify(otp, contact.uuid)
                                     }
                                 />
-                            )}
+                            </ConditionalRender>
                             <DeleteButton
                                 style="text-red-600 hover:bg-red-600 hover:text-white flex items-center mr-2 shadow-sm shadow-red-600 font-bold"
                                 itemName={

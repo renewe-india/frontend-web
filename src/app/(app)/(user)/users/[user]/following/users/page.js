@@ -4,6 +4,7 @@ import MainCard from '@/components/ui/MainCard'
 import { User } from '@phosphor-icons/react/dist/ssr'
 import React from 'react'
 import LoadMoreUser from './LoadMoreUsers'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const page = async ({ params }) => {
     const username = params.user
@@ -14,7 +15,6 @@ const page = async ({ params }) => {
 
     return (
         <div className="space-y-2">
-            {' '}
             <MainCard CardClassName="space-y-4">
                 <div className="flex justify-between items-center">
                     <div className="flex gap-2">
@@ -22,7 +22,9 @@ const page = async ({ params }) => {
                             weight="duotone"
                             size={32}
                             color="#2478ff"
-                            className="flex-shrink-0 bg-blue-100 rounded-full p-1"
+                            className={cn(
+                                'flex-shrink-0 bg-blue-100 rounded-full p-1',
+                            )}
                         />
                         <div className="text-lg sm:text-2xl font-bold ">
                             {username} follows {userFollowingMeta.total}{' '}
@@ -34,9 +36,10 @@ const page = async ({ params }) => {
                     {userFollowing.map(user => (
                         <UserCard key={user?.username} user={user} />
                     ))}
-                    {userFollowing.last_page !== 1 && (
+                    <ConditionalRender
+                        condition={userFollowing.last_page !== 1}>
                         <LoadMoreUser username={username} />
-                    )}
+                    </ConditionalRender>
                 </div>
             </MainCard>
         </div>

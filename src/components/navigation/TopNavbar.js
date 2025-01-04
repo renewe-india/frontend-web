@@ -17,6 +17,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { motion } from 'framer-motion'
 import { useUser } from '@/context/UserContext'
 import { usePathname } from 'next/navigation'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const Image = dynamic(() => import('@/components/Image'), { ssr: false })
 const AvatarSkeleton = () => (
@@ -39,11 +40,7 @@ const TopNavbar = memo(() => {
     }, [path])
 
     const handleToggle = e => {
-        if (e.target.checked) {
-            toggleTheme('dark')
-        } else {
-            toggleTheme('light')
-        }
+        toggleTheme(e.target.checked ? 'dark' : 'light')
     }
 
     useEffect(() => {
@@ -71,10 +68,14 @@ const TopNavbar = memo(() => {
     }, [prevScrollPos, isMobile])
 
     const getLinkClass = path => {
-        return currentPath && currentPath.includes(path)
-            ? 'my-0.5 rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2 text-success'
-            : 'my-0.5 rounded-md whitespace-nowrap rounded-none bg-inherit sm:px-2 text-gray-500 hover:bg-base-300'
+        return cn(
+            'my-0.5 rounded-md whitespace-nowrap bg-inherit sm:px-2',
+            currentPath && currentPath.includes(path)
+                ? 'text-success'
+                : 'text-gray-500 hover:bg-base-300',
+        )
     }
+
     return (
         <motion.div
             id="navbar"
@@ -89,11 +90,15 @@ const TopNavbar = memo(() => {
                             htmlFor="sidebar"
                             className="flex items-center cursor-pointer">
                             <div className="flex items-center gap-2">
-                                {!user ? (
+                                <ConditionalRender condition={!user}>
                                     <List className="h-5 inline-block w-5" />
-                                ) : !user.avatar ? (
+                                </ConditionalRender>
+                                <ConditionalRender
+                                    condition={user && !user.avatar}>
                                     <AvatarSkeleton />
-                                ) : (
+                                </ConditionalRender>
+                                <ConditionalRender
+                                    condition={user && user.avatar}>
                                     <Image
                                         data={
                                             user?.avatar || {
@@ -102,7 +107,7 @@ const TopNavbar = memo(() => {
                                         }
                                         customClass="rounded-full avatar w-7"
                                     />
-                                )}
+                                </ConditionalRender>
                             </div>
                         </label>
                         <Link href="/" className="flex items-center mr-2">
@@ -169,11 +174,11 @@ const TopNavbar = memo(() => {
                 <div className="p-2 relative flex items-center gap-2 lg:gap-5">
                     <label
                         htmlFor="search"
-                        className="btn btn-sm btn-circle relative text-gray-500 rounded-full md:btn-wide">
+                        className="btn btn-sm btn-circle relative text-gray-500 rounded-full sm:rounded-lg sm:btn-wide">
                         <MagnifyingGlass size={24} stroke={2} weight="fill" />
-                        <span className="hidden md:block">Search</span>
+                        <span className="hidden sm:block">Search</span>
                     </label>
-                    {user && (
+                    <ConditionalRender condition={user}>
                         <label
                             htmlFor="notifications"
                             className="btn btn-circle btn-sm relative text-gray-500">
@@ -182,7 +187,7 @@ const TopNavbar = memo(() => {
                                 9+
                             </div>
                         </label>
-                    )}
+                    </ConditionalRender>
                     <div className="block">
                         <label className="swap swap-rotate w-8 h-8 btn btn-circle btn-xs relative text-gray-500 ">
                             <input
@@ -205,13 +210,13 @@ const TopNavbar = memo(() => {
                             />
                         </label>
                     </div>
-                    {!user && (
+                    <ConditionalRender condition={!user}>
                         <Link
                             href="/login"
                             className="btn btn-sm btn-primary btn-outline">
                             Login
                         </Link>
-                    )}
+                    </ConditionalRender>
                 </div>
             </div>
         </motion.div>

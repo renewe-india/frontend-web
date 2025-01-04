@@ -2,6 +2,7 @@ import LoadMoreNews, { NoMoreArticles } from './LoadMoreNews'
 import { NewsCardWithActions } from '@/components/cards/news/NewsCard'
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import MainCard from '@/components/ui/MainCard'
+import { ConditionalRender } from '@/lib/utils'
 
 const NewsPage = async () => {
     const { data: articles, meta } = await getPaginatedData(1, '/news/articles')
@@ -16,8 +17,12 @@ const NewsPage = async () => {
                     sharedAt={article?.published_at}
                 />
             ))}
-            {meta.last_page === 1 && <NoMoreArticles />}
-            {meta.last_page !== 1 && <LoadMoreNews />}
+            <ConditionalRender condition={meta.last_page === 1}>
+                <NoMoreArticles />
+            </ConditionalRender>
+            <ConditionalRender condition={meta.last_page !== 1}>
+                <LoadMoreNews />
+            </ConditionalRender>
         </div>
     )
 }

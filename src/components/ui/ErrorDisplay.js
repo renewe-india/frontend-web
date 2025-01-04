@@ -1,5 +1,6 @@
 import { WarningCircle, X } from '@phosphor-icons/react/dist/ssr'
 import React from 'react'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const ErrorDisplay = ({ errors, message, onClose }) => {
     const errorContent = message ? [message] : errors
@@ -36,12 +37,14 @@ const ErrorDisplay = ({ errors, message, onClose }) => {
     }
     return (
         <div className="mt-2 text-red-500 space-y-2">
-            {Array.isArray(errorContent) ? (
-                errorContent.map((error, index) => (
+            <ConditionalRender condition={Array.isArray(errorContent)}>
+                {errorContent.map((error, index) => (
                     <div
                         key={index}
                         role="alert"
-                        className="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-center justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105">
+                        className={cn(
+                            'bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-center justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105',
+                        )}>
                         <div className="flex items-start">
                             <WarningCircle
                                 size={24}
@@ -59,11 +62,14 @@ const ErrorDisplay = ({ errors, message, onClose }) => {
                             </button>
                         )}
                     </div>
-                ))
-            ) : (
+                ))}
+            </ConditionalRender>
+            <ConditionalRender condition={!Array.isArray(errorContent)}>
                 <div
                     role="alert"
-                    className="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-start justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105 overflow-hidden">
+                    className={cn(
+                        'bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-start justify-between transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105 overflow-hidden',
+                    )}>
                     <div className="flex items-start">
                         <WarningCircle
                             size={24}
@@ -81,7 +87,7 @@ const ErrorDisplay = ({ errors, message, onClose }) => {
                         </button>
                     )}
                 </div>
-            )}
+            </ConditionalRender>
         </div>
     )
 }

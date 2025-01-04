@@ -43,7 +43,7 @@ const Network = () => {
                         The network is quiet right now. Check back soon for
                         updates.
                     </div>
-                    <p className="mb-4 text-lg  text-gray-500 dark:text-gray-400" />
+                    <p className="mb-4 text-lg text-gray-500 dark:text-gray-400" />
                 </div>
             </MainCard>
         </div>

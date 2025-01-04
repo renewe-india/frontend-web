@@ -1,3 +1,4 @@
+import { cn, ConditionalRender } from '@/lib/utils'
 import React from 'react'
 
 function MainCard({
@@ -10,11 +11,11 @@ function MainCard({
 }) {
     return (
         <div
-            className={
-                'card bg-base-200 rounded-lg p-2 sm:p-5 shadow-md ' +
-                `${CardClassName}`
-            }>
-            {title && (
+            className={cn(
+                'card bg-base-200 rounded-lg p-2 sm:p-5 shadow-md border-2 border-base-300',
+                CardClassName,
+            )}>
+            <ConditionalRender condition={title}>
                 <div className="flex justify-between items-center mb-2">
                     <div className="flex-grow">
                         <h2 className="text-xl sm:text-2xl font-bold">
@@ -22,16 +23,20 @@ function MainCard({
                         </h2>
                         <div className="divider my-0" />
                     </div>
-                    {buttonName && setOpen && (
+                    <ConditionalRender condition={buttonName && setOpen}>
                         <button
                             onClick={() => setOpen()}
                             className="btn btn-primary btn-sm ml-4">
                             {buttonName}
                         </button>
-                    )}
+                    </ConditionalRender>
                 </div>
+            </ConditionalRender>
+            {mainClassName ? (
+                <div className={cn(mainClassName)}>{children}</div>
+            ) : (
+                children
             )}
-            <div className={`${mainClassName}`}>{children}</div>
         </div>
     )
 }

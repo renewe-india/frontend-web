@@ -5,6 +5,7 @@ import DeleteButton from '@/components/ui/DeleteButton'
 import EditManagerRolesButton from './EditManagerRolesButton'
 import axios from '@/lib/axios'
 import { useToast } from '@/context/ToastContext'
+import { cn } from '@/lib/utils'
 
 function ManagerRow({ manager, setManagers, organizationName, managerRoles }) {
     const { notifySuccess, notifyError } = useToast()
@@ -16,7 +17,7 @@ function ManagerRow({ manager, setManagers, organizationName, managerRoles }) {
             )
 
             setManagers(prev =>
-                prev.filter(manager => manager.username !== manager.username),
+                prev.filter(m => m.username !== manager.username),
             )
             notifySuccess(`Manager ${manager?.username} deleted successfully!`)
         } catch (error) {
@@ -31,10 +32,8 @@ function ManagerRow({ manager, setManagers, organizationName, managerRoles }) {
                 { roles: roles },
             )
             setManagers(prev =>
-                prev.map(manager =>
-                    manager.username === manager.username
-                        ? { ...manager, roles }
-                        : manager,
+                prev.map(m =>
+                    m.username === manager.username ? { ...m, roles } : m,
                 ),
             )
             notifySuccess(`Manager ${manager?.username} updated successfully!`)
@@ -43,7 +42,10 @@ function ManagerRow({ manager, setManagers, organizationName, managerRoles }) {
         }
     }
     return (
-        <div className="flex flex-row items-center bg-base-100 justify-between px-2 md:px-4 py-4 rounded-lg shadow gap-2 md:gap-0">
+        <div
+            className={cn(
+                'flex flex-row items-center bg-base-100 justify-between px-2 md:px-4 py-4 rounded-lg shadow gap-2 md:gap-0',
+            )}>
             <div className="flex flex-row items-center gap-3 w-1/2">
                 <div className="hidden lg:block">
                     <Image

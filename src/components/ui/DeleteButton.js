@@ -1,5 +1,6 @@
 import { Trash } from '@phosphor-icons/react'
 import React from 'react'
+import { cn } from '@/lib/utils'
 
 function DeleteButton({ style, itemName, weight, onDelete, name }) {
     const modalId = `delete_modal_${itemName}`
@@ -20,14 +21,14 @@ function DeleteButton({ style, itemName, weight, onDelete, name }) {
     return (
         <>
             {/* Delete Button */}
-            <button onClick={openModal} className={`btn btn-sm ${style}`}>
+            <button onClick={openModal} className={cn('btn btn-sm', style)}>
                 <Trash weight={weight} className="w-5 h-5" /> Delete
             </button>
 
             {/* Confirmation Modal */}
             <dialog
                 id={modalId}
-                className="modal flex items-center justify-center">
+                className={cn('modal flex items-center justify-center')}>
                 <div className="modal-box">
                     <form method="dialog">
                         {/* Close Button */}

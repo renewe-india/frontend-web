@@ -1,3 +1,4 @@
+import { ConditionalRender } from '@/lib/utils'
 import { Faders, X } from '@phosphor-icons/react'
 import { useState } from 'react'
 
@@ -61,35 +62,41 @@ export default function FilterDrawer({
         })
 
         onApplyFilters(appliedFilters)
-        document.getElementById('my-drawer-4').checked = false
+        document.getElementById('filter-drawer').checked = false
     }
 
     return (
         <div className="drawer drawer-end">
-            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <input
+                id="filter-drawer"
+                type="checkbox"
+                className="drawer-toggle"
+            />
             <div className="drawer-content">
                 <label
-                    htmlFor="my-drawer-4"
+                    htmlFor="filter-drawer"
                     className="drawer-button btn btn-outline btn-sm flex items-center gap-2 bg-base-100">
                     <Faders size={16} />
                     Filters
-                    {filterLength > 0 && (
+                    <ConditionalRender condition={filterLength > 0}>
                         <span className="badge badge-ghost">
                             {filterLength}
                         </span>
-                    )}
+                    </ConditionalRender>
                 </label>
             </div>
             <div className="drawer-side z-50">
                 <label
-                    htmlFor="my-drawer-4"
+                    htmlFor="filter-drawer"
                     aria-label="close sidebar"
                     className="drawer-overlay"
                 />
                 <ul className="menu bg-base-200 min-h-full w-3/4 lg:w-1/4 p-8 space-y-4">
                     <li className="flex flex-row justify-between items-center">
                         <h1 className="font-bold text-2xl">All filters</h1>
-                        <label htmlFor="my-drawer-4" className="cursor-pointer">
+                        <label
+                            htmlFor="filter-drawer"
+                            className="cursor-pointer">
                             <X size={24} />
                         </label>
                     </li>

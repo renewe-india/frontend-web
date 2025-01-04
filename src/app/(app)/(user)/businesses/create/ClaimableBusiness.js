@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import ClaimableOrganizationCard from '@/components/organization/ClaimableOrganizationCard'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import MainCard from '@/components/ui/MainCard'
+import { ConditionalRender } from '@/lib/utils'
 
 function ClaimableBusiness({ claimableBusinesses }) {
     const router = useRouter()
@@ -24,11 +25,9 @@ function ClaimableBusiness({ claimableBusinesses }) {
             setIsSubmitting(prevState => ({ ...prevState, [name]: false }))
         }
     }
-
     if (claimableBusinesses.length === 0) {
         return null
     }
-
     return (
         <MainCard title={`Claimable Businesses`}>
             <div className="mb-4">
@@ -37,14 +36,15 @@ function ClaimableBusiness({ claimableBusinesses }) {
                     to claim.
                 </h2>
             </div>
-            {error && (
+            <ConditionalRender condition={error}>
                 <ErrorDisplay
                     errors={error}
                     onClose={() => {
                         setError(null)
                     }}
                 />
-            )}
+            </ConditionalRender>
+
             <div className="space-y-5">
                 {claimableBusinesses.map(business => (
                     <ClaimableOrganizationCard

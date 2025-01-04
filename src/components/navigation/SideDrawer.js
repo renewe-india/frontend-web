@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import OrganizationList from '@/components/organization/OrganizationListSidebar'
 import { useUser } from '@/context/UserContext'
+import { ConditionalRender } from '@/lib/utils'
 import {
     AddressBook,
     PlugsConnected,
@@ -70,19 +71,22 @@ function SideDrawer() {
                                     }
                                 }}>
                                 <span className="block">
-                                    <X size={24} stroke={2} />
+                                    <X size={24} />
                                 </span>
                             </button>
                         </div>
                     </div>
 
                     <div>
-                        {user && (
+                        <ConditionalRender condition={user}>
                             <ul className="menu rounded-md">
                                 <hr className="my-3" />
                                 <li className="menu-title text-inherit uppercase">
                                     <div className="flex items-center gap-2">
-                                        <PlugsConnected size={24} stroke={2} />
+                                        <PlugsConnected
+                                            size={24}
+                                            weight="thin"
+                                        />
                                         Connect
                                     </div>
                                 </li>
@@ -90,7 +94,10 @@ function SideDrawer() {
                                 <li>
                                     <details>
                                         <summary className="hover:text-inherit text-inherit">
-                                            <BagSimple size={24} stroke={2} />
+                                            <BagSimple
+                                                size={24}
+                                                weight="thin"
+                                            />
                                             <span className="">
                                                 My Businesses
                                             </span>
@@ -105,7 +112,10 @@ function SideDrawer() {
                                 <li>
                                     <details>
                                         <summary className="hover:text-inherit text-inherit">
-                                            <UsersFour size={24} stroke={2} />
+                                            <UsersFour
+                                                size={24}
+                                                weight="thin"
+                                            />
                                             <span className="mary-hideable">
                                                 My Associations
                                             </span>
@@ -117,12 +127,12 @@ function SideDrawer() {
                                     </details>
                                 </li>
                             </ul>
-                        )}
+                        </ConditionalRender>
                         <ul className="menu rounded-md">
                             <hr className="my-3" />
                             <li className="menu-title text-inherit uppercase">
                                 <div className="flex items-center gap-2">
-                                    <Sparkle size={24} stroke={2} />
+                                    <Sparkle size={24} weight="thin" />
                                     Coming Soon
                                 </div>
                             </li>
@@ -130,7 +140,7 @@ function SideDrawer() {
                                 <Link
                                     className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
-                                    <Newspaper size={24} stroke={2} />
+                                    <Newspaper size={24} weight="thin" />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Newsletters{' '}
                                         <span className="badge badge-ghost badge-sm !badge-warning">
@@ -143,7 +153,7 @@ function SideDrawer() {
                                 <Link
                                     className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
-                                    <Monitor size={24} stroke={2} />
+                                    <Monitor size={24} weight="thin" />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Projects{' '}
                                         <span className="badge badge-ghost badge-sm !badge-warning">
@@ -156,7 +166,7 @@ function SideDrawer() {
                                 <Link
                                     className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
-                                    <ChartLineUp size={24} stroke={2} />
+                                    <ChartLineUp size={24} weight="thin" />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Invest{' '}
                                         <span className="badge badge-ghost badge-sm !badge-warning">
@@ -169,7 +179,7 @@ function SideDrawer() {
                                 <Link
                                     className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
-                                    <Certificate size={24} stroke={2} />
+                                    <Certificate size={24} weight="thin" />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Courses{' '}
                                         <span className="badge badge-ghost badge-sm !badge-warning">
@@ -182,7 +192,7 @@ function SideDrawer() {
                                 <Link
                                     className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                     href="/coming-soon">
-                                    <ChatCenteredText size={24} stroke={2} />
+                                    <ChatCenteredText size={24} weight="thin" />
                                     <span className="mary-hideable whitespace-nowrap">
                                         Forums{' '}
                                         <span className="badge badge-ghost badge-sm !badge-warning">
@@ -193,7 +203,7 @@ function SideDrawer() {
                             </li>
                         </ul>
                         <ul className="menu rounded-md">
-                            {user && (
+                            <ConditionalRender condition={user}>
                                 <>
                                     <hr className="my-3" />
                                     <li className="menu-title text-inherit uppercase">
@@ -206,7 +216,7 @@ function SideDrawer() {
                                             <summary>
                                                 <UserSquare
                                                     size={24}
-                                                    stroke={2}
+                                                    weight="thin"
                                                 />
                                                 <span className="mary-hideable">
                                                     Account preferences
@@ -222,7 +232,7 @@ function SideDrawer() {
                                                         }>
                                                         <UserCircle
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Profile
@@ -238,7 +248,7 @@ function SideDrawer() {
                                                         }>
                                                         <SealCheck
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Verifications
@@ -254,7 +264,7 @@ function SideDrawer() {
                                                         }>
                                                         <AddressBookTabs
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Contacts
@@ -270,7 +280,7 @@ function SideDrawer() {
                                                         }>
                                                         <AddressBook
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Addresses
@@ -283,7 +293,10 @@ function SideDrawer() {
                                     <li>
                                         <details>
                                             <summary>
-                                                <LockKey size={24} stroke={2} />
+                                                <LockKey
+                                                    size={24}
+                                                    weight="thin"
+                                                />
                                                 <span className="mary-hideable">
                                                     Security and Privacy
                                                 </span>
@@ -298,7 +311,7 @@ function SideDrawer() {
                                                         }>
                                                         <Password
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Change Your password
@@ -314,7 +327,7 @@ function SideDrawer() {
                                                         }>
                                                         <UserFocus
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Change Your username
@@ -330,7 +343,7 @@ function SideDrawer() {
                                                         }>
                                                         <ClockCounterClockwise
                                                             size={24}
-                                                            stroke={2}
+                                                            weight="thin"
                                                         />
                                                         <span className="mary-hideable whitespace-nowrap">
                                                             Where you're signed
@@ -342,7 +355,7 @@ function SideDrawer() {
                                         </details>
                                     </li>
                                 </>
-                            )}
+                            </ConditionalRender>
                         </ul>
                         <ul className="menu rounded-md">
                             <hr className="my-3" />
@@ -354,7 +367,7 @@ function SideDrawer() {
                             <li>
                                 <details>
                                     <summary>
-                                        <Question size={24} stroke={2} />
+                                        <Question size={24} weight="thin" />
                                         <span className="mary-hideable">
                                             Help and Support
                                         </span>
@@ -366,7 +379,7 @@ function SideDrawer() {
                                                 href="/coming-soon">
                                                 <Handshake
                                                     size={24}
-                                                    stroke={2}
+                                                    weight="thin"
                                                 />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Help Center{' '}
@@ -380,7 +393,10 @@ function SideDrawer() {
                                             <Link
                                                 className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
-                                                <Ticket size={24} stroke={2} />
+                                                <Ticket
+                                                    size={24}
+                                                    weight="thin"
+                                                />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Support Tickets{' '}
                                                     <span className="badge badge-ghost badge-sm !badge-warning">
@@ -393,7 +409,10 @@ function SideDrawer() {
                                             <Link
                                                 className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
-                                                <Vault size={24} stroke={2} />
+                                                <Vault
+                                                    size={24}
+                                                    weight="thin"
+                                                />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Claims{' '}
                                                     <span className="badge badge-ghost badge-sm !badge-warning">
@@ -406,7 +425,10 @@ function SideDrawer() {
                                             <Link
                                                 className="my-0.5 hover-text-inherit rounded-md whitespace-nowrap"
                                                 href="/coming-soon">
-                                                <XCircle size={24} stroke={2} />
+                                                <XCircle
+                                                    size={24}
+                                                    weight="thin"
+                                                />
                                                 <span className="mary-hideable whitespace-nowrap">
                                                     Report A Problem{' '}
                                                     <span className="badge badge-ghost badge-sm !badge-warning">
@@ -419,14 +441,14 @@ function SideDrawer() {
                                 </details>
                             </li>
                             <hr className="my-3" />
-                            {user && (
+                            <ConditionalRender condition={user}>
                                 <div
                                     className="btn normal-case w-full btn-outline btn-xs"
                                     onClick={handleLogout}>
-                                    <SignOut size={24} stroke={2} />
+                                    <SignOut size={24} weight="thin" />
                                     Logout
                                 </div>
-                            )}
+                            </ConditionalRender>
                         </ul>
                     </div>
                 </div>

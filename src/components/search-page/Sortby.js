@@ -6,6 +6,7 @@ import {
     CaretUp,
     CaretUpDown,
 } from '@phosphor-icons/react'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 export default function SortBy({ onSortChange, sortOptions }) {
     const [selectedSort, setSelectedSort] = useState({
@@ -37,13 +38,16 @@ export default function SortBy({ onSortChange, sortOptions }) {
             <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-xs rounded-full bg-base-100 text-left whitespace-normal break-words px-2 max-w-full flex flex-col items-center">
-                {!selectedSort.field ? (
+                className={cn(
+                    'btn btn-xs rounded-full bg-base-100 text-left whitespace-normal break-words px-2 max-w-full flex flex-col items-center',
+                )}>
+                <ConditionalRender condition={!selectedSort.field}>
                     <>
                         <span>Sort</span>
                         <CaretUpDown size={16} />
                     </>
-                ) : (
+                </ConditionalRender>
+                <ConditionalRender condition={!!selectedSort.field}>
                     <>
                         {
                             sortOptions.find(
@@ -56,7 +60,7 @@ export default function SortBy({ onSortChange, sortOptions }) {
                             <CaretDown size={16} />
                         )}
                     </>
-                )}
+                </ConditionalRender>
             </div>
 
             <ul

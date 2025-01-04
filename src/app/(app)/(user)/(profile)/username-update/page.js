@@ -7,6 +7,7 @@ import SuccessDisplay from '@/components/ui/SuccessDisplay'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@/context/UserContext'
 import MainCard from '@/components/ui/MainCard'
+import { ConditionalRender } from '@/lib/utils'
 
 const page = () => {
     const { user, isLoading } = useUser()
@@ -34,7 +35,10 @@ const page = () => {
 
             if (response.status === 204) {
                 setSuccess('Username Updated Successfully!')
-                setTimeout(() => setSuccess(null), router.push('/'), 3000)
+                setTimeout(() => {
+                    setSuccess(null)
+                    router.push('/')
+                }, 3000)
             }
         } catch (err) {
             setError(err.response.data.errors)
@@ -63,7 +67,9 @@ const page = () => {
                     isSubmitting={isSubmitting}
                     label="Update Username"
                 />
-                {success && <SuccessDisplay success={success} />}
+                <ConditionalRender condition={success}>
+                    <SuccessDisplay success={success} />
+                </ConditionalRender>
             </form>
         </MainCard>
     )

@@ -7,6 +7,7 @@ import axios from '@/lib/axios'
 import SuccessDisplay from '@/components/ui/SuccessDisplay'
 import { useRouter } from 'next/navigation'
 import MainCard from '@/components/ui/MainCard'
+import { ConditionalRender } from '@/lib/utils'
 
 const page = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -67,7 +68,6 @@ const page = () => {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 form-control">
                 <div>
-                    {' '}
                     <InputField
                         label="Current Password"
                         type="password"
@@ -75,9 +75,9 @@ const page = () => {
                         placeholder="••••••••"
                         required
                     />
-                    {error?.old_password && (
-                        <ErrorDisplay errors={error.old_password} />
-                    )}
+                    <ConditionalRender condition={error?.old_password}>
+                        <ErrorDisplay errors={error?.old_password} />
+                    </ConditionalRender>
                 </div>
                 <div>
                     <InputField
@@ -97,12 +97,16 @@ const page = () => {
                         required
                     />
                 </div>
-                {error?.password && <ErrorDisplay errors={error.password} />}
+                <ConditionalRender condition={error?.password}>
+                    <ErrorDisplay errors={error?.password} />
+                </ConditionalRender>
                 <SubmitButton
                     isSubmitting={isSubmitting}
                     label="Update Password"
                 />
-                {success && <SuccessDisplay success={success} />}
+                <ConditionalRender condition={success}>
+                    <SuccessDisplay success={success} />
+                </ConditionalRender>
             </form>
         </MainCard>
     )

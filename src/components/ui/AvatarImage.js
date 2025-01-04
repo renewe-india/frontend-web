@@ -1,6 +1,7 @@
 'use client'
 
 import Image from '../Image'
+import { cn } from '@/lib/utils'
 
 export default function Avatar({
     avatarUrl,
@@ -22,7 +23,11 @@ export default function Avatar({
         <Image
             data={avatarUrl}
             alt={alt}
-            className={`avatar rounded-full flex-shrink-0 bg-base-300 ${sizes[size]} ${borderStyles}`}
+            className={cn(
+                'avatar rounded-full flex-shrink-0 bg-base-300',
+                sizes[size],
+                borderStyles,
+            )}
         />
     )
 }

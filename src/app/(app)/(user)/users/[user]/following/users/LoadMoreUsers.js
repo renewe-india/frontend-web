@@ -5,6 +5,7 @@ import UserCard from '@/components/cards/UserCard'
 import Spinner from '@/components/ui/Spinner'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 export default function LoadMoreUser({ username }) {
     const [users, setUsers] = useState([])
@@ -36,13 +37,15 @@ export default function LoadMoreUser({ username }) {
             {users.map(user => (
                 <UserCard key={user?.username} user={user} />
             ))}
-            {page !== lastPage && (
+            <ConditionalRender condition={page !== lastPage}>
                 <div
-                    className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
+                    className={cn('flex justify-center items-center p-4', {
+                        'col-span-1 sm:col-span-2 md:col-span-3': true,
+                    })}
                     ref={ref}>
                     <Spinner />
                 </div>
-            )}
+            </ConditionalRender>
         </div>
     )
 }

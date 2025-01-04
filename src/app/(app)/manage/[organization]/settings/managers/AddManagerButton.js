@@ -5,6 +5,7 @@ import axios from '@/lib/axios'
 import SearchComponent from '@/components/dashboard/SearchComponent'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import { useToast } from '@/context/ToastContext'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 function AddManagerButton({
     style,
@@ -66,10 +67,10 @@ function AddManagerButton({
         <>
             <button
                 onClick={openModal}
-                className={
-                    'btn px-6 btn-sm normal-case btn-primary ' +
-                    `${style ? style : ''}`
-                }>
+                className={cn(
+                    'btn px-6 btn-sm normal-case btn-primary',
+                    style,
+                )}>
                 Add Manager
             </button>
 
@@ -123,7 +124,9 @@ function AddManagerButton({
                                 ))}
                             </div>
                         </div>
-                        {error?.roles && <ErrorDisplay errors={error.roles} />}
+                        <ConditionalRender condition={error?.roles}>
+                            <ErrorDisplay errors={error.roles} />
+                        </ConditionalRender>
                         <div className="flex justify-end gap-4">
                             <button type="submit" className="btn btn-primary">
                                 Add Manager

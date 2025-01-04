@@ -1,5 +1,6 @@
 'use client'
 import InputField from '@/components/ui/InputField'
+import MainCard from '@/components/ui/MainCard'
 import SubmitButton from '@/components/ui/SubmitButton'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
@@ -36,35 +37,33 @@ export default function MainSearchDropdown() {
     }
 
     return (
-        <div className="w-full">
-            <div className="join w-full card bg-base-200 rounded-lg p-5 shadow-md">
-                <form onSubmit={handleSearch} className="flex w-full ">
-                    <div className="join w-2/3 sm:w-full rounded-full">
-                        <InputField
-                            type="text"
-                            value={searchTerm}
-                            onChange={handleInputChange}
-                            placeholder="Search"
-                            className="input input-primary input-bordered join-item w-full"
-                        />
-                    </div>
-                    <select
-                        value={selectedCategory}
-                        onChange={e => setSelectedCategory(e.target.value)}
-                        className="select select-primary select-bordered join-item w-1/6 sm:w-auto">
-                        {categories.map((category, index) => (
-                            <option key={index} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
-                    <div className="indicator rounded-full w-1/6 sm:w-auto">
-                        <SubmitButton className="btn btn-primary join-item ">
-                            <MagnifyingGlass size={24} />
-                        </SubmitButton>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <MainCard CardClassName="join w-full">
+            <form onSubmit={handleSearch} className="flex w-full ">
+                <div className="join w-2/3 sm:w-full rounded-lg">
+                    <InputField
+                        type="text"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                        placeholder="Search"
+                        className="input input-neutral input-bordered join-item w-full"
+                    />
+                </div>
+                <select
+                    value={selectedCategory}
+                    onChange={e => setSelectedCategory(e.target.value)}
+                    className="select select-neutral select-bordered join-item w-1/6 sm:w-auto">
+                    {categories.map((category, index) => (
+                        <option key={index} value={category}>
+                            {category}
+                        </option>
+                    ))}
+                </select>
+                <div className="indicator rounded-lg w-1/6 sm:w-auto">
+                    <SubmitButton className="btn btn-neutral join-item ">
+                        <MagnifyingGlass size={24} />
+                    </SubmitButton>
+                </div>
+            </form>
+        </MainCard>
     )
 }

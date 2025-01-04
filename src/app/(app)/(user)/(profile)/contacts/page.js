@@ -7,6 +7,7 @@ import MainCard from '@/components/ui/MainCard'
 import Loading from '@/components/ui/Loading'
 import { useUser } from '@/context/UserContext'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import { ConditionalRender } from '@/lib/utils'
 
 export default function ContactEdit() {
     const { user } = useUser()
@@ -123,12 +124,13 @@ export default function ContactEdit() {
         <MainCard
             CardClassName="space-y-4"
             title={'Update Contact Information'}>
-            {error && (
+            <ConditionalRender condition={error}>
                 <ErrorDisplay message={error} onClose={() => setError(null)} />
-            )}
-            {loading ? (
+            </ConditionalRender>
+            <ConditionalRender condition={loading}>
                 <Loading />
-            ) : (
+            </ConditionalRender>
+            <ConditionalRender condition={!loading}>
                 <>
                     <PhoneNumberUpdateForm
                         phoneNumbers={phoneNumbers}
@@ -146,7 +148,7 @@ export default function ContactEdit() {
                         onDeleteRequest={handleDelete}
                     />
                 </>
-            )}
+            </ConditionalRender>
         </MainCard>
     )
 }

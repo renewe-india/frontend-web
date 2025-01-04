@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import axios from '@/lib/axios'
 import { Trash } from '@phosphor-icons/react'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 function SkillComponent({
     placeholder = 'Search for skills...',
@@ -114,14 +115,18 @@ function SkillComponent({
             <h2 className="text-lg font-semibold mb-4">Skills</h2>
             <div className="flex flex-col gap-6">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="card bg-base-100 rounded-lg col-spans-1">
-                        {label && (
+                    <div
+                        className={cn(
+                            'card bg-base-100 rounded-lg col-spans-1',
+                        )}>
+                        <ConditionalRender condition={label}>
                             <label className="pt-0 label label-text font-semibold">
                                 <div className="text-base lg:text-2xl font-bold">
                                     {label}
                                 </div>
                             </label>
-                        )}
+                        </ConditionalRender>
+
                         <div className="relative">
                             <input
                                 placeholder={placeholder}
@@ -149,13 +154,16 @@ function SkillComponent({
                                         ))}
                                     </>
                                 )}
-                                {results.length === 0 &&
-                                    query.trim() !== '' &&
-                                    !isSelecting && (
-                                        <li className="menu">
-                                            <div>No results found.</div>
-                                        </li>
-                                    )}
+                                <ConditionalRender
+                                    condition={
+                                        results.length === 0 &&
+                                        query.trim() !== '' &&
+                                        !isSelecting
+                                    }>
+                                    <li className="menu">
+                                        <div>No results found.</div>
+                                    </li>
+                                </ConditionalRender>
                             </ul>
                         </div>
                     </div>

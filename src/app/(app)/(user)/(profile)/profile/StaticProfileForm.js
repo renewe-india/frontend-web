@@ -11,6 +11,7 @@ import {
     GenderMale,
     GenderNonbinary,
 } from '@phosphor-icons/react'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const StaticProfileForm = () => {
     const { user, isLoading } = useUser()
@@ -80,27 +81,30 @@ const StaticProfileForm = () => {
                         <button
                             type="button"
                             onClick={() => setGender('male')}
-                            className={`btn normal-case btn-outline ${
-                                gender === 'male' && 'btn-primary'
-                            }`}>
+                            className={cn('btn normal-case btn-outline', {
+                                'btn-primary': gender === 'male',
+                            })}>
                             <GenderMale size="24" weight="duotone" />
                             Male
                         </button>
                         <button
                             type="button"
                             onClick={() => setGender('female')}
-                            className={`btn normal-case btn-outline lg:p-0 ${
-                                gender === 'female' && 'btn-primary'
-                            }`}>
+                            className={cn(
+                                'btn normal-case btn-outline lg:p-0',
+                                {
+                                    'btn-primary': gender === 'female',
+                                },
+                            )}>
                             <GenderFemale size="24" weight="duotone" />
                             Female
                         </button>
                         <button
                             type="button"
                             onClick={() => setGender('other')}
-                            className={`btn normal-case btn-outline ${
-                                gender === 'other' && 'btn-primary'
-                            }`}>
+                            className={cn('btn normal-case btn-outline', {
+                                'btn-primary': gender === 'other',
+                            })}>
                             <GenderNonbinary size="24" weight="duotone" />
                             Other
                         </button>
@@ -128,7 +132,12 @@ const StaticProfileForm = () => {
                     onClose={() => setError(null)}
                 />
 
-                <ErrorDisplay errors={error} onClose={() => setError(null)} />
+                <ConditionalRender condition={error}>
+                    <ErrorDisplay
+                        errors={error}
+                        onClose={() => setError(null)}
+                    />
+                </ConditionalRender>
 
                 <SubmitButton
                     isSubmitting={isSubmitting}

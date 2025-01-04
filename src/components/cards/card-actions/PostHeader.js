@@ -5,6 +5,7 @@ import React from 'react'
 import FollowButton from '@/components/ui/FollowButton'
 import MainCard from '@/components/ui/MainCard'
 import Avatar from '@/components/ui/AvatarImage'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const PostHeader = ({ author, sharedAt, children, className }) => {
     return (
@@ -26,11 +27,11 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                                 <span className="text-xs text-gray-500">
                                     {author?.headline}
                                 </span>
-                                {sharedAt && (
+                                <ConditionalRender condition={sharedAt}>
                                     <span className="text-xs text-gray-500">
                                         {sharedAt?.formatted}
                                     </span>
-                                )}
+                                </ConditionalRender>
                             </div>
                         </div>
                     </Link>
@@ -69,7 +70,7 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                     </ul>
                 </div>
             </div>
-            <div className={className}> {children}</div>
+            <div className={cn(className)}> {children}</div>
         </MainCard>
     )
 }

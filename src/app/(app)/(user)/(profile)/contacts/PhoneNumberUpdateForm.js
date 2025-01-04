@@ -7,6 +7,7 @@ import DeleteButton from '@/components/ui/DeleteButton'
 import VerifyButton from '@/components/ui/VerifyButton'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import SubmitButton from '@/components/ui/SubmitButton'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const PhoneNumberUpdateForm = ({
     phoneNumbers,
@@ -115,23 +116,29 @@ const PhoneNumberUpdateForm = ({
                 {phoneNumbers.map((phone, index) => (
                     <li
                         key={index}
-                        className="flex flex-col lg:flex-row items-left lg:items-center gap-3 bg-base-100 justify-between mb-2 p-2 border border-gray-600 rounded">
+                        className={cn(
+                            'flex flex-col lg:flex-row items-left lg:items-center gap-3 bg-base-100 justify-between mb-2 p-2 border border-gray-600 rounded',
+                        )}>
                         <div className="flex items-center">
-                            {phone.is_otp_verified ? (
+                            <ConditionalRender
+                                condition={phone.is_otp_verified}>
                                 <SealCheck
                                     className="w-8 h-8 text-green-600 mr-2"
                                     weight="fill"
                                 />
-                            ) : (
+                            </ConditionalRender>
+                            <ConditionalRender
+                                condition={!phone.is_otp_verified}>
                                 <SealQuestion
                                     className="w-8 h-8 mr-2"
                                     weight="fill"
                                 />
-                            )}
+                            </ConditionalRender>
                             +{phone.country_code}-{phone.data}
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                            {!phone.is_otp_verified && (
+                            <ConditionalRender
+                                condition={!phone.is_otp_verified}>
                                 <VerifyButton
                                     itemName={`+${phone.country_code}-${phone.data}`}
                                     sendOtp={async () =>
@@ -140,7 +147,7 @@ const PhoneNumberUpdateForm = ({
                                     methodType={'Phone Number'}
                                     onVerify={otp => onVerify(otp, phone)}
                                 />
-                            )}
+                            </ConditionalRender>
                             <DeleteButton
                                 itemName={`${phone.country_code}-${phone.data}`}
                                 onDelete={() => handleDelete(phone)}

@@ -4,13 +4,11 @@ import dynamic from 'next/dynamic'
 import FormSection from './FormSection'
 import useFetchOptions from '@/hooks/useFetchOptions'
 
-const InputText = dynamic(
-    () => import('@/components/dashboard/Input/InputText'),
-    { ssr: false },
+const InputText = dynamic(() =>
+    import('@/components/dashboard/Input/InputText'),
 )
-const SelectBox = dynamic(
-    () => import('@/components/dashboard/Input/SelectBox'),
-    { ssr: false },
+const SelectBox = dynamic(() =>
+    import('@/components/dashboard/Input/SelectBox'),
 )
 
 const JobDetailsSection = ({ formData, updateFormValue }) => {

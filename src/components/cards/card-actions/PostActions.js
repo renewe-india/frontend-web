@@ -8,6 +8,7 @@ import {
 } from '@phosphor-icons/react/dist/ssr'
 import CommentSection from './comments/CommentSection'
 import ReactionSection from './reactions/ReactionSection'
+import { ConditionalRender } from '@/lib/utils'
 
 const PostActions = ({ likes, comments, reposts, url }) => {
     const [showComments, setShowComments] = useState(false)
@@ -16,7 +17,7 @@ const PostActions = ({ likes, comments, reposts, url }) => {
         <>
             <div className="mt-4 flex flex-wrap justify-between items-center border-b border-neutral-content pb-1">
                 <div className="inline-flex items-center text-xs text-gray-500 flex-1 space-x-2 min-w-0">
-                    {likes.count > 0 && (
+                    <ConditionalRender condition={likes.count > 0}>
                         <>
                             <ThumbsUp
                                 size={20}
@@ -32,18 +33,20 @@ const PostActions = ({ likes, comments, reposts, url }) => {
                                 Liked by {likes.text}
                             </span>
                         </>
-                    )}
+                    </ConditionalRender>
                 </div>
 
                 <div className="text-xs text-gray-500 flex gap-4 mt-1 sm:mt-0">
-                    {comments.count > 0 && (
+                    <ConditionalRender condition={comments.count > 0}>
                         <span>{comments.abbreviate_count} comments</span>
-                    )}
-                    {reposts > 0 && <span>{reposts} reposts</span>}
+                    </ConditionalRender>
+                    <ConditionalRender condition={reposts > 0}>
+                        <span>{reposts} reposts</span>
+                    </ConditionalRender>
                 </div>
             </div>
 
-            <div className=" mt-2 grid grid-cols-4 lg:gap-2 gap-0">
+            <div className="mt-2 grid grid-cols-4 lg:gap-2 gap-0">
                 {/* Like Dropdown */}
                 <ReactionSection url={url} />
 
@@ -86,9 +89,9 @@ const PostActions = ({ likes, comments, reposts, url }) => {
                     label="Share"
                 />
             </div>
-            {showComments && (
+            <ConditionalRender condition={showComments}>
                 <CommentSection url={url} commentsCount={comments.count} />
-            )}
+            </ConditionalRender>
         </>
     )
 }

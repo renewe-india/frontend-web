@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from '@/components/Image'
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
+import clsx from 'clsx'
 
 function Carousel() {
     const images = [
@@ -45,9 +46,10 @@ function Carousel() {
                 {images.map((image, index) => (
                     <div
                         key={index}
-                        className={`duration-700 ease-in-out absolute inset-0 transition-opacity ${
-                            index === activeIndex ? 'opacity-100' : 'opacity-0'
-                        }`}
+                        className={clsx(
+                            'duration-700 ease-in-out absolute inset-0 transition-opacity',
+                            index === activeIndex ? 'opacity-100' : 'opacity-0',
+                        )}
                         data-carousel-item>
                         <Image
                             src={image.src}

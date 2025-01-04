@@ -9,7 +9,7 @@ export default async function BusinessSearch() {
         <Suspense fallback={<Loading />}>
             <SearchPageComponent
                 searchEndpoint={`organizations/type/business/search`}
-                resultCard={'business'}
+                resultCard={'organization'}
                 filterConfig={companyFilterConfig}
                 sortOptions={[
                     { label: 'Company Size', field: 'company_size' },

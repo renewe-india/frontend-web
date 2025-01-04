@@ -1,6 +1,7 @@
 'use client'
 
 import Image from '../Image'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 export default function OrganizationLogo({
     LogoUrl,
@@ -19,10 +20,16 @@ export default function OrganizationLogo({
     const borderStyles = isVerified ? 'border-green-500' : 'border-base-100'
 
     return (
-        <Image
-            data={LogoUrl}
-            alt={alt}
-            className={`avatar flex-shrink-0 bg-base-300 ${sizes[size]} ${borderStyles}`}
-        />
+        <ConditionalRender condition={LogoUrl}>
+            <Image
+                data={LogoUrl}
+                alt={alt}
+                className={cn(
+                    'avatar flex-shrink-0 bg-base-300',
+                    sizes[size],
+                    borderStyles,
+                )}
+            />
+        </ConditionalRender>
     )
 }

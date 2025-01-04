@@ -7,6 +7,7 @@ import FollowButton from '@/components/ui/FollowButton'
 import MoreOptions from './MoreOptions'
 import MainCard from '@/components/ui/MainCard'
 import EditorJsRenderer from '@/lib/utils/EditorJsRenderer'
+import { ConditionalRender } from '@/lib/utils'
 
 const ArticlePage = async ({ params }) => {
     const slug = params.slug
@@ -14,7 +15,7 @@ const ArticlePage = async ({ params }) => {
 
     return (
         <>
-            {article !== null ? (
+            <ConditionalRender condition={article !== null}>
                 <article className="max-w-4xl mx-auto bg-base-200 rounded-lg shadow-lg overflow-hidden">
                     <div className="relative">
                         {/* Author section */}
@@ -43,12 +44,15 @@ const ArticlePage = async ({ params }) => {
                                                         ?.formatted
                                                 }
                                             </p>
-                                            {article?.author?.headline && (
+                                            <ConditionalRender
+                                                condition={
+                                                    article?.author?.headline
+                                                }>
                                                 <span className="text-xs sm:text-sm text-gray-300">
                                                     ·{' '}
                                                     {article?.author?.headline}
                                                 </span>
-                                            )}
+                                            </ConditionalRender>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +107,7 @@ const ArticlePage = async ({ params }) => {
                         />
 
                         {/* Editor Attribution */}
-                        {article?.editor && (
+                        <ConditionalRender condition={article?.editor}>
                             <div className="pt-6 border-t">
                                 <div className="flex items-center gap-3">
                                     <Avatar
@@ -124,10 +128,11 @@ const ArticlePage = async ({ params }) => {
                                     </div>
                                 </div>
                             </div>
-                        )}
+                        </ConditionalRender>
                     </div>
                 </article>
-            ) : (
+            </ConditionalRender>
+            <ConditionalRender condition={article === null}>
                 <MainCard>
                     <div className="flex flex-col items-center justify-center text-center">
                         <img
@@ -141,7 +146,7 @@ const ArticlePage = async ({ params }) => {
                         </div>
                     </div>
                 </MainCard>
-            )}
+            </ConditionalRender>
         </>
     )
 }

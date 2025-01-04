@@ -1,10 +1,11 @@
 import OrganizationLogo from '../organization/OrganizationLogo'
 import FollowButton from '../ui/FollowButton'
 import { Users } from '@phosphor-icons/react/dist/ssr'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 export default function OrganizationCard({ organization }) {
     return (
-        <div className="card w-full bg-base-100 shadow-md rounded-lg p-4">
+        <div className={cn('card w-full bg-base-100 shadow-md rounded-lg p-4')}>
             {/* Organization Logo and Name */}
             <div className="flex items-center w-full justify-between">
                 {/* Left side: Avatar, Name, and Tagline */}
@@ -21,14 +22,18 @@ export default function OrganizationCard({ organization }) {
                             <h2 className="card-title text-base font-semibold flex items-center">
                                 {organization?.display_name}
                             </h2>
-                            {organization?.tagline && (
+                            <ConditionalRender
+                                condition={organization?.tagline}>
                                 <p className="text-sm text-gray-600 truncate">
                                     {organization?.tagline}
                                 </p>
-                            )}
+                            </ConditionalRender>
 
                             {/* Followers Information */}
-                            {organization?.followed_by?.count > 0 && (
+                            <ConditionalRender
+                                condition={
+                                    organization?.followed_by?.count > 0
+                                }>
                                 <div className="flex items-start text-gray-600 mb-2">
                                     <Users
                                         size={16}
@@ -53,7 +58,7 @@ export default function OrganizationCard({ organization }) {
                                         </span>
                                     </div>
                                 </div>
-                            )}
+                            </ConditionalRender>
                         </div>
                     </div>
                 </a>

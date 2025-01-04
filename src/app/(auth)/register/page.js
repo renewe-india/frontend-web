@@ -11,6 +11,7 @@ import {
 import SubmitButton from '@/components/ui/SubmitButton'
 import InputField from '@/components/ui/InputField'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const RegisterPage = () => {
     const { register } = useAuth({
@@ -106,7 +107,6 @@ const RegisterPage = () => {
                     </div>
 
                     <div>
-                        {' '}
                         <InputField
                             id="date_of_birth"
                             label="Date of Birth"
@@ -128,35 +128,35 @@ const RegisterPage = () => {
                             <button
                                 type="button"
                                 onClick={() => setGender('male')}
-                                className={`btn normal-case btn-outline ${
-                                    gender === 'male' && 'btn-primary'
-                                }`}>
+                                className={cn('btn normal-case btn-outline', {
+                                    'btn-primary': gender === 'male',
+                                })}>
                                 <GenderMale size="24" weight="duotone" />
                                 Male
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setGender('female')}
-                                className={`btn normal-case btn-outline ${
-                                    gender === 'female' && 'btn-primary'
-                                }`}>
+                                className={cn('btn normal-case btn-outline', {
+                                    'btn-primary': gender === 'female',
+                                })}>
                                 <GenderFemale size="24" weight="duotone" />
                                 Female
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setGender('other')}
-                                className={`btn normal-case btn-outline ${
-                                    gender === 'other' && 'btn-primary'
-                                }`}>
+                                className={cn('btn normal-case btn-outline', {
+                                    'btn-primary': gender === 'other',
+                                })}>
                                 <GenderNonbinary size="24" weight="duotone" />
                                 Other
                             </button>
                             <input type="hidden" name="gender" value={gender} />
                         </div>
-                        {errors.gender && (
+                        <ConditionalRender condition={errors.gender}>
                             <ErrorDisplay errors={errors.gender} />
-                        )}
+                        </ConditionalRender>
                     </div>
 
                     <SubmitButton

@@ -4,9 +4,11 @@ import MainSearchDropdown from './MainSearchDropdown'
 import FeedCards from '@/components/cards/feed/FeedCards'
 import LoadMoreFeed, { NoMoreFeed } from './LoadMoreFeed'
 import { getPaginatedData } from '@/actions/get-paginated-data'
+import { ConditionalRender } from '@/lib/utils'
 
 const Home = async () => {
     const { data: posts, meta } = await getPaginatedData(1, '/feeds')
+
     return (
         <div className="space-y-2">
             <MainSearchDropdown />
@@ -23,8 +25,12 @@ const Home = async () => {
                     </div>
                 </div>
                 <FeedCards posts={posts} />
-                {meta.last_page === 1 && <NoMoreFeed />}
-                {meta.last_page !== 1 && <LoadMoreFeed />}
+                <ConditionalRender condition={meta.last_page === 1}>
+                    <NoMoreFeed />
+                </ConditionalRender>
+                <ConditionalRender condition={meta.last_page !== 1}>
+                    <LoadMoreFeed />
+                </ConditionalRender>
             </div>
         </div>
     )

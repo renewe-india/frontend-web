@@ -6,6 +6,7 @@ import { useToast } from '@/context/ToastContext'
 import useFetchOptions from '@/hooks/useFetchOptions'
 import AddManagerButton from './AddManagerButton'
 import ManagerRow from './ManagerRow'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 function ManagersTable({ managers: managersData, organizationName }) {
     const [managers, setManagers] = useState(managersData)
@@ -24,7 +25,10 @@ function ManagersTable({ managers: managersData, organizationName }) {
     }, [organizationName])
 
     return (
-        <div className="card bg-base-200 rounded-lg mx-2 md:mx-0 mb-2 lg:p-5 flex flex-col gap-5">
+        <div
+            className={cn(
+                'card bg-base-200 rounded-lg mx-2 md:mx-0 mb-2 lg:p-5 flex flex-col gap-5',
+            )}>
             <div className="flex justify-between items-center">
                 <div className="text-2xl font-bold">Business Managers</div>
                 <div className="inline-block float-right">
@@ -36,7 +40,7 @@ function ManagersTable({ managers: managersData, organizationName }) {
                 </div>
             </div>
 
-            {managers && (
+            <ConditionalRender condition={managers}>
                 <div className="lg:px-5 flex flex-col gap-2">
                     <div className="flex justify-between font-bold">
                         <div className="w-1/2 pl-2">Name</div>
@@ -53,7 +57,7 @@ function ManagersTable({ managers: managersData, organizationName }) {
                         />
                     ))}
                 </div>
-            )}
+            </ConditionalRender>
         </div>
     )
 }

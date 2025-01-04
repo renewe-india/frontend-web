@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Smiley, Image as ImageIcon, X } from '@phosphor-icons/react'
 import Image from '@/components/Image'
 import Avatar from '@/components/ui/AvatarImage'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const CommentInput = ({
     user,
@@ -66,20 +67,20 @@ const CommentInput = ({
                         e.target.style.height = `${e.target.scrollHeight}px`
                     }}
                     placeholder="Add a comment..."
-                    className={`textarea textarea-bordered w-full ${
-                        userImage ? 'pb-24' : userComment ? 'pb-10' : ''
-                    }`}
+                    className={cn('textarea textarea-bordered w-full', {
+                        'pb-24': userImage,
+                        'pb-10': userComment,
+                    })}
                     style={{ overflow: 'hidden' }}
                 />
 
                 {/* Emoji Picker and Image Upload Button */}
                 <div
-                    className={`absolute flex items-center gap-2 ${
-                        userComment || userImage
-                            ? 'left-4 bottom-4'
-                            : 'right-2 top-4'
-                    }`}>
-                    {!userImage && (
+                    className={cn('absolute flex items-center gap-2', {
+                        'left-4 bottom-4': userComment || userImage,
+                        'right-2 top-4': !userComment && !userImage,
+                    })}>
+                    <ConditionalRender condition={userImage}>
                         <label className="cursor-pointer">
                             <ImageIcon size={20} />
                             <input
@@ -89,13 +90,12 @@ const CommentInput = ({
                                 onChange={handleImageUpload}
                             />
                         </label>
-                    )}
+                    </ConditionalRender>
 
                     <div className="relative">
                         {/* Image Preview and Removal */}
-                        {userImage && (
-                            <div
-                                className={`absolute z-10 w-20 h-20 bottom-0 left-10`}>
+                        <ConditionalRender condition={userImage}>
+                            <div className="absolute z-10 w-20 h-20 bottom-0 left-10">
                                 <Image
                                     src={userImage}
                                     alt="Image Preview"
@@ -112,21 +112,22 @@ const CommentInput = ({
                                     <X size={12} />
                                 </button>
                             </div>
-                        )}
+                        </ConditionalRender>
                         <Smiley
                             size={20}
                             className="cursor-pointer"
                             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                         />
-                        {showEmojiPicker && (
+                        <ConditionalRender condition={showEmojiPicker}>
                             <div className="relative">
                                 <div
                                     ref={emojiPickerRef}
-                                    className={`absolute z-10 ${
-                                        userComment || userImage
-                                            ? 'top-12 -left-32'
-                                            : 'top-12 -right-10'
-                                    }`}>
+                                    className={cn('absolute z-10', {
+                                        'top-12 -left-32':
+                                            userComment || userImage,
+                                        'top-12 -right-10':
+                                            !userComment && !userImage,
+                                    })}>
                                     <button
                                         className="z-20 btn btn-circle btn-xs absolute -top-2 -right-2 bg-base-100"
                                         onClick={() =>
@@ -136,22 +137,22 @@ const CommentInput = ({
                                     </button>
                                 </div>
                             </div>
-                        )}
+                        </ConditionalRender>
                     </div>
                 </div>
 
                 {/* Post Button */}
                 <div
-                    className={`absolute ${
-                        userComment || userImage ? 'right-4 bottom-4' : ''
-                    }`}>
-                    {(userComment || userImage) && (
+                    className={cn('absolute', {
+                        'right-4 bottom-4': userComment || userImage,
+                    })}>
+                    <ConditionalRender condition={userComment || userImage}>
                         <button
                             onClick={handlePostComment}
                             className="btn btn-primary rounded-full btn-sm w-full sm:w-auto mt-4 sm:mt-0">
                             Comment
                         </button>
-                    )}
+                    </ConditionalRender>
                 </div>
             </div>
         </div>

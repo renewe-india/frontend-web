@@ -3,13 +3,13 @@
 import dynamic from 'next/dynamic'
 import FormSection from './FormSection'
 import useFetchOptions from '@/hooks/useFetchOptions'
-const InputText = dynamic(
-    () => import('@/components/dashboard/Input/InputText'),
-    { ssr: false },
+import { ConditionalRender } from '@/lib/utils'
+
+const InputText = dynamic(() =>
+    import('@/components/dashboard/Input/InputText'),
 )
-const SelectBox = dynamic(
-    () => import('@/components/dashboard/Input/SelectBox'),
-    { ssr: false },
+const SelectBox = dynamic(() =>
+    import('@/components/dashboard/Input/SelectBox'),
 )
 
 const ApplyDetailsSection = ({ formData, updateFormValue }) => {
@@ -32,17 +32,17 @@ const ApplyDetailsSection = ({ formData, updateFormValue }) => {
                 required
             />
 
-            {formData.apply_via !== 'easy_apply' && (
+            <ConditionalRender condition={formData.apply_via !== 'easy_apply'}>
                 <InputText
                     labelTitle="Apply Via Data"
                     labelDescription="Provide the necessary information for application (e.g., website or email)."
                     name="apply_via_data"
-                    containerStyle={'col-span-1 lg:col-span-2'}
+                    containerStyle="col-span-1 lg:col-span-2"
                     defaultValue={formData.apply_via_data}
                     updateFormValue={updateFormValue}
                     updateType="apply_via_data"
                 />
-            )}
+            </ConditionalRender>
         </FormSection>
     )
 }

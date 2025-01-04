@@ -1,5 +1,6 @@
 import React from 'react'
 import Spinner from './Spinner'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const SubmitButton = ({
     isSubmitting = false,
@@ -14,13 +15,17 @@ const SubmitButton = ({
         <button
             type={type}
             onClick={onClick}
-            className={`${className} ${
-                isSubmitting ? 'opacity-90 cursor-not-allowed' : ''
-            }`}
+            className={cn(className, {
+                'opacity-90 cursor-not-allowed': isSubmitting,
+            })}
             disabled={isSubmitting || disabled}>
-            {isSubmitting ? <Spinner spinColor="text-neutral" /> : children}
-
-            {isSubmitting ? null : label && <span>{label}</span>}
+            <ConditionalRender condition={isSubmitting}>
+                <Spinner spinColor="text-neutral" />
+            </ConditionalRender>
+            <ConditionalRender condition={!isSubmitting}>
+                {label && <span>{label}</span>}
+                {children}
+            </ConditionalRender>
         </button>
     )
 }

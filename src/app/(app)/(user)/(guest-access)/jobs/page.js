@@ -2,6 +2,7 @@
 
 import JobCard from '@/components/cards/JobCard'
 import Loading from '@/components/ui/Loading'
+import MainCard from '@/components/ui/MainCard'
 // import axios from '@/lib/axios'
 import React, { useEffect, useState } from 'react'
 
@@ -31,7 +32,7 @@ const JobPage = () => {
     return (
         <>
             {jobs.length === 0 ? (
-                <div className="card bg-base-200 rounded-lg p-5 shadow-md">
+                <MainCard>
                     <div className="flex flex-col items-center justify-center text-center">
                         <img
                             src="/notFound/job-not-found.svg"
@@ -45,7 +46,7 @@ const JobPage = () => {
                             upcoming Job roles!
                         </div>
                     </div>
-                </div>
+                </MainCard>
             ) : (
                 <div className="grid grid-cols-1 gap-2">
                     {jobs.map(job => (

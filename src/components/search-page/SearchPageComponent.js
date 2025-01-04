@@ -11,6 +11,7 @@ import OrganizationCard from '@/components/cards/OrganizationCard'
 import NoResultFound from '@/components/ui/NoResultFound'
 import UserCard from '../cards/UserCard'
 import Pagination from '../ui/Pagination'
+import { ConditionalRender } from '@/lib/utils'
 
 export default function SearchPageComponent({
     searchEndpoint,
@@ -75,14 +76,14 @@ export default function SearchPageComponent({
                             />
                         </div>
 
-                        {filters.length > 0 && (
+                        <ConditionalRender condition={filters.length > 0}>
                             <button
                                 className="btn btn-ghost btn-sm flex items-center gap-2 bg-base-100"
                                 onClick={() => setFilters([])}>
                                 <ArrowCounterClockwise size={16} />
                                 Reset
                             </button>
-                        )}
+                        </ConditionalRender>
                     </div>
 
                     <div className="flex-shrink-0">
@@ -94,41 +95,53 @@ export default function SearchPageComponent({
                 </div>
             </div>
             <div className="flex items-center justify-between">
-                {searchResults.length > 1 && (
+                <ConditionalRender condition={searchResults.length > 1}>
                     <div className="flex items-center space-x-2 mx-4">
                         <span className="text-xs">
                             {searchResults.length} result
                             {searchResults.length !== 1 ? 's' : ''} found
                         </span>
                     </div>
-                )}
+                </ConditionalRender>
                 <div className="flex-1 ml-2">
                     <div className="divider my-0" />
                 </div>
             </div>
             <div className="card bg-base-200 rounded-lg p-5">
-                {loading ? (
+                <ConditionalRender condition={loading}>
                     <Loading />
-                ) : searchResults.length > 0 ? (
+                </ConditionalRender>
+                <ConditionalRender
+                    condition={!loading && searchResults.length > 0}>
                     <div className="space-y-4">
-                        {searchResults.map(result =>
-                            resultCard === 'user' ? (
-                                <UserCard key={result.username} user={result} />
-                            ) : (
-                                <OrganizationCard
-                                    key={result.name}
-                                    organization={result}
-                                />
-                            ),
-                        )}
+                        {searchResults.map(result => (
+                            <>
+                                <ConditionalRender
+                                    condition={resultCard === 'user'}>
+                                    <UserCard
+                                        key={result.username}
+                                        user={result}
+                                    />
+                                </ConditionalRender>
+                                <ConditionalRender
+                                    condition={resultCard === 'organization'}>
+                                    <OrganizationCard
+                                        key={result.username}
+                                        organization={result}
+                                    />
+                                </ConditionalRender>
+                            </>
+                        ))}
                     </div>
-                ) : (
+                </ConditionalRender>
+                <ConditionalRender
+                    condition={!loading && searchResults.length === 0}>
                     <NoResultFound search={search} />
-                )}
+                </ConditionalRender>
             </div>
-            {meta && meta.last_page !== 1 && (
+            <ConditionalRender condition={meta && meta.last_page !== 1}>
                 <Pagination meta={meta} onPageChange={handlePageChange} />
-            )}
+            </ConditionalRender>
         </div>
     )
 }

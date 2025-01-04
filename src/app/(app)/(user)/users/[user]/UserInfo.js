@@ -10,6 +10,7 @@ import {
     Phone,
 } from '@phosphor-icons/react/dist/ssr'
 import React from 'react'
+import { ConditionalRender } from '@/lib/utils'
 
 const UserInfo = ({ user }) => {
     const modalId = `more_info_modal`
@@ -47,7 +48,7 @@ const UserInfo = ({ user }) => {
                     <div className="divider divider-neutral my-0" />
                     <div className="mt-4 space-y-4">
                         <div className="flex items-start gap-5">
-                            <Cake size="24" className=" mr-2" />
+                            <Cake size="24" className="mr-2" />
                             <div className="flex flex-col gap-2">
                                 <span className="text-base font-semibold">
                                     BirthDay
@@ -57,24 +58,26 @@ const UserInfo = ({ user }) => {
                         </div>
                         <div className="flex items-start gap-5">
                             {/* Gender Icon from Phosphor */}
-                            {user?.gender === 'female' ? (
-                                <GenderFemale
-                                    size="24"
-                                    className="mr-2 text-xl"
-                                />
-                            ) : user?.gender === 'male' ? (
-                                <GenderMale
-                                    size="24"
-                                    className="mr-2 text-xl"
-                                />
-                            ) : user?.gender === 'other' ? (
-                                <GenderNonbinary
-                                    size="24"
-                                    className="mr-2 text-xl"
-                                />
-                            ) : (
-                                <span className="mr-2 text-xl">❓</span>
-                            )}
+                            <ConditionalRender condition={user?.gender}>
+                                {user.gender === 'female' ? (
+                                    <GenderFemale
+                                        size="24"
+                                        className="mr-2 text-xl"
+                                    />
+                                ) : user.gender === 'male' ? (
+                                    <GenderMale
+                                        size="24"
+                                        className="mr-2 text-xl"
+                                    />
+                                ) : user.gender === 'other' ? (
+                                    <GenderNonbinary
+                                        size="24"
+                                        className="mr-2 text-xl"
+                                    />
+                                ) : (
+                                    <span className="mr-2 text-xl">❓</span>
+                                )}
+                            </ConditionalRender>
                             <div className="flex flex-col gap-2">
                                 <span className="text-base font-semibold">
                                     Gender
@@ -82,41 +85,35 @@ const UserInfo = ({ user }) => {
                                 <span>{user?.gender}</span>
                             </div>
                         </div>
-                        {user?.email ||
-                            (user?.mobile && (
-                                <>
-                                    <div className="text-lg">Contact Info</div>
-                                    {user?.email && (
-                                        <div className="flex items-start gap-5">
-                                            <Envelope
-                                                size="24"
-                                                className="mr-2 text-xl"
-                                            />
-                                            <div className="flex flex-col gap-2">
-                                                <span className="text-base font-semibold">
-                                                    Email
-                                                </span>
-                                                <span>{user?.email}</span>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {user?.mobile && (
-                                        <div className="flex items-start gap-5">
-                                            <Phone
-                                                size="24"
-                                                className="mr-2 text-xl"
-                                            />
-                                            <div className="flex flex-col gap-2">
-                                                <span className="text-base font-semibold">
-                                                    Mobile
-                                                </span>
-                                                <span>{user?.mobile}</span>
-                                            </div>
-                                        </div>
-                                    )}
-                                </>
-                            ))}
+                        <ConditionalRender
+                            condition={user?.email || user?.mobile}>
+                            <div className="text-lg">Contact Info</div>
+                            <ConditionalRender condition={user?.email}>
+                                <div className="flex items-start gap-5">
+                                    <Envelope
+                                        size="24"
+                                        className="mr-2 text-xl"
+                                    />
+                                    <div className="flex flex-col gap-2">
+                                        <span className="text-base font-semibold">
+                                            Email
+                                        </span>
+                                        <span>{user?.email}</span>
+                                    </div>
+                                </div>
+                            </ConditionalRender>
+                            <ConditionalRender condition={user?.mobile}>
+                                <div className="flex items-start gap-5">
+                                    <Phone size="24" className="mr-2 text-xl" />
+                                    <div className="flex flex-col gap-2">
+                                        <span className="text-base font-semibold">
+                                            Mobile
+                                        </span>
+                                        <span>{user?.mobile}</span>
+                                    </div>
+                                </div>
+                            </ConditionalRender>
+                        </ConditionalRender>
                     </div>
                 </div>
             </dialog>

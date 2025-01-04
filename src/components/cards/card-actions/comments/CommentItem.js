@@ -10,6 +10,7 @@ import {
 } from '@phosphor-icons/react'
 import Link from 'next/link'
 import DeleteButton from '@/components/ui/DeleteButton'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 const CommentItem = ({ comment, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false)
@@ -58,7 +59,8 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                             {comment?.published_at?.formatted}
                         </div>
                     </div>
-                    {!isEditing && (
+
+                    <ConditionalRender condition={!isEditing}>
                         <div className="dropdown dropdown-end">
                             <button
                                 tabIndex={0}
@@ -98,7 +100,7 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                                 </li>
                             </ul>
                         </div>
-                    )}
+                    </ConditionalRender>
                 </div>
 
                 {!isEditing ? (
@@ -128,16 +130,18 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                         </div>
                     </div>
                 )}
-                {comment?.contentImage && (
+                <ConditionalRender condition={comment?.contentImage}>
                     <img
                         src={comment?.contentImage}
                         alt="Content"
                         className="mt-2 rounded-lg max-w-full h-auto"
                     />
-                )}
-                {/* Conditionally hide interaction buttons */}
-                {!isEditing && (
-                    <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 ">
+                </ConditionalRender>
+                <ConditionalRender condition={!isEditing}>
+                    <div
+                        className={cn(
+                            'flex items-center gap-4 mt-2 text-sm text-gray-500',
+                        )}>
                         <button className="flex items-center gap-1">
                             <ThumbsUp size={16} /> Like
                         </button>
@@ -145,7 +149,7 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                             | Reply
                         </button>
                     </div>
-                )}
+                </ConditionalRender>
             </div>
         </div>
     )

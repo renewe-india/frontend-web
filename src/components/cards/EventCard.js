@@ -2,6 +2,8 @@ import React from 'react'
 import Image from '../Image'
 import { Calendar, MapPin } from '@phosphor-icons/react/dist/ssr'
 import Link from 'next/link'
+import { cn, ConditionalRender } from '@/lib/utils'
+import MainCard from '../ui/MainCard'
 
 function EventCard({ events }) {
     const formatDate = dateString => {
@@ -13,15 +15,13 @@ function EventCard({ events }) {
 
     return (
         <>
-            {events ? (
-                events.map((event, idx) => (
-                    <div
-                        className="card bg-base-200 rounded-lg p-5 shadow-md"
-                        key={idx}>
+            <ConditionalRender condition={events}>
+                {events.map((event, idx) => (
+                    <MainCard key={idx}>
                         <div>
                             <Link
                                 href={`/meet/${event.slug}`}
-                                className="space-y-2">
+                                className={cn('space-y-2')}>
                                 <div className="flex items-start">
                                     <div className="flex flex-col gap-1 flex-grow">
                                         <div className="font-bold">
@@ -34,12 +34,13 @@ function EventCard({ events }) {
                                                 {formatDate(event.end_at)}
                                             </div>
                                         </div>
-                                        {event.location && (
+                                        <ConditionalRender
+                                            condition={event.location}>
                                             <div className="inline-flex items-center gap-1">
                                                 <MapPin size={24} />
                                                 <div>{event.location}</div>
                                             </div>
-                                        )}
+                                        </ConditionalRender>
                                     </div>
                                     <div className="flex items-end gap-2">
                                         <div className="avatar">
@@ -63,11 +64,9 @@ function EventCard({ events }) {
                                 </p>
                             </Link>
                         </div>
-                    </div>
-                ))
-            ) : (
-                <div className="text-xl font-bold">No Events available !! </div>
-            )}
+                    </MainCard>
+                ))}
+            </ConditionalRender>
         </>
     )
 }

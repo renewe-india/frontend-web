@@ -13,6 +13,7 @@ import {
 import Loading from '@/components/ui/Loading'
 import SubmitButton from '@/components/ui/SubmitButton'
 import InputField from '@/components/ui/InputField'
+import { ConditionalRender } from '@/lib/utils'
 
 const Page = () => {
     const { onboardingOtp, onboardingVerifyOtp } = useAuth({
@@ -173,19 +174,23 @@ const Page = () => {
                                 }
                             />
                         </div>
-                        {otpSent && (
+                        <ConditionalRender condition={otpSent}>
                             <button
                                 type="button"
                                 onClick={resetForm}
                                 className="absolute right-0 mr-2">
                                 <ArrowClockwise size={24} />
                             </button>
-                        )}
+                        </ConditionalRender>
                     </div>
                 </div>
-                {errors?.data && <ErrorDisplay errors={errors.data} />}
-                {errors?.type && <ErrorDisplay errors={errors.type} />}
-                {otpSent && (
+                <ConditionalRender condition={errors?.data}>
+                    <ErrorDisplay errors={errors.data} />
+                </ConditionalRender>
+                <ConditionalRender condition={errors?.type}>
+                    <ErrorDisplay errors={errors.type} />
+                </ConditionalRender>
+                <ConditionalRender condition={otpSent}>
                     <div className="w-full">
                         <InputField
                             id="otp"
@@ -198,10 +203,11 @@ const Page = () => {
                             autoComplete="current-otp"
                         />
                     </div>
-                )}
-                {errors?.otp && errors.otp.length > 0 && (
+                </ConditionalRender>
+                <ConditionalRender
+                    condition={errors?.otp && errors.otp.length > 0}>
                     <ErrorDisplay errors={errors.otp} />
-                )}
+                </ConditionalRender>
                 <SubmitButton isSubmitting={sendingOtp || verifyingOtp}>
                     {otpSent ? (
                         <>

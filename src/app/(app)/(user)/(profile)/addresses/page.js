@@ -9,6 +9,7 @@ import AddAddressModal from '@/components/modals/AddAddressModal'
 import { useUser } from '@/context/UserContext'
 import Pagination from '@/components/ui/Pagination'
 import { getData } from '@/actions/getData'
+import { ConditionalRender } from '@/lib/utils'
 
 const AddressCard = dynamic(() => import('@/components/cards/AddressCard'))
 const ErrorDisplay = dynamic(() => import('@/components/ui/ErrorDisplay'))
@@ -127,10 +128,12 @@ const AddressPage = () => {
         setAddressToEdit(null)
         document.getElementById('add_address_modal').close()
     }
+
     const handlePageChange = url => {
         setCurrentPageURL(url)
         window.scrollTo(0, 0)
     }
+
     return (
         <>
             <MainCard
@@ -138,8 +141,8 @@ const AddressPage = () => {
                 buttonName="Add New Address"
                 setOpen={() => handleOpenModal()}>
                 <ErrorDisplay errors={errors} />
-                {!loading ? (
-                    addresses.length > 0 ? (
+                <ConditionalRender condition={!loading}>
+                    <ConditionalRender condition={addresses.length > 0}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {addresses.map(address => (
                                 <AddressCard
@@ -152,16 +155,18 @@ const AddressPage = () => {
                                 />
                             ))}
                         </div>
-                    ) : (
+                    </ConditionalRender>
+                    <ConditionalRender condition={addresses.length === 0}>
                         <NoResultFound text={'You do not have any address.'} />
-                    )
-                ) : (
+                    </ConditionalRender>
+                </ConditionalRender>
+                <ConditionalRender condition={loading}>
                     <Loading />
-                )}
+                </ConditionalRender>
             </MainCard>
-            {meta && meta.last_page !== 1 && (
+            <ConditionalRender condition={meta && meta.last_page !== 1}>
                 <Pagination meta={meta} onPageChange={handlePageChange} />
-            )}
+            </ConditionalRender>
             <AddAddressModal
                 address={addressToEdit}
                 onSubmit={addressToEdit ? handleEditAddress : handleAddAddress}

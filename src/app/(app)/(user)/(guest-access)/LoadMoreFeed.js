@@ -6,6 +6,7 @@ import MainCard from '@/components/ui/MainCard'
 import Spinner from '@/components/ui/Spinner'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
+import { ConditionalRender } from '@/lib/utils'
 
 export default function LoadMoreFeed() {
     const [posts, setPosts] = useState([])
@@ -13,10 +14,7 @@ export default function LoadMoreFeed() {
     const [lastPage, setLastPage] = useState()
     const { ref, inView } = useInView()
 
-    // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-
     const loadMorePosts = async () => {
-        // await delay(500)
         const nextPage = page + 1
         const { data: newPosts, meta } =
             (await getPaginatedData(nextPage, '/feeds')) ?? []
@@ -35,21 +33,22 @@ export default function LoadMoreFeed() {
     return (
         <div className="mt-2">
             <FeedCards posts={posts} />
-            {page !== lastPage && (
+            <ConditionalRender condition={page !== lastPage}>
                 <div
                     className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
                     ref={ref}>
                     <Spinner />
                 </div>
-            )}
-            {lastPage === page && (
+            </ConditionalRender>
+            <ConditionalRender condition={lastPage === page}>
                 <div className="my-2">
                     <NoMoreFeed />
                 </div>
-            )}
+            </ConditionalRender>
         </div>
     )
 }
+
 export function NoMoreFeed() {
     return (
         <MainCard>

@@ -1,5 +1,7 @@
 'use client'
 import React from 'react'
+import { cn } from '@/lib/utils'
+
 const Pagination = ({ meta, onPageChange }) => {
     const { current_page, last_page, links } = meta
 
@@ -10,9 +12,9 @@ const Pagination = ({ meta, onPageChange }) => {
                 .map((link, index) => (
                     <button
                         key={index}
-                        className={`join-item btn ${
-                            link.active ? 'btn-active btn-neutral' : ''
-                        }`}
+                        className={cn('join-item btn', {
+                            'btn-active btn-neutral': link.active,
+                        })}
                         onClick={() => link.url && onPageChange(link.url)}
                         dangerouslySetInnerHTML={{
                             __html: link.label.toString(),
@@ -27,9 +29,9 @@ const Pagination = ({ meta, onPageChange }) => {
                 pageButtons.push(
                     <button
                         key={i}
-                        className={`join-item btn ${
-                            link.active ? 'btn-active btn-neutral' : ''
-                        }`}
+                        className={cn('join-item btn', {
+                            'btn-active btn-neutral': link.active,
+                        })}
                         onClick={() => link.url && onPageChange(link.url)}
                         dangerouslySetInnerHTML={{
                             __html: link.label.toString(),
@@ -55,9 +57,9 @@ const Pagination = ({ meta, onPageChange }) => {
                 pageButtons.push(
                     <button
                         key={i}
-                        className={`join-item btn ${
-                            link.active ? 'btn-active btn-neutral' : ''
-                        }`}
+                        className={cn('join-item btn', {
+                            'btn-active btn-neutral': link.active,
+                        })}
                         onClick={() => link.url && onPageChange(link.url)}
                         dangerouslySetInnerHTML={{
                             __html: link.label.toString(),
@@ -75,9 +77,9 @@ const Pagination = ({ meta, onPageChange }) => {
             <div className="join ">
                 {/* Previous Button */}
                 <button
-                    className={`join-item btn ${
-                        current_page === 1 ? 'btn-disabled' : ''
-                    }`}
+                    className={cn('join-item btn', {
+                        'btn-disabled': current_page === 1,
+                    })}
                     onClick={() =>
                         current_page > 1 && onPageChange(links[0].url)
                     }>
@@ -93,9 +95,9 @@ const Pagination = ({ meta, onPageChange }) => {
 
                 {/* Next Button */}
                 <button
-                    className={`join-item btn ${
-                        current_page === last_page ? 'btn-disabled' : ''
-                    }`}
+                    className={cn('join-item btn', {
+                        'btn-disabled': current_page === last_page,
+                    })}
                     onClick={() =>
                         current_page < last_page &&
                         onPageChange(links[links.length - 1].url)

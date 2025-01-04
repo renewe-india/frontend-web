@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Plus, PencilSimple } from '@phosphor-icons/react'
 import SelectBox from '@/components/dashboard/Input/SelectBox'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 function SocialMediaInput({ socialLinks, updateSocialLinks }) {
     const [selectedPlatform, setSelectedPlatform] = useState('')
@@ -52,7 +53,7 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
     }
 
     return (
-        <div className="card bg-base-100 rounded-lg  mb-5">
+        <div className="card bg-base-100 rounded-lg mb-5">
             <h3 className="text-lg sm:text-xl font-semibold mb-4">
                 Social Links
             </h3>
@@ -67,7 +68,8 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
                         containerStyle="md:w-1/5 w-full md:mr-2"
                         value={selectedPlatform}
                     />
-                    {selectedPlatform === 'custom' && (
+                    <ConditionalRender
+                        condition={selectedPlatform === 'custom'}>
                         <input
                             type="text"
                             value={customPlatformName}
@@ -75,9 +77,9 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
                                 setCustomPlatformName(e.target.value)
                             }
                             placeholder="Enter custom social media name"
-                            className="input input-bordered  w-full md:mr-2"
+                            className="input input-bordered w-full md:mr-2"
                         />
-                    )}
+                    </ConditionalRender>
                     <input
                         type="text"
                         value={link}
@@ -97,7 +99,9 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
                         ([platform, url], index) => (
                             <li
                                 key={index}
-                                className="flex justify-between items-center mb-2 p-2 border text-black rounded bg-neutral-content">
+                                className={cn(
+                                    'flex justify-between items-center mb-2 p-2 border text-black rounded bg-neutral-content',
+                                )}>
                                 <span className="truncate">
                                     {platform} - {url}
                                 </span>
@@ -111,7 +115,7 @@ function SocialMediaInput({ socialLinks, updateSocialLinks }) {
                         ),
                     )}
                 </ul>
-            </div>{' '}
+            </div>
         </div>
     )
 }

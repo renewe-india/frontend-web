@@ -4,6 +4,7 @@ import OverviewSection from '@/components/organization/publicView/OverviewSectio
 import TabsNavigation from '@/components/organization/publicView/TabsNavigation'
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
+import { ConditionalRender } from '@/lib/utils'
 
 const JobsSection = dynamic(() =>
     import('@/components/organization/publicView/JobsSection'),
@@ -24,19 +25,21 @@ function ShowAssociationDetails({ associationDetails }) {
                 setSelectedTab={setSelectedTab}
                 tabs={tabs}
             />
-            {selectedTab === 1 && (
+            <ConditionalRender condition={selectedTab === 1}>
                 <OverviewSection
                     selectedTab={selectedTab}
                     shortDescription={associationDetails.short_description}
                 />
-            )}
-            {selectedTab === 2 && (
+            </ConditionalRender>
+            <ConditionalRender condition={selectedTab === 2}>
                 <AboutSection
                     selectedTab={selectedTab}
                     organization={associationDetails}
                 />
-            )}
-            {selectedTab === 3 && <JobsSection selectedTab={selectedTab} />}
+            </ConditionalRender>
+            <ConditionalRender condition={selectedTab === 3}>
+                <JobsSection selectedTab={selectedTab} />
+            </ConditionalRender>
         </>
     )
 }

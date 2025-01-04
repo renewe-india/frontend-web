@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Plus } from '@phosphor-icons/react'
 import useSWR from 'swr'
 import axios from '@/lib/axios'
+import { cn } from '@/lib/utils'
 
 const fetcher = url => axios.get(url).then(res => res.data.data)
 
@@ -59,7 +60,9 @@ const OrganizationList = ({ type, handleLinkClick }) => {
                 <li key={org.name}>
                     <Link
                         href={`/manage/${org.name}`}
-                        className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                        className={cn(
+                            'my-0.5 hover:text-inherit rounded-md whitespace-nowrap',
+                        )}
                         onClick={handleLinkClick}>
                         <img
                             src={org.logo.url}
@@ -73,7 +76,9 @@ const OrganizationList = ({ type, handleLinkClick }) => {
             <li>
                 <Link
                     href={createLink}
-                    className="my-0.5 hover:text-inherit rounded-md whitespace-nowrap"
+                    className={cn(
+                        'my-0.5 hover:text-inherit rounded-md whitespace-nowrap',
+                    )}
                     onClick={handleLinkClick}>
                     <Plus size={24} stroke={2} />
                     Create New {type.charAt(0).toUpperCase() + type.slice(1)}

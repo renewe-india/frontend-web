@@ -1,11 +1,13 @@
 import { getData } from '@/actions/getData'
-import Image from '@/components/Image'
-import FollowButton from '@/components/ui/FollowButton'
-import MainCard from '@/components/ui/MainCard'
-import UserInfo from './UserInfo'
-import ErrorClose from './ErrorClose'
+import dynamic from 'next/dynamic'
+
+const Image = dynamic(() => import('@/components/Image'))
+const FollowButton = dynamic(() => import('@/components/ui/FollowButton'))
+const MainCard = dynamic(() => import('@/components/ui/MainCard'))
+const UserInfo = dynamic(() => import('./UserInfo'))
+const ErrorClose = dynamic(() => import('./ErrorClose'))
 import { getPaginatedData } from '@/actions/get-paginated-data'
-import NetworkCard from '@/components/cards/NetworkCard'
+const NetworkCard = dynamic(() => import('@/components/cards/NetworkCard'))
 import {
     UserCircleCheck,
     User,
@@ -14,8 +16,11 @@ import {
 } from '@phosphor-icons/react/dist/ssr'
 import Link from 'next/link'
 import React from 'react'
-import RelationshipListModal from '@/components/ui/RelationshipListModal'
-import Avatar from '@/components/ui/AvatarImage'
+const RelationshipListModal = dynamic(() =>
+    import('@/components/ui/RelationshipListModal'),
+)
+const Avatar = dynamic(() => import('@/components/ui/AvatarImage'))
+import { ConditionalRender } from '@/lib/utils'
 
 export const metadata = {
     title: 'User Show',
@@ -117,18 +122,28 @@ export default async function UserShow({ params }) {
                         />
                         Following
                     </span>
-                    {userFollowingMeta.total + organizationFollowingMeta.total >
-                    0 ? (
-                        <div className=" text-sm text-gray-500">
+                    <ConditionalRender
+                        condition={
+                            userFollowingMeta.total +
+                                organizationFollowingMeta.total >
+                            0
+                        }>
+                        <div className="text-sm text-gray-500">
                             {userFollowingMeta.total +
                                 organizationFollowingMeta.total}{' '}
-                            Following{' '}
+                            Following
                         </div>
-                    ) : (
-                        <div className=" text-sm text-gray-500">
-                            You are not following anyone
+                    </ConditionalRender>
+                    <ConditionalRender
+                        condition={
+                            userFollowingMeta.total +
+                                organizationFollowingMeta.total ===
+                            0
+                        }>
+                        <div className="text-sm text-gray-500">
+                            You are not following anyone.
                         </div>
-                    )}
+                    </ConditionalRender>
                 </div>
                 {userFollowingMeta.total > 0 ? (
                     <>
@@ -149,7 +164,7 @@ export default async function UserShow({ params }) {
                                 href={`${username}/following/users`}
                                 className="font-semibold text-base flex gap-2 items-center">
                                 See all <ArrowRight size="16" weight="bold" />
-                            </Link>{' '}
+                            </Link>
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                             {userFollowing.map(user => (
@@ -161,25 +176,22 @@ export default async function UserShow({ params }) {
                         </div>
                     </>
                 ) : (
-                    <>
-                        <div className="flex gap-2 items-center">
-                            <User
-                                weight="duotone"
-                                size={24}
-                                color="#2478ff"
-                                className="flex-shrink-0 bg-blue-100 rounded-full p-1"
-                            />
-                            <div className="text-lg font-semibold">
-                                You do not follow any user.
-                            </div>
+                    <div className="flex gap-2 items-center">
+                        <User
+                            weight="duotone"
+                            size={24}
+                            color="#2478ff"
+                            className="flex-shrink-0 bg-blue-100 rounded-full p-1"
+                        />
+                        <div className="text-lg font-semibold">
+                            You do not follow any user.
                         </div>
-                    </>
-                )}{' '}
+                    </div>
+                )}
             </MainCard>
             <MainCard mainClassName="space-y-4">
                 {organizationFollowingMeta.total > 0 ? (
                     <>
-                        {' '}
                         <div className="flex justify-between items-center">
                             <div className="flex gap-2">
                                 <Briefcase
@@ -194,10 +206,10 @@ export default async function UserShow({ params }) {
                                 </div>
                             </div>
                             <Link
-                                href={`${username}/following/users`}
+                                href={`${username}/following/organizations`}
                                 className="font-semibold text-sm flex gap-2 items-center">
                                 See all <ArrowRight size="16" weight="bold" />
-                            </Link>{' '}
+                            </Link>
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                             {organizationFollowing.map(org => (
@@ -210,19 +222,17 @@ export default async function UserShow({ params }) {
                         </div>
                     </>
                 ) : (
-                    <>
-                        <div className="flex gap-2 items-center">
-                            <Briefcase
-                                weight="duotone"
-                                size={24}
-                                color="#b85dcb"
-                                className="flex-shrink-0 bg-purple-100 rounded-full p-1"
-                            />
-                            <div className="text-lg font-semibold">
-                                You do not follow any Organization.
-                            </div>
+                    <div className="flex gap-2 items-center">
+                        <Briefcase
+                            weight="duotone"
+                            size={24}
+                            color="#b85dcb"
+                            className="flex-shrink-0 bg-purple-100 rounded-full p-1"
+                        />
+                        <div className="text-lg font-semibold">
+                            You do not follow any Organization.
                         </div>
-                    </>
+                    </div>
                 )}
             </MainCard>
         </div>

@@ -8,6 +8,7 @@ import Pagination from '@/components/ui/Pagination'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/ui/Loading'
 import { useToast } from '@/context/ToastContext'
+import { ConditionalRender } from '@/lib/utils'
 
 const AddAddressModal = dynamic(() =>
     import('@/components/modals/AddAddressModal'),
@@ -189,14 +190,15 @@ const OrganizationComponent = ({ params }) => {
                 }}>
                 <div className="container mx-auto lg:p-4">
                     <ErrorDisplay errors={error} />
-                    {!loading ? (
-                        addresses.length > 0 ? (
+                    <ConditionalRender condition={!loading}>
+                        <ConditionalRender condition={addresses.length > 0}>
+                            {' '}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {addresses.map(address => (
                                     <AddressCard
                                         key={address.uuid}
                                         address={address}
-                                        onEdit={() => handleOpenModal(address)} // Open modal for editing
+                                        onEdit={() => handleOpenModal(address)}
                                         onDelete={() =>
                                             handleDelete(address.uuid)
                                         }
@@ -209,19 +211,22 @@ const OrganizationComponent = ({ params }) => {
                                     />
                                 ))}
                             </div>
-                        ) : (
+                        </ConditionalRender>
+
+                        <ConditionalRender condition={addresses.length === 0}>
                             <NoResultFound
                                 text={'You do not have any address.'}
                             />
-                        )
-                    ) : (
+                        </ConditionalRender>
+                    </ConditionalRender>
+                    <ConditionalRender condition={loading}>
                         <Loading />
-                    )}
+                    </ConditionalRender>
                 </div>
             </TitleCard>
-            {meta && meta.last_page === 1 && (
+            <ConditionalRender condition={meta && meta.last_page === 1}>
                 <Pagination meta={meta} onPageChange={handlePageChange} />
-            )}
+            </ConditionalRender>
             <AddAddressModal
                 address={addressToEdit}
                 onSubmit={addressToEdit ? handleEditAddress : handleAddAddress}

@@ -9,6 +9,7 @@ import FollowButton from './FollowButton'
 import { useInView } from 'react-intersection-observer'
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import Avatar from './AvatarImage'
+import { ConditionalRender } from '@/lib/utils'
 
 function RelationshipListModal({
     count,
@@ -81,17 +82,18 @@ function RelationshipListModal({
                 onClick={openModal}
                 className="link link-hover inline-flex gap-2 text-left">
                 <Users weight="fill" size={'20'} className="flex-shrink-0" />
-                {count?.count > 0 ? (
-                    relationshipType === 'followed-by' ? (
+                <ConditionalRender condition={count?.count > 0}>
+                    {relationshipType === 'followed-by' ? (
                         <>
                             {count?.abbreviate_count} followers • {count?.text}
                         </>
                     ) : (
                         <>0 {relationshipType}</>
-                    )
-                ) : (
+                    )}
+                </ConditionalRender>
+                <ConditionalRender condition={count?.count === 0}>
                     <>You do not have any follower.</>
-                )}
+                </ConditionalRender>
             </button>
 
             {/* Relationship Modal */}
@@ -122,11 +124,13 @@ function RelationshipListModal({
                         errors={error}
                         onClose={() => setError(null)}
                     />
-                    {loading ? (
+                    <ConditionalRender condition={loading}>
                         <div className="flex items-center justify-center">
                             <Spinner />
                         </div>
-                    ) : relationships && relationships.length > 0 ? (
+                    </ConditionalRender>
+                    <ConditionalRender
+                        condition={relationships && relationships.length > 0}>
                         <ul className="mt-4 space-y-2  h-auto">
                             {relationships.map(relationship => (
                                 <li
@@ -147,13 +151,19 @@ function RelationshipListModal({
                                             <h2 className="card-title text-base font-semibold flex items-center">
                                                 {relationship?.name}
                                             </h2>
-                                            {relationship?.headline && (
+                                            <ConditionalRender
+                                                condition={
+                                                    relationship?.headline
+                                                }>
                                                 <p className="text-sm text-gray-600 truncate">
                                                     {relationship?.headline}
                                                 </p>
-                                            )}
-                                            {relationship?.followed_by?.count >
-                                                0 && (
+                                            </ConditionalRender>
+                                            <ConditionalRender
+                                                condition={
+                                                    relationship?.followed_by
+                                                        ?.count > 0
+                                                }>
                                                 <div className="flex items-start text-gray-600 mb-2">
                                                     <Users
                                                         size={16}
@@ -182,7 +192,7 @@ function RelationshipListModal({
                                                         </span>
                                                     </div>
                                                 </div>
-                                            )}
+                                            </ConditionalRender>
                                         </div>
                                     </Link>
 
@@ -195,7 +205,11 @@ function RelationshipListModal({
                                 </li>
                             ))}
                         </ul>
-                    ) : (
+                    </ConditionalRender>
+                    <ConditionalRender
+                        condition={
+                            !(relationships && relationships.length > 0)
+                        }>
                         <p className="py-4 text-gray-500">
                             {relationshipType === 'followed-by' ? (
                                 <>You do not have any followers.</>
@@ -203,14 +217,14 @@ function RelationshipListModal({
                                 <>You do not have any {relationshipType}.</>
                             )}
                         </p>
-                    )}
-                    {page < lastPage && (
+                    </ConditionalRender>
+                    <ConditionalRender condition={page < lastPage}>
                         <div
                             className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
                             ref={ref}>
                             <Spinner />
                         </div>
-                    )}
+                    </ConditionalRender>
                 </div>
 
                 <form method="dialog" className="modal-backdrop">

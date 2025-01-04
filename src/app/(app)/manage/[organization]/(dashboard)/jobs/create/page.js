@@ -10,10 +10,11 @@ import SkillComponent from './Sections/SkillComponent'
 import { useRouter } from 'next/navigation'
 import useEditor from '@/components/dashboard/Editor/useEditor'
 import ErrorDisplay from '@/components/ui/ErrorDisplay'
+import { ConditionalRender } from '@/lib/utils'
+import SubmitButton from '@/components/ui/SubmitButton'
 
-const TitleCard = dynamic(
-    () => import('@/components/dashboard/Cards/TitleCard'),
-    { ssr: false },
+const TitleCard = dynamic(() =>
+    import('@/components/dashboard/Cards/TitleCard'),
 )
 
 function JobForm() {
@@ -114,52 +115,50 @@ function JobForm() {
                             formData={formData}
                             updateFormValue={updateFormValue}
                         />
-                        {errors.organization_name && (
+                        <ConditionalRender condition={errors.organization_name}>
                             <ErrorDisplay errors={errors.organization_name} />
-                        )}
+                        </ConditionalRender>
 
-                        {errors.location && (
+                        <ConditionalRender condition={errors.location}>
                             <ErrorDisplay errors={errors.location} />
-                        )}
+                        </ConditionalRender>
                         <ApplyDetailsSection
                             formData={formData}
                             updateFormValue={updateFormValue}
                         />
 
-                        {errors.apply_via_data && (
+                        <ConditionalRender condition={errors.apply_via_data}>
                             <ErrorDisplay errors={errors.apply_via_data} />
-                        )}
+                        </ConditionalRender>
                         <SalaryDetailsSection
                             formData={formData}
                             updateFormValue={updateFormValue}
                         />
 
-                        {errors.maximum_ctc && (
+                        <ConditionalRender condition={errors.maximum_ctc}>
                             <ErrorDisplay errors={errors.maximum_ctc} />
-                        )}
-                        {errors.minimum_ctc && (
+                        </ConditionalRender>
+                        <ConditionalRender condition={errors.minimum_ctc}>
                             <ErrorDisplay errors={errors.minimum_ctc} />
-                        )}
+                        </ConditionalRender>
                         <FormSection title="Job Description">
                             <div
                                 id="editorjs"
                                 className="container max-w-full h-full col-span-3"
                             />
-                            {errors.description && (
+                            <ConditionalRender condition={errors.description}>
                                 <ErrorDisplay errors={errors.description} />
-                            )}
+                            </ConditionalRender>
                         </FormSection>
 
                         <SkillComponent skills={skills} setSkills={setSkills} />
 
                         <div className="mt-16">
-                            <button
+                            <SubmitButton
                                 className="btn btn-primary float-right"
-                                type="submit"
-                                disabled={loading} // Disable button when loading
-                            >
-                                {loading ? 'Posting...' : 'Post Job'}
-                            </button>
+                                isSubmitting={loading}
+                                label={'Post Job'}
+                            />
                         </div>
                     </form>
                 </div>

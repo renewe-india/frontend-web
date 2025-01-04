@@ -9,6 +9,7 @@ import {
     Info,
 } from '@phosphor-icons/react/dist/ssr'
 import axios from '@/lib/axios'
+import { cn } from '@/lib/utils'
 
 const reactions = [
     {
@@ -133,11 +134,14 @@ const ReactionSection = ({ url }) => {
                             className="tooltip tooltip-top"
                             data-tip={reaction.label}>
                             <button
-                                className={`p-0 hover:scale-125 transition-transform ${
-                                    selectedReaction?.label === reaction.label
-                                        ? 'scale-110'
-                                        : ''
-                                }`}
+                                className={cn(
+                                    'p-0 hover:scale-125 transition-transform',
+                                    {
+                                        'scale-110':
+                                            selectedReaction?.label ===
+                                            reaction.label,
+                                    },
+                                )}
                                 onClick={() => handleReaction(reaction)}>
                                 {reaction.icon}
                             </button>

@@ -2,6 +2,7 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import SubmitButton from '@/components/ui/SubmitButton'
 import { PencilSimple } from '@phosphor-icons/react'
+import { cn, ConditionalRender } from '@/lib/utils'
 
 function EditManagerRolesButton({
     style,
@@ -47,10 +48,10 @@ function EditManagerRolesButton({
             {/* Edit Button */}
             <button
                 onClick={openModal}
-                className={
-                    'btn btn-sm bg-blue-600 text-white mr-2 flex items-center' +
-                    `${style ? style : ''}`
-                }>
+                className={cn(
+                    'btn btn-sm bg-blue-600 text-white mr-2 flex items-center',
+                    style,
+                )}>
                 <PencilSimple className="w-5 h-5" /> Edit
             </button>
 
@@ -104,7 +105,9 @@ function EditManagerRolesButton({
                                 ))}
                             </div>
 
-                            <SubmitButton label="Save Changes" />
+                            <ConditionalRender condition={roles.length > 0}>
+                                <SubmitButton label="Save Changes" />
+                            </ConditionalRender>
                         </div>
                     </form>
                 </div>

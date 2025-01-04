@@ -87,7 +87,7 @@ const UserProfile = ({ user }) => (
                 <Link
                     href={`/profile`}
                     className="btn btn-wide bg-base-300 normal-case btn-xs flex gap-2 items-center justify-center">
-                    <Pencil weight="fill" size={16} className="flex-shrink-0" />
+                    <Pencil weight="thin" size={16} className="flex-shrink-0" />
                     <span>Edit Profile</span>
                 </Link>
             )}

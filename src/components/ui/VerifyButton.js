@@ -1,5 +1,6 @@
 import { CheckCircle } from '@phosphor-icons/react'
 import React, { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 function VerifyButton({ style, itemName, sendOtp, methodType, onVerify }) {
     const [otp, setOtp] = useState('')
@@ -37,10 +38,10 @@ function VerifyButton({ style, itemName, sendOtp, methodType, onVerify }) {
             {/* verify Button */}
             <button
                 onClick={openModal}
-                className={
-                    'btn btn-sm btn-success text-white mr-2 flex items-center' +
-                    `${style ? style : ''}`
-                }>
+                className={cn(
+                    'btn btn-sm btn-success text-white mr-2 flex items-center',
+                    style,
+                )}>
                 <CheckCircle weight="duotone" className="w-5 h-5" /> Verify
             </button>
 
