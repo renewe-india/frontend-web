@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { X, MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
+import SubmitButton from '../ui/SubmitButton'
+import InputField from '../ui/InputField'
 
 function SearchDrawer() {
     const [searchTerm, setSearchTerm] = useState('')
@@ -61,9 +63,9 @@ function SearchDrawer() {
 
                     <div className="flex flex-col gap-5">
                         <div className="relative">
-                            <input
+                            <InputField
                                 id="search_term"
-                                placeholder=" "
+                                placeholder="Search"
                                 className="input input-primary w-full peer"
                                 type="text"
                                 name="search_term"
@@ -75,87 +77,90 @@ function SearchDrawer() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="user"
-                                    className="radio"
+                                    className="radio radio-primary"
                                     defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>User</span>
                             </label>
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="products"
-                                    className="radio"
+                                    className="radio radio-primary"
+                                    defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>Products</span>
                             </label>
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="services"
-                                    className="radio"
+                                    className="radio radio-primary"
+                                    defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>Services</span>
                             </label>
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="business"
-                                    className="radio"
+                                    className="radio radio-primary"
+                                    defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>Businesses</span>
                             </label>
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="association"
-                                    className="radio"
+                                    className="radio radio-primary"
+                                    defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>Associations</span>
                             </label>
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="news"
-                                    className="radio"
+                                    className="radio radio-primary"
+                                    defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>News</span>
                             </label>
                             <label className="flex gap-3">
-                                <input
+                                <InputField
                                     type="radio"
                                     name="search_model"
                                     value="events"
-                                    className="radio"
+                                    className="radio radio-primary"
+                                    defaultChecked
                                     onChange={handleModelChange}
                                 />
                                 <span>Events</span>
                             </label>
                         </div>
 
-                        <button
-                            type="button"
-                            onClick={handleSearch}
-                            className="btn normal-case btn-primary">
+                        <SubmitButton type="button" onClick={handleSearch}>
                             <span className="block">
                                 <MagnifyingGlass size={24} stroke={2} />
                             </span>
                             Search
-                        </button>
+                        </SubmitButton>
                     </div>
                 </div>
             </div>

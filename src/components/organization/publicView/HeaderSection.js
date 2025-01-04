@@ -21,8 +21,8 @@ function HeaderSection({ organization }) {
                     />
                 </div>
             </div>
-            <div className="mx-5 sm:py-2 mt-14 sm:mt-16 flex flex-col gap-4">
-                <div className="flex flex-col items-left gap-2">
+            <div className="mx-5 py-2 mt-14 sm:mt-16 flex flex-col gap-4">
+                <div className="mt-2 flex flex-col items-left gap-2">
                     <div className="flex items-center gap-2">
                         <h2 className=" font-bold text-xl sm:text-2xl">
                             {organization?.display_name}{' '}
@@ -38,7 +38,7 @@ function HeaderSection({ organization }) {
                     </div>
                 </div>
 
-                <div className="text-left text-xs md:text-sm ">
+                <div className="mb-2 text-left text-xs md:text-sm ">
                     <RelationshipListModal
                         count={organization?.followed_by}
                         entityName={organization?.name}

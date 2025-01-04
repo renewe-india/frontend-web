@@ -72,7 +72,7 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                                     <button
                                         onClick={handleEdit}
                                         className="btn btn-sm btn-ghost flex justify-start shadow-none border-none">
-                                        <Pencil size={24} weight="duotone" />
+                                        <Pencil size={24} />
                                         <span>Edit</span>
                                     </button>
                                 </li>
@@ -82,18 +82,17 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                                         name={' comment'}
                                         itemName={comment?.uuid}
                                         onDelete={() => onDelete(comment?.uuid)}
-                                        weight={'duotone'}
                                     />
                                 </li>
                                 <li>
                                     <button className="btn btn-sm btn-ghost flex justify-start shadow-none border-none">
-                                        <EyeSlash size={24} weight="duotone" />
+                                        <EyeSlash size={24} />
                                         <span>I don't want to see this</span>
                                     </button>
                                 </li>
                                 <li>
                                     <button className="btn btn-sm btn-ghost flex justify-start shadow-none border-none">
-                                        <Flag size={24} weight="duotone" />
+                                        <Flag size={24} />
                                         <span>Report</span>
                                     </button>
                                 </li>

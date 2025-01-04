@@ -59,7 +59,7 @@ export default async function UserShow({ params }) {
                     </div>
                 </div>
                 <div className="mx-5 sm:py-2 mt-14 sm:mt-16 flex flex-col gap-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2">
                         {/* Name and Follow Button */}
                         <div className="w-full flex flex-col sm:flex-row sm:items-center gap-2">
                             {/* Name */}
@@ -84,7 +84,7 @@ export default async function UserShow({ params }) {
                         </div>
                     </div>
 
-                    <div className="text-left text-xs md:text-sm ">
+                    <div className="mb-2 text-left text-xs md:text-sm ">
                         <RelationshipListModal
                             count={userDetails?.followed_by}
                             entityName={userDetails?.username}
@@ -106,7 +106,7 @@ export default async function UserShow({ params }) {
                 </MainCard>
             )}
 
-            <MainCard CardClassName="space-y-4">
+            <MainCard mainClassName="space-y-4">
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-bold flex gap-2 flex-shrink-0">
                         <UserCircleCheck
@@ -118,16 +118,21 @@ export default async function UserShow({ params }) {
                         Following
                     </span>
                     {userFollowingMeta.total + organizationFollowingMeta.total >
-                        0 && (
+                    0 ? (
                         <div className=" text-sm text-gray-500">
                             {userFollowingMeta.total +
                                 organizationFollowingMeta.total}{' '}
                             Following{' '}
                         </div>
+                    ) : (
+                        <div className=" text-sm text-gray-500">
+                            You are not following anyone
+                        </div>
                     )}
                 </div>
                 {userFollowingMeta.total > 0 ? (
                     <>
+                        <div className="divider my-0 h-0" />
                         <div className="flex justify-between items-center">
                             <div className="flex gap-2">
                                 <User
@@ -171,7 +176,7 @@ export default async function UserShow({ params }) {
                     </>
                 )}{' '}
             </MainCard>
-            <MainCard CardClassName="space-y-4">
+            <MainCard mainClassName="space-y-4">
                 {organizationFollowingMeta.total > 0 ? (
                     <>
                         {' '}

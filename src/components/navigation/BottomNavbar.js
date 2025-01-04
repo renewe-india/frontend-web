@@ -1,14 +1,14 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import {
-    Article,
+    // Article,
     Briefcase,
-    BriefcaseMetal,
-    Confetti,
+    // BriefcaseMetal,
+    // Confetti,
     Globe,
     Newspaper,
     Users,
-    Envelope,
+    // Envelope,
     House,
 } from '@phosphor-icons/react'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 function BottomNavbar() {
-    const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
+    // const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
     const [prevScrollPos, setPrevScrollPos] = useState(0)
     const [visible, setVisible] = useState(true)
     const path = usePathname()
@@ -33,9 +33,9 @@ function BottomNavbar() {
                 prevScrollPos > currentScrollPos || currentScrollPos < 10,
             )
             setPrevScrollPos(currentScrollPos)
-            if (!visible) {
-                setIsBottomDrawerOpen(false)
-            }
+            // if (!visible) {
+            //     setIsBottomDrawerOpen(false)
+            // }
         }
 
         window.addEventListener('scroll', handleScroll)
@@ -44,13 +44,13 @@ function BottomNavbar() {
 
     const getLinkClass = path => {
         return currentPath === path
-            ? 'flex flex-col items-center p-2 bg-base-300 text-success'
-            : 'flex flex-col items-center p-2 text-gray-500 hover:bg-base-300'
+            ? 'bg-base-300 text-success active'
+            : 'text-gray-500 hover:bg-base-300'
     }
 
     return (
         <>
-            <motion.div
+            {/* <motion.div
                 className={`mb-14 transform left-0 fixed w-full overflow-auto ease-in-out transition-all duration-300 z-10 border-t ${
                     isBottomDrawerOpen
                         ? 'translate-y-0 bottom-0'
@@ -93,11 +93,11 @@ function BottomNavbar() {
                         Buy Request
                     </button>
                 </div>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
                 id="mobile-footer"
-                className="fixed z-40 w-full text-xs grid grid-cols-5 bg-inherit lg:hidden items-center bottom-0 shadow-md"
+                className=" z-40 w-full text-xs btm-nav  bg-inherit lg:hidden bottom-0 shadow-md"
                 initial={{ y: 60 }}
                 animate={{ y: visible ? 0 : 60 }}
                 transition={{ duration: 0.3 }}>

@@ -67,7 +67,7 @@ const UserInfo = ({ user }) => {
                                     size="24"
                                     className="mr-2 text-xl"
                                 />
-                            ) : user?.gender === 'non-binary' ? (
+                            ) : user?.gender === 'other' ? (
                                 <GenderNonbinary
                                     size="24"
                                     className="mr-2 text-xl"
@@ -82,30 +82,41 @@ const UserInfo = ({ user }) => {
                                 <span>{user?.gender}</span>
                             </div>
                         </div>
-                        <div className="text-lg">Contact Info</div>
-                        {user?.email && (
-                            <div className="flex items-start gap-5">
-                                <Envelope size="24" className="mr-2 text-xl" />
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-base font-semibold">
-                                        Email
-                                    </span>
-                                    <span>{user?.email}</span>
-                                </div>
-                            </div>
-                        )}
+                        {user?.email ||
+                            (user?.mobile && (
+                                <>
+                                    <div className="text-lg">Contact Info</div>
+                                    {user?.email && (
+                                        <div className="flex items-start gap-5">
+                                            <Envelope
+                                                size="24"
+                                                className="mr-2 text-xl"
+                                            />
+                                            <div className="flex flex-col gap-2">
+                                                <span className="text-base font-semibold">
+                                                    Email
+                                                </span>
+                                                <span>{user?.email}</span>
+                                            </div>
+                                        </div>
+                                    )}
 
-                        {user?.mobile && (
-                            <div className="flex items-start gap-5">
-                                <Phone size="24" className="mr-2 text-xl" />
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-base font-semibold">
-                                        Mobile
-                                    </span>
-                                    <span>{user?.mobile}</span>
-                                </div>
-                            </div>
-                        )}
+                                    {user?.mobile && (
+                                        <div className="flex items-start gap-5">
+                                            <Phone
+                                                size="24"
+                                                className="mr-2 text-xl"
+                                            />
+                                            <div className="flex flex-col gap-2">
+                                                <span className="text-base font-semibold">
+                                                    Mobile
+                                                </span>
+                                                <span>{user?.mobile}</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            ))}
                     </div>
                 </div>
             </dialog>

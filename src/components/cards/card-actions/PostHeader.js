@@ -9,8 +9,8 @@ import Avatar from '@/components/ui/AvatarImage'
 const PostHeader = ({ author, sharedAt, children, className }) => {
     return (
         <MainCard CardClassName="card-bordered !p-2">
-            <div className="flex items-center justify-between ">
-                <div className="flex items-start gap-3">
+            <div className="flex items-center gap-3 ">
+                <div className="flex items-center justify-between w-full">
                     <Link href={`/users/${author?.username}`}>
                         <div className="flex items-center gap-3">
                             <Avatar
@@ -40,34 +40,33 @@ const PostHeader = ({ author, sharedAt, children, className }) => {
                         isFollowing={author?.is_following}
                     />
                 </div>
-                <div className="flex items-center gap-3">
-                    <div className="dropdown dropdown-end">
-                        <button tabIndex={0} className="btn btn-ghost btn-sm">
-                            ⋮
-                        </button>
-                        <ul
-                            tabIndex={0}
-                            className="dropdown-content z-10 menu p-2 shadow bg-base-100 rounded-box w-40">
-                            <li>
-                                <button className="flex items-center gap-2">
-                                    <BookmarkSimple size={24} />
-                                    Save Post
-                                </button>
-                            </li>
-                            <li>
-                                <button className="flex items-center gap-2">
-                                    <EyeSlash size={24} />
-                                    Hide Post
-                                </button>
-                            </li>
-                            <li>
-                                <button className="flex items-center gap-2">
-                                    <Flag size={24} />
-                                    Report
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+
+                <div className="dropdown dropdown-end">
+                    <button tabIndex={0} className="btn btn-ghost btn-sm">
+                        ⋮
+                    </button>
+                    <ul
+                        tabIndex={0}
+                        className="dropdown-content z-10 menu p-2 shadow bg-base-100 rounded-box w-40">
+                        <li>
+                            <button className="flex items-center gap-2">
+                                <BookmarkSimple size={24} />
+                                Save Post
+                            </button>
+                        </li>
+                        <li>
+                            <button className="flex items-center gap-2">
+                                <EyeSlash size={24} />
+                                Hide Post
+                            </button>
+                        </li>
+                        <li>
+                            <button className="flex items-center gap-2">
+                                <Flag size={24} />
+                                Report
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div className={className}> {children}</div>

@@ -58,7 +58,7 @@ export default function NetworkCard({ entity, entityType, onDismiss }) {
             <div className=" mb-8 flex items-center justify-center">
                 {entity?.followed_by.count > 0 && (
                     <span className="mt-4 text-xs text-gray-600 text-center">
-                        {entity?.followed_by.text} followed
+                        {entity?.followed_by.text} followed this
                     </span>
                 )}
             </div>

@@ -1,5 +1,6 @@
 'use client'
 import InputField from '@/components/ui/InputField'
+import SubmitButton from '@/components/ui/SubmitButton'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -58,11 +59,9 @@ export default function MainSearchDropdown() {
                         ))}
                     </select>
                     <div className="indicator rounded-full w-1/6 sm:w-auto">
-                        <button
-                            type="submit"
-                            className="btn btn-primary join-item ">
+                        <SubmitButton className="btn btn-primary join-item ">
                             <MagnifyingGlass size={24} />
-                        </button>
+                        </SubmitButton>
                     </div>
                 </form>
             </div>
