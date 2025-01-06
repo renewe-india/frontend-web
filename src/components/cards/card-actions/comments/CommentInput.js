@@ -69,7 +69,7 @@ const CommentInput = ({
                     placeholder="Add a comment..."
                     className={cn('textarea textarea-bordered w-full', {
                         'pb-24': userImage,
-                        'pb-10': userComment,
+                        'pb-10': userComment && !userImage,
                     })}
                     style={{ overflow: 'hidden' }}
                 />
@@ -80,7 +80,7 @@ const CommentInput = ({
                         'left-4 bottom-4': userComment || userImage,
                         'right-2 top-4': !userComment && !userImage,
                     })}>
-                    <ConditionalRender condition={userImage}>
+                    <ConditionalRender condition={!userImage}>
                         <label className="cursor-pointer">
                             <ImageIcon size={20} />
                             <input

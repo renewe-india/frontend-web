@@ -81,33 +81,38 @@ const StaticProfileForm = () => {
                         <button
                             type="button"
                             onClick={() => setGender('male')}
-                            className={cn('btn normal-case btn-outline', {
+                            className={cn('btn normal-case btn-outline p-2', {
                                 'btn-primary': gender === 'male',
                             })}>
-                            <GenderMale size="24" weight="duotone" />
-                            Male
+                            <div className="tooltip" data-tip="Male">
+                                <GenderMale size="24" weight="duotone" />
+                            </div>
+                            <span className="hidden sm:block">Male</span>
                         </button>
                         <button
                             type="button"
                             onClick={() => setGender('female')}
-                            className={cn(
-                                'btn normal-case btn-outline lg:p-0',
-                                {
-                                    'btn-primary': gender === 'female',
-                                },
-                            )}>
-                            <GenderFemale size="24" weight="duotone" />
-                            Female
+                            className={cn('btn normal-case btn-outline p-2', {
+                                'btn-primary': gender === 'female',
+                            })}>
+                            <div className="tooltip" data-tip="Female">
+                                <GenderFemale size="24" weight="duotone" />
+                            </div>
+                            <span className="hidden sm:block">Female</span>
                         </button>
+
                         <button
                             type="button"
                             onClick={() => setGender('other')}
-                            className={cn('btn normal-case btn-outline', {
+                            className={cn('btn normal-case btn-outline p-2', {
                                 'btn-primary': gender === 'other',
                             })}>
-                            <GenderNonbinary size="24" weight="duotone" />
-                            Other
+                            <div className="tooltip" data-tip="others">
+                                <GenderNonbinary size="24" weight="duotone" />
+                            </div>
+                            <span className="hidden sm:block">Other</span>
                         </button>
+
                         <input type="hidden" name="gender" value={gender} />
                     </div>
                 </div>

@@ -18,7 +18,7 @@ const Network = () => {
             text: 'Mr. Tremaine Parisian Jr., Jay Grant and 24 others',
         },
         avatar: {
-            url: 'http://localhost:8000/images/placeholder/user.svg',
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/images/placeholder/user.svg`,
             srcset: null,
         },
     }

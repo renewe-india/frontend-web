@@ -63,7 +63,7 @@ const CommentSection = ({ commentsCount, url }) => {
 
     const handleDelete = async uuid => {
         try {
-            await axios.delete(`${url}/comments/${uuid}`)
+            await axios.delete(`/comment/comments/${uuid}`)
             setComments(prevComments =>
                 prevComments.filter(comment => comment.uuid !== uuid),
             )
@@ -74,7 +74,7 @@ const CommentSection = ({ commentsCount, url }) => {
 
     const handleEdit = async (uuid, newComment) => {
         try {
-            await axios.patch(`${url}/comments/${uuid}`, {
+            await axios.patch(`/comment/comments/${uuid}`, {
                 comment: newComment,
             })
 
@@ -126,7 +126,7 @@ const CommentSection = ({ commentsCount, url }) => {
                     ))}
                 </ConditionalRender>
                 <ConditionalRender condition={comments.length === 0}>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-500 text-center ">
                         Be the first to comment on this post.
                     </div>
                 </ConditionalRender>

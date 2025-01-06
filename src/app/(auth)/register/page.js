@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from '@/hooks/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
     GenderFemale,
@@ -27,6 +27,12 @@ const RegisterPage = () => {
     const [errors, setErrors] = useState([])
     const [isSubmitting, setIsSubmitting] = useState(false)
 
+    useEffect(() => {
+        setName(localStorage.getItem('name') || '')
+        setUsername(localStorage.getItem('username') || '')
+        setDateOfBirth(localStorage.getItem('DOB') || '')
+        if (!localStorage.getItem('token')) router.push('/onboarding')
+    }, [])
     const submitForm = event => {
         event.preventDefault()
         setIsSubmitting(true)
@@ -128,29 +134,48 @@ const RegisterPage = () => {
                             <button
                                 type="button"
                                 onClick={() => setGender('male')}
-                                className={cn('btn normal-case btn-outline', {
-                                    'btn-primary': gender === 'male',
-                                })}>
-                                <GenderMale size="24" weight="duotone" />
-                                Male
+                                className={cn(
+                                    'btn normal-case btn-outline p-2',
+                                    {
+                                        'btn-primary': gender === 'male',
+                                    },
+                                )}>
+                                <div className="tooltip" data-tip="Male">
+                                    <GenderMale size="24" weight="duotone" />
+                                </div>
+                                <span className="hidden sm:block">Male</span>
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setGender('female')}
-                                className={cn('btn normal-case btn-outline', {
-                                    'btn-primary': gender === 'female',
-                                })}>
-                                <GenderFemale size="24" weight="duotone" />
-                                Female
+                                className={cn(
+                                    'btn normal-case btn-outline p-2',
+                                    {
+                                        'btn-primary': gender === 'female',
+                                    },
+                                )}>
+                                <div className="tooltip" data-tip="Female">
+                                    <GenderFemale size="24" weight="duotone" />
+                                </div>
+                                <span className="hidden sm:block">Female</span>
                             </button>
+
                             <button
                                 type="button"
                                 onClick={() => setGender('other')}
-                                className={cn('btn normal-case btn-outline', {
-                                    'btn-primary': gender === 'other',
-                                })}>
-                                <GenderNonbinary size="24" weight="duotone" />
-                                Other
+                                className={cn(
+                                    'btn normal-case btn-outline p-2',
+                                    {
+                                        'btn-primary': gender === 'other',
+                                    },
+                                )}>
+                                <div className="tooltip" data-tip="others">
+                                    <GenderNonbinary
+                                        size="24"
+                                        weight="duotone"
+                                    />
+                                </div>
+                                <span className="hidden sm:block">Other</span>
                             </button>
                             <input type="hidden" name="gender" value={gender} />
                         </div>

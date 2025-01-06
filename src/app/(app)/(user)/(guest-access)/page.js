@@ -1,6 +1,5 @@
 import React from 'react'
 import MainSearchDropdown from './MainSearchDropdown'
-// import CreatePost from './CreatePost'
 import FeedCards from '@/components/cards/feed/FeedCards'
 import LoadMoreFeed, { NoMoreFeed } from './LoadMoreFeed'
 import { getPaginatedData } from '@/actions/get-paginated-data'

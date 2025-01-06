@@ -94,9 +94,15 @@ const ArticlePage = async ({ params }) => {
                         <div className="divider" />
 
                         <div className="prose prose-gray dark:prose-invert max-w-none">
-                            <EditorJsRenderer
-                                content={JSON.parse(article?.body?.json)}
-                            />
+                            {article?.body?.json ? (
+                                <EditorJsRenderer
+                                    content={JSON.parse(article.body.json)}
+                                />
+                            ) : (
+                                <p className="text-center text-muted-foreground">
+                                    No content available for this article.
+                                </p>
+                            )}
                         </div>
 
                         {/* Engagement Section */}

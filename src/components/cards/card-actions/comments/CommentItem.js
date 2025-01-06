@@ -116,8 +116,8 @@ const CommentItem = ({ comment, onDelete, onEdit }) => {
                             <button
                                 onClick={handleSave}
                                 disabled={
-                                    editedComment.trim() ===
-                                    comment?.comment.trim()
+                                    editedComment?.trim() ===
+                                    comment?.comment?.trim()
                                 }
                                 className="btn btn-sm btn-primary">
                                 Save Changes

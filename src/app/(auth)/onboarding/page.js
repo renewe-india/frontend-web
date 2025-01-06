@@ -185,10 +185,10 @@ const Page = () => {
                     </div>
                 </div>
                 <ConditionalRender condition={errors?.data}>
-                    <ErrorDisplay errors={errors.data} />
+                    <ErrorDisplay errors={errors?.data} />
                 </ConditionalRender>
                 <ConditionalRender condition={errors?.type}>
-                    <ErrorDisplay errors={errors.type} />
+                    <ErrorDisplay errors={errors?.type} />
                 </ConditionalRender>
                 <ConditionalRender condition={otpSent}>
                     <div className="w-full">
@@ -205,8 +205,8 @@ const Page = () => {
                     </div>
                 </ConditionalRender>
                 <ConditionalRender
-                    condition={errors?.otp && errors.otp.length > 0}>
-                    <ErrorDisplay errors={errors.otp} />
+                    condition={errors?.otp && errors?.otp.length > 0}>
+                    <ErrorDisplay errors={errors?.otp} />
                 </ConditionalRender>
                 <SubmitButton isSubmitting={sendingOtp || verifyingOtp}>
                     {otpSent ? (

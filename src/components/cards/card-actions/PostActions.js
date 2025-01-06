@@ -10,14 +10,14 @@ import CommentSection from './comments/CommentSection'
 import ReactionSection from './reactions/ReactionSection'
 import { ConditionalRender } from '@/lib/utils'
 
-const PostActions = ({ likes, comments, reposts, url }) => {
+const PostActions = ({ reactions, comments, reposts, url }) => {
     const [showComments, setShowComments] = useState(false)
 
     return (
         <>
             <div className="mt-4 flex flex-wrap justify-between items-center border-b border-neutral-content pb-1">
                 <div className="inline-flex items-center text-xs text-gray-500 flex-1 space-x-2 min-w-0">
-                    <ConditionalRender condition={likes.count > 0}>
+                    <ConditionalRender condition={reactions?.count > 0}>
                         <>
                             <ThumbsUp
                                 size={20}
@@ -27,18 +27,18 @@ const PostActions = ({ likes, comments, reposts, url }) => {
                                 className="p-1 bg-blue-100 rounded-full flex-shrink-0"
                             />
                             <span className="block sm:hidden ">
-                                {likes.abbreviate_count}
+                                {reactions?.abbreviate_count}
                             </span>
                             <span className="hidden sm:block truncate">
-                                Liked by {likes.text}
+                                Liked by {reactions?.text}
                             </span>
                         </>
                     </ConditionalRender>
                 </div>
 
                 <div className="text-xs text-gray-500 flex gap-4 mt-1 sm:mt-0">
-                    <ConditionalRender condition={comments.count > 0}>
-                        <span>{comments.abbreviate_count} comments</span>
+                    <ConditionalRender condition={comments?.count > 0}>
+                        <span>{comments?.abbreviate_count} comments</span>
                     </ConditionalRender>
                     <ConditionalRender condition={reposts > 0}>
                         <span>{reposts} reposts</span>
@@ -52,14 +52,14 @@ const PostActions = ({ likes, comments, reposts, url }) => {
 
                 {/* Comment Button */}
                 <ActionButton
-                    icon={<ChatCenteredText size={16} />}
+                    icon={<ChatCenteredText size={20} />}
                     label="Comment"
                     onClick={() => setShowComments(true)}
                 />
 
                 {/* Repost Button with Dropdown */}
                 <div className="dropdown dropdown-end text-center">
-                    <ActionButton icon={<Repeat size={16} />} label="Repost" />
+                    <ActionButton icon={<Repeat size={20} />} label="Repost" />
 
                     <ul
                         tabIndex={0}
@@ -85,12 +85,12 @@ const PostActions = ({ likes, comments, reposts, url }) => {
 
                 {/* Share Button */}
                 <ActionButton
-                    icon={<PaperPlaneTilt size={16} />}
+                    icon={<PaperPlaneTilt size={20} />}
                     label="Share"
                 />
             </div>
             <ConditionalRender condition={showComments}>
-                <CommentSection url={url} commentsCount={comments.count} />
+                <CommentSection url={url} commentsCount={comments?.count} />
             </ConditionalRender>
         </>
     )

@@ -37,7 +37,8 @@ function FollowButton({ entityType, entityName, isFollowing, buttonStyle }) {
                     <Plus size="12" weight="bold" /> Follow
                 </button>
             </ConditionalRender>
-            <ConditionalRender condition={user?.username !== entityName}>
+            <ConditionalRender
+                condition={user?.username !== entityName && user}>
                 <button
                     className={cn(
                         'z-10 btn btn-xs shadow-xl rounded-full btn-outline',

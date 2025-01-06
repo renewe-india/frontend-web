@@ -125,7 +125,7 @@ function AddManagerButton({
                             </div>
                         </div>
                         <ConditionalRender condition={error?.roles}>
-                            <ErrorDisplay errors={error.roles} />
+                            <ErrorDisplay errors={error?.roles} />
                         </ConditionalRender>
                         <div className="flex justify-end gap-4">
                             <button type="submit" className="btn btn-primary">

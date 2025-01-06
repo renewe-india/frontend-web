@@ -9,6 +9,7 @@ export default async function UserSearch() {
             <SearchPageComponent
                 searchEndpoint="/users/search"
                 resultCard={'user'}
+                resultName={'Peoples'}
                 filterConfig={userFilterConfig}
                 sortOptions={[
                     { label: 'Name', field: 'name' },

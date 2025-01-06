@@ -59,7 +59,7 @@ function EditManagerRolesButton({
             <dialog
                 id={modalId}
                 className="modal flex items-center justify-center">
-                <div className="modal-box w-72 p-8 rounded-lg shadow-lg bg-base-200 relative">
+                <div className="modal-box w-96 p-8 rounded-lg shadow-lg bg-base-200 relative">
                     <form
                         onSubmit={e => {
                             e.preventDefault()
@@ -73,10 +73,10 @@ function EditManagerRolesButton({
                         </button>
 
                         <div className="flex flex-col gap-4">
-                            <label className="flex flex-col text-base lg:text-xl font-bold">
-                                <span>Select Roles:</span>
-                                <span className="text-base text-primary">
-                                    {currentManager.username}
+                            <label className="mr-2 text-base sm:text-lg font-bold">
+                                Select Roles:
+                                <span className="inline-flex items-baseline text-primary">
+                                    {currentManager.name}
                                 </span>
                             </label>
                             <div className="flex flex-col gap-2">

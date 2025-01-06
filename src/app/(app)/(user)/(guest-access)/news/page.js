@@ -15,6 +15,9 @@ const NewsPage = async () => {
                     key={index}
                     article={article}
                     sharedAt={article?.published_at}
+                    comments={article?.comments}
+                    reactions={articles?.reactions}
+                    url={`/news/articles/${article?.slug}`}
                 />
             ))}
             <ConditionalRender condition={meta.last_page === 1}>

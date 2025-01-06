@@ -62,7 +62,7 @@ const UserProfile = ({ user }) => (
                     <Image
                         data={user?.backdrop}
                         alt={user?.name}
-                        customClass="w-full h-40 object-cover rounded-lg"
+                        customClass="w-full h-48 object-cover rounded-lg"
                     />
                 </SkeletonWrapper>
                 <div className="flex justify-center -mt-10">

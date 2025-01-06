@@ -2,21 +2,17 @@ import Avatar from '../ui/AvatarImage'
 import FollowButton from '../ui/FollowButton'
 import { Users } from '@phosphor-icons/react/dist/ssr'
 import { cn, ConditionalRender } from '@/lib/utils'
+import MainCard from '../ui/MainCard'
 
 export default function UserCard({ user }) {
     return (
-        <div
-            className={cn(
-                'card w-full bg-base-100 shadow-md rounded-lg p-2 sm:p-4',
-            )}>
+        <MainCard CardClassName={cn('bg-base-100 sm:p-4')}>
             {/* Profile Image and Name */}
             <div
-                className={cn(
-                    'flex items-center w-full justify-between gap-2',
-                )}>
+                className={cn('flex items-start w-full justify-between gap-2')}>
                 {/* Left side: Avatar, Name, and Headline */}
                 <a href={`/users/${user?.username}`} className="flex-grow">
-                    <div className={cn('flex items-start')}>
+                    <div className={cn('flex items-start gap-2 sm:gap-4')}>
                         <div className="flex-none">
                             <Avatar
                                 avatarUrl={user?.avatar}
@@ -26,19 +22,17 @@ export default function UserCard({ user }) {
                             />
                         </div>
 
-                        <div className="ml-2 sm:ml-4 max-w-[200px] sm:max-w-[350px]">
+                        <div className="max-w-[200px] sm:max-w-[350px]">
                             <h2
                                 className={cn(
-                                    'card-title text-sm sm:text-base font-semibold flex items-center',
+                                    'card-title text-sm sm:text-base font-semibold',
                                 )}>
-                                <div className="flex items-start">
-                                    {user?.name}
-                                </div>
+                                {user?.name}
                             </h2>
                             <ConditionalRender condition={user?.headline}>
                                 <p
                                     className={cn(
-                                        'text-xs sm:text-sm text-gray-600 truncate',
+                                        'max-w-[100px] sm:sm:max-w-full text-xs sm:text-sm text-gray-600 truncate',
                                     )}>
                                     {user?.headline}
                                 </p>
@@ -82,6 +76,6 @@ export default function UserCard({ user }) {
                     />
                 </div>
             </div>
-        </div>
+        </MainCard>
     )
 }

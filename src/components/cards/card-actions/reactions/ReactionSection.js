@@ -8,18 +8,17 @@ import {
     HandHeart,
     Info,
 } from '@phosphor-icons/react/dist/ssr'
-import axios from '@/lib/axios'
+// import axios from '@/lib/axios'
 import { cn } from '@/lib/utils'
 
 const reactions = [
     {
         icon: (
             <ThumbsUp
-                size={32}
-                stroke={2}
-                color="#1E90FF"
-                weight="duotone"
-                className="p-1 bg-blue-100 rounded-full flex-shrink-0"
+                size={20}
+                // color="#1E90FF"
+                // weight="duotone"
+                className="flex-shrink-0 hover:text-blue-500"
             />
         ),
         label: 'Like',
@@ -27,11 +26,10 @@ const reactions = [
     {
         icon: (
             <Confetti
-                size={32}
-                stroke={2}
-                color="#FFD700"
-                weight="duotone"
-                className="p-1 bg-yellow-100 rounded-full flex-shrink-0"
+                size={20}
+                // color="#FFD700"
+                // weight="duotone"
+                className="flex-shrink-0 hover:text-yellow-500"
             />
         ),
         label: 'Celebrate',
@@ -39,11 +37,10 @@ const reactions = [
     {
         icon: (
             <Lightbulb
-                size={32}
-                stroke={2}
-                color="#FFA500"
-                weight="duotone"
-                className="p-1 bg-orange-100 rounded-full flex-shrink-0"
+                size={20}
+                // color="#FFA500"
+                // weight="duotone"
+                className="flex-shrink-0 hover:text-orange-500"
             />
         ),
         label: 'Inspiring',
@@ -51,11 +48,10 @@ const reactions = [
     {
         icon: (
             <HandsClapping
-                size={32}
-                stroke={2}
-                color="#2ECC71"
-                weight="duotone"
-                className="p-1 bg-green-100 rounded-full flex-shrink-0"
+                size={20}
+                // color="#2ECC71"
+                // weight="duotone"
+                className="flex-shrink-0 hover:text-green-500"
             />
         ),
         label: 'Appreciate',
@@ -63,11 +59,10 @@ const reactions = [
     {
         icon: (
             <HandHeart
-                size={32}
-                stroke={2}
-                color="#E74C3C"
-                weight="duotone"
-                className="p-1 bg-red-100 rounded-full flex-shrink-0"
+                size={20}
+                // color="#E74C3C"
+                // weight="duotone"
+                className="flex-shrink-0 hover:text-red-500"
             />
         ),
         label: 'Support',
@@ -75,59 +70,59 @@ const reactions = [
     {
         icon: (
             <Info
-                size={32}
-                stroke={2}
-                color="#8E44AD"
-                weight="duotone"
-                className="p-1 bg-purple-100 rounded-full flex-shrink-0"
+                size={20}
+                // color="#8E44AD"
+                // weight="duotone"
+                // className="p-1 bg-purple-100 rounded-full flex-shrink-0"
+                className="flex-shrink-0 hover:text-purple-500"
             />
         ),
         label: 'Informative',
     },
 ]
 
-const ReactionSection = ({ url }) => {
+const ReactionSection = () => {
     const [selectedReaction, setSelectedReaction] = useState(null)
 
     const handleReaction = async reaction => {
         if (!reaction) return
 
-        if (selectedReaction?.label === reaction.label) {
-            try {
-                await axios.delete(`${url}/reactions`)
-                setSelectedReaction(null)
-            } catch (error) {
-                // console.error('Error deleting reaction:', error)
-            }
-        } else {
-            try {
-                await axios.post(`${url}/reactions`, {
-                    reaction: reaction.label.toLowerCase(),
-                })
-                setSelectedReaction(reaction)
-            } catch (error) {
-                // console.error('Error updating reaction:', error)
-            }
-        }
+        // if (selectedReaction?.label === reaction.label) {
+        //     try {
+        //         await axios.delete(`${url}/reactions`)
+        //         setSelectedReaction(null)
+        //     } catch (error) {
+        //         // console.error('Error deleting reaction:', error)
+        //     }
+        // } else {
+        //     try {
+        //         await axios.post(`${url}/reactions`, {
+        //             reaction: reaction.label.toLowerCase(),
+        //         })
+        setSelectedReaction(reaction)
+        // } catch (error) {
+        //     // console.error('Error updating reaction:', error)
+        // }
+        // }
     }
 
     return (
-        <div className="dropdown dropdown-top dropdown-hover w-full">
+        <div className="dropdown dropdown-top dropdown-hove w-full">
             <button
                 className="btn btn-ghost btn-sm w-full flex justify-center items-center space-x-1 px-0"
                 onClick={() => handleReaction(selectedReaction)}>
                 {selectedReaction ? (
                     selectedReaction.icon
                 ) : (
-                    <ThumbsUp size={20} stroke={2} color="currentColor" />
+                    <ThumbsUp size={20} color="currentColor" />
                 )}
                 <span className="hidden sm:block">
                     {selectedReaction ? selectedReaction.label : 'Like'}
                 </span>
             </button>
 
-            <ul className="dropdown-content menu shadow bg-base-300 rounded-lg p-2">
-                <div className="flex gap-2 items-center justify-center">
+            <ul className="dropdown-content menu shadow bg-base-300 rounded-lg p-3 ">
+                <div className="flex gap-4 items-center justify-center">
                     {reactions.map((reaction, index) => (
                         <div
                             key={index}
@@ -135,7 +130,7 @@ const ReactionSection = ({ url }) => {
                             data-tip={reaction.label}>
                             <button
                                 className={cn(
-                                    'p-0 hover:scale-125 transition-transform',
+                                    'p-1.5 hover:scale-125 transition-transform',
                                     {
                                         'scale-110':
                                             selectedReaction?.label ===

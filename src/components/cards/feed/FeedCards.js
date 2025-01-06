@@ -5,54 +5,67 @@ import SharedWrapper from './feedWrappers/SharedWrapper'
 import { NewsCardBasic, NewsCardWithActions } from '../news/NewsCard'
 import LikedCommentedWrapper from './feedWrappers/LikedCommentedWrapper'
 import PostActions from '../card-actions/PostActions'
-import { cn, ConditionalRender } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 function FeedCards({ posts }) {
     const renderNewsCard = post => {
-        const { via, content: article, author, shared_at } = post
-        const key = article?.slug
+        const {
+            uuid,
+            via,
+            content: article,
+            author,
+            shared_at,
+            comments,
+            reactions,
+        } = post
+
+        const key = uuid
+
+        if (via === 'shared') {
+            return (
+                <SharedWrapper key={key} author={author} sharedAt={shared_at}>
+                    <NewsCardBasic
+                        article={article}
+                        sharedAt={article?.published_at}
+                    />
+                    <PostActions
+                        reactions={reactions}
+                        comments={comments}
+                        url={`/feeds/${key}`}
+                    />
+                </SharedWrapper>
+            )
+        }
+
+        if (via === 'liked' || via === 'commented') {
+            return (
+                <LikedCommentedWrapper key={key} author={author} via={via}>
+                    <NewsCardWithActions
+                        article={article}
+                        sharedAt={shared_at}
+                        comments={comments}
+                        reactions={reactions}
+                        url={`/feeds/${key}`}
+                    />
+                </LikedCommentedWrapper>
+            )
+        }
 
         return (
-            (
-                <ConditionalRender condition={via === 'shared'}>
-                    <SharedWrapper
-                        key={key}
-                        author={author}
-                        sharedAt={shared_at}>
-                        <NewsCardBasic
-                            article={article}
-                            sharedAt={article?.published_at}
-                        />
-                        <PostActions
-                            likes={article?.reactions}
-                            comments={article?.comments}
-                            url={`/news/articles/${key}`}
-                        />
-                    </SharedWrapper>
-                </ConditionalRender>
-            ) || (
-                <ConditionalRender
-                    condition={via === 'liked' || via === 'commented'}>
-                    <LikedCommentedWrapper key={key} author={author} via={via}>
-                        <NewsCardWithActions
-                            article={article}
-                            sharedAt={shared_at}
-                        />
-                    </LikedCommentedWrapper>
-                </ConditionalRender>
-            ) || (
-                <NewsCardWithActions
-                    key={key}
-                    article={article}
-                    sharedAt={shared_at}
-                />
-            )
+            <NewsCardWithActions
+                key={key}
+                article={article}
+                sharedAt={shared_at}
+                comments={comments}
+                reactions={reactions}
+                url={`/feeds/${key}`}
+            />
         )
     }
 
     const renderContent = post => {
-        const { type, content } = post
-        const key = content?.slug
+        const { uuid, type, content } = post
+        const key = uuid
 
         switch (type) {
             case 'news_article':

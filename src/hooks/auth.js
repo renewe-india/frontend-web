@@ -93,6 +93,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             const response = await axios.post('/onboarding/check-otp', props)
             const data = response.data
 
+            localStorage.setItem('name', data.name)
+            localStorage.setItem('username', data.username)
+            localStorage.setItem('DOB', data.date_of_birth)
             localStorage.setItem('contact_id', data.uuid)
             localStorage.setItem('token', data.token)
             if (data.type === 'Mobile') {

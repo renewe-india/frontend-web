@@ -12,10 +12,11 @@ import NoResultFound from '@/components/ui/NoResultFound'
 import UserCard from '../cards/UserCard'
 import Pagination from '../ui/Pagination'
 import { ConditionalRender } from '@/lib/utils'
+import MainCard from '../ui/MainCard'
 
 export default function SearchPageComponent({
     searchEndpoint,
-    defaultFilter,
+    resultName,
     resultCard,
     filterConfig,
     sortOptions,
@@ -37,9 +38,7 @@ export default function SearchPageComponent({
                     value: decodedSearchTerm,
                 },
                 sort: sortBy ? [sortBy] : [],
-                filters: defaultFilter
-                    ? [defaultFilter, ...appliedFilters]
-                    : appliedFilters,
+                filters: appliedFilters,
             })
             setMeta(response.data.meta)
             setSearchResults(response.data.data)
@@ -65,7 +64,7 @@ export default function SearchPageComponent({
 
     return (
         <div className="space-y-2">
-            <div className="card bg-base-200 rounded-lg p-5">
+            <MainCard>
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex flex-wrap items-center gap-3 flex-1">
                         <div>
@@ -93,7 +92,7 @@ export default function SearchPageComponent({
                         />
                     </div>
                 </div>
-            </div>
+            </MainCard>
             <div className="flex items-center justify-between">
                 <ConditionalRender condition={searchResults.length > 1}>
                     <div className="flex items-center space-x-2 mx-4">
@@ -107,7 +106,7 @@ export default function SearchPageComponent({
                     <div className="divider my-0" />
                 </div>
             </div>
-            <div className="card bg-base-200 rounded-lg p-5">
+            <MainCard title={resultName}>
                 <ConditionalRender condition={loading}>
                     <Loading />
                 </ConditionalRender>
@@ -138,7 +137,7 @@ export default function SearchPageComponent({
                     condition={!loading && searchResults.length === 0}>
                     <NoResultFound search={search} />
                 </ConditionalRender>
-            </div>
+            </MainCard>
             <ConditionalRender condition={meta && meta.last_page !== 1}>
                 <Pagination meta={meta} onPageChange={handlePageChange} />
             </ConditionalRender>

@@ -37,6 +37,9 @@ export default function LoadMoreNews() {
                     key={index}
                     article={article}
                     sharedAt={article?.published_at}
+                    comments={article?.comments}
+                    reactions={articles?.reactions}
+                    url={`/news/articles/${article?.slug}`}
                 />
             ))}
             <ConditionalRender condition={page !== lastPage}>

@@ -4,14 +4,10 @@ import PostActions from '../card-actions/PostActions'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-function NewsCardWithActions({ article, sharedAt }) {
+function NewsCardWithActions({ article, sharedAt, comments, reactions, url }) {
     return (
         <NewsCardBasic article={article} sharedAt={sharedAt}>
-            <PostActions
-                likes={article?.reactions}
-                comments={article?.comments}
-                url={`/news/articles/${article?.slug}`}
-            />
+            <PostActions reactions={reactions} comments={comments} url={url} />
         </NewsCardBasic>
     )
 }
