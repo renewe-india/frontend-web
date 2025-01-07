@@ -4,19 +4,30 @@ import PostActions from '../card-actions/PostActions'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-function NewsCardWithActions({ article, sharedAt, comments, reactions, url }) {
+function NewsCardWithActions({
+    article,
+    sharedAt,
+    authorType,
+    comments,
+    reactions,
+    url,
+}) {
     return (
-        <NewsCardBasic article={article} sharedAt={sharedAt}>
+        <NewsCardBasic
+            article={article}
+            sharedAt={sharedAt}
+            authorType={authorType}>
             <PostActions reactions={reactions} comments={comments} url={url} />
         </NewsCardBasic>
     )
 }
 
-function NewsCardBasic({ article, sharedAt, children }) {
+function NewsCardBasic({ article, authorType, sharedAt, children }) {
     return (
         <PostHeader
             author={article?.author}
             sharedAt={sharedAt}
+            authorType={authorType}
             className={cn('flex flex-col')}>
             <Link
                 href={`/news/${article?.slug}`}

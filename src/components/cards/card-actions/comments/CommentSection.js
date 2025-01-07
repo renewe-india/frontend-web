@@ -125,7 +125,8 @@ const CommentSection = ({ commentsCount, url }) => {
                         />
                     ))}
                 </ConditionalRender>
-                <ConditionalRender condition={comments.length === 0}>
+                <ConditionalRender
+                    condition={comments.length === 0 && !isLoading}>
                     <div className="text-sm text-gray-500 text-center ">
                         Be the first to comment on this post.
                     </div>

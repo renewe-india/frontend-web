@@ -12,6 +12,7 @@ function FeedCards({ posts }) {
         const {
             uuid,
             via,
+            author_type: authorType,
             content: article,
             author,
             shared_at,
@@ -23,9 +24,14 @@ function FeedCards({ posts }) {
 
         if (via === 'shared') {
             return (
-                <SharedWrapper key={key} author={author} sharedAt={shared_at}>
+                <SharedWrapper
+                    key={key}
+                    author={author}
+                    authorType={authorType}
+                    sharedAt={shared_at}>
                     <NewsCardBasic
                         article={article}
+                        authorType={'user'}
                         sharedAt={article?.published_at}
                     />
                     <PostActions
@@ -39,9 +45,14 @@ function FeedCards({ posts }) {
 
         if (via === 'liked' || via === 'commented') {
             return (
-                <LikedCommentedWrapper key={key} author={author} via={via}>
+                <LikedCommentedWrapper
+                    key={key}
+                    author={author}
+                    authorType={authorType}
+                    via={via}>
                     <NewsCardWithActions
                         article={article}
+                        authorType={'user'}
                         sharedAt={shared_at}
                         comments={comments}
                         reactions={reactions}
@@ -55,6 +66,7 @@ function FeedCards({ posts }) {
             <NewsCardWithActions
                 key={key}
                 article={article}
+                authorType={'user'}
                 sharedAt={shared_at}
                 comments={comments}
                 reactions={reactions}

@@ -107,7 +107,7 @@ const ReactionSection = () => {
     }
 
     return (
-        <div className="dropdown dropdown-top dropdown-hove w-full">
+        <div className="dropdown dropdown-top dropdown-hover w-full">
             <button
                 className="btn btn-ghost btn-sm w-full flex justify-center items-center space-x-1 px-0"
                 onClick={() => handleReaction(selectedReaction)}>
@@ -130,7 +130,7 @@ const ReactionSection = () => {
                             data-tip={reaction.label}>
                             <button
                                 className={cn(
-                                    'p-1.5 hover:scale-125 transition-transform',
+                                    'p-1.5 hover:scale-150  transition-transform',
                                     {
                                         'scale-110':
                                             selectedReaction?.label ===
