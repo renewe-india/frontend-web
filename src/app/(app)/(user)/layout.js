@@ -11,9 +11,7 @@ export default function AppLayout({ children }) {
     return (
         <UserProvider>
             <Navigation />
-            <Suspense fallback={null}>
-                <PopoverWrapper />
-            </Suspense>
+
             <div className="container mx-auto my-auto py-12 sm:py-16">
                 <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-2 px-2">
                     <div className="lg:col-span-4 xl:col-span-3">
@@ -23,6 +21,9 @@ export default function AppLayout({ children }) {
                     <div
                         id="main-content"
                         className="w-full min-h-screen lg:col-span-8 xl:col-span-6">
+                        <Suspense fallback={null}>
+                            <PopoverWrapper />
+                        </Suspense>
                         {children}
                     </div>
 

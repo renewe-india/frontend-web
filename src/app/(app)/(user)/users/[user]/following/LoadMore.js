@@ -35,7 +35,7 @@ export default function LoadMore({ apiEndpoint, type }) {
             case 'user':
                 return <UserCard key={item?.username} user={item} />
             case 'organization':
-                return <OrganizationCard key={item?.name} org={item} />
+                return <OrganizationCard key={item?.name} organization={item} />
             default:
                 return null
         }

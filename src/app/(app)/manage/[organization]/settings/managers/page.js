@@ -9,6 +9,7 @@ async function organizationManagers({ params }) {
     const { data: managers } = await getData(
         `/organizations/${organizationName}/managers`,
     )
+
     return (
         <MangersTable managers={managers} organizationName={organizationName} />
     )

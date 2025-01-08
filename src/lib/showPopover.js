@@ -5,13 +5,12 @@ import { useEffect, useState } from 'react'
 export default function usePopover() {
     const searchParams = useSearchParams()
     const [errorMessage, setErrorMessage] = useState(null)
-
+    const error = searchParams.get('error')
     useEffect(() => {
-        const error = searchParams.get('error')
         if (error) {
             setErrorMessage(decodeURIComponent(error))
         }
-    }, [searchParams])
+    }, [searchParams, error])
 
     return errorMessage
 }

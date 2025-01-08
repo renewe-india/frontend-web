@@ -12,6 +12,11 @@ import { ConditionalRender } from '@/lib/utils'
 
 const PostActions = ({ reactions, comments, reposts, url }) => {
     const [showComments, setShowComments] = useState(false)
+    const [commentCount, setCommentCount] = useState(comments?.count || 0)
+
+    const updateCommentCount = newCount => {
+        setCommentCount(newCount)
+    }
 
     return (
         <>
@@ -38,7 +43,7 @@ const PostActions = ({ reactions, comments, reposts, url }) => {
 
                 <div className="text-xs text-gray-500 flex gap-4 mt-1 sm:mt-0">
                     <ConditionalRender condition={comments?.count > 0}>
-                        <span>{comments?.abbreviate_count} comments</span>
+                        <span>{commentCount} comments</span>
                     </ConditionalRender>
                     <ConditionalRender condition={reposts > 0}>
                         <span>{reposts} reposts</span>
@@ -90,7 +95,11 @@ const PostActions = ({ reactions, comments, reposts, url }) => {
                 />
             </div>
             <ConditionalRender condition={showComments}>
-                <CommentSection url={url} commentsCount={comments?.count} />
+                <CommentSection
+                    url={url}
+                    commentsCount={comments?.count}
+                    onUpdateCommentCount={updateCommentCount}
+                />
             </ConditionalRender>
         </>
     )

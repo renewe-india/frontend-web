@@ -34,13 +34,13 @@ function ShowBusinessDetails({ businessDetails }) {
             <ConditionalRender condition={selectedTab === 1}>
                 <OverviewSection
                     selectedTab={selectedTab}
-                    shortDescription={businessDetails.short_description}>
+                    shortDescription={businessDetails?.short_description}>
                     <div className="bg-base-100 border-base-300 p-5 rounded-box">
                         <Carousel />
                     </div>
                     <div className="bg-base-100 border-base-300 p-5 rounded-box">
                         <CertificationSection
-                            businessName={businessDetails.display_name}
+                            businessName={businessDetails?.display_name}
                         />
                     </div>
                     <div className="bg-base-100 border-base-300 p-5 rounded-box">

@@ -1,6 +1,8 @@
 'use server'
 import axios from '@/lib/axios'
 import RequestHeader from '@/lib/RequestHeader'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 export async function getPaginatedData(page, apiUrl, limit) {
     const url = limit
         ? `${apiUrl}?page=${page}&limit=${limit}`
@@ -14,6 +16,27 @@ export async function getPaginatedData(page, apiUrl, limit) {
 
         return { data, meta }
     } catch (error) {
-        return { data: [], meta: { last_page: 1 } }
+        console.error('API Error:', error)
+        if (error.response) {
+            const status = error.response.status
+            console.log('status', status)
+            switch (status) {
+                case 400:
+                    redirect('/bad-request')
+                    break
+                case 404:
+                    redirect('/page-not-found')
+                    break
+                case 500:
+                    redirect('/internal-server-error')
+                    break
+                case 419:
+                    cookies().delete('last-auth-check')
+                    redirect('/login')
+                    break
+                default:
+                    return { data: [], meta: { last_page: 1 } }
+            }
+        }
     }
 }

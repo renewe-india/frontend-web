@@ -5,7 +5,6 @@ const Image = dynamic(() => import('@/components/Image'))
 const FollowButton = dynamic(() => import('@/components/ui/FollowButton'))
 const MainCard = dynamic(() => import('@/components/ui/MainCard'))
 const UserInfo = dynamic(() => import('./UserInfo'))
-const ErrorClose = dynamic(() => import('./ErrorClose'))
 import { getPaginatedData } from '@/actions/get-paginated-data'
 const NetworkCard = dynamic(() => import('@/components/cards/NetworkCard'))
 import {
@@ -27,7 +26,7 @@ export const metadata = {
 }
 export default async function UserShow({ params }) {
     const username = params.user
-    const { data: userDetails, error } = await getData(`/users/${username}`)
+    const { data: userDetails } = await getData(`/users/${username}`)
     const {
         data: userFollowing,
         meta: userFollowingMeta,
@@ -41,10 +40,6 @@ export default async function UserShow({ params }) {
         `users/${username}/following/organizations`,
         6,
     )
-
-    if (error?.status === 403) {
-        return <ErrorClose error={error?.data?.message} />
-    }
 
     return (
         <div className="space-y-2">

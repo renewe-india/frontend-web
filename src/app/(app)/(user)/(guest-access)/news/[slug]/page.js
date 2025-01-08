@@ -6,8 +6,11 @@ import Avatar from '@/components/ui/AvatarImage'
 import FollowButton from '@/components/ui/FollowButton'
 import MoreOptions from './MoreOptions'
 import MainCard from '@/components/ui/MainCard'
-import EditorJsRenderer from '@/lib/utils/EditorJsRenderer'
 import { ConditionalRender } from '@/lib/utils'
+import dynamic from 'next/dynamic'
+const EditorJsRenderer = dynamic(() => import('@/lib/utils/EditorJsRenderer'), {
+    ssr: false,
+})
 
 const ArticlePage = async ({ params }) => {
     const slug = params.slug
@@ -107,7 +110,7 @@ const ArticlePage = async ({ params }) => {
 
                         {/* Engagement Section */}
                         <PostActions
-                            likes={article?.reactions}
+                            reactions={article?.reactions}
                             comments={article?.comments}
                             url={`/news/articles/${article?.slug}`}
                         />

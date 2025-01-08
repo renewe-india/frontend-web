@@ -3,7 +3,7 @@ import Avatar from '@/components/ui/AvatarImage'
 import MainCard from '@/components/ui/MainCard'
 import Link from 'next/link'
 import React from 'react'
-import { cn, ConditionalRender } from '@/lib/utils'
+import { ConditionalRender } from '@/lib/utils'
 import OrganizationLogo from '@/components/organization/OrganizationLogo'
 
 const LikedCommentedWrapper = ({ author, authorType, via, children }) => {
@@ -57,8 +57,8 @@ const LikedCommentedWrapper = ({ author, authorType, via, children }) => {
     }
 
     return (
-        <MainCard CardClassName={cn('p-0 rounded-t-lg flex flex-col')}>
-            <ConditionalRender condition={authorType === null}>
+        <MainCard CardClassName="!p-0 rounded-t-lg flex flex-col">
+            <ConditionalRender condition={authorType !== null}>
                 <h4 className="p-2 border-b border-neutral-content pb-1">
                     <Link
                         href={

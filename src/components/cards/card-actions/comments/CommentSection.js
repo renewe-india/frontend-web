@@ -12,7 +12,7 @@ import ErrorDisplay from '@/components/ui/ErrorDisplay'
 import SubmitButton from '@/components/ui/SubmitButton'
 import { cn, ConditionalRender } from '@/lib/utils'
 
-const CommentSection = ({ commentsCount, url }) => {
+const CommentSection = ({ commentsCount, url, onUpdateCommentCount }) => {
     const { user } = useUser()
     const [comments, setComments] = useState([])
     const [userComment, setUserComment] = useState('')
@@ -47,18 +47,23 @@ const CommentSection = ({ commentsCount, url }) => {
             fetchComments(page + 1)
         }
     }
-
     const handlePostComment = async () => {
         if (userComment.trim() === '') return
 
-        const response = await axios.post(`${url}/comments`, {
-            comment: userComment,
-        })
-        const newComment = response.data.data
+        try {
+            const response = await axios.post(`${url}/comments`, {
+                comment: userComment,
+            })
+            const newComment = response.data.data
 
-        setComments(prevComments => [newComment, ...prevComments])
-        setUserComment('')
-        setUserImage(null)
+            setComments(prevComments => [newComment, ...prevComments])
+            setUserComment('')
+            setUserImage(null)
+
+            onUpdateCommentCount(commentsCount + 1)
+        } catch (err) {
+            setErrors(err.response.data.message)
+        }
     }
 
     const handleDelete = async uuid => {
@@ -67,6 +72,7 @@ const CommentSection = ({ commentsCount, url }) => {
             setComments(prevComments =>
                 prevComments.filter(comment => comment.uuid !== uuid),
             )
+            onUpdateCommentCount(commentsCount - 1)
         } catch (err) {
             setErrors(err.response.data.message)
         }
