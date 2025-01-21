@@ -5,8 +5,14 @@ import LoadMoreFeed, { NoMoreFeed } from './LoadMoreFeed'
 import { getPaginatedData } from '@/actions/get-paginated-data'
 import { ConditionalRender } from '@/lib/utils'
 
+export const metadata = {
+    title: 'Feed',
+    description:
+        'RenewE is a platform that allows you to share your thoughts, ideas, and opinions with the world. Join us today and start sharing!',
+}
+
 const Home = async () => {
-    const { data: posts, meta } = await getPaginatedData(1, '/feeds')
+    const { data: posts, meta } = await getPaginatedData(1, '/feed/feeds')
 
     return (
         <div className="space-y-2">

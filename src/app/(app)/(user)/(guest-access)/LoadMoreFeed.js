@@ -17,7 +17,7 @@ export default function LoadMoreFeed() {
     const loadMorePosts = async () => {
         const nextPage = page + 1
         const { data: newPosts, meta } =
-            (await getPaginatedData(nextPage, '/feeds')) ?? []
+            (await getPaginatedData(nextPage, '/feed/feeds')) ?? []
 
         setPosts(prevPosts => [...prevPosts, ...newPosts])
         setLastPage(meta.last_page)

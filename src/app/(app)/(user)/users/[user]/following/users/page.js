@@ -17,7 +17,7 @@ const page = async ({ params }) => {
         <div className="space-y-2">
             <MainCard CardClassName="space-y-4">
                 <div className="flex justify-between items-center">
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-2">
                         <User
                             weight="duotone"
                             size={32}

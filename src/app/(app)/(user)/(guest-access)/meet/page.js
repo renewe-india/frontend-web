@@ -6,6 +6,7 @@ import { ConditionalRender } from '@/lib/utils'
 
 export const metadata = {
     title: 'Meet',
+    description: 'Explore upcoming events and meetups in your area',
 }
 
 const MeetPage = async () => {

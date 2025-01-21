@@ -17,10 +17,10 @@ const page = async ({ params }) => {
         <div className="space-y-2">
             <MainCard CardClassName="space-y-4">
                 <div className="flex justify-between items-center">
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-2">
                         <Briefcase
                             weight="duotone"
-                            size={24}
+                            size={32}
                             color="#b85dcb"
                             className={cn(
                                 'flex-shrink-0 bg-purple-100 rounded-full p-1',

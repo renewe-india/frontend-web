@@ -16,7 +16,7 @@ export async function getPaginatedData(page, apiUrl, limit) {
 
         return { data, meta }
     } catch (error) {
-        console.error('API Error:', error)
+        console.error('API Error:', error.response.data)
         if (error.response) {
             const status = error.response.status
             console.log('status', status)

@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react'
 import {
-    ThumbsUp,
     ChatCenteredText,
     Repeat,
     PaperPlaneTilt,
@@ -9,7 +8,11 @@ import {
 import CommentSection from './comments/CommentSection'
 import ReactionSection from './reactions/ReactionSection'
 import { ConditionalRender } from '@/lib/utils'
+import dynamic from 'next/dynamic'
 
+const ReactionModal = dynamic(() => import('./reactions/ReactionModal'), {
+    ssr: false,
+})
 const PostActions = ({ reactions, comments, reposts, url }) => {
     const [showComments, setShowComments] = useState(false)
     const [commentCount, setCommentCount] = useState(comments?.count || 0)
@@ -23,21 +26,9 @@ const PostActions = ({ reactions, comments, reposts, url }) => {
             <div className="mt-4 flex flex-wrap justify-between items-center border-b border-neutral-content pb-1">
                 <div className="inline-flex items-center text-xs text-gray-500 flex-1 space-x-2 min-w-0">
                     <ConditionalRender condition={reactions?.count > 0}>
-                        <>
-                            <ThumbsUp
-                                size={20}
-                                stroke={2}
-                                color="#1E90FF"
-                                weight="duotone"
-                                className="p-1 bg-blue-100 rounded-full flex-shrink-0"
-                            />
-                            <span className="block sm:hidden ">
-                                {reactions?.abbreviate_count}
-                            </span>
-                            <span className="hidden sm:block truncate">
-                                Liked by {reactions?.text}
-                            </span>
-                        </>
+                        <div className="flex flex-row items-center">
+                            <ReactionModal reactions={reactions} url={url} />
+                        </div>
                     </ConditionalRender>
                 </div>
 

@@ -1,5 +1,9 @@
 import React from 'react'
-
+export const metadata = {
+    title: 'Contact Us',
+    description:
+        'We are here to help you. Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.',
+}
 function page() {
     return (
         <div className=" flex items-center justify-center min-h-screen relative py-16">

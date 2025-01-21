@@ -4,6 +4,11 @@ import { getPaginatedData } from '@/actions/get-paginated-data'
 import MainCard from '@/components/ui/MainCard'
 import { ConditionalRender } from '@/lib/utils'
 
+export const metadata = {
+    title: 'News',
+    description: 'The latest news and insights on the energy industry',
+}
+
 const NewsPage = async () => {
     const { data: articles, meta } = await getPaginatedData(1, '/news/articles')
 

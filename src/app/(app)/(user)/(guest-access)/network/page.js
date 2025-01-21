@@ -3,6 +3,7 @@ import MainCard from '@/components/ui/MainCard'
 
 export const metadata = {
     title: 'Network',
+    description: 'Explore your network and connect with other professionals',
 }
 
 const Network = () => {

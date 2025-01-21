@@ -2,6 +2,12 @@ import Image from '@/components/Image'
 import React from 'react'
 import { cn } from '@/lib/utils'
 
+export const metadata = {
+    title: 'About RenewE',
+    description:
+        'RenewE is a platform designed to connect professionals in the renewable energy industry.',
+}
+
 function page() {
     const ReneweLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_LOGO}`
     return (
